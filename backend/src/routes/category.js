@@ -8,7 +8,7 @@ const category = require('../controllers/category')
 const permissions = require('../middlewares/permissions')
 
 //? URL: /cetegories
-route.route('/').get(category.list).post(permissions.isAdmin, category.create)
-route.route('/:id').get(category.read).put(permissions.isAdmin, category.update).patch(permissions.isAdmin, category.update).delete(permissions.isAdmin, category.delete)
+router.route('/').get(category.list).post(permissions.isAdmin, category.create)
+router.route('/:id').get(category.read).put(permissions.isAdmin, category.update).patch(permissions.isAdmin, category.update).delete(permissions.isAdmin, category.delete)
 
 module.exports = router

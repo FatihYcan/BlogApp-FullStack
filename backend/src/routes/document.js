@@ -20,7 +20,7 @@ router.use('/json', (req, res) => {
 
 //? REDOC
 const redoc = require('redoc-express')
-router.use('/redoc', redoc.init(`/src/configs/swagger.json`, { title: 'Blog API', pathInMiddlewares: true }))
+router.use('/redoc', redoc(`/src/configs/swagger.json`, { title: 'Blog API', pathInMiddlewares: true }))
 
 //? SWAGGER
 const swaggerUi = require('swagger-ui-express')
