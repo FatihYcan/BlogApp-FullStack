@@ -11,3 +11,6 @@ const likeSchema = new mongoose.Schema({
     postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true, index: true },
 },
     { collection: 'likes', timestamps: true })
+
+//? Like Model Export
+module.exports = mongoose.model('Like', likeSchema)
