@@ -48,7 +48,7 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } 
         */
         const data = await Category.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
-        res.status(200).send({ error: false, data, new: await Car.findOne({ _id: req.params.id }) })
+        res.status(200).send({ error: false, data, new: await Category.findOne({ _id: req.params.id }) })
     },
 
     delete: async (req, res) => {

@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API Comment CONTROLLER --- */
+/* --- BLOG API COMMENT CONTROLLER --- */
 
 //? Import Comment model
 const Comment = require('../models/comment')
@@ -48,7 +48,7 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } 
         */
         const data = await Comment.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
-        res.status(200).send({ error: false, data, new: await Car.findOne({ _id: req.params.id }) })
+        res.status(200).send({ error: false, data, new: await Comment.findOne({ _id: req.params.id }) })
     },
 
     delete: async (req, res) => {
