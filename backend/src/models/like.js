@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API LIKE --- */
+/* --- BLOG API LIKE MODEL --- */
 
 const mongoose = require('mongoose')
 

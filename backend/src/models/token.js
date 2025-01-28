@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API TOKEN --- */
+/* --- BLOG API TOKEN MODEL --- */
 
 const mongoose = require('mongoose')
 

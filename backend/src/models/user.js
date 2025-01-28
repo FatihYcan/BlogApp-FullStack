@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API TOKEN --- */
+/* --- BLOG API USER MODEL --- */
 
 const mongoose = require('mongoose')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
