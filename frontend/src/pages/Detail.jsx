@@ -43,7 +43,7 @@ const toTitleCase = (str) => {
 
 const formatContent = (text) => {
   if (!text) return "";
-  return text.split('\n').map((line, index) => {
+  return text.split("\n").map((line, index) => {
     const formattedLine = line.charAt(0).toUpperCase() + line.slice(1);
     return (
       <span key={index}>
@@ -59,7 +59,7 @@ export default function Detail() {
   const { _id } = useParams();
   const { details, likes: like } = useSelector((state) => state.blog);
   const { userId, username } = useSelector((state) => state.auth);
-  const { getDetails, postLikes } = useBlogCalls();
+  const { getDetails, blogLikes } = useBlogCalls();
   const navigate = useNavigate();
 
   const [show, setShow] = React.useState(false);
@@ -115,7 +115,8 @@ export default function Detail() {
 
   const name = details.userId ? details.userId.username : "";
   const isTallImage = imageSize.height * 1.5 > imageSize.width;
-  const formattedName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  const formattedName =
+    name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   const categoryName = details.categoryId ? details.categoryId.name : "";
 
   const handleEditComment = (commentId, commentText) => {
@@ -130,7 +131,7 @@ export default function Detail() {
 
   const handleLike = () => {
     if (userId) {
-      postLikes("blogs", _id);
+      blogLikes("blogs", _id);
     } else {
       navigate("/login");
     }
@@ -177,7 +178,9 @@ export default function Detail() {
             </Avatar>
           }
           title={name}
-          subheader={details.createdAt && new Date(details.createdAt).toLocaleString()}
+          subheader={
+            details.createdAt && new Date(details.createdAt).toLocaleString()
+          }
         />
 
         <StyledCardContent>
@@ -239,7 +242,8 @@ export default function Detail() {
           <>
             <CommentForm
               editingComment={
-                comments.find((comment) => comment._id === editingCommentId)?.comment
+                comments.find((comment) => comment._id === editingCommentId)
+                  ?.comment
               }
               editingCommentId={editingCommentId}
               setEditingCommentId={setEditingCommentId}

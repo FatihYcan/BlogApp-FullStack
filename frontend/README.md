@@ -1,14 +1,14 @@
 # Blog App
 
-This project is a blogging application where users can create and share blog posts. The application was developed using React, Redux and Firebase.
+This project is a blogging application where users can create and share blog blogs. The application was developed using React, Redux and Firebase.
 
 ## Features
 
 - **User Registration and Login**: Users can register to the application and access their accounts by logging in. A secure authentication process is provided using Firebase.
-- **Creating, Editing and Deleting Blog Posts**: Users can create new blog posts, edit existing posts and delete their posts whenever they want.
+- **Creating, Editing and Deleting Blog blogs**: Users can create new blog blogs, edit existing blogs and delete their blogs whenever they want.
 - **Notification System**: The application allows users to receive notifications when they perform various operations (such as success, error, warning). User-friendly notifications are displayed using the React-Toastify library.
-- **Blog Management by Categories**: Blog posts can be viewed and managed more regularly by dividing them into categories.
-- **Comment and Like Management**: Users can comment on blog posts and interact by liking them.
+- **Blog Management by Categories**: Blog blogs can be viewed and managed more regularly by dividing them into categories.
+- **Comment and Like Management**: Users can comment on blog blogs and interact by liking them.
 - **About Page**: The app includes an 'About' page that provides information about the developer. Users can easily access LinkedIn and GitHub profiles.
 - **Login via Social Media**: Users can have a quick and easy login experience by logging in with their Google account.
 

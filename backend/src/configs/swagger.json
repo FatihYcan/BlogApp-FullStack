@@ -35,7 +35,7 @@
   ],
   "paths": {
     "/auth/login": {
-      "post": {
+      "blog": {
         "tags": [
           "Authentication"
         ],
@@ -95,7 +95,7 @@
           }
         }
       },
-      "post": {
+      "blog": {
         "tags": [
           "User"
         ],
@@ -219,12 +219,12 @@
         }
       }
     },
-    "/posts/": {
+    "/blogs/": {
       "get": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "List Posts",
+        "summary": "List blogs",
         "description": "You can send query with endpoint for filter[], search[], sort[], page and limit.\r  <ul>\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>",
         "responses": {
           "200": {
@@ -232,11 +232,11 @@
           }
         }
       },
-      "post": {
+      "blog": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "Create Post",
+        "summary": "Create blog",
         "description": "",
         "parameters": [
           {
@@ -244,7 +244,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Post"
+              "$ref": "#/definitions/blog"
             }
           }
         ],
@@ -255,12 +255,12 @@
         }
       }
     },
-    "/posts/{id}": {
+    "/blogs/{id}": {
       "get": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "Get Single Post",
+        "summary": "Get Single blog",
         "description": "",
         "parameters": [
           {
@@ -278,9 +278,9 @@
       },
       "put": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "Update Post",
+        "summary": "Update blog",
         "description": "",
         "parameters": [
           {
@@ -294,7 +294,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Post"
+              "$ref": "#/definitions/blog"
             }
           }
         ],
@@ -306,9 +306,9 @@
       },
       "delete": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "Delete Post",
+        "summary": "Delete blog",
         "description": "",
         "parameters": [
           {
@@ -329,9 +329,9 @@
       },
       "patch": {
         "tags": [
-          "Post"
+          "blog"
         ],
-        "summary": "Update Post",
+        "summary": "Update blog",
         "description": "",
         "parameters": [
           {
@@ -345,7 +345,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Post"
+              "$ref": "#/definitions/blog"
             }
           }
         ],
@@ -369,7 +369,7 @@
           }
         }
       },
-      "post": {
+      "blog": {
         "tags": [
           "Comment"
         ],
@@ -506,7 +506,7 @@
           }
         }
       },
-      "post": {
+      "blog": {
         "tags": [
           "Category"
         ],
@@ -790,7 +790,7 @@
     "Comment": {
       "type": "object",
       "properties": {
-        "postId": {
+        "blogId": {
           "type": "object",
           "properties": {
             "type": {
@@ -798,7 +798,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "Post"
+              "example": "blog"
             },
             "required": {
               "type": "boolean",
@@ -871,7 +871,7 @@
             }
           }
         },
-        "postId": {
+        "blogId": {
           "type": "object",
           "properties": {
             "type": {
@@ -879,7 +879,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "Post"
+              "example": "blog"
             },
             "required": {
               "type": "boolean",
@@ -893,7 +893,7 @@
         }
       }
     },
-    "Post": {
+    "blog": {
       "type": "object",
       "properties": {
         "userId": {
@@ -997,7 +997,7 @@
         }
       }
     },
-    "PostView": {
+    "blogView": {
       "type": "object",
       "properties": {
         "userId": {
@@ -1020,7 +1020,7 @@
             }
           }
         },
-        "postId": {
+        "blogId": {
           "type": "object",
           "properties": {
             "type": {
@@ -1028,7 +1028,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "Post"
+              "example": "blog"
             },
             "required": {
               "type": "boolean",

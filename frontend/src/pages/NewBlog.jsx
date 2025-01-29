@@ -16,7 +16,7 @@ import { Helmet } from "react-helmet";
 
 const NewBlog = () => {
   const { categories, pagination } = useSelector((state) => state.blog);
-  const { postBlogs, getCategories, getBlogs } = useBlogCalls();
+  const { blogBlogs, getCategories, getBlogs } = useBlogCalls();
 
   const [data, setData] = useState({
     categoryId: "",
@@ -36,7 +36,7 @@ const NewBlog = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postBlogs(data).then(() => {
+    blogBlogs(data).then(() => {
       getBlogs(`/blogs?page=1&limit=${pagination.totalRecords}`);
     });
     setData({

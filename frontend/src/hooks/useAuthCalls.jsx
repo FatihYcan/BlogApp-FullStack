@@ -35,7 +35,7 @@ const useAuthCalls = () => {
       // Diziyi tekrar localStorage'a kaydet
       localStorage.setItem("users", JSON.stringify(users));
 
-      const { data } = await axiosPublic.post("/users/", userInfo);
+      const { data } = await axiosPublic.blog("/users/", userInfo);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register işlemi başarılı olmuştur.");
       await createUserWithEmailAndPassword(
@@ -64,7 +64,7 @@ const useAuthCalls = () => {
   const login = async (userInfo) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosPublic.post("/auth/login/", userInfo);
+      const { data } = await axiosPublic.blog("/auth/login/", userInfo);
       dispatch(loginSuccess(data));
       toastSuccessNotify("Login işlemi başarılı olmuştur.");
       await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
@@ -96,7 +96,7 @@ const useAuthCalls = () => {
         password: randomPassword,
       };
 
-      const { data } = await axiosPublic.post("/users/", Register);
+      const { data } = await axiosPublic.blog("/users/", Register);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register işlemi başarılı olmuştur.");
       navigate("/");
@@ -121,7 +121,7 @@ const useAuthCalls = () => {
         password: password,
       };
 
-      const { data } = await axiosPublic.post("/auth/login/", Login);
+      const { data } = await axiosPublic.blog("/auth/login/", Login);
       dispatch(loginSuccess(data));
       toastSuccessNotify("Login işlemi başarılı olmuştur.");
       navigate("/");

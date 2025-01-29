@@ -13,8 +13,8 @@ router.use('/users', require('./user'))
 //? token
 router.use('/tokens', require('./token'))
 
-//? post
-router.use('/posts', require('./post'))
+//? blog
+router.use('/blogs', require('./blog'))
 //? comment
 router.use('/comments', require('./comment'))
 //? category

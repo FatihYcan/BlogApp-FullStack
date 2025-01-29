@@ -41,9 +41,9 @@ module.exports = async () => {
         "name": "Health"
     })
 
-    //? POST
-    const Post = require('../models/post')
-    await Post.create({
+    //? BLOG
+    const Blog = require('../models/blog')
+    await blog.create({
         "_id": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
         "categoryId": "679a2c8987b220a27b68b410",
@@ -52,7 +52,7 @@ module.exports = async () => {
         "views": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"],
         "likes": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"]
     })
-    await Post.create({
+    await Blog.create({
         "_id": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
         "categoryId": "679a2c8987b220a27b68b410",
@@ -65,13 +65,13 @@ module.exports = async () => {
     const Comment = require('../models/comment')
     await Comment.create({
         "_id": "679a3090896534f79624b453",
-        "postId": "679a3090896534f79624b450",
+        "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
         "content": "Test 1 Comment"
     })
     await Comment.create({
         "_id": "679a3090896534f79624b454",
-        "postId": "679a3090896534f79624b452",
+        "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
         "content": "Admin 1 Comment"
     })
@@ -79,24 +79,24 @@ module.exports = async () => {
     const Like = require('../models/like')
     await Like.create({
         "_id": "679a3090896534f79624b455",
-        "postId": "679a3090896534f79624b450",
+        "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
     })
     await Like.create({
         "_id": "679a3090896534f79624b456",
-        "postId": "679a3090896534f79624b452",
+        "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
     })
 
     const View = require('../models/view')
     await View.create({
         "_id": "679a3090896534f79624b457",
-        "postId": "679a3090896534f79624b450",
+        "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
     })
     await View.create({
         "_id": "679a3090896534f79624b458",
-        "postId": "679a3090896534f79624b452",
+        "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
     })
 

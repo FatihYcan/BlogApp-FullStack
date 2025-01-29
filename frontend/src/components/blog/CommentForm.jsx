@@ -8,7 +8,7 @@ const CommentForm = ({
   setEditingCommentId,
   editingComment,
 }) => {
-  const { postComments, getDetails, putComments } = useBlogCalls();
+  const { blogComments, getDetails, putComments } = useBlogCalls();
 
   const { _id } = useParams();
   const [data, setData] = React.useState({
@@ -26,7 +26,7 @@ const CommentForm = ({
       await putComments(editingCommentId, { comment: data.comment });
       setEditingCommentId(null);
     } else {
-      await postComments("comments", data);
+      await blogComments("comments", data);
     }
     setData({
       blogId: _id,

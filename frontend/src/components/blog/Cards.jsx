@@ -74,7 +74,7 @@ export default function BlogCard({
   pagination,
 }) {
   const { userId } = useSelector((state) => state.auth);
-  const { postLikes, getBlogs } = useBlogCalls();
+  const { blogLikes, getBlogs } = useBlogCalls();
   const navigate = useNavigate();
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
@@ -91,7 +91,7 @@ export default function BlogCard({
 
   const handleLike = () => {
     if (userId) {
-      postLikes("blogs", _id);
+      blogLikes("blogs", _id);
       getBlogs(`/blogs?page=${page}&limit=${pagination.totalRecords}`);
     } else {
       navigate("/login");

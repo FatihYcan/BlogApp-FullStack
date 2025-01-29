@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API POST VIEW MODEL --- */
+/* --- BLOG API blog VIEW MODEL --- */
 
 const mongoose = require('mongoose')
 
@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const viewSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
 
-    postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true, index: true },
+    blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'blog', required: true, index: true },
 },
     { collection: 'views', timestamps: true })
 

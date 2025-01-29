@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 
 //? Comment Model
 const commentSchema = new mongoose.Schema({
-    postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true, index: true },
+    blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'blog', required: true, index: true },
 
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
 

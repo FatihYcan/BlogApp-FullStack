@@ -1,11 +1,11 @@
 "use strict"
 
-/* --- BLOG API POST MODEL --- */
+/* --- BLOG API blog MODEL --- */
 
 const mongoose = require('mongoose')
 
-//? Post Model
-const postSchema = new mongoose.Schema({
+//? Blog Model
+const blogSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
 
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true, index: true },
@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema({
 
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 },
-    { collection: 'posts', timestamps: true })
+    { collection: 'blogs', timestamps: true })
 
-//? Post Model Export
-module.exports = mongoose.model('Post', postSchema)
+//? Blog Model Export
+module.exports = mongoose.model('blog', blogSchema)

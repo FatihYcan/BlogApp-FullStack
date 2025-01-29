@@ -29,10 +29,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const postBlogs = async (postData) => {
+  const blogBlogs = async (blogData) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.post("/blogs/", postData);
+      await axiosWithToken.blog("/blogs/", blogData);
       toastSuccessNotify("Blog kaydı eklenmiştir.");
     } catch (error) {
       dispatch(fetchFail());
@@ -40,10 +40,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const putBlogs = async (post_id, data) => {
+  const putBlogs = async (blog_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`/blogs/${post_id}`, data);
+      await axiosWithToken.put(`/blogs/${blog_id}`, data);
       toastSuccessNotify("Blog kaydı güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -51,10 +51,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const deleteBlogs = async (post_id) => {
+  const deleteBlogs = async (blog_id) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.delete(`/blogs/${post_id}/`);
+      await axiosWithToken.delete(`/blogs/${blog_id}/`);
       toastSuccessNotify("Blog silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
@@ -68,10 +68,10 @@ const useBlogCalls = () => {
     dispatch(getCategorySuccess({ apiData, url }));
   };
 
-  const postLikes = async (url, post_id) => {
+  const blogLikes = async (url, blog_id) => {
     try {
-      const { data } = await axiosWithToken.post(
-        `/${url}/${post_id}/postLike/`,
+      const { data } = await axiosWithToken.blog(
+        `/${url}/${blog_id}/blogLike/`,
         null
       );
       dispatch(getLikeSuccess(data));
@@ -80,10 +80,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const getDetails = async (post) => {
+  const getDetails = async (blog) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`/blogs/${post.id}/`);
+      const { data } = await axiosWithToken(`/blogs/${blog.id}/`);
       const apiData = data.data;
       dispatch(getDetailSuccess({ apiData }));
     } catch (error) {
@@ -102,10 +102,10 @@ const useBlogCalls = () => {
       dispatch(fetchFail());
     }
   };
-  const postComments = async (url, data) => {
+  const blogComments = async (url, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.post(`/${url}/`, data);
+      await axiosWithToken.blog(`/${url}/`, data);
       toastSuccessNotify("Yorum yapılmıştır.");
     } catch (error) {
       dispatch(fetchFail());
@@ -113,10 +113,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const putComments = async (post_id, data) => {
+  const putComments = async (blog_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`/comments/${post_id}`, data);
+      await axiosWithToken.put(`/comments/${blog_id}`, data);
       toastSuccessNotify("Yorum güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -124,10 +124,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const deleteComments = async (post_id) => {
+  const deleteComments = async (blog_id) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.delete(`/comments/${post_id}/`);
+      await axiosWithToken.delete(`/comments/${blog_id}/`);
       toastSuccessNotify("Yorum silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
@@ -137,14 +137,14 @@ const useBlogCalls = () => {
 
   return {
     getBlogs,
-    postBlogs,
+    blogBlogs,
     putBlogs,
     deleteBlogs,
     getCategories,
-    postLikes,
+    blogLikes,
     getDetails,
     getUsers,
-    postComments,
+    blogComments,
     putComments,
     deleteComments,
   };
