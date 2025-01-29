@@ -38,8 +38,8 @@ const document = {
 		"Category": require('./src/models/category').schema.obj,
 		"Comment": require('./src/models/comment').schema.obj,
 		"Like": require('./src/models/like').schema.obj,
-		"blog": require('./src/models/blog').schema.obj,
-		"blogView": require('./src/models/blogView').schema.obj,
+		"Blog": require('./src/models/blog').schema.obj,
+		"View": require('./src/models/view').schema.obj,
 	}
 }
 

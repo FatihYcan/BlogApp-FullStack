@@ -35,7 +35,7 @@
   ],
   "paths": {
     "/auth/login": {
-      "blog": {
+      "post": {
         "tags": [
           "Authentication"
         ],
@@ -95,7 +95,7 @@
           }
         }
       },
-      "blog": {
+      "post": {
         "tags": [
           "User"
         ],
@@ -222,9 +222,9 @@
     "/blogs/": {
       "get": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "List blogs",
+        "summary": "List Blogs",
         "description": "You can send query with endpoint for filter[], search[], sort[], page and limit.\r  <ul>\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>",
         "responses": {
           "200": {
@@ -232,11 +232,11 @@
           }
         }
       },
-      "blog": {
+      "post": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "Create blog",
+        "summary": "Create Blog",
         "description": "",
         "parameters": [
           {
@@ -244,7 +244,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/blog"
+              "$ref": "#/definitions/Blog"
             }
           }
         ],
@@ -258,9 +258,9 @@
     "/blogs/{id}": {
       "get": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "Get Single blog",
+        "summary": "Get Single Blog",
         "description": "",
         "parameters": [
           {
@@ -278,9 +278,9 @@
       },
       "put": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "Update blog",
+        "summary": "Update Blog",
         "description": "",
         "parameters": [
           {
@@ -294,7 +294,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/blog"
+              "$ref": "#/definitions/Blog"
             }
           }
         ],
@@ -306,9 +306,9 @@
       },
       "delete": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "Delete blog",
+        "summary": "Delete Blog",
         "description": "",
         "parameters": [
           {
@@ -329,9 +329,9 @@
       },
       "patch": {
         "tags": [
-          "blog"
+          "Blog"
         ],
-        "summary": "Update blog",
+        "summary": "Update Blog",
         "description": "",
         "parameters": [
           {
@@ -345,7 +345,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/blog"
+              "$ref": "#/definitions/Blog"
             }
           }
         ],
@@ -369,7 +369,7 @@
           }
         }
       },
-      "blog": {
+      "post": {
         "tags": [
           "Comment"
         ],
@@ -506,7 +506,7 @@
           }
         }
       },
-      "blog": {
+      "post": {
         "tags": [
           "Category"
         ],
@@ -893,7 +893,7 @@
         }
       }
     },
-    "blog": {
+    "Blog": {
       "type": "object",
       "properties": {
         "userId": {
@@ -969,14 +969,17 @@
           }
         },
         "views": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "number",
-              "example": 0
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "User"
+              }
             }
           }
         },
@@ -997,7 +1000,7 @@
         }
       }
     },
-    "blogView": {
+    "View": {
       "type": "object",
       "properties": {
         "userId": {
