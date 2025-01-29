@@ -18,9 +18,13 @@ module.exports = {
                     <li>URL/?<b>page=2&limit=1</b></li>
                 </ul>`
         */
-        const data = await res.getModelList(Blog, {}, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
 
-        res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog), data })
+        //! isPublish true olanları listele, false olanları listeleme
+        let customFilter = { isPublish: true }
+
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+
+        res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 
     create: async (req, res) => {
@@ -38,7 +42,7 @@ module.exports = {
             #swagger.tags = ["Blog"]
             #swagger.summary = "Get Single Blog"
         */
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
         res.status(200).send({ error: false, data })
     },
 

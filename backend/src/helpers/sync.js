@@ -43,14 +43,16 @@ module.exports = async () => {
 
     //? BLOG
     const Blog = require('../models/blog')
-    await blog.create({
+    await Blog.create({
         "_id": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"],
-        "likes": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"]
+        "likes": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"],
+        "comments": ["679a3090896534f79624b453"],
+        "isPublish": true
     })
     await Blog.create({
         "_id": "679a3090896534f79624b452",
@@ -59,7 +61,9 @@ module.exports = async () => {
         "title": "Admin 1 Title",
         "content": "Admin 1 Content",
         "views": ["65343222b67e9681f937f003"],
-        "likes": ["65343222b67e9681f937f003"]
+        "likes": ["65343222b67e9681f937f003"],
+        "comments": ["679a3090896534f79624b454"],
+        "isPublish": false
     })
 
     const Comment = require('../models/comment')
@@ -67,13 +71,13 @@ module.exports = async () => {
         "_id": "679a3090896534f79624b453",
         "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
-        "content": "Test 1 Comment"
+        "comment": "Test 1 Comment"
     })
     await Comment.create({
         "_id": "679a3090896534f79624b454",
         "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
-        "content": "Admin 1 Comment"
+        "comment": "Admin 1 Comment"
     })
 
     const Like = require('../models/like')
