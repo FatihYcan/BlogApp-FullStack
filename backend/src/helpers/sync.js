@@ -2,7 +2,7 @@
 
 /* --- BLOG API SYNC --- */
 
-module.exports = async function () {
+module.exports = async () => {
     // return null;
 
     //? REMOVE DATABASE
@@ -32,6 +32,28 @@ module.exports = async function () {
         "lastName": "test",
         "isActive": true,
         "isAdmin": false
+    })
+
+    //? CATEGORY
+    const Category = require('../models/category')
+    await Category.create({
+        "_id": "679a2c8987b220a27b68b410",
+        "name": "Health"
+    })
+
+    //? POST
+    const Post = require('../models/post')
+    await Post.create({
+        "userId": "65343222b67e9681f937f003",
+        "categoryId": "679a2c8987b220a27b68b410",
+        "title": "Test 1 Title ",
+        "content": "Test 1 Content"
+    })
+    await Post.create({
+        "userId": "65343222b67e9681f937f001",
+        "categoryId": "679a2c8987b220a27b68b410",
+        "title": "Admin 1 Title ",
+        "content": "Admin 1 Content"
     })
 
     //? End

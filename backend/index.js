@@ -48,6 +48,7 @@ app.all('/', (req, res) => {
             redoc: '/documents/redoc',
             json: '/documents/json',
         },
+        user: req.user
     })
 })
 
@@ -55,6 +56,8 @@ app.all('/', (req, res) => {
 app.use(require('./src/routes'))
 
 /* ------------------------------------------------------- */
+//? Synchronization
+// require('./src/helpers/sync')()
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))

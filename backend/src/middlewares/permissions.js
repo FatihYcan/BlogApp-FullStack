@@ -7,7 +7,7 @@ module.exports = {
     isLogin: (req, res, next) => {
         // return next()
 
-        if (req.user && res.user.isActive) {
+        if (req.user && req.user.isActive) {
             next()
         } else {
             res.errorStatusCode = 401

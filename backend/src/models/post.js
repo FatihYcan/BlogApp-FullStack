@@ -18,7 +18,7 @@ const postSchema = new mongoose.Schema({
 
     views: { type: Number, default: 0 },
 
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    likes: { type: Number, default: 0 },
 },
     { collection: 'posts', timestamps: true })
 

@@ -28,7 +28,7 @@ module.exports = {
                     let tokenData = await Token.findOne({ userId: user._id })
                     if (!tokenData) tokenData = await Token.create({ userId: user._id, token: passwordEncrypt(user._id + Date.now()) })
 
-                    res.send({ error: false, token: tokenData.token })
+                    res.send({ error: false, token: tokenData.token, user })
 
                 } else {
                     res.errorStatusCode = 400

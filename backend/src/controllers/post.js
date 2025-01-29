@@ -18,7 +18,7 @@ module.exports = {
                     <li>URL/?<b>page=2&limit=1</b></li>
                 </ul>`
         */
-        const data = await res.getModelList(Post)
+        const data = await res.getModelList(Post, {}, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Post), data })
     },
 
@@ -37,7 +37,7 @@ module.exports = {
             #swagger.tags = ["Post"]
             #swagger.summary = "Get Single Post"
         */
-        const data = await Post.findOne({ _id: req.params.id })
+        const data = await Post.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
         res.status(200).send({ error: false, data })
     },
 
@@ -49,9 +49,12 @@ module.exports = {
         */
 
         //! Kullanıcı sadece kendi postlarını günceleyebilir
-        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { _id: req.user._id }
+        }
 
-        const data = await Post.updateOne(customFilters, req.body, { runValidators: true })
+        const data = await Post.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Post.findOne({ _id: req.params.id }) })
     },
 
@@ -62,9 +65,12 @@ module.exports = {
         */
 
         //! Kullanıcı sadece kendi postlarını silebilir
-        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { _id: req.user._id }
+        }
 
-        const data = await Post.deleteOne(customFilters)
+        const data = await Post.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
 }
