@@ -22,8 +22,13 @@ module.exports = {
         //! isPublish true olanları listele, false olanları listeleme
         let customFilter = { isPublish: true }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+        //! Kullanıcı kendi bloglarını görmek isterse isPublish filtresini kaldır ve kendi bloglarını listele
+        if (req.query.author && req.user && req.query.author == req.user._id.toString()) {
+            delete customFilter.isPublish
+            customFilter.userId = req.user._id
+        }
 
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -58,7 +63,6 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { _id: req.user._id }
         }
-
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
     },
@@ -74,7 +78,6 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { _id: req.user._id }
         }
-
         const data = await Blog.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },

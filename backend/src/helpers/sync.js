@@ -65,6 +65,17 @@ module.exports = async () => {
         "comments": ["679a3090896534f79624b454"],
         "isPublish": false
     })
+    await Blog.create({
+        "_id": "679a3090896534f79624b472",
+        "userId": "65343222b67e9681f937f001",
+        "categoryId": "679a2c8987b220a27b68b410",
+        "title": "Admin 11 Title",
+        "content": "Admin 11 Content",
+        "views": ["65343222b67e9681f937f003"],
+        "likes": ["65343222b67e9681f937f003"],
+        "comments": ["679a3090896534f79624b454"],
+        "isPublish": true
+    })
 
     const Comment = require('../models/comment')
     await Comment.create({

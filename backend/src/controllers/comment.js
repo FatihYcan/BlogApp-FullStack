@@ -53,7 +53,6 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { _id: req.user._id }
         }
-
         const data = await Comment.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Comment.findOne({ _id: req.params.id }) })
     },
@@ -69,7 +68,6 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { _id: req.user._id }
         }
-
         const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
