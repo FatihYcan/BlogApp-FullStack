@@ -53,7 +53,6 @@ module.exports = {
         const auth = req.headers?.authorization || null
         const tokenKey = auth ? auth?.split(' ') : null
         const result = await Token.deleteOne({ token: tokenKey[1] })
-
         res.send({ error: false, message: "Logout successful.", result })
     }
 }
