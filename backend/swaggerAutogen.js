@@ -14,7 +14,7 @@ const document = {
 		version: packageJson.version,
 		title: "Blog API",
 		description: packageJson.description,
-		termsOfService: "http://www.clarusway.com/#",
+		termsOfService: "",
 		contact: { name: "Fatih Can", email: "f.yakutcan.32@gmail.com" },
 		license: { name: packageJson.license, },
 	},
