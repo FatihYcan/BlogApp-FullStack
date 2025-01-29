@@ -26,7 +26,7 @@ module.exports = {
         /*
             #swagger.tags = ["Category"]
             #swagger.summary = "Create Category"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } }
         */
         const data = await Category.create(req.body)
         res.status(201).send({ error: false, data })
@@ -45,7 +45,7 @@ module.exports = {
         /*
             #swagger.tags = ["Category"]
             #swagger.summary = "Update Category"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } }
         */
         const data = await Category.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Category.findOne({ _id: req.params.id }) })

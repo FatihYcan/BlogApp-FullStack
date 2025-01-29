@@ -26,7 +26,7 @@ module.exports = {
         /*
             #swagger.tags = ["Post"]
             #swagger.summary = "Create Post"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Post' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Post' } }
         */
         const data = await Post.create(req.body)
         res.status(201).send({ error: false, data })
@@ -45,7 +45,7 @@ module.exports = {
         /*
             #swagger.tags = ["Post"]
             #swagger.summary = "Update Post"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Post' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Post' } }
         */
         const data = await Post.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Post.findOne({ _id: req.params.id }) })
@@ -54,7 +54,7 @@ module.exports = {
     delete: async (req, res) => {
         /*
             #swagger.tags = ["Post"]
-            #swagger.summary = "Delete Post"]"
+            #swagger.summary = "Delete Post"
         */
         const data = await Post.deleteOne({ _id: req.params.id })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })

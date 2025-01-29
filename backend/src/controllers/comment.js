@@ -26,7 +26,7 @@ module.exports = {
         /*
             #swagger.tags = ["Comment"]
             #swagger.summary = "Create Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } }
         */
         const data = await Comment.create(req.body)
         res.status(201).send({ error: false, data })
@@ -45,7 +45,7 @@ module.exports = {
         /*
             #swagger.tags = ["Comment"]
             #swagger.summary = "Update Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } }
         */
         const data = await Comment.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Comment.findOne({ _id: req.params.id }) })
@@ -54,7 +54,7 @@ module.exports = {
     delete: async (req, res) => {
         /*
             #swagger.tags = ["Comment"]
-            #swagger.summary = "Delete Comment"]"
+            #swagger.summary = "Delete Comment"
         */
         const data = await Comment.deleteOne({ _id: req.params.id })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })

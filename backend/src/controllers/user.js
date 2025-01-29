@@ -10,8 +10,8 @@ const Token = require('../models/token')
 module.exports = {
     list: async (req, res) => {
         /*
-            #swagger.tags = ["Users"]
-            #swagger.summary = "List Users"
+            #swagger.tags = ["User"]
+            #swagger.summary = "List User"
             #swagger.description = `You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.
                 <ul>
                     <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>
@@ -32,7 +32,7 @@ module.exports = {
         /*
             #swagger.tags = ["User"]
             #swagger.summary = "Create User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } }
         */
 
         //! Yeni kayıtlarda admin=false
@@ -63,7 +63,7 @@ module.exports = {
         /*
             #swagger.tags = ["User"]
             #swagger.summary = "Update User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } 
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } }
         */
 
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.

@@ -13,7 +13,7 @@ module.exports = {
             #swagger.tags = ["Authentication"]
             #swagger.summary = "Login"
             #swagger.description = 'Login with username (or email) and password for get Token.'
-            #swagger.parameters["body"] = { in: "body", required: true, schema: { "username": "test", "password": "1234", } }
+            #swagger.parameters["body"] = { in: "body", required: true, schema: { "username": "test", "password": "1234" } }
         */
         const { username, email, password } = req.body
 
