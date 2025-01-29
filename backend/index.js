@@ -9,6 +9,7 @@ const app = express()
 
 //? envVariables to process.env
 require("dotenv").config()
+const cors = require("cors")
 const PORT = process.env.PORT
 const HOST = process.env.HOST
 
@@ -27,6 +28,7 @@ dbConnection()
 
 //? Accept JSON
 app.use(express.json())
+app.use(cors())
 
 //? Check Authentication
 app.use(require('./src/middlewares/authentication'))
