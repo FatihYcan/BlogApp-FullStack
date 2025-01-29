@@ -47,7 +47,11 @@ module.exports = {
             #swagger.summary = "Update Post"
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Post' } }
         */
-        const data = await Post.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+
+        //! Kullanıcı sadece kendi postlarını günceleyebilir
+        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+
+        const data = await Post.updateOne(customFilters, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Post.findOne({ _id: req.params.id }) })
     },
 
@@ -56,7 +60,11 @@ module.exports = {
             #swagger.tags = ["Post"]
             #swagger.summary = "Delete Post"
         */
-        const data = await Post.deleteOne({ _id: req.params.id })
+
+        //! Kullanıcı sadece kendi postlarını silebilir
+        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+
+        const data = await Post.deleteOne(customFilters)
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
 }
