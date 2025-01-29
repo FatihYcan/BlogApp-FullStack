@@ -16,9 +16,9 @@ const postSchema = new mongoose.Schema({
 
     // image: { type: String, required: true, trim: true },
 
-    views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'View', unique: true }],
+    views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like', unique: true }],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 },
     { collection: 'posts', timestamps: true })
 

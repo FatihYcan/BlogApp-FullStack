@@ -12,6 +12,6 @@ const viewSchema = new mongoose.Schema({
 },
     { collection: 'views', timestamps: true })
 
-//? PostView Model Export
+//? View Model Export
 module.exports = mongoose.model('View', viewSchema)
 

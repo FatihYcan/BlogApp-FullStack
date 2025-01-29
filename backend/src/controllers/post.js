@@ -19,6 +19,7 @@ module.exports = {
                 </ul>`
         */
         const data = await res.getModelList(Post, {}, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Post), data })
     },
 
