@@ -48,10 +48,13 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } }
         */
 
-        //! Kullanıcı sadece kendi kaydını güncelleyebilir.
-        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+        //! Kullanıcı sadece kendi yorumlarını güncelleyebilir.
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { _id: req.user._id }
+        }
 
-        const data = await Comment.updateOne(customFilters, req.body, { runValidators: true })
+        const data = await Comment.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Comment.findOne({ _id: req.params.id }) })
     },
 
@@ -61,10 +64,13 @@ module.exports = {
             #swagger.summary = "Delete Comment"
         */
 
-        //! Kullanıcı sadece kendi kaydını silebilir.
-        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
+        //! Kullanıcı sadece kendi yorumlarını silebilir.
+        let customFilter = {}
+        if (!req.user.isAdmin) {
+            customFilter = { _id: req.user._id }
+        }
 
-        const data = await Comment.deleteOne(customFilters)
+        const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
 }
