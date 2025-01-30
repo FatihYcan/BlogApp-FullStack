@@ -48,7 +48,8 @@ module.exports = {
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Get Single Blog"
         */
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }, [{ path: "likes" }]])
+        // const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "likes" }])
         res.status(200).send({ error: false, data })
     },
 

@@ -4,7 +4,7 @@
 
 const { mongoose } = require('../configs/dbConnection')
 
-//? Comment Model
+//? Like Model
 const likeSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
 

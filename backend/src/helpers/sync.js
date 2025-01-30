@@ -36,6 +36,7 @@ module.exports = async () => {
 
     //? CATEGORY
     const Category = require('../models/category')
+    await Category.deleteMany() // !!! Clear collection
     await Category.create({
         "_id": "679a2c8987b220a27b68b410",
         "name": "Health"
@@ -43,6 +44,7 @@ module.exports = async () => {
 
     //? BLOG
     const Blog = require('../models/blog')
+    await Blog.deleteMany() // !!! Clear collection
     await Blog.create({
         "_id": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
@@ -78,6 +80,7 @@ module.exports = async () => {
     })
 
     const Comment = require('../models/comment')
+    await Comment.deleteMany() // !!! Clear collection
     await Comment.create({
         "_id": "679a3090896534f79624b453",
         "blogId": "679a3090896534f79624b450",
@@ -92,6 +95,7 @@ module.exports = async () => {
     })
 
     const Like = require('../models/like')
+    await Like.deleteMany() // !!! Clear collection
     await Like.create({
         "_id": "679a3090896534f79624b455",
         "blogId": "679a3090896534f79624b450",
@@ -109,6 +113,7 @@ module.exports = async () => {
     })
 
     const View = require('../models/view')
+    await View.deleteMany() // !!! Clear collection
     await View.create({
         "_id": "679a3090896534f79624b457",
         "blogId": "679a3090896534f79624b450",
