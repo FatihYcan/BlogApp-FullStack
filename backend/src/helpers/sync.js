@@ -126,7 +126,6 @@ module.exports = async () => {
             "userId": "65343222b67e9681f937f001",
         })
     */
-
     //? End
     console.log('* Synchronized *')
 }

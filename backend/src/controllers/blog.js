@@ -28,7 +28,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId" }])
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -49,7 +49,6 @@ module.exports = {
             #swagger.summary = "Get Single Blog"
         */
         const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
-        // const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "likes" }])
         res.status(200).send({ error: false, data })
     },
 
@@ -59,7 +58,6 @@ module.exports = {
             #swagger.summary = "Update Blog"
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
         */
-
 
         //! Kullanıcı sadece kendi bloglarını günceleyebilir
         let customFilter = {}
@@ -116,7 +114,10 @@ module.exports = {
 
             //! Blogun toplam like sayısını azalt
             const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-            const likesCount = blogData.likes.length
+            console.log(blogData)
+            // const likesCount = blogData.likes.length - 1
+            // console.log(likesCount)
+
             // await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: likesCount:- 1 }})
         }
 

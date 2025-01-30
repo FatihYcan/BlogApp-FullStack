@@ -3,6 +3,8 @@
 /* --- BLOG API blog MODEL --- */
 
 const { mongoose } = require('../configs/dbConnection')
+const Like = require('./like')
+const View = require('./view')
 
 //? Blog Model
 const blogSchema = new mongoose.Schema({
@@ -16,9 +18,9 @@ const blogSchema = new mongoose.Schema({
 
     // image: { type: String, required: true, trim: true },
 
-    views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'View' }],
+    views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Like' }],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: Like.modelName }],
 
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 
