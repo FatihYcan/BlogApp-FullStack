@@ -83,4 +83,47 @@ module.exports = {
         const data = await Blog.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
+
+    getLike: async (req, res) => {
+        /*
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Get Like Info"
+        */
+        const Like = require('../models/like')
+
+        //! Kullanıcın bloga olan like durumunu getir
+        const data = await Like.findOne({ blogId: req.params.id, userId: req.user._id })
+        console.log("blogId and userId:", data)
+
+        const data1 = await Like.findOne({ blogId: req.params.id })
+        console.log("blogId:", data1)
+
+        const data2 = await Like.findOne({ userId: req.user._id })
+        console.log("userId:", data2)
+
+        //! Blogun toplam like sayısını getir
+        const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
+        res.status(200).send({ error: false, userLike: !!data, likes: blogData.likes.length })
+    },
+
+    postLike: async (req, res) => {
+        /*
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Add/Remove Like"
+        */
+
+        const Like = require('../models/like')
+
+        //! Kullanıcın bloga olan like durumunu kontrol et
+        // const data = await Like.findOne({ blogId: req.params.id, userId: req.user._id })
+        const data = await Like.find({ blogId: req.params.id, userId: req.user._id })
+
+        console.log(data)
+
+
+
+    }
+
+
+
 }

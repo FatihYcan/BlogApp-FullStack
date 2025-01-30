@@ -49,8 +49,8 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Test 1 Title",
         "content": "Test 1 Content",
-        "views": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"],
-        "likes": ["65343222b67e9681f937f001", "65343222b67e9681f937f003"],
+        "views": ["679a3090896534f79624b457"],
+        "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
         "comments": ["679a3090896534f79624b453"],
         "isPublish": true
     })
@@ -60,8 +60,8 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Admin 1 Title",
         "content": "Admin 1 Content",
-        "views": ["65343222b67e9681f937f003"],
-        "likes": ["65343222b67e9681f937f003"],
+        "views": ["679a3090896534f79624b458"],
+        "likes": ["679a3090896534f79624b456"],
         "comments": ["679a3090896534f79624b454"],
         "isPublish": false
     })
@@ -71,9 +71,9 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Admin 11 Title",
         "content": "Admin 11 Content",
-        "views": ["65343222b67e9681f937f003"],
-        "likes": ["65343222b67e9681f937f003"],
-        "comments": ["679a3090896534f79624b454"],
+        "views": [""],
+        "likes": [""],
+        "comments": [""],
         "isPublish": true
     })
 
@@ -96,6 +96,11 @@ module.exports = async () => {
         "_id": "679a3090896534f79624b455",
         "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f003",
+    })
+    await Like.create({
+        "_id": "679a3090896534f79624b457",
+        "blogId": "679a3090896534f79624b450",
+        "userId": "65343222b67e9681f937f001",
     })
     await Like.create({
         "_id": "679a3090896534f79624b456",

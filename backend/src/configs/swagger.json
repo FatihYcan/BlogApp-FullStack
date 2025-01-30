@@ -507,6 +507,28 @@
         }
       }
     },
+    "/blogs/{id}/getLike": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get Like Info",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/comments/": {
       "get": {
         "tags": [
