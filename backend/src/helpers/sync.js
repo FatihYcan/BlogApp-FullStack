@@ -53,7 +53,7 @@ module.exports = async () => {
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b457"],
         "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
-        "comments": ["679a3090896534f79624b453"],
+        "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "isPublish": true
     })
     await Blog.create({
