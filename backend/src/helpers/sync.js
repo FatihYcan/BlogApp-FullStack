@@ -3,14 +3,14 @@
 /* --- BLOG API SYNC --- */
 
 module.exports = async () => {
-    // return null;
+    return null;
 
     //? REMOVE DATABASE
     const { mongoose } = require('../configs/dbConnection')
     await mongoose.connection.dropDatabase()
     console.log('- Database and all data DELETED!')
 
-    
+
     //? USER
     const User = require('../models/user')
     await User.deleteMany() // !!! Clear collection.
@@ -95,7 +95,7 @@ module.exports = async () => {
         "comment": "Admin 1 Comment"
     })
 
-    const Like = require('../models/like')
+    const Like = require('../models/postLike')
     await Like.deleteMany() // !!! Clear collection
     await Like.create({
         "_id": "679a3090896534f79624b455",

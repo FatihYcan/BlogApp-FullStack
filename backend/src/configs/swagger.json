@@ -529,6 +529,28 @@
         }
       }
     },
+    "/blogs/{id}/postLike": {
+      "post": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Add/Remove Like",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/comments/": {
       "get": {
         "tags": [
@@ -971,7 +993,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "blog"
+              "example": "Blog"
             },
             "required": {
               "type": "boolean",
@@ -1024,7 +1046,7 @@
     "Like": {
       "type": "object",
       "properties": {
-        "userId": {
+        "blogId": {
           "type": "object",
           "properties": {
             "type": {
@@ -1032,7 +1054,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "User"
+              "example": "Blog"
             },
             "required": {
               "type": "boolean",
@@ -1044,7 +1066,7 @@
             }
           }
         },
-        "blogId": {
+        "userId": {
           "type": "object",
           "properties": {
             "type": {
@@ -1052,7 +1074,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "blog"
+              "example": "User"
             },
             "required": {
               "type": "boolean",
@@ -1151,7 +1173,7 @@
               },
               "ref": {
                 "type": "string",
-                "example": "User"
+                "example": "View"
               }
             }
           }
@@ -1166,7 +1188,7 @@
               },
               "ref": {
                 "type": "string",
-                "example": "User"
+                "example": "Like"
               }
             }
           }
@@ -1231,7 +1253,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "blog"
+              "example": "Blog"
             },
             "required": {
               "type": "boolean",

@@ -59,7 +59,7 @@ app.use(require('./src/routes'))
 
 /* ------------------------------------------------------- */
 //? Synchronization
-// require('./src/helpers/sync')()
+require('./src/helpers/sync')()
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))
