@@ -10,7 +10,7 @@ const Token = require('../models/token')
 module.exports = {
     list: async (req, res) => {
         /*
-            #swagger.tags = ["User"]
+            #swagger.tags = ["Users"]
             #swagger.summary = "List User"
             #swagger.description = `You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.
                 <ul>
@@ -30,9 +30,9 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["User"]
+            #swagger.tags = ["Users"]
             #swagger.summary = "Create User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": "" } }
         */
 
         //! Yeni kayıtlarda admin=false
@@ -48,7 +48,7 @@ module.exports = {
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["User"]
+            #swagger.tags = ["Users"]
             #swagger.summary = "Get Single User"
         */
 
@@ -61,9 +61,9 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["User"]
+            #swagger.tags = ["Users"]
             #swagger.summary = "Update User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/User' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": "" } }
         */
 
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
@@ -82,7 +82,7 @@ module.exports = {
     delete: async (req, res) => {
 
         /*
-            #swagger.tags = ["User"]
+            #swagger.tags = ["Users"]
             #swagger.summary = "Delete User"
         */
 

@@ -8,7 +8,7 @@ const Blog = require('../models/blog')
 module.exports = {
     list: async (req, res) => {
         /*       
-            #swagger.tags = ["Blog"]
+            #swagger.tags = ["Blogs"]
             #swagger.summary = "List Blogs"
             #swagger.description = `You can send query with endpoint for filter[], search[], sort[], page and limit.
                 <ul>
@@ -34,17 +34,18 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["Blog"]
+            #swagger.tags = ["Blogs"]
             #swagger.summary = "Create Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Blog' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
         */
+
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
     },
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["Blog"]
+            #swagger.tags = ["Blogs"]
             #swagger.summary = "Get Single Blog"
         */
         const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
@@ -53,10 +54,11 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Blog"]
+            #swagger.tags = ["Blogs"]
             #swagger.summary = "Update Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Blog' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
         */
+
 
         //! Kullanıcı sadece kendi bloglarını günceleyebilir
         let customFilter = {}
@@ -69,7 +71,7 @@ module.exports = {
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Blog"]
+            #swagger.tags = ["Blogs"]
             #swagger.summary = "Delete Blog"
         */
 
