@@ -48,7 +48,7 @@ module.exports = {
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Get Single Blog"
         */
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }, { path: "likes", select: "blogId userId createdAt" }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
         res.status(200).send({ error: false, data })
     },
 
@@ -104,6 +104,7 @@ module.exports = {
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Add/Remove Like"
         */
+
         const Like = require('../models/like')
 
         //! Kullanıcın bloga olan like durumunu kontrol et
@@ -115,14 +116,21 @@ module.exports = {
 
             //! Blogun toplam like sayısını azalt
             const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-            const likesCount = blogData.likes.length
-            // await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: likesCount:- 1 }})
+            console.log(blogData)
+            // await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: -1 } })
+            // const x = await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: -1 } })
+            // console.log(x)
+
+            // res.status(200).send({ error: false, message: "Like removed", userLike: false, likes: blogData.likes.length })
+        } else {
+            //! Kullanıcının bloga olan like durumunu ekle
+            await Like.create({ blogId: req.params.id, userId: req.user._id })
+
+            //! Blogun toplam like sayısını artır
+            const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
+            // console.log(blogData)
+            // await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: 1 } })
+            // res.status(200).send({ error: false, message: "Like added", userLike: true, likes: blogData.likes.length })
         }
-
-
-
     }
-
-
-
 }

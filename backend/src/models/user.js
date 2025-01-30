@@ -2,7 +2,7 @@
 
 /* --- BLOG API USER MODEL --- */
 
-const mongoose = require('mongoose')
+const { mongoose } = require('../configs/dbConnection')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
 
 //? User Model

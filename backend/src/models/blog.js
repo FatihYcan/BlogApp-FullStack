@@ -2,7 +2,7 @@
 
 /* --- BLOG API blog MODEL --- */
 
-const mongoose = require('mongoose')
+const { mongoose } = require('../configs/dbConnection')
 
 //? Blog Model
 const blogSchema = new mongoose.Schema({
@@ -27,4 +27,4 @@ const blogSchema = new mongoose.Schema({
     { collection: 'blogs', timestamps: true })
 
 //? Blog Model Export
-module.exports = mongoose.model('blog', blogSchema)
+module.exports = mongoose.model('Blog', blogSchema)

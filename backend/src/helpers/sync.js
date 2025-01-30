@@ -71,9 +71,9 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Admin 11 Title",
         "content": "Admin 11 Content",
-        "views": [""],
-        "likes": [""],
-        "comments": [""],
+        "views": [],
+        "likes": [],
+        "comments": [],
         "isPublish": true
     })
 

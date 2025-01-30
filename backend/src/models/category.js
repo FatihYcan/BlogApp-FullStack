@@ -2,7 +2,7 @@
 
 /* --- BLOG API CATEGORY MODEL --- */
 
-const mongoose = require('mongoose')
+const { mongoose } = require('../configs/dbConnection')
 
 //? Category Model
 const categorySchema = new mongoose.Schema({

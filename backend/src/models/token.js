@@ -2,7 +2,7 @@
 
 /* --- BLOG API TOKEN MODEL --- */
 
-const mongoose = require('mongoose')
+const { mongoose } = require('../configs/dbConnection')
 
 // { "userId": "65343222b67e9681f937f001", "token": "...tokenKey..." }
 

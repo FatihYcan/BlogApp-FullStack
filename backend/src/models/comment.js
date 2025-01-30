@@ -2,11 +2,11 @@
 
 /* --- BLOG API COMMENT  --- */
 
-const mongoose = require('mongoose')
+const { mongoose } = require('../configs/dbConnection')
 
 //? Comment Model
 const commentSchema = new mongoose.Schema({
-    blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'blog', required: true, index: true },
+    blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'Blog', required: true, index: true },
 
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
 
