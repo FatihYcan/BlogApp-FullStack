@@ -8,7 +8,7 @@ const Comment = require('../models/comment')
 module.exports = {
     list: async (req, res) => {
         /*       
-            #swagger.tags = ["Comment"]
+            #swagger.tags = ["Comments"]
             #swagger.summary = "List Comments"
             #swagger.description = `You can send query with endpoint for filter[], search[], sort[], page and limit.
                 <ul>
@@ -24,17 +24,21 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["Comment"]
+            #swagger.tags = ["Comments"]
             #swagger.summary = "Create Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "blogId": "65343222b67e9681f937f201",  "comment": "Comment 1"} }
         */
+
+        //! userId verisini req.user._id ile al
+        req.body.userId = req.user._id
+
         const data = await Comment.create(req.body)
         res.status(201).send({ error: false, data })
     },
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["Comment"]
+            #swagger.tags = ["Comments"]
             #swagger.summary = "Get Single Comment"
         */
         const data = await Comment.findOne({ _id: req.params.id })
@@ -43,9 +47,9 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Comment"]
+            #swagger.tags = ["Comments"]
             #swagger.summary = "Update Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Comment' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "blogId": "65343222b67e9681f937f201",  "comment": "Comment 1"} }
         */
 
         //! Kullanıcı sadece kendi yorumlarını güncelleyebilir.
@@ -59,7 +63,7 @@ module.exports = {
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Comment"]
+            #swagger.tags = ["Comments"]
             #swagger.summary = "Delete Comment"
         */
 

@@ -39,6 +39,9 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
         */
 
+        //! userId verisini req.user._id ile al
+        req.body.userId = req.user._id
+
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
     },

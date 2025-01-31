@@ -545,8 +545,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -554,7 +554,7 @@
     "/comments/": {
       "get": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "List Comments",
         "description": "You can send query with endpoint for filter[], search[], sort[], page and limit.\r  <ul>\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>",
@@ -566,7 +566,7 @@
       },
       "post": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "Create Comment",
         "description": "",
@@ -576,7 +576,17 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Comment"
+              "type": "object",
+              "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Comment 1"
+                }
+              }
             }
           }
         ],
@@ -590,7 +600,7 @@
     "/comments/{id}": {
       "get": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "Get Single Comment",
         "description": "",
@@ -610,7 +620,7 @@
       },
       "put": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "Update Comment",
         "description": "",
@@ -626,7 +636,17 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Comment"
+              "type": "object",
+              "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Comment 1"
+                }
+              }
             }
           }
         ],
@@ -638,7 +658,7 @@
       },
       "delete": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "Delete Comment",
         "description": "",
@@ -661,7 +681,7 @@
       },
       "patch": {
         "tags": [
-          "Comment"
+          "Comments"
         ],
         "summary": "Update Comment",
         "description": "",
@@ -677,7 +697,17 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Comment"
+              "type": "object",
+              "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Comment 1"
+                }
+              }
             }
           }
         ],
@@ -691,7 +721,7 @@
     "/categories/": {
       "get": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "List Categories",
         "description": "You can send query with endpoint for filter[], search[], sort[], page and limit.\r  <ul>\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>",
@@ -703,7 +733,7 @@
       },
       "post": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "Create Category",
         "description": "",
@@ -713,7 +743,13 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Category"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Category 1"
+                }
+              }
             }
           }
         ],
@@ -727,7 +763,7 @@
     "/categories/{id}": {
       "get": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "Get Single Category",
         "description": "",
@@ -747,7 +783,7 @@
       },
       "put": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "Update Category",
         "description": "",
@@ -763,7 +799,13 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Category"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Category 1"
+                }
+              }
             }
           }
         ],
@@ -775,7 +817,7 @@
       },
       "delete": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "Delete Category",
         "description": "",
@@ -798,7 +840,7 @@
       },
       "patch": {
         "tags": [
-          "Category"
+          "Categories"
         ],
         "summary": "Update Category",
         "description": "",
@@ -814,7 +856,13 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Category"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Category 1"
+                }
+              }
             }
           }
         ],
@@ -982,112 +1030,6 @@
         }
       }
     },
-    "Comment": {
-      "type": "object",
-      "properties": {
-        "blogId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "Blog"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "userId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "comment": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        }
-      }
-    },
-    "Like": {
-      "type": "object",
-      "properties": {
-        "blogId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "Blog"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "userId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        }
-      }
-    },
     "Blog": {
       "type": "object",
       "properties": {
@@ -1222,9 +1164,29 @@
         }
       }
     },
-    "View": {
+    "Comment": {
       "type": "object",
       "properties": {
+        "blogId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Blog"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
         "userId": {
           "type": "object",
           "properties": {
@@ -1245,21 +1207,17 @@
             }
           }
         },
-        "blogId": {
+        "comment": {
           "type": "object",
           "properties": {
             "type": {
               "type": "function"
             },
-            "ref": {
-              "type": "string",
-              "example": "Blog"
-            },
             "required": {
               "type": "boolean",
               "example": true
             },
-            "index": {
+            "trim": {
               "type": "boolean",
               "example": true
             }

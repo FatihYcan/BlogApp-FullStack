@@ -8,7 +8,7 @@ const Category = require('../models/category')
 module.exports = {
     list: async (req, res) => {
         /*       
-            #swagger.tags = ["Category"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "List Categories"
             #swagger.description = `You can send query with endpoint for filter[], search[], sort[], page and limit.
                 <ul>
@@ -24,9 +24,9 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["Category"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Create Category"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "name": "Category 1"} }
         */
         const data = await Category.create(req.body)
         res.status(201).send({ error: false, data })
@@ -34,7 +34,7 @@ module.exports = {
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["Category"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Get Single Category"
         */
         const data = await Category.findOne({ _id: req.params.id })
@@ -43,9 +43,9 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Category"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Update Category"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/Category' } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "name": "Category 1"} }
         */
         const data = await Category.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Category.findOne({ _id: req.params.id }) })
@@ -53,7 +53,7 @@ module.exports = {
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Category"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Delete Category"
         */
         const data = await Category.deleteOne({ _id: req.params.id })
