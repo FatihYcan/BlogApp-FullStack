@@ -53,12 +53,18 @@ module.exports = {
         */
         const View = require('../models/view')
 
+        //! Kullanıcı IP adresini al
+        const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
+
+        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
+        const userIdentifier = req.user ? req.user._id : userIP
+
         //! Kullanıcının bloga olan view durumunu kontrol et
-        const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
+        const view = await View.findOne({ blogId: req.params.id, userId: userIdentifier })
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
-            const view = await View.create({ blogId: req.params.id, userId: req.user._id })
+            const view = await View.create({ blogId: req.params.id, userId: userIdentifier  })
 
             //! Blog'un view sayısını güncelle
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: view } })
@@ -147,8 +153,3 @@ module.exports = {
         }
     }
 }
-
-// {
-// "blogId": "679a3090896534f79624b450",
-// "comment": "New Comment Fatih"
-//   }
