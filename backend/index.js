@@ -30,6 +30,9 @@ dbConnection()
 app.use(express.json())
 app.use(cors())
 
+//? Logging
+app.use(require('./src/middlewares/logging'))
+
 //? Check Authentication
 app.use(require('./src/middlewares/authentication'))
 
