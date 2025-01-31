@@ -29,10 +29,15 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "blogId": "65343222b67e9681f937f201",  "comment": "Comment 1"} }
         */
 
+        const Blog = require('../models/blog')
+
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
         const data = await Comment.create(req.body)
+
+        //! Kullanıcının bloga olan comment durumunu ekle
+        await Blog.updateOne({ _id: req.body.blogId }, { $push: { comments: data._id } })
         res.status(201).send({ error: false, data })
     },
 
@@ -55,7 +60,7 @@ module.exports = {
         //! Kullanıcı sadece kendi yorumlarını güncelleyebilir.
         let customFilter = {}
         if (!req.user.isAdmin) {
-            customFilter = { _id: req.user._id }
+            customFilter = { userId: req.user._id }
         }
         const data = await Comment.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Comment.findOne({ _id: req.params.id }) })
@@ -67,12 +72,18 @@ module.exports = {
             #swagger.summary = "Delete Comment"
         */
 
+        const Blog = require('../models/blog')
+
         //! Kullanıcı sadece kendi yorumlarını silebilir.
         let customFilter = {}
         if (!req.user.isAdmin) {
-            customFilter = { _id: req.user._id }
+            customFilter = { userId: req.user._id }
         }
         const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
+
+        //! Kullanıcının bloga olan comment durumunu sil
+        const x = await Blog.updateOne({ _id: req.params.id })
+        console.log(x)
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
 }
