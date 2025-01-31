@@ -51,6 +51,19 @@ module.exports = {
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Get Single Blog"
         */
+        const View = require('../models/view')
+
+        //! Kullanıcının bloga olan view durumunu kontrol et
+        const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
+
+        if (!view) {
+            //! Kullanıcının bloga olan view durumunu ekle
+            const view = await View.create({ blogId: req.params.id, userId: req.user._id })
+
+            //! Blog'un view sayısını güncelle
+            await Blog.updateOne({ _id: req.params.id }, { $push: { views: view } })
+        }
+
         const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
         res.status(200).send({ error: false, data })
     },
@@ -134,3 +147,8 @@ module.exports = {
         }
     }
 }
+
+// {
+// "blogId": "679a3090896534f79624b450",
+// "comment": "New Comment Fatih"
+//   }

@@ -79,11 +79,15 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { userId: req.user._id }
         }
+
+        //! Kullanıcının bloga olan comment durumunu kontrol et
+        const blogComment = await Comment.findOne({ _id: req.params.id, ...customFilter })
+
         const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
 
         //! Kullanıcının bloga olan comment durumunu sil
-        const x = await Blog.updateOne({ _id: req.params.id })
-        console.log(x)
+        await Blog.updateOne({ _id: blogComment.blogId }, { $pull: { comments: req.params.id } })
+
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },
 }

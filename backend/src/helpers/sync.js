@@ -118,7 +118,7 @@ module.exports = async () => {
         await View.create({
             "_id": "679a3090896534f79624b457",
             "blogId": "679a3090896534f79624b450",
-            "userId": "65343222b67e9681f937f003",
+            "userId": "65343222b67e9681f937f001",
         })
         await View.create({
             "_id": "679a3090896534f79624b458",
