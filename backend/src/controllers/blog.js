@@ -28,7 +28,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId" }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -110,21 +110,24 @@ module.exports = {
 
         if (data) {
             //! Kullanıcın bloga olan like durumunu sil
-            await Like.deleteOne({ blogId: req.params.id, userId: req.user._id })
+            await Like.deleteOne({ _id: data._id })
 
             //! Blogun toplam like sayısını azalt
+            await Blog.updateOne({ _id: req.params.id }, { $pull: { likes: data._id } })
+
+            //! Güncellenmiş blogu al
             const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-            console.log(blogData)
-            // const likesCount = blogData.likes.length - 1
-            // console.log(likesCount)
+            res.status(200).send({ error: false, message: "Like removed", userLike: false, likes: blogData.likes.length })
+        } else {
+            //! Kullanıcının bloga olan like durumunu ekle
+            const like = await Like.create({ blogId: req.params.id, userId: req.user._id })
 
-            // await Blog.updateOne({ _id: req.params.id }, { $inc: { likes: likesCount:- 1 }})
+            //! Blogun toplam like sayısını artır
+            await Blog.updateOne({ _id: req.params.id }, { $push: { likes: like } })
+
+            //! Güncellenmiş blogu al
+            const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
+            res.status(200).send({ error: false, message: "Like added", userLike: true, likes: blogData.likes.length })
         }
-
-
-
     }
-
-
-
 }
