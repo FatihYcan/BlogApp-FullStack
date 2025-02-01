@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         },
     },
 
-    // image: { type: String, required: true, trim: true },
+    image: { type: String, default: null },
 
     isActive: { type: Boolean, default: true },
 
