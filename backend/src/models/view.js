@@ -6,9 +6,11 @@ const { mongoose } = require('../configs/dbConnection')
 
 //? View Model
 const viewSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
 
     blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'Blog', required: true, index: true },
+
+    userIp: { type: String, index: true, sparse: true }
 },
     { collection: 'views', timestamps: true })
 

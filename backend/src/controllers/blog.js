@@ -56,21 +56,21 @@ module.exports = {
         //! Kullanıcı IP adresini al
         const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
 
-        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
-        const userIdentifier = req.user ? req.user._id : userIP
+        // //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
+        const userIdentifier = req.user ? req.user._id : null;
 
         //! Kullanıcının bloga olan view durumunu kontrol et
-        const view = await View.findOne({ blogId: req.params.id, userId: userIdentifier })
+        const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: userIdentifier }, { userIP: userIP }] })
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
-            const view = await View.create({ blogId: req.params.id, userId: userIdentifier  })
+            const view = await View.create({ blogId: req.params.id, userId: userIdentifier, userIP: userIdentifier ? null : userIP })
 
             //! Blog'un view sayısını güncelle
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: view } })
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }, { path: "views" }])
         res.status(200).send({ error: false, data })
     },
 
