@@ -30,6 +30,9 @@ dbConnection()
 app.use(express.json())
 app.use(cors())
 
+//? Accept Form-Data
+app.use(express.urlencoded({ extended: true }))
+
 //? Logging
 app.use(require('./src/middlewares/logging'))
 
@@ -59,6 +62,9 @@ app.all('/', (req, res) => {
 
 //? Routes
 app.use(require('./src/routes'))
+
+//? Static Files
+app.use("/uploads", express.static("./uploads"))
 
 /* ------------------------------------------------------- */
 //? Synchronization
