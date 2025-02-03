@@ -41,6 +41,7 @@ module.exports = {
 
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
+        req.body.image = req.file.path
 
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
@@ -86,6 +87,9 @@ module.exports = {
         if (!req.user.isAdmin) {
             customFilter = { userId: req.user._id }
         }
+
+        req.body.image = req.file.path
+
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
     },

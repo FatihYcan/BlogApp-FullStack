@@ -38,6 +38,10 @@ module.exports = {
         //! Yeni kayıtlarda admin=false
         req.body.isAdmin = false
 
+        if (req.file) {
+            req.body.image = req.file.path
+        }
+
         const data = await User.create(req.body)
 
         //! Kullanıcı kaydı başarılır ise otomatik login olsun ve token oluşturulsun.
@@ -73,6 +77,10 @@ module.exports = {
         if (!req.user?.isAdmin) {
             delete req.body.isActive
             delete req.body.isAdmin
+        }
+
+        if (req.file) {
+            req.body.image = req.file.path
         }
 
         const data = await User.updateOne(customFilters, req.body, { runValidators: true })
