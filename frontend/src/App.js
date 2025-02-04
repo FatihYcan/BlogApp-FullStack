@@ -1,22 +1,21 @@
-import './App.css';
+import React from "react";
+import { Provider } from "react-redux";
+import store, { persistor } from "./app/store.jsx";
+import "./App.css";
+import AppRouter from "./router/AppRouter.jsx";
+import { ToastContainer } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-              <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppRouter />
+        </PersistGate>
+      </Provider>
+      <ToastContainer />
+    </>
   );
 }
 
