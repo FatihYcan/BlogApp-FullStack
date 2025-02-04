@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: "",
-  username: "",
   userId: "",
   token: "",
+  username: "",
+  firstName: "",
+  lastName: "",
   email: "",
   image: "",
+  isActive: true,
+  isAdmin: false,
   loading: false,
   error: false,
 };
@@ -20,34 +23,43 @@ const authSlice = createSlice({
       state.error = false;
     },
 
-    loginSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.user = payload?.user?.username;
-      state.userId = payload?.user?._id;
-      state.token = payload?.token;
-      state.username = payload?.user?.username;
-      state.email = payload?.user?.email;
-      state.image = payload?.user?.image;
-    },
-
     registerSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.user = payload?.data?.username;
       state.userId = payload?.data?._id;
       state.token = payload?.token;
       state.username = payload?.data?.username;
+      state.firstName = payload?.data?.firstName;
+      state.lastName = payload?.data?.lastName;
       state.email = payload?.data?.email;
       state.image = payload?.data?.image;
+      state.isActive = payload?.data?.isActive;
+      state.isAdmin = payload?.data?.isAdmin;
+      state.loading = false;
+    },
+
+    loginSuccess: (state, { payload }) => {
+      state.userId = payload?.user?._id;
+      state.token = payload?.token;
+      state.username = payload?.user?.username;
+      state.firstName = payload?.user?.firstName;
+      state.lastName = payload?.user?.lastName;
+      state.email = payload?.user?.email;
+      state.image = payload?.user?.image;
+      state.isActive = payload?.user?.isActive;
+      state.isAdmin = payload?.user?.isAdmin;
+      state.loading = false;
     },
 
     logoutSuccess: (state) => {
-      state.user = "";
-      state.loading = false;
+      state.userId = "";
       state.token = "";
       state.username = "";
-      state.userId = "";
+      state.firstName = "";
+      state.lastName = "";
       state.email = "";
       state.image = "";
+      state.isActive = false;
+      state.isAdmin = false;
+      state.loading = false;
     },
 
     fetchFail: (state) => {
