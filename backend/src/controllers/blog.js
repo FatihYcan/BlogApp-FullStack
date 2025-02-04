@@ -28,7 +28,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName image" }, { path: "categoryId", select: "name" }])
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 

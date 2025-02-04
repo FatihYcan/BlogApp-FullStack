@@ -21,7 +21,7 @@ module.exports = async () => {
         "lastName": "admin",
         "email": "admin@site.com",
         "password": "aA?123456",
-        "image": [],
+        "image": "",
         "isActive": true,
         "isAdmin": true
     })
@@ -32,7 +32,7 @@ module.exports = async () => {
         "email": "test@site.com",
         "firstName": "test",
         "lastName": "test",
-        "image": [],
+        "image": "",
         "isActive": true,
         "isAdmin": false
     })
@@ -57,6 +57,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b457"],
         "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
+        "image": "",
         "isPublish": true
     })
     await Blog.create({
@@ -68,6 +69,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b458"],
         "likes": ["679a3090896534f79624b456"],
         "comments": ["679a3090896534f79624b454"],
+        "image": "",
         "isPublish": false
     })
     await Blog.create({
@@ -79,6 +81,7 @@ module.exports = async () => {
         "views": [],
         "likes": [],
         "comments": [],
+        "image": "",
         "isPublish": true
     })
 

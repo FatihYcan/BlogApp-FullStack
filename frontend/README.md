@@ -1,61 +1,70 @@
-# Blog App
+# Getting Started with Create React App
 
-This project is a blogging application where users can create and share blog blogs. The application was developed using React, Redux and Firebase.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
+## Available Scripts
 
-- **User Registration and Login**: Users can register to the application and access their accounts by logging in. A secure authentication process is provided using Firebase.
-- **Creating, Editing and Deleting Blog blogs**: Users can create new blog blogs, edit existing blogs and delete their blogs whenever they want.
-- **Notification System**: The application allows users to receive notifications when they perform various operations (such as success, error, warning). User-friendly notifications are displayed using the React-Toastify library.
-- **Blog Management by Categories**: Blog blogs can be viewed and managed more regularly by dividing them into categories.
-- **Comment and Like Management**: Users can comment on blog blogs and interact by liking them.
-- **About Page**: The app includes an 'About' page that provides information about the developer. Users can easily access LinkedIn and GitHub profiles.
-- **Login via Social Media**: Users can have a quick and easy login experience by logging in with their Google account.
+In the project directory, you can run:
 
-## Technologies
+### `yarn start`
 
-- HTML
-- Javascript
-- React
-- Redux
-- Firebase
-- Material-UI
-- Tailwind CSS
-- Axios
-- React Router
-- React-Toastify
-- Redux Persist
-- Formic and Yup
-- [BLOG API](https://blog-api-js.fullstack.clarusway.com/)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-# Blog App
+### `yarn test`
 
-Bu proje, kullanıcıların blog yazıları oluşturup paylaşabilecekleri bir blog uygulamasıdır. Uygulama React, Redux ve Firebase kullanılarak geliştirilmiştir.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Özellikler
+### `yarn build`
 
-- **Kullanıcı Kayıt ve Giriş**: Kullanıcılar, uygulamaya kaydolabilir ve giriş yaparak kendi hesaplarına erişebilirler. Firebase kullanılarak güvenli bir kimlik doğrulama süreci sağlanmıştır.
-- **Blog Yazısı Oluşturma, Düzenleme ve Silme**: Kullanıcılar, yeni blog yazıları oluşturabilir, mevcut yazılarını düzenleyebilir ve istedikleri zaman yazılarını silebilirler.
-- **Bildirim Sistemi**: Uygulama, kullanıcıların çeşitli işlemleri gerçekleştirdiğinde (başarı, hata, uyarı gibi) bildirimler almasını sağlar. React-Toastify kütüphanesi kullanılarak kullanıcı dostu bildirimler gösterilir.
-- **Kategorilere Göre Blog Yönetimi**: Blog yazıları kategorilere ayrılarak daha düzenli bir şekilde görüntülenebilir ve yönetilebilir.
-- **Yorum ve Beğeni Yönetimi**: Kullanıcılar, blog yazılarına yorum yapabilir ve beğenerek etkileşimde bulunabilirler.
-- **Hakkında Sayfası**: Uygulama, geliştirici hakkında bilgi veren bir "Hakkında" sayfası içerir. Kullanıcılar, LinkedIn ve GitHub profillerine kolayca erişebilirler.
-- **Sosyal Medya ile Giriş**: Kullanıcılar, Google hesabı ile giriş yaparak hızlı ve kolay bir oturum açma deneyimi yaşayabilirler.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Teknolojiler
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- HTML
-- Javascript
-- React
-- Redux
-- Firebase
-- Material-UI
-- Tailwind CSS
-- Axios
-- React Router
-- React-Toastify
-- Redux Persist
-- Formik ve Yup
-- [BLOG API](https://blog-api-js.fullstack.clarusway.com/)
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `yarn eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -14,7 +14,7 @@ import PrivateRouter from "./PrivateRouter";
 const AppRouter = () => {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="register" element={<Register />} />
@@ -27,7 +27,7 @@ const AppRouter = () => {
         <Route path="my-blogs" element={<MyBlogs />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 };

@@ -19,11 +19,10 @@ const useBlogCalls = () => {
     // dispatch(fetchStart());
     try {
       const { data } = await axiosPublic(url);
-      const apiData = data.data.filter(
-        (blog) => blog._id !== "67111b9f3ec8b710e80612f0"
-      );
-      const pagination = data.details;
-      dispatch(getBlogSuccess({ apiData, pagination }));
+      const apiData = data.data;
+      const detail = data.detail;
+      dispatch(getBlogSuccess({ apiData, detail }));
+      dispatch(getBlogSuccess({ apiData }));
     } catch (error) {
       dispatch(fetchFail());
     }
