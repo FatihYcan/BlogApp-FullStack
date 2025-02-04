@@ -14,6 +14,8 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import Sitemark from "./SitemarkIcon";
 import BlogImg from "./BlogImg";
+import { useSelector } from "react-redux";
+import useAuthCalls from "../hooks/useAuthCalls";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -40,8 +42,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 // Login (!Login)
 // Logout (Admin ve Login)
 
-
-
 const admin = [{ name: "Users", to: "/users", current: false }];
 const notLogin = [
   { name: "New Blog", to: "/new-blog", current: false },
@@ -53,6 +53,9 @@ const login = [
 ];
 
 export default function AppAppBar() {
+  const { username, image, isAdmin } = useSelector((state) => state.auth);
+  const { logout } = useAuthCalls();
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
