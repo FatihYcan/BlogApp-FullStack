@@ -16,6 +16,7 @@ import Sitemark from "./SitemarkIcon";
 import BlogImg from "./BlogImg";
 import { useSelector } from "react-redux";
 import useAuthCalls from "../hooks/useAuthCalls";
+import { Link } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -79,7 +80,59 @@ export default function AppAppBar() {
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
           >
             <BlogImg />
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "flex",
+                  alignItems: "center",
+                },
+              }}
+            >
+              {isAdmin &&
+                admin.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    style={{
+                      marginLeft: "1.5rem",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+
+              {notLogin.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.to}
+                  style={{
+                    marginLeft: "1.5rem",
+                    textDecoration: "none",
+                    color: "black",
+                  }}
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {username &&
+                login.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    style={{
+                      marginLeft: "1.5rem",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+
               <Button variant="text" color="info" size="small">
                 Features
               </Button>
