@@ -9,7 +9,7 @@ export default function BlogImg() {
       sx={{
         display: "flex",
         alignItems: "center",
-        marginRight: "15px",
+        marginRight: "32px",
         cursor: "pointer",
       }}
     >

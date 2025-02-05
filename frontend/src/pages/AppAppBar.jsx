@@ -12,11 +12,10 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
-import Sitemark from "./SitemarkIcon";
 import BlogImg from "./BlogImg";
 import { useSelector } from "react-redux";
 import useAuthCalls from "../hooks/useAuthCalls";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -56,6 +55,7 @@ const login = [
 export default function AppAppBar() {
   const { username, image, isAdmin } = useSelector((state) => state.auth);
   const { logout } = useAuthCalls();
+  const location = useLocation();
 
   const [open, setOpen] = React.useState(false);
 
@@ -94,11 +94,11 @@ export default function AppAppBar() {
                   <Link
                     key={item.name}
                     to={item.to}
-                    style={{
-                      marginLeft: "1.5rem",
-                      textDecoration: "none",
-                      color: "black",
-                    }}
+                    className={`${
+                      location.pathname === item.to
+                        ? "bg-black text-white dark:bg-white dark:text-black"
+                        : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
+                    } rounded-md px-3 py-2 text-sm font-medium mr-3`}
                   >
                     {item.name}
                   </Link>
@@ -108,11 +108,11 @@ export default function AppAppBar() {
                 <Link
                   key={item.name}
                   to={item.to}
-                  style={{
-                    marginLeft: "1.5rem",
-                    textDecoration: "none",
-                    color: "black",
-                  }}
+                  className={`${
+                    location.pathname === item.to
+                      ? "bg-black text-white dark:bg-white dark:text-black"
+                      : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black "
+                  } rounded-md px-3 py-2 text-sm font-medium mr-3`}
                 >
                   {item.name}
                 </Link>
@@ -123,44 +123,15 @@ export default function AppAppBar() {
                   <Link
                     key={item.name}
                     to={item.to}
-                    style={{
-                      marginLeft: "1.5rem",
-                      textDecoration: "none",
-                      color: "black",
-                    }}
+                    className={`${
+                      location.pathname === item.to
+                        ? "bg-black text-white dark:bg-white dark:text-black"
+                        : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
+                    } rounded-md px-3 py-2 text-sm font-medium mr-3`}
                   >
                     {item.name}
                   </Link>
                 ))}
-
-              <Button variant="text" color="info" size="small">
-                Features
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Testimonials
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Highlights
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Pricing
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                sx={{ minWidth: 0 }}
-              >
-                FAQ
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                sx={{ minWidth: 0 }}
-              >
-                Blog
-              </Button>
             </Box>
           </Box>
           <Box
@@ -170,12 +141,45 @@ export default function AppAppBar() {
               alignItems: "center",
             }}
           >
-            <Button color="primary" variant="text" size="small">
-              Sign in
-            </Button>
-            <Button color="primary" variant="contained" size="small">
-              Sign up
-            </Button>
+            {!username && (
+              <>
+                <Link
+                  to="/login"
+                  className={`${
+                    location.pathname === "/login"
+                      ? "bg-black text-white dark:bg-white dark:text-black"
+                      : "text-black hover:bg-gray-600 hover:text-white  dark:text-white dark:hover:bg-gray-600 dark:hover:text-black"
+                  } rounded-md px-3 py-2 text-sm font-medium`}
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/register"
+                  className={`${
+                    location.pathname === "/register"
+                      ? "bg-black text-white dark:bg-white dark:text-black"
+                      : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
+                  } rounded-md px-3 py-2 text-sm font-medium`}
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
+
+            {username && (
+              <Link
+                to="/"
+                className={`${
+                  location.pathname === "/"
+                    ? "bg-black text-white dark:bg-white dark:text-black"
+                    : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
+                } rounded-md px-3 py-2 text-sm font-medium`}
+                onClick={logout}
+              >
+                Logout
+              </Link>
+            )}
+
             <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
@@ -204,23 +208,98 @@ export default function AppAppBar() {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-                <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem>
+                {isAdmin &&
+                  admin.map((item) => (
+                    <MenuItem style={{ background: "none" }}>
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`${
+                          location.pathname === item.to
+                            ? "bg-black text-white dark:bg-white dark:text-black"
+                            : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
+                        } rounded-md px-2 py-3 text-sm font-medium w-full h-100`}
+                      >
+                        {item.name}
+                      </Link>
+                    </MenuItem>
+                  ))}
+                {notLogin.map((item) => (
+                  <MenuItem style={{ background: "none" }}>
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className={`${
+                        location.pathname === item.to
+                          ? "bg-black text-white dark:bg-white dark:text-black"
+                          : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black "
+                      } rounded-md px-2 py-3 text-sm font-medium w-full h-100`}
+                    >
+                      {item.name}
+                    </Link>
+                  </MenuItem>
+                ))}
+                {username &&
+                  login.map((item) => (
+                    <MenuItem style={{ background: "none" }}>
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={`${
+                          location.pathname === item.to
+                            ? "bg-black text-white dark:bg-white dark:text-black"
+                            : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
+                        } rounded-md px-2 py-3 text-sm font-medium w-full h-100`}
+                      >
+                        {item.name}
+                      </Link>
+                    </MenuItem>
+                  ))}
                 <Divider sx={{ my: 3 }} />
-                <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Sign up
-                  </Button>
-                </MenuItem>
-                <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
-                    Sign in
-                  </Button>
-                </MenuItem>
+                {!username && (
+                  <>
+                    <MenuItem style={{ background: "none" }}>
+                      <Link
+                        to="/login"
+                        className={`${
+                          location.pathname === "/login"
+                            ? "bg-black text-white dark:bg-white dark:text-black"
+                            : "text-black hover:bg-gray-600 hover:text-white  dark:text-white dark:hover:bg-gray-300 dark:hover:text-black"
+                        } rounded-md px-3 py-2 text-sm font-medium text-center w-full border border-gray-500 `}
+                      >
+                        Sign in
+                      </Link>
+                    </MenuItem>
+                    <MenuItem style={{ background: "none" }}>
+                      <Link
+                        to="/register"
+                        className={`${
+                          location.pathname === "/register"
+                            ? "bg-black text-white dark:bg-white dark:text-black"
+                            : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-300 dark:hover:text-black"
+                        } rounded-md px-3 py-2 text-sm font-medium text-center w-full border border-black`}
+                      >
+                        Sign up
+                      </Link>
+                    </MenuItem>
+                  </>
+                )}
+
+                {!username && (
+                  <MenuItem style={{ background: "none" }}>
+                    <Link
+                      to="/"
+                      className={`${
+                        location.pathname === "/"
+                          ? "bg-black text-white dark:bg-white dark:text-black"
+                          : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
+                      } rounded-md px-3 py-2 text-sm font-medium text-center w-full border border-black`}
+                      onClick={logout}
+                    >
+                      Logout
+                    </Link>
+                  </MenuItem>
+                )}
               </Box>
             </Drawer>
           </Box>
