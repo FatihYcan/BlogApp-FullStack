@@ -3,7 +3,6 @@ import { alpha, styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -33,14 +32,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: "8px 12px",
 }));
 
-// Users (Admin)
-// New Blog (!Login)
-// About (!Login)
-// My Blogs (Login)
-// Profil (Login)
-
-// Login (!Login)
-// Logout (Admin ve Login)
 
 const admin = [{ name: "Users", to: "/users", current: false }];
 const notLogin = [
@@ -169,11 +160,7 @@ export default function AppAppBar() {
             {username && (
               <Link
                 to="/"
-                className={`${
-                  location.pathname === "/"
-                    ? "bg-black text-white dark:bg-white dark:text-black"
-                    : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
-                } rounded-md px-3 py-2 text-sm font-medium`}
+                className="bg-black text-white dark:bg-white dark:text-black  dark:hover:bg-gray-600  hover:bg-gray-600 rounded-md px-3 py-2 text-sm font-medium"
                 onClick={logout}
               >
                 Logout
@@ -285,15 +272,11 @@ export default function AppAppBar() {
                   </>
                 )}
 
-                {!username && (
+                {username && (
                   <MenuItem style={{ background: "none" }}>
                     <Link
                       to="/"
-                      className={`${
-                        location.pathname === "/"
-                          ? "bg-black text-white dark:bg-white dark:text-black"
-                          : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
-                      } rounded-md px-3 py-2 text-sm font-medium text-center w-full border border-black`}
+                      className="bg-black text-white dark:bg-white dark:text-black  dark:hover:bg-gray-600  hover:bg-gray-600 rounded-md px-3 py-2 text-sm font-medium  text-center w-full border border-black"
                       onClick={logout}
                     >
                       Logout
