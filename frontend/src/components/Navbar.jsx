@@ -11,10 +11,10 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
-import BlogImg from "./BlogImg";
 import { useSelector } from "react-redux";
 import useAuthCalls from "../hooks/useAuthCalls";
 import { Link, useLocation } from "react-router-dom";
+import blog from "../img/blog-app.png";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -32,7 +32,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: "8px 12px",
 }));
 
-
 const admin = [{ name: "Users", to: "/users", current: false }];
 const notLogin = [
   { name: "New Blog", to: "/new-blog", current: false },
@@ -44,7 +43,7 @@ const login = [
 ];
 
 export default function Navbar() {
-  const { username, image, isAdmin } = useSelector((state) => state.auth);
+  const { username, isAdmin } = useSelector((state) => state.auth);
   const { logout } = useAuthCalls();
   const location = useLocation();
 
@@ -70,7 +69,18 @@ export default function Navbar() {
           <Box
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
           >
-            <BlogImg />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                marginRight: "32px",
+                cursor: "pointer",
+              }}
+            >
+              <Link to="/">
+                <img style={{ height: 70, width: 100 }} src={blog} alt={blog} />
+              </Link>
+            </Box>
             <Box
               sx={{
                 display: {
@@ -88,7 +98,7 @@ export default function Navbar() {
                     className={`${
                       location.pathname === item.to
                         ? "bg-black text-white dark:bg-white dark:text-black"
-                        : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
+                        : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                     } rounded-md px-3 py-2 text-sm font-medium mr-3`}
                   >
                     {item.name}
@@ -132,6 +142,12 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
+            {username && (
+              <h5 className="border border-black text-black dark:border-white dark:text-white rounded-md px-3 py-2 text-sm font-medium capitalize">
+                {username}
+              </h5>
+            )}
+
             {!username && (
               <>
                 <Link
@@ -243,6 +259,13 @@ export default function Navbar() {
                     </MenuItem>
                   ))}
                 <Divider sx={{ my: 3 }} />
+
+                {username && (
+                  <h5 className="border border-black text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize text-center px-3 py-2 mx-2.5">
+                    {username}
+                  </h5>
+                )}
+                <Divider sx={{ my: 1 }} />
                 {!username && (
                   <>
                     <MenuItem style={{ background: "none" }}>
@@ -272,7 +295,7 @@ export default function Navbar() {
                   </>
                 )}
 
-                {username && (
+                {!username && (
                   <MenuItem style={{ background: "none" }}>
                     <Link
                       to="/"

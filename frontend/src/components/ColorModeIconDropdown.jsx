@@ -13,8 +13,8 @@ export default function ColorModeIconDropdown(props) {
 
   useEffect(() => {
     if (mode) {
-      document.documentElement.classList.remove("dark", "light"); // Hem light hem de dark sınıflarını kaldır
-      document.documentElement.classList.add(mode); // Sadece seçilen mode sınıfını ekle
+      document.documentElement.classList.remove("dark", "light")
+      document.documentElement.classList.add(mode)
     }
   }, [mode]);
 
