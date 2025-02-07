@@ -19,7 +19,6 @@ import useBlogCalls from "../hooks/useBlogCalls";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { IconButton } from "@mui/material";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
