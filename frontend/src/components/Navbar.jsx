@@ -213,9 +213,8 @@ export default function Navbar() {
                 </Box>
                 {isAdmin &&
                   admin.map((item) => (
-                    <MenuItem style={{ background: "none" }}>
+                    <MenuItem style={{ background: "none" }} key={item.name}>
                       <Link
-                        key={item.name}
                         to={item.to}
                         className={`${
                           location.pathname === item.to
@@ -228,9 +227,8 @@ export default function Navbar() {
                     </MenuItem>
                   ))}
                 {notLogin.map((item) => (
-                  <MenuItem style={{ background: "none" }}>
+                  <MenuItem style={{ background: "none" }} key={item.name}>
                     <Link
-                      key={item.name}
                       to={item.to}
                       className={`${
                         location.pathname === item.to
@@ -244,9 +242,8 @@ export default function Navbar() {
                 ))}
                 {username &&
                   login.map((item) => (
-                    <MenuItem style={{ background: "none" }}>
+                    <MenuItem style={{ background: "none" }} key={item.name}>
                       <Link
-                        key={item.name}
                         to={item.to}
                         className={`${
                           location.pathname === item.to

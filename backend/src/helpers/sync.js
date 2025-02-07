@@ -44,6 +44,10 @@ module.exports = async () => {
         "_id": "679a2c8987b220a27b68b410",
         "name": "Health"
     })
+    await Category.create({
+        "_id": "679d8e0ba123a08e6f755e66",
+        "name": "World"
+    })
 
     //? BLOG
     const Blog = require('../models/blog')

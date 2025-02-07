@@ -8,14 +8,15 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid2";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import useBlogCalls from "../hooks/useBlogCalls";
 
 const cardData = [
   {
@@ -181,6 +182,14 @@ export function Search() {
 
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
+  const { categories } = useSelector((state) => state.blog);
+  const { getCategories } = useBlogCalls();
+
+  console.log(categories);
+
+  useEffect(() => {
+    getCategories("categories");
+  }, []);
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
@@ -234,42 +243,19 @@ export default function MainContent() {
           }}
         >
           <Chip onClick={handleClick} size="medium" label="All categories" />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Company"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Product"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Design"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Engineering"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+
+          {categories.map((item) => (
+            <Chip
+              onClick={handleClick}
+              key={item._id}
+              size="medium"
+              label={item.name}
+              sx={{
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            />
+          ))}
         </Box>
         <Box
           sx={{
