@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -17,63 +16,10 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
-
-const cardData = [
-  {
-    img: "https://picsum.photos/800/450?random=1",
-    tag: "Engineering",
-    title: "Revolutionizing software development with cutting-edge tools",
-    description:
-      "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-    authors: [
-      { name: "Remy Sharp", avatar: "/static/images/avatar/1.jpg" },
-      { name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=2",
-    tag: "Product",
-    title: "Innovative product features that drive success",
-    description:
-      "Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.",
-    authors: [{ name: "Erica Johns", avatar: "/static/images/avatar/6.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=3",
-    tag: "Design",
-    title: "Designing for the future: trends and insights",
-    description:
-      "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=4",
-    tag: "Company",
-    title: "Our company's journey: milestones and achievements",
-    description:
-      "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=45",
-    tag: "Engineering",
-    title: "Pioneering sustainable engineering solutions",
-    description:
-      "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=6",
-    tag: "Product",
-    title: "Maximizing efficiency with our latest product updates",
-    description:
-      "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-];
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { IconButton } from "@mui/material";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -111,54 +57,6 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-function Author({ authors }) {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 2,
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "16px",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 1,
-          alignItems: "center",
-        }}
-      >
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar
-              key={index}
-              alt={author.name}
-              src={author.avatar}
-              sx={{ width: 24, height: 24 }}
-            />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">
-          {authors.map((author) => author.name).join(", ")}
-        </Typography>
-      </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
-    </Box>
-  );
-}
-
-Author.propTypes = {
-  authors: PropTypes.arrayOf(
-    PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 export function Search() {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
@@ -181,26 +79,23 @@ export function Search() {
 }
 
 export default function MainContent() {
-  const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
-  const { categories } = useSelector((state) => state.blog);
-  const { getCategories } = useBlogCalls();
+  const { blogs, categories } = useSelector((state) => state.blog);
+  const { getBlogs, getCategories } = useBlogCalls();
 
   console.log(categories);
+  console.log(blogs);
 
   useEffect(() => {
+    getBlogs("blogs");
     getCategories("categories");
   }, []);
 
-  const handleFocus = (index) => {
-    setFocusedCardIndex(index);
+  const handleAllClick = () => {
+    getBlogs("blogs");
   };
 
-  const handleBlur = () => {
-    setFocusedCardIndex(null);
-  };
-
-  const handleClick = () => {
-    console.info("You clicked the filter chip.");
+  const handleClick = (id) => {
+    getBlogs(`blogs?filter[categoryId]=${id}`);
   };
 
   return (
@@ -242,14 +137,14 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Chip onClick={handleClick} size="medium" label="All categories" />
+          <Chip size="medium" onClick={handleAllClick} label="All categories" />
 
-          {categories.map((item) => (
+          {categories.map((category) => (
             <Chip
-              onClick={handleClick}
-              key={item._id}
+              onClick={() => handleClick(category._id)}
+              key={category._id}
               size="medium"
-              label={item.name}
+              label={category.name}
               sx={{
                 backgroundColor: "transparent",
                 border: "none",
@@ -269,230 +164,115 @@ export default function MainContent() {
           <Search />
         </Box>
       </Box>
-      <Grid container spacing={2} columns={12}>
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(0)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 0 ? "Mui-focused" : ""}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[0].img}
-              sx={{
-                aspectRatio: "16 / 9",
-                borderBottom: "1px solid",
-                borderColor: "divider",
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[0].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[0].title}
-              </Typography>
-              <StyledTypography
-                variant="body2"
-                color="text.secondary"
-                gutterBottom
-              >
-                {cardData[0].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[0].authors} />
-          </SyledCard>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(1)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 1 ? "Mui-focused" : ""}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[1].img}
-              aspect-ratio="16 / 9"
-              sx={{
-                borderBottom: "1px solid",
-                borderColor: "divider",
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[1].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[1].title}
-              </Typography>
-              <StyledTypography
-                variant="body2"
-                color="text.secondary"
-                gutterBottom
-              >
-                {cardData[1].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[1].authors} />
-          </SyledCard>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(2)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 2 ? "Mui-focused" : ""}
-            sx={{ height: "100%" }}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[2].img}
-              sx={{
-                height: { sm: "auto", md: "50%" },
-                aspectRatio: { sm: "16 / 9", md: "" },
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[2].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[2].title}
-              </Typography>
-              <StyledTypography
-                variant="body2"
-                color="text.secondary"
-                gutterBottom
-              >
-                {cardData[2].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[2].authors} />
-          </SyledCard>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              height: "100%",
-            }}
-          >
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(3)}
-              onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 3 ? "Mui-focused" : ""}
-              sx={{ height: "100%" }}
-            >
-              <SyledCardContent
+      <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
+        {blogs.map((blog) => (
+          <Grid item xs={12} sm={6} md={4} key={blog._id}>
+            <SyledCard variant="outlined">
+              <CardMedia
+                component="img"
+                alt={blog.title}
+                image={blog.image}
+                sx={{
+                  aspectRatio: "16 / 9",
+                  borderBottom: "1px solid",
+                  borderColor: "divider",
+                }}
+              />
+              <SyledCardContent>
+                <Typography gutterBottom variant="caption" component="div">
+                  {blog.categoryId.name}
+                </Typography>
+                <Typography gutterBottom variant="h6" component="div">
+                  {blog.title}
+                </Typography>
+                <StyledTypography
+                  variant="body2"
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {blog.content}
+                </StyledTypography>
+              </SyledCardContent>
+
+              <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <div>
-                  <Typography gutterBottom variant="caption" component="div">
-                    {cardData[3].tag}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {cardData[3].title}
-                  </Typography>
-                  <StyledTypography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {cardData[3].description}
-                  </StyledTypography>
-                </div>
-              </SyledCardContent>
-              <Author authors={cardData[3].authors} />
-            </SyledCard>
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(4)}
-              onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 4 ? "Mui-focused" : ""}
-              sx={{ height: "100%" }}
-            >
-              <SyledCardContent
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <FavoriteIcon sx={{ cursor: "pointer" }} />
+                  <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                    {blog.likes.length}
+                  </span>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <ChatBubbleOutlineIcon sx={{ cursor: "pointer" }} />
+                  <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                    {blog.comments.length}
+                  </span>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "default",
+                  }}
+                >
+                  <VisibilityOutlinedIcon />
+                  <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                    {blog.views.length}
+                  </span>
+                </Box>
+              </Box>
+
+              <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  gap: 2,
+                  alignItems: "center",
                   justifyContent: "space-between",
-                  height: "100%",
+                  padding: "16px",
                 }}
               >
-                <div>
-                  <Typography gutterBottom variant="caption" component="div">
-                    {cardData[4].tag}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <AvatarGroup>
+                    <Avatar
+                      key={blog._id}
+                      alt={blog.userId.username}
+                      src={blog.userId.image}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </AvatarGroup>
+                  <Typography variant="caption">
+                    {blog.userId.username}
                   </Typography>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {cardData[4].title}
-                  </Typography>
-                  <StyledTypography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {cardData[4].description}
-                  </StyledTypography>
-                </div>
-              </SyledCardContent>
-              <Author authors={cardData[4].authors} />
+                </Box>
+                <Typography variant="caption">{blog.createdAt}</Typography>
+              </Box>
             </SyledCard>
-          </Box>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(5)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 5 ? "Mui-focused" : ""}
-            sx={{ height: "100%" }}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[5].img}
-              sx={{
-                height: { sm: "auto", md: "50%" },
-                aspectRatio: { sm: "16 / 9", md: "" },
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[5].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[5].title}
-              </Typography>
-              <StyledTypography
-                variant="body2"
-                color="text.secondary"
-                gutterBottom
-              >
-                {cardData[5].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[5].authors} />
-          </SyledCard>
-        </Grid>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

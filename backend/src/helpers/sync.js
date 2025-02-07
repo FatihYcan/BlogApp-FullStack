@@ -79,12 +79,36 @@ module.exports = async () => {
     await Blog.create({
         "_id": "679a3090896534f79624b472",
         "userId": "65343222b67e9681f937f001",
-        "categoryId": "679a2c8987b220a27b68b410",
+        "categoryId": "679d8e0ba123a08e6f755e66",
         "title": "Admin 11 Title",
         "content": "Admin 11 Content",
         "views": [],
         "likes": [],
         "comments": [],
+        "image": "",
+        "isPublish": true
+    })
+    await Blog.create({
+        "_id": "679a3090896534f79624b480",
+        "userId": "65343222b67e9681f937f003",
+        "categoryId": "679a2c8987b220a27b68b410",
+        "title": "Test 1 Title",
+        "content": "Test 1 Content",
+        "views": ["679a3090896534f79624b457"],
+        "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
+        "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
+        "image": "",
+        "isPublish": true
+    })
+    await Blog.create({
+        "_id": "679a3090896534f79624b420",
+        "userId": "65343222b67e9681f937f003",
+        "categoryId": "679a2c8987b220a27b68b410",
+        "title": "Test 1 Title",
+        "content": "Test 1 Content",
+        "views": ["679a3090896534f79624b457"],
+        "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
+        "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "image": "",
         "isPublish": true
     })
