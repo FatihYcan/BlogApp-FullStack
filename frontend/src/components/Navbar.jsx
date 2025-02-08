@@ -32,7 +32,10 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: "8px 12px",
 }));
 
-const admin = [{ name: "Users", to: "/users", current: false }];
+const admin = [
+  { name: "Users", to: "/users", current: false },
+  { name: "New Category", to: "/new-category" },
+];
 const notLogin = [
   { name: "New Blog", to: "/new-blog", current: false },
   { name: "About", to: "/about", current: false },

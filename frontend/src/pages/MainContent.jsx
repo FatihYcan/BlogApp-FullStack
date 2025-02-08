@@ -267,7 +267,9 @@ export default function MainContent() {
                     {blog.userId.username}
                   </Typography>
                 </Box>
-                <Typography variant="caption">{blog.createdAt}</Typography>
+                <Typography variant="caption">
+                  {new Date(blog.createdAt).toLocaleDateString("tr-TR")}
+                </Typography>
               </Box>
             </SyledCard>
           </Grid>
