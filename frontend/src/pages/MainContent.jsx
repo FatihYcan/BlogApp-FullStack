@@ -2,10 +2,10 @@ import {
   Box,
   Chip,
   FormControl,
-  Grid2,
-  InputAdornment,
+    InputAdornment,
   OutlinedInput,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
@@ -36,9 +36,6 @@ export function Search() {
 export default function MainContent() {
   const { blogs, categories } = useSelector((state) => state.blog);
   const { getBlogs, getCategories } = useBlogCalls();
-
-  console.log(categories);
-  console.log(blogs);
 
   useEffect(() => {
     getBlogs("blogs");
@@ -119,11 +116,11 @@ export default function MainContent() {
           <Search />
         </Box>
       </Box>
-      <Grid2 container rowSpacing={2} columnSpacing={2} justifyContent="center">
+      <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
         {blogs.map((blog) => (
           <BlogCard key={blog._id} {...blog} />
         ))}
-      </Grid2>
+      </Grid>
     </Box>
   );
 }

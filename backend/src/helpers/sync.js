@@ -95,7 +95,7 @@ module.exports = async () => {
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b457"],
-        "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
+        "likes": ["679a3090896534f79624b455"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "image": "",
         "isPublish": true
@@ -107,7 +107,7 @@ module.exports = async () => {
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b457"],
-        "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
+        "likes": ["679a3090896534f79624b457"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "image": "",
         "isPublish": true

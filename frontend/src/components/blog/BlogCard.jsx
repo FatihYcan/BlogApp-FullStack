@@ -5,13 +5,15 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Grid2,
   styled,
   Typography,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { useState } from "react";
+import LikeModal from "./LikeModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -61,8 +63,12 @@ export default function BlogCard({
   userId,
   createdAt,
 }) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <Grid2 item xs={12} sm={6} md={4}>
+    <Grid item={+true} xs={12} sm={6} md={4}>
       <SyledCard variant="outlined">
         <CardMedia
           component="img"
@@ -101,9 +107,14 @@ export default function BlogCard({
             }}
           >
             <FavoriteIcon sx={{ cursor: "pointer" }} />
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {likes.length}
-            </span>
+            {likes.length > 0 && (
+              <span
+                style={{ fontSize: "1.2rem", marginLeft: "2px" }}
+                onClick={handleOpen}
+              >
+                {likes.length}
+              </span>
+            )}
           </Box>
           <Box
             sx={{
@@ -112,9 +123,11 @@ export default function BlogCard({
             }}
           >
             <ChatBubbleOutlineIcon sx={{ cursor: "pointer" }} />
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {comments.length}
-            </span>
+            {comments.length > 0 && (
+              <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                {comments.length}
+              </span>
+            )}
           </Box>
           <Box
             sx={{
@@ -124,9 +137,11 @@ export default function BlogCard({
             }}
           >
             <VisibilityOutlinedIcon />
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {views.length}
-            </span>
+            {views.length > 0 && (
+              <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                {views.length}
+              </span>
+            )}
           </Box>
         </Box>
 
@@ -150,7 +165,7 @@ export default function BlogCard({
           >
             <AvatarGroup>
               <Avatar
-                key={_id}
+                key={userId._id}
                 alt={userId.username}
                 src={userId.image}
                 sx={{ width: 24, height: 24 }}
@@ -162,7 +177,8 @@ export default function BlogCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
+        <LikeModal open={open} handleClose={handleClose} likes={likes} />
       </SyledCard>
-    </Grid2>
+    </Grid>
   );
 }
