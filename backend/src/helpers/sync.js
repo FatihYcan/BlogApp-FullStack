@@ -70,11 +70,11 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Admin 1 Title",
         "content": "Admin 1 Content",
-        "views": ["679a3090896534f79624b458"],
+        "views": ["679a3090896534f79624b488", "679a3090896534f79624b458"],
         "likes": ["679a3090896534f79624b456"],
-        "comments": ["679a3090896534f79624b454"],
+        "comments": ["679a3090896534f79625b454"],
         "image": "",
-        "isPublish": false
+        "isPublish": true
     })
     await Blog.create({
         "_id": "679a3090896534f79624b472",
@@ -94,9 +94,9 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Test 1 Title",
         "content": "Test 1 Content",
-        "views": ["679a3090896534f79624b457"],
-        "likes": ["679a3090896534f79624b455"],
-        "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
+        "views": ["679a3090896534f79624b588"],
+        "likes": [],
+        "comments": [],
         "image": "",
         "isPublish": true
     })
@@ -106,11 +106,11 @@ module.exports = async () => {
         "categoryId": "679a2c8987b220a27b68b410",
         "title": "Test 1 Title",
         "content": "Test 1 Content",
-        "views": ["679a3090896534f79624b457"],
-        "likes": ["679a3090896534f79624b457"],
+        "views": ["679a3090896534f79624b457", "679a3090896534f79624b455"],
+        "likes": ["879a3090896534f79624b456"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "image": "",
-        "isPublish": true
+        "isPublish": false
     })
 
     const Comment = require('../models/comment')
@@ -123,6 +123,12 @@ module.exports = async () => {
     })
     await Comment.create({
         "_id": "679a3090896534f79624b454",
+        "blogId": "679a3090896534f79624b450",
+        "userId": "65343222b67e9681f937f001",
+        "comment": "Admin 1 Comment"
+    })
+    await Comment.create({
+        "_id": "679a3090896534f79625b454",
         "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
         "comment": "Admin 1 Comment"
@@ -145,6 +151,11 @@ module.exports = async () => {
         "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
     })
+    await Like.create({
+        "_id": "879a3090896534f79624b456",
+        "blogId": "679a3090896534f79624b420",
+        "userId": "65343222b67e9681f937f001",
+    })
 
     const View = require('../models/view')
     await View.deleteMany() // !!! Clear collection
@@ -157,9 +168,22 @@ module.exports = async () => {
     await View.create({
         "_id": "679a3090896534f79624b458",
         "blogId": "679a3090896534f79624b452",
+        "userId": "65343222b67e9681f937f003",
+        "userIp": "12345"
+    })
+    await View.create({
+        "_id": "679a3090896534f79624b488",
+        "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
         "userIp": "12345"
     })
+    await View.create({
+        "_id": "679a3090896534f79624b588",
+        "blogId": "679a3090896534f79624b480",
+        "userId": "65343222b67e9681f937f003",
+        "userIp": "123456"
+    })
+
 
     //? End
     console.log('* Synchronized *')

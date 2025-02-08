@@ -21,11 +21,10 @@ module.exports = (req, res, next) => {
     // console.log(search)
 
     // ### SORTING ###
-
     // URL?sort[key1]=asc&sort[key2]=desc
     // asc: A-Z - desc: Z-A
     const sort = req.query?.sort || {}
-    // console.log(sort)
+    console.log(sort)
 
     // ### PAGINATION ###
 

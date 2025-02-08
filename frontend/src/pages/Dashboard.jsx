@@ -4,8 +4,9 @@ import Container from "@mui/material/Container";
 import MainContent from "./MainContent";
 import Latest from "./Latest";
 import Footer from "./Footer";
+import MostPopular from "./MostPopular";
 
-export default function Blog(props) {
+export default function Blog() {
   return (
     <>
       <CssBaseline enableColorScheme />
@@ -15,6 +16,7 @@ export default function Blog(props) {
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
         <MainContent />
+        <MostPopular />
         <Latest />
       </Container>
       <Footer />
