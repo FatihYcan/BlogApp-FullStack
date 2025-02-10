@@ -5,13 +5,11 @@ module.exports = (req, res, next) => {
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
 
     // ### FILTERING ###
-
     // URL?filter[key1]=value1&filter[key2]=value2
     const filter = req.query?.filter || {}
     // console.log(filter)
 
     // ### SEARCHING ###
-
     // URL?search[key1]=value1&search[key2]=value2
     // https://www.mongodb.com/docs/manual/reference/operator/query/regex/
     const search = req.query?.search || {}
@@ -24,7 +22,15 @@ module.exports = (req, res, next) => {
     // URL?sort[key1]=asc&sort[key2]=desc
     // asc: A-Z - desc: Z-A
     const sort = req.query?.sort || {}
-    console.log(sort)
+    let aggregateSort = {};
+    if (sort.views) {
+        aggregateSort = { viewsCount: sort.views === "asc" ? 1 : -1 };
+    } else {
+        for (let key in sort) {
+            sort[key] = sort[key] === "asc" ? 1 : -1;
+        }
+    }
+    // console.log(sort)
 
     // ### PAGINATION ###
 
@@ -46,8 +52,23 @@ module.exports = (req, res, next) => {
 
     // Run for output:
     res.getModelList = async (Model, customFilter = {}, populate = null) => {
-        return await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate)
-    }
+        if (sort.views) {
+            return await Model.aggregate([
+                { $match: { ...filter, ...search, ...customFilter } },
+                { $addFields: { viewsCount: { $size: "$views" } } },
+                { $sort: aggregateSort },
+                { $skip: skip },
+                { $limit: limit },
+                { $unset: "viewsCount" }
+            ]);
+        } else {
+            return await Model.find({ ...filter, ...search, ...customFilter })
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .populate(populate);
+        }
+    };
 
     // Details:
     res.getModelListDetails = async (Model, customFilter = {}) => {
