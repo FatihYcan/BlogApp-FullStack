@@ -2,9 +2,8 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import MainContent from "./MainContent";
-import Latest from "./Latest";
-import Footer from "./Footer";
 import MostPopular from "./MostPopular";
+import Footer from "./Footer";
 
 export default function Blog() {
   return (
@@ -17,7 +16,6 @@ export default function Blog() {
       >
         <MainContent />
         <MostPopular />
-        <Latest />
       </Container>
       <Footer />
     </>

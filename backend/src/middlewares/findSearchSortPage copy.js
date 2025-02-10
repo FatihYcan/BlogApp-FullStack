@@ -22,20 +22,16 @@ module.exports = (req, res, next) => {
     // URL?sort[key1]=asc&sort[key2]=desc
     // asc: A-Z - desc: Z-A
     const sort = req.query?.sort || {}
-    let manualSortViews = false;
-    let viewsSortOrder = "desc";
-
-    if (req.query?.sort) {
-        for (let key in req.query.sort) {
-            if (key === "views") {
-                manualSortViews = true;
-                viewsSortOrder = req.query.sort[key]; 
-            } else {
-                sort[key] = req.query.sort[key] === "asc" ? 1 : -1;
-            }
+    let aggregateSort = {};
+    if (sort.views) {
+        aggregateSort = { viewsCount: sort.views === "asc" ? 1 : -1 };
+    } else {
+        // Normal sort işlemi
+        for (let key in sort) {
+            sort[key] = sort[key] === "asc" ? 1 : -1;
         }
     }
-    // console.log(sort);
+    // console.log(sort)
 
     // ### PAGINATION ###
 
@@ -57,22 +53,37 @@ module.exports = (req, res, next) => {
 
     // Run for output:
     res.getModelList = async (Model, customFilter = {}, populate = null) => {
-        let data = await Model.find({ ...filter, ...search, ...customFilter })
-            .sort(sort)
-            .skip(skip)
-            .limit(limit)
-            .populate(populate);
-
-            if (manualSortViews) {
-                data = data.sort((a, b) => {
-                    if (viewsSortOrder === "asc") {
-                        return a.views.length - b.views.length; 
-                    } else {
-                        return b.views.length - a.views.length;
-                    }
-                });
-            }
-        return data;
+        if (sort.views) {
+            return await Model.aggregate([
+                { $match: { ...filter, ...search, ...customFilter } },
+                { $addFields: { viewsCount: { $size: "$views" } } },
+                { $sort: aggregateSort },
+                { $skip: skip },
+                { $limit: limit },
+                {
+                    $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'userId' }
+                },
+                {
+                    $lookup: { from: 'categories', localField: 'categoryId', foreignField: '_id', as: 'categoryId' }
+                },
+                {
+                    $lookup: { from: 'likes', localField: 'likes', foreignField: '_id', as: 'likes' }
+                },
+                {
+                    $unwind: { path: "$likes" }
+                },
+                {
+                    $lookup: { from: 'users', localField: 'likes.userId', foreignField: '_id', as: 'likes.userId' }
+                },
+                { $unset: "viewsCount" }
+            ]);
+        } else {
+            return await Model.find({ ...filter, ...search, ...customFilter })
+                .sort(sort)
+                .skip(skip)
+                .limit(limit)
+                .populate(populate);
+        }
     };
 
     // Details:

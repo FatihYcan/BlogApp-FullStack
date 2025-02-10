@@ -29,6 +29,9 @@ module.exports = {
         }
 
         const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId blogId", populate: { path: "userId", select: "username firstName lastName image" } }, { path: "views" }])
+
+        // data.sort((a, b) => b.views.length - a.views.length);
+
         res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
     },
 
