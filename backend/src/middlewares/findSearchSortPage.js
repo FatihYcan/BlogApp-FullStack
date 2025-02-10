@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
     if (sort.views) {
         aggregateSort = { viewsCount: sort.views === "asc" ? 1 : -1 };
     } else {
+        // Normal sort işlemi
         for (let key in sort) {
             sort[key] = sort[key] === "asc" ? 1 : -1;
         }
@@ -59,7 +60,24 @@ module.exports = (req, res, next) => {
                 { $sort: aggregateSort },
                 { $skip: skip },
                 { $limit: limit },
-                { $unset: "viewsCount" }
+                // "userId" ve "categoryId" gibi ilişkili verileri eklemek için $lookup kullanabilirsiniz
+                {
+                    $lookup: {
+                        from: 'users', // İlişkili koleksiyonun adı
+                        localField: 'userId', // Bu alanda 'userId' kullanılarak ilişki yapılır
+                        foreignField: '_id', // 'users' koleksiyonundaki _id'ye eşleşir
+                        as: 'userId' // Sonuçlar 'user' adlı bir alanda toplanır
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'categories', // İlişkili koleksiyonun adı
+                        localField: 'categoryId', // 'categoryId' kullanılarak ilişki yapılır
+                        foreignField: '_id', // 'categories' koleksiyonundaki _id'ye eşleşir
+                        as: 'categoryId' // Sonuçlar 'category' adlı bir alanda toplanır
+                    }
+                },
+                { $unset: "viewsCount" } // Görünüm sayısını tekrar kaldırıyoruz
             ]);
         } else {
             return await Model.find({ ...filter, ...search, ...customFilter })
