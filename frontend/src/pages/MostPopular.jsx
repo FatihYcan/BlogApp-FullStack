@@ -1,98 +1,12 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
-import Pagination from "@mui/material/Pagination";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+import { Avatar, AvatarGroup, Box, Pagination, styled, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect } from "react";
-
-const articleInfo = [
-  {
-    tag: "Engineering",
-    title: "The future of AI in software engineering",
-    description:
-      "Artificial intelligence is revolutionizing software engineering. Explore how AI-driven tools are enhancing development processes and improving software quality.",
-    authors: [
-      { name: "Remy Sharp", avatar: "/static/images/avatar/1.jpg" },
-      { name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Driving growth with user-centric product design",
-    description:
-      "Our user-centric product design approach is driving significant growth. Learn about the strategies we employ to create products that resonate with users.",
-    authors: [{ name: "Erica Johns", avatar: "/static/images/avatar/6.jpg" }],
-  },
-  {
-    tag: "Design",
-    title: "Embracing minimalism in modern design",
-    description:
-      "Minimalism is a key trend in modern design. Discover how our design team incorporates minimalist principles to create clean and impactful user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    tag: "Company",
-    title: "Cultivating a culture of innovation",
-    description:
-      "Innovation is at the heart of our company culture. Learn about the initiatives we have in place to foster creativity and drive groundbreaking solutions.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-  {
-    tag: "Engineering",
-    title: "Advancing cybersecurity with next-gen solutions",
-    description:
-      "Our next-generation cybersecurity solutions are setting new standards in the industry. Discover how we protect our clients from evolving cyber threats.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Enhancing customer experience through innovation",
-    description:
-      "Our innovative approaches are enhancing customer experience. Learn about the new features and improvements that are delighting our users.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-  {
-    tag: "Engineering",
-    title: "Pioneering sustainable engineering solutions",
-    description:
-      "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Maximizing efficiency with our latest product updates",
-    description:
-      "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-  {
-    tag: "Design",
-    title: "Designing for the future: trends and insights",
-    description:
-      "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    tag: "Company",
-    title: "Our company's journey: milestones and achievements",
-    description:
-      "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-];
+import Grid from "@mui/material/Grid2";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 const StyledTypography = styled(Typography)({
   display: "-webkit-box",
@@ -139,78 +53,28 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-function Author({ authors }) {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 2,
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 1,
-          alignItems: "center",
-        }}
-      >
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar
-              key={index}
-              alt={author.name}
-              src={author.avatar}
-              sx={{ width: 24, height: 24 }}
-            />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">
-          {authors.map((author) => author.name).join(", ")}
-        </Typography>
-      </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
-    </Box>
-  );
-}
-
-Author.propTypes = {
-  authors: PropTypes.arrayOf(
-    PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 export default function MostPopular() {
   const { viewBlogs } = useSelector((state) => state.blog);
   const { getBlogsView } = useBlogCalls();
-  const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
 
   useEffect(() => {
     getBlogsView("blogs?sort[views]=desc");
   }, []);
-
-  const handleFocus = (index) => {
-    setFocusedCardIndex(index);
-  };
-
-  const handleBlur = () => {
-    setFocusedCardIndex(null);
-  };
 
   return (
     <div>
       <Typography variant="h2" gutterBottom>
         Most Popular
       </Typography>
-      <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-        {articleInfo.map((article, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6 }}>
+      <Grid
+        container
+        rowSpacing={8}
+        columnSpacing={12}
+        justifyContent="center"
+        sx={{ my: 4 }}
+      >
+        {viewBlogs.map((viewBlog) => (
+          <Grid key={viewBlog._id} size={{ xs: 12, sm: 6 }}>
             <Box
               sx={{
                 display: "flex",
@@ -221,31 +85,110 @@ export default function MostPopular() {
               }}
             >
               <Typography gutterBottom variant="caption" component="div">
-                {article.tag}
+                {viewBlog.categoryId.name}
               </Typography>
-              <TitleTypography
-                gutterBottom
-                variant="h6"
-                onFocus={() => handleFocus(index)}
-                onBlur={handleBlur}
-                tabIndex={0}
-                className={focusedCardIndex === index ? "Mui-focused" : ""}
-              >
-                {article.title}
+              <TitleTypography gutterBottom variant="h6">
+                {viewBlog.title}
                 <NavigateNextRoundedIcon
                   className="arrow"
                   sx={{ fontSize: "1rem" }}
                 />
               </TitleTypography>
+
               <StyledTypography
                 variant="body2"
                 color="text.secondary"
                 gutterBottom
               >
-                {article.description}
+                {viewBlog.content}
               </StyledTypography>
 
-              <Author authors={article.authors} />
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <FavoriteIcon sx={{ cursor: "pointer" }} />
+                  {viewBlog.likes.length > 0 && (
+                    <span
+                      style={{ fontSize: "1.2rem", marginLeft: "2px" }}
+                      // onClick={handleOpen}
+                    >
+                      {viewBlog.likes.length}
+                    </span>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <ChatBubbleOutlineIcon sx={{ cursor: "pointer" }} />
+                  {viewBlog.comments.length > 0 && (
+                    <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                      {viewBlog.comments.length}
+                    </span>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "default",
+                  }}
+                >
+                  <VisibilityOutlinedIcon />
+                  {viewBlog.views.length > 0 && (
+                    <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                      {viewBlog.views.length}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <AvatarGroup>
+                    <Avatar
+                      key={viewBlog.userId._id}
+                      alt={viewBlog.userId.username}
+                      src={viewBlog.userId.image}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </AvatarGroup>
+                  <Typography variant="caption">
+                    {viewBlog.userId.username}
+                  </Typography>
+                </Box>
+                <Typography variant="caption">
+                  {new Date(viewBlog.createdAt).toLocaleDateString("tr-TR")}
+                </Typography>
+              </Box>
             </Box>
           </Grid>
         ))}

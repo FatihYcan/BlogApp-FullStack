@@ -68,7 +68,7 @@ export default function BlogCard({
   const handleClose = () => setOpen(false);
 
   return (
-    <Grid item={+true} xs={12} sm={6} md={4}>
+    <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <SyledCard variant="outlined">
         <CardMedia
           component="img"
