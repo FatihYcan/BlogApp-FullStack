@@ -2,7 +2,6 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import MainContent from "./MainContent";
-import MostPopular from "./MostPopular";
 import Footer from "./Footer";
 
 export default function Blog() {
@@ -15,7 +14,6 @@ export default function Blog() {
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
         <MainContent />
-        <MostPopular />
       </Container>
       <Footer />
     </>

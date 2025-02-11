@@ -4,6 +4,9 @@ import {
   FormControl,
   InputAdornment,
   OutlinedInput,
+  Pagination,
+  Stack,
+  Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -11,6 +14,7 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect } from "react";
 import BlogCard from "../components/blog/BlogCard";
+import PopularCard from "../components/blog/PopularCard";
 
 export function Search() {
   return (
@@ -34,12 +38,13 @@ export function Search() {
 }
 
 export default function MainContent() {
-  const { blogs, categories } = useSelector((state) => state.blog);
-  const { getBlogs, getCategories } = useBlogCalls();
+  const { blogs, categories, viewBlogs } = useSelector((state) => state.blog);
+  const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
 
   useEffect(() => {
     getBlogs("blogs");
     getCategories("categories");
+    getBlogsView("blogs?sort[views]=desc");
   }, []);
 
   const handleAllClick = () => {
@@ -121,6 +126,36 @@ export default function MainContent() {
           <BlogCard key={blog._id} {...blog} />
         ))}
       </Grid>
+
+      <div>
+        <Typography variant="h2" gutterBottom>
+          Most Popular
+        </Typography>
+        <Grid
+          container
+          rowSpacing={8}
+          columnSpacing={12}
+          justifyContent="center"
+          sx={{ my: 4 }}
+        >
+          {viewBlogs.map((viewBlog) => (
+            <PopularCard key={viewBlog._id} {...viewBlog} />
+          ))}
+        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            pt: 4,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Stack spacing={2}>
+            <Pagination color="primary" count={10} showFirstButton showLastButton />
+          </Stack>
+        </Box>
+      </div>
     </Box>
   );
 }
