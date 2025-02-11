@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
         for (let key in req.query.sort) {
             if (key === "views") {
                 manualSortViews = true;
-                viewsSortOrder = req.query.sort[key]; 
+                viewsSortOrder = req.query.sort[key];
             } else {
                 sort[key] = req.query.sort[key] === "asc" ? 1 : -1;
             }
@@ -42,7 +42,8 @@ module.exports = (req, res, next) => {
     // URL?page=3&limit=10
     let limit = Number(req.query?.limit)
     // console.log(limit)
-    limit = limit > 0 ? limit : Number(process.env.PAGE_SIZE || 20)
+    // limit = limit > 0 ? limit : Number(process.env.PAGE_SIZE || 20)
+    if (!limit || limit <= 0) limit = undefined;
     // console.log(typeof limit, limit)
 
     let page = Number(req.query?.page)
@@ -50,7 +51,8 @@ module.exports = (req, res, next) => {
     // console.log(typeof page, page)
 
     let skip = Number(req.query?.skip)
-    skip = skip > 0 ? skip : (page * limit)
+    // skip = skip > 0 ? skip : (page * limit)
+    skip = skip > 0 ? skip : (page * (limit || 0));
     // console.log(typeof skip, skip)
 
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
@@ -63,15 +65,15 @@ module.exports = (req, res, next) => {
             .limit(limit)
             .populate(populate);
 
-            if (manualSortViews) {
-                data = data.sort((a, b) => {
-                    if (viewsSortOrder === "asc") {
-                        return a.views.length - b.views.length; 
-                    } else {
-                        return b.views.length - a.views.length;
-                    }
-                });
-            }
+        if (manualSortViews) {
+            data = data.sort((a, b) => {
+                if (viewsSortOrder === "asc") {
+                    return a.views.length - b.views.length;
+                } else {
+                    return b.views.length - a.views.length;
+                }
+            });
+        }
         return data;
     };
 
@@ -91,12 +93,12 @@ module.exports = (req, res, next) => {
                 previous: (page > 0 ? page : false),
                 current: page + 1,
                 next: page + 2,
-                total: Math.ceil(data.length / limit)
+                total: Math.ceil(data.length / (limit || data.length))
             },
             totalRecords: data.length,
         }
         details.pages.next = (details.pages.next > details.pages.total ? false : details.pages.next)
-        if (details.totalRecords <= limit) details.pages = false
+        if (details.totalRecords <= (limit || data.length)) details.pages = false
         return details
     }
 

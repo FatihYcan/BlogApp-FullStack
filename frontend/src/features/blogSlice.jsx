@@ -7,7 +7,7 @@ const blogSlice = createSlice({
     users: [],
     singleUser: {},
     blogs: [],
-    viewBlogs:[],
+    viewBlogs: [],
     detail: {},
     singleBlog: {},
     likes: [],
@@ -16,8 +16,6 @@ const blogSlice = createSlice({
     loading: false,
     error: false,
   },
-
-  
 
   reducers: {
     fetchStart: (state) => {
@@ -46,7 +44,6 @@ const blogSlice = createSlice({
 
     getBlogViewSuccess: (state, { payload }) => {
       state.viewBlogs = payload.apiData;
-      state.detail = payload.detail;
       state.loading = false;
       state.error = false;
     },

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Chip,
   FormControl,
   InputAdornment,
@@ -12,9 +13,10 @@ import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/BlogCard";
 import PopularCard from "../components/blog/PopularCard";
+import { Link } from "react-router-dom";
 
 export function Search() {
   return (
@@ -38,21 +40,42 @@ export function Search() {
 }
 
 export default function MainContent() {
-  const { blogs, categories, viewBlogs } = useSelector((state) => state.blog);
+  const { blogs, categories, viewBlogs, detail } = useSelector(
+    (state) => state.blog
+  );
   const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
+  const [page, setPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [allSelected, setAllSelected] = useState(true);
 
   useEffect(() => {
-    getBlogs("blogs");
+    if (selectedCategory) {
+      getBlogs(
+        `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=2`
+      );
+    } else {
+      getBlogs(`blogs?page=${page}&limit=2`);
+    }
     getCategories("categories");
-    getBlogsView("blogs?sort[views]=desc");
-  }, []);
+    getBlogsView("blogs?sort[views]=desc&limit=2");
+  }, [page, selectedCategory]);
 
   const handleAllClick = () => {
-    getBlogs("blogs");
+    setPage(1);
+    setSelectedCategory("");
+    setAllSelected(true);
+    getBlogs(`blogs?page=${page}&limit=2`);
   };
 
   const handleClick = (id) => {
-    getBlogs(`blogs?filter[categoryId]=${id}`);
+    setSelectedCategory(id);
+    setPage(1);
+    setAllSelected(false);
+    getBlogs(`blogs?filter[categoryId]=${id}&page=${page}&limit=2`);
+  };
+
+  const handleChange = (event, value) => {
+    setPage(value);
   };
 
   return (
@@ -94,19 +117,28 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Chip size="medium" onClick={handleAllClick} label="All categories" />
+          <button
+            className={`${
+              allSelected
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
+            } rounded-full px-3 py-2 text-sm font-medium`}
+            onClick={handleAllClick}
+          >
+            All categories
+          </button>
 
           {categories.map((category) => (
-            <Chip
+            <button
+              className={`${
+                selectedCategory === category._id
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
+              } rounded-full px-3 py-2 text-sm font-medium`}
               onClick={() => handleClick(category._id)}
-              key={category._id}
-              size="medium"
-              label={category.name}
-              sx={{
-                backgroundColor: "transparent",
-                border: "none",
-              }}
-            />
+            >
+              {category.name}
+            </button>
           ))}
         </Box>
         <Box
@@ -128,6 +160,29 @@ export default function MainContent() {
       </Grid>
 
       <div>
+        {detail.totalRecords > detail.limit && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 4,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Stack spacing={2}>
+              <Pagination
+                color="primary"
+                count={detail?.pages?.total}
+                onChange={handleChange}
+                page={page}
+                showFirstButton
+                showLastButton
+              />
+            </Stack>
+          </Box>
+        )}
+
         <Typography variant="h2" gutterBottom>
           Most Popular
         </Typography>
@@ -142,19 +197,6 @@ export default function MainContent() {
             <PopularCard key={viewBlog._id} {...viewBlog} />
           ))}
         </Grid>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            pt: 4,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Stack spacing={2}>
-            <Pagination color="primary" count={10} showFirstButton showLastButton />
-          </Stack>
-        </Box>
       </div>
     </Box>
   );
