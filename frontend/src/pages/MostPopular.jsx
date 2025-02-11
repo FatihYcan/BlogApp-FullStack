@@ -1,4 +1,4 @@
-import { Box, Pagination, Typography } from "@mui/material";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect } from "react";
@@ -29,13 +29,18 @@ export default function MostPopular() {
           <PopularCard key={viewBlog._id} {...viewBlog} />
         ))}
       </Grid>
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }}>
-        <Pagination
-          hidePrevButton
-          hideNextButton
-          count={10}
-          boundaryCount={10}
-        />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          pt: 4,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Stack spacing={2}>
+          <Pagination count={10} showFirstButton showLastButton />
+        </Stack>
       </Box>
     </div>
   );
