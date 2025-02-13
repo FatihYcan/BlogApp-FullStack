@@ -14,7 +14,6 @@ import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/BlogCard";
 import PopularCard from "../components/blog/PopularCard";
-import { Link } from "react-router-dom";
 
 export function Search() {
   return (
@@ -128,6 +127,7 @@ export default function MainContent() {
 
           {categories.map((category) => (
             <button
+              key={category._id}
               className={`${
                 selectedCategory === category._id
                   ? "bg-black text-white dark:bg-white dark:text-black"
@@ -153,7 +153,7 @@ export default function MainContent() {
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
         {blogs.map((blog) => (
-          <BlogCard key={blog._id} {...blog} />
+          <BlogCard key={blog._id} {...blog} page={page} />
         ))}
       </Grid>
 

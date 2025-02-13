@@ -14,6 +14,9 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import LikeModal from "./LikeModal";
+import { useSelector } from "react-redux";
+import useBlogCalls from "../../hooks/useBlogCalls";
+import { useNavigate } from "react-router-dom";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -62,17 +65,37 @@ export default function BlogCard({
   views,
   userId,
   createdAt,
+  page,
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { username } = useSelector((state) => state.auth);
+  const { getBlogs, postBlogLike } = useBlogCalls();
+  const navigate = useNavigate();
+
+  const handleLike = () => {
+    if (username) {
+      postBlogLike("blogs", _id);
+      getBlogs(`blogs?page=${page}&limit=3`);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleDetail = () => {
+    navigate(`/detail/${_id}`);
+  };
 
   const imagePath = images[0].slice(1);
+
+  const isLiked = likes.some((like) => like.userId.username === username);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <SyledCard variant="outlined">
         <CardMedia
+          onClick={handleDetail}
           component="img"
           alt={title}
           image={`http://127.0.0.1:8000${imagePath}`}
@@ -80,6 +103,7 @@ export default function BlogCard({
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
             borderColor: "divider",
+            objectFit: "initial",
           }}
         />
         <SyledCardContent>
@@ -108,7 +132,12 @@ export default function BlogCard({
               alignItems: "center",
             }}
           >
-            <FavoriteIcon sx={{ cursor: "pointer" }} />
+            <FavoriteIcon
+              color={isLiked ? "error" : "inherit"}
+              sx={{ cursor: "pointer" }}
+              onClick={handleLike}
+            />
+
             {likes.length > 0 && (
               <span
                 style={{ fontSize: "1.2rem", marginLeft: "2px" }}
