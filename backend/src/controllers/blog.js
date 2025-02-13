@@ -44,7 +44,7 @@ module.exports = {
 
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
-        req.body.image = req.file.path
+        req.body.images = req.file.path
 
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
@@ -91,7 +91,16 @@ module.exports = {
             customFilter = { userId: req.user._id }
         }
 
-        req.body.image = req.file.path
+        //? Mevcut blog resimlerini getir
+        const blog = await Blog.findOne({ _id: req.params.id }, { images: 1, _id: 0 })
+
+        for (let file of req.files) {
+            //? Mevcut blog resimlerini ekle
+            blog.images.push("./uploads/blog/" + file.filename)
+        }
+
+        //? Blog resimlerini req.bodye aktar
+        req.body.images = blog.images
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })

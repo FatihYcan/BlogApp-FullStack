@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  Chip,
   FormControl,
   InputAdornment,
   OutlinedInput,
@@ -51,10 +49,10 @@ export default function MainContent() {
   useEffect(() => {
     if (selectedCategory) {
       getBlogs(
-        `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=2`
+        `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
       );
     } else {
-      getBlogs(`blogs?page=${page}&limit=2`);
+      getBlogs(`blogs?page=${page}&limit=3`);
     }
     getCategories("categories");
     getBlogsView("blogs?sort[views]=desc&limit=2");
@@ -64,14 +62,14 @@ export default function MainContent() {
     setPage(1);
     setSelectedCategory("");
     setAllSelected(true);
-    getBlogs(`blogs?page=${page}&limit=2`);
+    getBlogs(`blogs?page=${page}&limit=3`);
   };
 
   const handleClick = (id) => {
     setSelectedCategory(id);
     setPage(1);
     setAllSelected(false);
-    getBlogs(`blogs?filter[categoryId]=${id}&page=${page}&limit=2`);
+    getBlogs(`blogs?filter[categoryId]=${id}&page=${page}&limit=3`);
   };
 
   const handleChange = (event, value) => {

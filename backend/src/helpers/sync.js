@@ -61,7 +61,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b457"],
         "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
-        "image": "",
+        "images": [],
         "isPublish": true
     })
     await Blog.create({
@@ -73,7 +73,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b488", "679a3090896534f79624b458"],
         "likes": ["679a3090896534f79624b456"],
         "comments": ["679a3090896534f79625b454"],
-        "image": "",
+        "images": [],
         "isPublish": true
     })
     await Blog.create({
@@ -85,7 +85,7 @@ module.exports = async () => {
         "views": [],
         "likes": [],
         "comments": [],
-        "image": "",
+        "images": [],
         "isPublish": true
     })
     await Blog.create({
@@ -97,7 +97,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b588"],
         "likes": [],
         "comments": [],
-        "image": "",
+        "images": [],
         "isPublish": true
     })
     await Blog.create({
@@ -109,7 +109,7 @@ module.exports = async () => {
         "views": ["679a3090896534f79624b457", "679a3090896534f79624b455"],
         "likes": ["879a3090896534f79624b456"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
-        "image": "",
+        "images": [],
         "isPublish": false
     })
 

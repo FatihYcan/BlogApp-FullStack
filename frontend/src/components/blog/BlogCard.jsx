@@ -54,7 +54,7 @@ const StyledTypography = styled(Typography)({
 export default function BlogCard({
   _id,
   title,
-  image,
+  images,
   categoryId,
   content,
   likes,
@@ -67,13 +67,15 @@ export default function BlogCard({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const imagePath = images[0].slice(1);
+
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <SyledCard variant="outlined">
         <CardMedia
           component="img"
           alt={title}
-          image={image}
+          image={`http://127.0.0.1:8000${imagePath}`}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",

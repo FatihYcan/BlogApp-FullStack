@@ -7,7 +7,7 @@ const path = require("path");
 
 module.exports = multer({
     storage: multer.diskStorage({
-        destination: "./uploads",
+        destination: "./uploads/blog",
         filename: (req, file, callback) => {
             callback(null, Date.now() + "-" + file.originalname)
         }

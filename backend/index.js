@@ -64,7 +64,7 @@ app.all('/', (req, res) => {
 app.use(require('./src/routes'))
 
 //? Static Files
-app.use("/uploads", express.static("./uploads"))
+app.use("/uploads/blog", express.static("./uploads/blog"))
 
 /* ------------------------------------------------------- */
 //? Synchronization
