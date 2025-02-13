@@ -3,7 +3,7 @@ import Dashboard from "../pages/Dashboard";
 // import NewBlog from "../pages/NewBlog";
 // import About from "../pages/About";
 import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 // import Detail from "../pages/Detail";
 // import Register from "../pages/Register";
 // import Login from "../pages/Login";
@@ -27,7 +27,7 @@ const AppRouter = () => {
         {/* <Route path="my-blogs" element={<MyBlogs />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 };
