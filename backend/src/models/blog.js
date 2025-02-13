@@ -17,8 +17,6 @@ const blogSchema = new mongoose.Schema({
     content: { type: String, required: true, trim: true },
 
     images: [],
-    // image: { type: String, required: true },
-    // image: { type: String },
 
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 

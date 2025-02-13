@@ -7,7 +7,6 @@ const blog = require('../controllers/blog')
 const permissions = require('../middlewares/permissions')
 const upload = require('../middlewares/upload')
 
-
 //? URL: /blogs
 router.route('/').get(blog.list).post(permissions.isLogin, upload.array('images'), blog.create)
 router.route('/:id').get(blog.read).put(permissions.isLogin, upload.array('images'), blog.update).patch(permissions.isLogin, upload.array('images'), blog.update).delete(permissions.isLogin, blog.delete)

@@ -44,7 +44,7 @@ module.exports = {
 
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
-        req.body.images = req.file.path
+        req.body.images = req.files.map(file => file.path)
 
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
