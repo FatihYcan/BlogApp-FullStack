@@ -151,9 +151,10 @@ export default function BlogCard({
             sx={{
               display: "flex",
               alignItems: "center",
+              cursor: "default",
             }}
           >
-            <ChatBubbleOutlineIcon sx={{ cursor: "pointer" }} />
+            <ChatBubbleOutlineIcon />
             {comments.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
                 {comments.length}

@@ -6,6 +6,9 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import LikeModal from "./LikeModal";
+import { useSelector } from "react-redux";
+import useBlogCalls from "../../hooks/useBlogCalls";
+import { useNavigate } from "react-router-dom";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
   position: "relative",
@@ -66,6 +69,24 @@ export default function PopularCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { username } = useSelector((state) => state.auth);
+  const { getBlogsView, postBlogLike } = useBlogCalls();
+  const navigate = useNavigate();
+
+  const handleLike = () => {
+    if (username) {
+      postBlogLike("blogs", _id);
+      getBlogsView("blogs?sort[views]=desc&limit=2");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleDetail = () => {
+    navigate(`/detail/${_id}`);
+  };
+
+  const isLiked = likes.some((like) => like.userId.username === username);
 
   return (
     <Grid size={{ xs: 12, sm: 6 }}>
@@ -81,7 +102,7 @@ export default function PopularCard({
         <Typography gutterBottom variant="caption" component="div">
           {categoryId.name}
         </Typography>
-        <TitleTypography gutterBottom variant="h6">
+        <TitleTypography gutterBottom variant="h6" onClick={handleDetail}>
           {title}
           <NavigateNextRoundedIcon
             className="arrow"
@@ -107,7 +128,11 @@ export default function PopularCard({
               alignItems: "center",
             }}
           >
-            <FavoriteIcon sx={{ cursor: "pointer" }} />
+            <FavoriteIcon
+              color={isLiked ? "error" : "inherit"}
+              sx={{ cursor: "pointer" }}
+              onClick={handleLike}
+            />
             {likes.length > 0 && (
               <span
                 style={{
@@ -125,9 +150,10 @@ export default function PopularCard({
             sx={{
               display: "flex",
               alignItems: "center",
+              cursor: "default",
             }}
           >
-            <ChatBubbleOutlineIcon sx={{ cursor: "pointer" }} />
+            <ChatBubbleOutlineIcon />
             {comments.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
                 {comments.length}
