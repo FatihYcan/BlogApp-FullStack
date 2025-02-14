@@ -71,10 +71,10 @@ module.exports = {
             const view = await View.create({ blogId: req.params.id, userId: userIdentifier, userIP: userIdentifier ? null : userIP })
 
             //! Blog'un view sayısını güncelle
-            await Blog.updateOne({ _id: req.params.id }, { $push: { views: view } })
+            await Blog.updateOne({ _id: req.params.id }, { $push: { views: view }, $inc: { viewCount: 1 } })
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }, { path: "views" }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName" }, { path: "categoryId", select: "name" }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName" } }])
         res.status(200).send({ error: false, data })
     },
 

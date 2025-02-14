@@ -4,7 +4,7 @@ import Dashboard from "../pages/Dashboard";
 // import About from "../pages/About";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-// import Detail from "../pages/Detail";
+import Detail from "../pages/Detail";
 // import Register from "../pages/Register";
 // import Login from "../pages/Login";
 // import MyBlogs from "../pages/MyBlogs";
@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Route path="" element={<PrivateRouter />}>
           {/* <Route path="new-blog" element={<NewBlog />} /> */}
         </Route>
-        {/* <Route path="/detail/:_id" element={<Detail />} /> */}
+        <Route path="/detail/:_id" element={<Detail />} />
         {/* <Route path="my-blogs" element={<MyBlogs />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}
       </Routes>

@@ -37,7 +37,7 @@ export function Search() {
 }
 
 export default function MainContent() {
-  const { blogs, categories, viewBlogs, detail } = useSelector(
+  const { blogs, categories, viewBlogs, detail, likes } = useSelector(
     (state) => state.blog
   );
   const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
@@ -54,8 +54,8 @@ export default function MainContent() {
       getBlogs(`blogs?page=${page}&limit=3`);
     }
     getCategories("categories");
-    getBlogsView("blogs?sort[views]=desc&limit=2");
-  }, [page, selectedCategory]);
+    getBlogsView("blogs?sort[viewCount]=desc&limit=2");
+  }, [page, selectedCategory, likes]);
 
   const handleAllClick = () => {
     setPage(1);

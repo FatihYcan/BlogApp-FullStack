@@ -59,6 +59,7 @@ module.exports = async () => {
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b457"],
+        "viewCount": 1,
         "likes": ["679a3090896534f79624b455", "679a3090896534f79624b457"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "images": [],
@@ -71,6 +72,7 @@ module.exports = async () => {
         "title": "Admin 1 Title",
         "content": "Admin 1 Content",
         "views": ["679a3090896534f79624b488", "679a3090896534f79624b458"],
+        "viewCount": 2,
         "likes": ["679a3090896534f79624b456"],
         "comments": ["679a3090896534f79625b454"],
         "images": [],
@@ -83,6 +85,7 @@ module.exports = async () => {
         "title": "Admin 11 Title",
         "content": "Admin 11 Content",
         "views": [],
+        "viewCount": 0,
         "likes": [],
         "comments": [],
         "images": [],
@@ -95,6 +98,7 @@ module.exports = async () => {
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b588"],
+        "viewCount": 1,
         "likes": [],
         "comments": [],
         "images": [],
@@ -107,6 +111,7 @@ module.exports = async () => {
         "title": "Test 1 Title",
         "content": "Test 1 Content",
         "views": ["679a3090896534f79624b457", "679a3090896534f79624b455"],
+        "viewCount": 2,
         "likes": ["879a3090896534f79624b456"],
         "comments": ["679a3090896534f79624b453", "679a3090896534f79624b454"],
         "images": [],
@@ -163,25 +168,21 @@ module.exports = async () => {
         "_id": "679a3090896534f79624b457",
         "blogId": "679a3090896534f79624b450",
         "userId": "65343222b67e9681f937f001",
-        "userIp": "1234"
     })
     await View.create({
         "_id": "679a3090896534f79624b458",
         "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f003",
-        "userIp": "12345"
     })
     await View.create({
         "_id": "679a3090896534f79624b488",
         "blogId": "679a3090896534f79624b452",
         "userId": "65343222b67e9681f937f001",
-        "userIp": "12345"
     })
     await View.create({
         "_id": "679a3090896534f79624b588",
         "blogId": "679a3090896534f79624b480",
         "userId": "65343222b67e9681f937f003",
-        "userIp": "123456"
     })
 
 
