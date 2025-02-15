@@ -140,7 +140,7 @@ export default function BlogCard({
 
             {likes.length > 0 && (
               <span
-                style={{ fontSize: "1.2rem", marginLeft: "2px" }}
+                style={{ fontSize: "1.2rem", marginLeft: "2px"  }}
                 onClick={handleOpen}
               >
                 {likes.length}

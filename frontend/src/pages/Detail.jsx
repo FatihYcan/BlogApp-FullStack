@@ -11,9 +11,13 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import useBlogCalls from "../hooks/useBlogCalls";
+import { useSelector } from "react-redux";
+import Grid from "@mui/material/Grid2";
+import LikeModal from "../components/blog/LikeModal";
+import UpdateModel from "../components/blog/UpdateModel";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -28,15 +32,69 @@ const SyledCardContent = styled(CardContent)({
 
 export default function Detail() {
   const { _id } = useParams();
-  const { getSingleBlog } = useBlogCalls();
+  const navigate = useNavigate();
+
+  const { singleBlog, likes: like } = useSelector((state) => state.blog);
+  const { username } = useSelector((state) => state.auth);
+
+  const { getSingleBlog, postBlogLike } = useBlogCalls();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleUpdateOpen = () => {
+    setData({
+      categoryId: singleBlog.categoryId._id,
+      content: singleBlog.content,
+      isPublish: singleBlog.isPublish,
+      images: singleBlog.images,
+      title: singleBlog.title,
+    });
+    setUpdateOpen(true);
+  };
+  const handleUpdateClose = () => setUpdateOpen(false);
+
+  const [data, setData] = useState({
+    categoryId: singleBlog.categoryId,
+    content: singleBlog.content,
+    isPublish: singleBlog.isPublish,
+    images: singleBlog.images,
+    title: singleBlog.title,
+  });
 
   useEffect(() => {
     getSingleBlog({ id: _id });
-  }, []);
+  }, [like]);
+
+  const {
+    categoryId,
+    comments,
+    content,
+    createdAt,
+    images,
+    likes,
+    title,
+    userId,
+    views,
+  } = singleBlog;
+
+  const imagePath = images?.map((image) => image.slice(1)) || [];
+
+  const isLiked = likes?.some((like) => like.userId.username === username);
+
+  const handleLike = () => {
+    if (username) {
+      postBlogLike("blogs", _id);
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <Container
-      maxWidth="xl"
+      maxWidth="md"
       component="main"
       sx={{
         display: "flex",
@@ -48,83 +106,15 @@ export default function Detail() {
     >
       <CardMedia
         component="img"
-        alt={"title"}
-        image={"`http://127.0.0.1:8000${imagePath}`"}
+        alt={title}
+        image={`http://127.0.0.1:8000${imagePath[0]}`}
         sx={{
+          width: "80%",
+          margin: "auto",
           aspectRatio: "16 / 9",
           objectFit: "initial",
         }}
       />
-      <SyledCardContent>
-        <Typography gutterBottom variant="caption" component="div">
-          {"categoryId.name"}
-        </Typography>
-        <Typography gutterBottom variant="h6" component="div">
-          {"title"}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {"content"}
-        </Typography>
-      </SyledCardContent>
-
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          alignItems: "center",
-          justifyContent: "space-evenly",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <FavoriteIcon
-            // color={isLiked ? "error" : "inherit"}
-            sx={{ cursor: "pointer" }}
-            // onClick={handleLike}
-          />
-
-          {/* {likes.length > 0 && (
-            <span
-              style={{ fontSize: "1.2rem", marginLeft: "2px" }}
-              onClick={handleOpen}
-            >
-              {likes.length}
-            </span>
-            )} */}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "default",
-          }}
-        >
-          <ChatBubbleOutlineIcon />
-          {/* {comments.length > 0 && (
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {comments.length}
-            </span>
-          )} */}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "default",
-          }}
-        >
-          <VisibilityOutlinedIcon />
-          {/* {views.length > 0 && (
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {views.length}
-            </span>
-          )} */}
-        </Box>
-      </Box>
 
       <Box
         sx={{
@@ -146,19 +136,132 @@ export default function Detail() {
         >
           <AvatarGroup>
             <Avatar
-              //   key={userId._id}
-              alt={"userId.username"}
-              src={"userId.image"}
+              key={userId?._id}
+              alt={userId?.username}
+              src={userId?.image}
               sx={{ width: 24, height: 24 }}
             />
           </AvatarGroup>
-          <Typography variant="caption">{"userId.username"}</Typography>
+          <Typography variant="caption">{userId?.username}</Typography>
         </Box>
         <Typography variant="caption">
-          {/* {new Date(createdAt).toLocaleDateString("tr-TR")} */}
+          {new Date(createdAt).toLocaleDateString("tr-TR")}
         </Typography>
       </Box>
-      {/* <LikeModal open={open} handleClose={handleClose} likes={likes} /> */}
+
+      <SyledCardContent>
+        <Typography gutterBottom variant="caption" component="div">
+          {categoryId?.name}
+        </Typography>
+        <Typography gutterBottom variant="h6" component="div">
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          {content}
+        </Typography>
+      </SyledCardContent>
+
+      <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
+        {imagePath.map((image, index) => (
+          <Grid key={index} size={{ xs: 12, sm: 6 }}>
+            <CardMedia
+              component="img"
+              alt={`${title} image ${index + 1}`}
+              image={`http://127.0.0.1:8000${image}`}
+              sx={{
+                aspectRatio: "16 / 9",
+                objectFit: "initial",
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <FavoriteIcon
+            color={isLiked ? "error" : "inherit"}
+            sx={{ cursor: "pointer" }}
+            onClick={handleLike}
+          />
+
+          {likes?.length > 0 && (
+            <span
+              style={{
+                fontSize: "1.2rem",
+                marginLeft: "2px",
+                cursor: "pointer",
+              }}
+              onClick={handleOpen}
+            >
+              {likes.length}
+            </span>
+          )}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            cursor: "default",
+          }}
+        >
+          <ChatBubbleOutlineIcon />
+          {comments?.length > 0 && (
+            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+              {comments.length}
+            </span>
+          )}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            cursor: "default",
+          }}
+        >
+          <VisibilityOutlinedIcon />
+          {views?.length > 0 && (
+            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+              {views.length}
+            </span>
+          )}
+        </Box>
+      </Box>
+
+      <Box my={2} display="flex" justifyContent="center" gap={2}>
+        <button
+          className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+          onClick={handleUpdateOpen}
+        >
+          Update Blog
+        </button>
+
+        <button
+          className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
+          // onClick={handleDeleteOpen}
+        >
+          Delete Blog
+        </button>
+      </Box>
+      <LikeModal open={open} handleClose={handleClose} likes={likes} />
+      <UpdateModel
+        updateOpen={updateOpen}
+        handleUpdateClose={handleUpdateClose}
+        setData={setData}
+        data={data}
+      />
     </Container>
   );
 }

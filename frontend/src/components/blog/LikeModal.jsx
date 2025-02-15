@@ -24,7 +24,7 @@ export default function LikeModal({ open, handleClose, likes }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {likes.map((like) => (
+          {likes?.map((like) => (
             <Box
               key={like._id}
               sx={{
