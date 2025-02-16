@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useNavigate } from "react-router-dom";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -55,13 +56,19 @@ export default function UserCard({
   username,
   _id,
 }) {
+  const navigate = useNavigate();
+
+  const handleDetail = () => {
+    navigate(`/user/${_id}`);
+  };
+
   const fullName = firstName + " " + lastName;
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 3 }}>
       <SyledCard variant="outlined">
         <CardMedia
-          //   onClick={handleDetail}
+          onClick={handleDetail}
           component="img"
           alt={username}
           //   image={"`http://127.0.0.1:8000${imagePath}`"}

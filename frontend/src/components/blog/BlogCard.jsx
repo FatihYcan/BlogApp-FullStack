@@ -82,7 +82,7 @@ export default function BlogCard({
   };
 
   const handleDetail = () => {
-    navigate(`/detail/${_id}`);
+    navigate(`/blog/${_id}`);
   };
 
   const imagePath = images[0].slice(1);
