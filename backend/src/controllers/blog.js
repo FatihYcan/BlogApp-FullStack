@@ -94,15 +94,19 @@ module.exports = {
         //? Mevcut blog resimlerini getir
         const blog = await Blog.findOne({ _id: req.params.id }, { images: 1, _id: 0 })
 
-        for (let file of req.files) {
-            //? Mevcut blog resimlerini ekle
-            blog.images.push("./uploads/blog/" + file.filename)
+        if (req.files && req.files.length > 0) {
+            for (let file of req.files) {
+                //? Mevcut blog resimlerini ekle
+                blog.images.push("./uploads/blog/" + file.filename);
+            }
         }
 
         //? Blog resimlerini req.bodye aktar
         req.body.images = blog.images
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
+        // const data = await Blog.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
     },
 

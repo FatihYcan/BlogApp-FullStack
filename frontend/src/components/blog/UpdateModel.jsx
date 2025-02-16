@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
   MenuItem,
@@ -7,9 +8,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
+import { useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -21,6 +23,8 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  maxHeight: "80vh",
+  overflowY: "auto",
 };
 
 export default function UpdateModel({
@@ -30,15 +34,23 @@ export default function UpdateModel({
   data,
 }) {
   const { categories } = useSelector((state) => state.blog);
-  const { getCategories, putBlogs, getDetails } = useBlogCalls();
+  const { getCategories, putBlog, getSingleBlog } = useBlogCalls();
+  const { _id } = useParams();
 
   useEffect(() => {
     getCategories("categories");
   }, []);
 
-  console.log(data);
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   const imagePath = data?.images?.map((image) => image.slice(1)) || [];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    putBlog({ id: _id, data });
+  };
 
   return (
     <div>
@@ -50,8 +62,9 @@ export default function UpdateModel({
       >
         <Box sx={style}>
           <Box
+            encType="multipart/form-data"
             component="form"
-            //   onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
           >
             <Typography gutterBottom variant="h6" component="div">
               Update Blog
@@ -64,7 +77,7 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
-                //   onChange={handleChange}
+                onChange={handleChange}
                 value={data.title}
               />
             </FormControl>
@@ -76,7 +89,7 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
-                //   onChange={handleChange}
+                onChange={handleChange}
                 value={data.content}
               />
             </FormControl>
@@ -87,7 +100,7 @@ export default function UpdateModel({
                 select
                 name="categoryId"
                 value={data.categoryId}
-                // onChange={handleChange}
+                onChange={handleChange}
               >
                 {categories?.map((category) => (
                   <MenuItem key={category._id} value={category._id}>
@@ -96,7 +109,7 @@ export default function UpdateModel({
                 ))}
               </TextField>
             </FormControl>
-
+{/* 
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="images">Images</FormLabel>
               <Box
@@ -119,17 +132,39 @@ export default function UpdateModel({
                   }}
                 >
                   {imagePath.map((image, index) => (
-                    <img
-                      key={index}
-                      src={`http://127.0.0.1:8000${image}`}
-                      alt={`Uploaded ${index}`}
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                        borderRadius: "5px",
-                      }}
-                    />
+                    <Box key={index} sx={{ position: "relative" }}>
+                      <img
+                        src={`http://127.0.0.1:8000${image}`}
+                        alt={`Uploaded ${index}`}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "5px",
+                        }}
+                      />
+                      <button
+                        // onClick={() => handleDeleteImage(image)}
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          backgroundColor: "red",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "20px",
+                          height: "20px",
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "12px",
+                        }}
+                      >
+                        X
+                      </button>
+                    </Box>
                   ))}
                 </Box>
 
@@ -147,7 +182,28 @@ export default function UpdateModel({
                   }}
                 />
               </Box>
+            </FormControl> */}
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="isPublish">Publish</FormLabel>
+              <TextField
+                id="isPublish"
+                select
+                name="isPublish"
+                value={data.isPublish}
+                onChange={handleChange}
+              >
+                <MenuItem value="false">Draft</MenuItem>
+                <MenuItem value="true">Published</MenuItem>
+              </TextField>
             </FormControl>
+
+            <button
+              type="submit"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+            >
+              Update Blog
+            </button>
           </Box>
         </Box>
       </Modal>
