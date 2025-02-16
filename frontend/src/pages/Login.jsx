@@ -25,6 +25,7 @@ import MuiCard from "@mui/material/Card";
 import useAuthCalls from "../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
+import LoginForm, { loginSchema } from "../components/auth/LoginForm";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -46,7 +47,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
-  //   height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
   minHeight: "100%",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
@@ -63,13 +63,16 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     backgroundRepeat: "no-repeat",
     ...theme.applyStyles("dark", {
       backgroundImage:
-        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
+        "radial-gradient(at 50% 50%, hsl(220, 30%, 5%), hsl(220, 30%, 5%))",
     }),
   },
 }));
 
 export default function Login() {
   const { login, signInProvider } = useAuthCalls();
+
+ 
+
   const navigate = useNavigate();
 
   return (
@@ -107,74 +110,6 @@ export default function Login() {
               component={(props) => <LoginForm {...props} />}
             ></Formik>
 
-            <Box
-              component="form"
-              //   onSubmit={handleSubmit}
-              noValidate
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                gap: 2,
-              }}
-            >
-              <FormControl>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <TextField
-                  //   error={emailError}
-                  //   helperText={emailErrorMessage}
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="your@email.com"
-                  autoComplete="email"
-                  autoFocus
-                  required
-                  fullWidth
-                  variant="outlined"
-                  //   color={emailError ? "error" : "primary"}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <TextField
-                  //   error={passwordError}
-                  //   helperText={passwordErrorMessage}
-                  name="password"
-                  placeholder="••••••"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  autoFocus
-                  required
-                  fullWidth
-                  variant="outlined"
-                  //   color={passwordError ? "error" : "primary"}
-                />
-              </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                // onClick={validateInputs}
-              >
-                Sign in
-              </Button>
-              <Link
-                component="button"
-                type="button"
-                // onClick={handleClickOpen}
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-              >
-                Forgot your password?
-              </Link>
-            </Box>
             <Divider>or</Divider>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <Button

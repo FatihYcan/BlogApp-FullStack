@@ -295,7 +295,7 @@ export default function Navbar() {
                   </>
                 )}
 
-                {!username && (
+                {username && (
                   <MenuItem style={{ background: "none" }}>
                     <Link
                       to="/"
