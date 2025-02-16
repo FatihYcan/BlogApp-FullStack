@@ -32,7 +32,7 @@ module.exports = {
 
         // data.sort((a, b) => b.views.length - a.views.length);
 
-        res.status(200).send({ error: false, detail: await res.getModelListDetails(Blog, customFilter), data })
+        res.status(200).send({ error: false, details: await res.getModelListDetails(Blog, customFilter), data })
     },
 
     create: async (req, res) => {

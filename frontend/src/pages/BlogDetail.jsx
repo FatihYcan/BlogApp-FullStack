@@ -30,7 +30,7 @@ const SyledCardContent = styled(CardContent)({
   },
 });
 
-export default function Detail() {
+export default function BlogDetail() {
   const { _id } = useParams();
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ export default function Detail() {
 
   const handleLike = () => {
     if (username) {
-      postBlogLike("blogs", _id);
+      postBlogLike({ id: _id });
     } else {
       navigate("/login");
     }

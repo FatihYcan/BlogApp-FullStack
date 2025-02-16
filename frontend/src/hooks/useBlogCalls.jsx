@@ -23,7 +23,8 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosWithToken(url);
       const apiData = data.data;
-      dispatch(getUserSuccess({ apiData }));
+      const details = data.details;
+      dispatch(getUserSuccess({ apiData, details }));
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -54,8 +55,8 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosPublic(url);
       const apiData = data.data;
-      const detail = data.detail;
-      dispatch(getBlogSuccess({ apiData, detail }));
+      const details = data.details;
+      dispatch(getBlogSuccess({ apiData, details }));
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -66,8 +67,8 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosPublic(url);
       const apiData = data.data;
-      const detail = data.detail;
-      dispatch(getBlogViewSuccess({ apiData, detail }));
+      const details = data.details;
+      dispatch(getBlogViewSuccess({ apiData, details }));
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -131,8 +132,8 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosWithToken(`/blogs?author=${user.id}`);
       const apiData = data.data;
-      const detail = data.detail;
-      dispatch(getUserBlogSuccess({ apiData, detail }));
+      const details = data.details;
+      dispatch(getUserBlogSuccess({ apiData, details }));
     } catch (error) {
       dispatch(fetchFail());
     }

@@ -37,7 +37,7 @@ export function Search() {
 }
 
 export default function MainContent() {
-  const { blogs, categories, viewBlogs, detail, likes } = useSelector(
+  const { blogs, categories, viewBlogs, details, likes } = useSelector(
     (state) => state.blog
   );
   const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
@@ -158,7 +158,7 @@ export default function MainContent() {
       </Grid>
 
       <div>
-        {detail.totalRecords > detail.limit && (
+        {details.totalRecords > details.limit && (
           <Box
             sx={{
               display: "flex",
@@ -171,7 +171,7 @@ export default function MainContent() {
             <Stack spacing={2}>
               <Pagination
                 color="primary"
-                count={detail?.pages?.total}
+                count={details?.pages?.total}
                 onChange={handleChange}
                 page={page}
                 showFirstButton

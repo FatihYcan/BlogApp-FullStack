@@ -19,7 +19,7 @@ module.exports = {
                 </ul>`
         */
         const data = await res.getModelList(Comment)
-        res.status(200).send({ error: false, detail: await res.getModelListDetails(Comment), data })
+        res.status(200).send({ error: false, details: await res.getModelListDetails(Comment), data })
     },
 
     create: async (req, res) => {

@@ -10,7 +10,7 @@ export default function Blog() {
       <Container
         maxWidth="xl"
         component="main"
-        sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
+        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
       >
         <MainContent />
       </Container>

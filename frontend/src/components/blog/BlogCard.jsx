@@ -65,19 +65,17 @@ export default function BlogCard({
   views,
   userId,
   createdAt,
-  page,
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { username } = useSelector((state) => state.auth);
-  const { getBlogs, postBlogLike } = useBlogCalls();
+  const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
 
   const handleLike = () => {
     if (username) {
-      postBlogLike("blogs", _id);
-      getBlogs(`blogs?page=${page}&limit=3`);
+      postBlogLike({ id: _id });
     } else {
       navigate("/login");
     }
@@ -140,7 +138,7 @@ export default function BlogCard({
 
             {likes.length > 0 && (
               <span
-                style={{ fontSize: "1.2rem", marginLeft: "2px"  }}
+                style={{ fontSize: "1.2rem", marginLeft: "2px" }}
                 onClick={handleOpen}
               >
                 {likes.length}
