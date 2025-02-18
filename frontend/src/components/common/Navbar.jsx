@@ -1,20 +1,20 @@
-import * as React from "react";
 import { alpha, styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
-import MenuItem from "@mui/material/MenuItem";
 import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import { useSelector } from "react-redux";
+import useAuthCalls from "../../hooks/useAuthCalls";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import blog from "../../img/blog-app.png";
+import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import ColorModeIconDropdown from "./ColorModeIconDropdown";
-import { useSelector } from "react-redux";
-import useAuthCalls from "../hooks/useAuthCalls";
-import { Link, useLocation } from "react-router-dom";
-import blog from "../img/blog-app.png";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -50,7 +50,7 @@ export default function Navbar() {
   const { logout } = useAuthCalls();
   const location = useLocation();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

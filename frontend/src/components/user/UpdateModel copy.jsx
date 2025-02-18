@@ -1,16 +1,23 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { object, string, boolean } from "yup";
+import { useFormik } from "formik";
 
 const style = {
   position: "absolute",
@@ -26,26 +33,76 @@ const style = {
   overflowY: "auto",
 };
 
+export const updateUserSchema = object({
+  username: string().required("User Name zorunludur."),
+  firstName: string().required("First Name zorunludur."),
+  lastName: string().required("Last Name zorunludur."),
+  email: string()
+    .matches(
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Lütfen geçerli bir email adresi giriniz."
+    )
+    .required("Email zorunludur."),
+  password: string()
+    .notRequired()
+    .when("password", {
+      is: (value) => value && value.length > 0,
+      then: (schema) =>
+        schema
+          .min(8, "Şifre en az 8 karakter olmalıdır.")
+          .matches(/\d/, "Şifre en az bir rakam içermelidir.")
+          .matches(/[a-z]/, "Şifre en az bir küçük harf içermelidir.")
+          .matches(/[A-Z]/, "Şifre en az bir büyük harf içermelidir.")
+          .matches(
+            /[@$!%*?&]/,
+            "Şifre en az bir özel karakter (@$!%*?&) içermelidir."
+          ),
+    }),
+  isActive: boolean().required("Aktiflik durumu zorunludur."),
+  isAdmin: boolean().required("Admin durumu zorunludur."),
+});
+
 export default function UpdateModel({
+  values,
+  handleChange,
+  errors,
+  touched,
+  handleBlur,
+  handleSubmit,
+  setFieldValue,
   updateOpen,
   handleUpdateClose,
-  setData,
-  data,
 }) {
-  const { putUser, getSingleUser } = useBlogCalls();
-  const { _id } = useParams();
+  // const { putUser, getSingleUser } = useBlogCalls();
+  // const { _id } = useParams();
+  //
+  // console.log(data.isAdmin)
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  // const handleChange = (e) => {
+  //   setData({ ...data, [e.target.name]: e.target.value });
+  // };
+
+  // const imagePath = data?.images?.map((image) => image.slice(1)) || [];
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   putUser({ id: _id, data });
+  //   getSingleUser({ id: _id });
+  //   handleUpdateClose();
+  // };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
-  const imagePath = data?.images?.map((image) => image.slice(1)) || [];
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await putUser(_id, data);
-    await getSingleUser(_id);
-    handleUpdateClose();
+  const handlePasswordChange = (e) => {
+    setIsPasswordChanged(true);
+    handleChange(e);
   };
 
   return (
@@ -73,8 +130,12 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
+                color={errors.username ? "error" : "primary"}
+                value={values.username}
                 onChange={handleChange}
-                value={data.username}
+                onBlur={handleBlur}
+                error={touched.username && Boolean(errors.username)}
+                helperText={errors.username}
               />
             </FormControl>
             <FormControl fullWidth margin="normal">
@@ -85,8 +146,12 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
+                color={errors.firstName ? "error" : "primary"}
+                value={values.firstName}
                 onChange={handleChange}
-                value={data.firstName}
+                onBlur={handleBlur}
+                error={touched.firstName && Boolean(errors.firstName)}
+                helperText={errors.firstName}
               />
             </FormControl>
 
@@ -98,8 +163,12 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
+                color={errors.lastName ? "error" : "primary"}
+                value={values.lastName}
                 onChange={handleChange}
-                value={data.lastName}
+                onBlur={handleBlur}
+                error={touched.lastName && Boolean(errors.lastName)}
+                helperText={errors.lastName}
               />
             </FormControl>
 
@@ -111,23 +180,45 @@ export default function UpdateModel({
                 type="email"
                 variant="outlined"
                 required
+                color={errors.email ? "error" : "primary"}
+                value={values.email}
                 onChange={handleChange}
-                value={data.email}
+                onBlur={handleBlur}
+                error={touched.email && Boolean(errors.email)}
+                helperText={errors.email}
               />
             </FormControl>
 
-            {/* <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                name="password"
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="••••••"
                 variant="outlined"
-                required
-                onChange={handleChange}
-                value={data.password}
+                color={errors.password ? "error" : "primary"}
+                value={isPasswordChanged ? values.password : ""}
+                onChange={handlePasswordChange}
+                onBlur={handleBlur}
+                error={touched.password && Boolean(errors.password)}
+                helperText={errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </FormControl> */}
+            </FormControl>
 
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="isActive">Active</FormLabel>
@@ -135,8 +226,12 @@ export default function UpdateModel({
                 id="isActive"
                 select
                 name="isActive"
-                value={data.isActive}
+                color={errors.isActive ? "error" : "primary"}
+                value={values.isActive}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.isActive && Boolean(errors.isActive)}
+                helperText={errors.isActive}
               >
                 <MenuItem value={false}>False</MenuItem>
                 <MenuItem value={true}>True</MenuItem>
@@ -149,8 +244,12 @@ export default function UpdateModel({
                 id="isAdmin"
                 select
                 name="isAdmin"
-                value={data.isAdmin}
+                color={errors.isAdmin ? "error" : "primary"}
+                value={values.isAdmin}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.isAdmin && Boolean(errors.isAdmin)}
+                helperText={errors.isAdmin}
               >
                 <MenuItem value={false}>False</MenuItem>
                 <MenuItem value={true}>True</MenuItem>

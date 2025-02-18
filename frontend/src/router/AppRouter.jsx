@@ -1,17 +1,28 @@
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import Navbar from "../components/Navbar";
+// import Dashboard from "../pages/Dashboard";
+// import NewBlog from "../pages/NewBlog";
+// // import About from "../pages/About";
+// import Footer from "../components/Footer";
+// import BlogDetail from "../pages/BlogDetail";
+// import UserDetail from "../pages/UserDetail";
+// // import Register from "../pages/Register";
+// import Login from "../pages/Login";
+// // import MyBlogs from "../pages/MyBlogs";
+// // import Profile from "../pages/Profile";
+// import PrivateRouter from "./PrivateRouter";
+// import Users from "../pages/Users";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "../components/common/Navbar";
 import Dashboard from "../pages/Dashboard";
-import NewBlog from "../pages/NewBlog";
-// import About from "../pages/About";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import BlogDetail from "../pages/BlogDetail";
-import UserDetail from "../pages/UserDetail";
-// import Register from "../pages/Register";
-import Login from "../pages/Login";
-// import MyBlogs from "../pages/MyBlogs";
-// import Profile from "../pages/Profile";
+import Users from "../pages/user/Users";
+import Login from "../pages/auth/Login";
 import PrivateRouter from "./PrivateRouter";
-import Users from "../pages/Users";
+import NewBlog from "../pages/blog/NewBlog";
+import BlogDetail from "../pages/blog/BlogDetail";
+import UserDetail from "../pages/user/UserDetail";
+import Footer from "../components/common/Footer";
 
 const AppRouter = () => {
   return (

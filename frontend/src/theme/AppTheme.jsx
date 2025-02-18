@@ -1,13 +1,18 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import { inputsCustomizations } from './inputs';
-import { dataDisplayCustomizations } from './dataDisplay';
-import { feedbackCustomizations } from './feedback';
-import { navigationCustomizations } from './navigation';
-import { surfacesCustomizations } from './surfaces';
-import { colorSchemes, typography, shadows, shape } from './themePrimitives';
+import { inputsCustomizations } from "./components/inputs";
+import { dataDisplayCustomizations } from "./components/dataDisplay";
+import { feedbackCustomizations } from "./components/feedback";
+import { navigationCustomizations } from "./components/navigation";
+import { surfacesCustomizations } from "./components/surfaces";
+import {
+  colorSchemes,
+  typography,
+  shadows,
+  shape,
+} from "./primitives/themePrimitives";
 
 function AppTheme(props) {
   const { children, disableCustomTheme, themeComponents } = props;
@@ -17,8 +22,8 @@ function AppTheme(props) {
       : createTheme({
           // For more details about CSS variables configuration, see https://mui.com/material-ui/customization/css-theme-variables/configuration/
           cssVariables: {
-            colorSchemeSelector: 'data-mui-color-scheme',
-            cssVarPrefix: 'template',
+            colorSchemeSelector: "data-mui-color-scheme",
+            cssVarPrefix: "template",
           },
           colorSchemes, // Recently added in v6 for building light & dark mode app, see https://mui.com/material-ui/customization/palette/#color-schemes
           typography,

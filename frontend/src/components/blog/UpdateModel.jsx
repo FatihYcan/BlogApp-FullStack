@@ -1,17 +1,15 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 const style = {
   position: "absolute",
@@ -49,7 +47,7 @@ export default function UpdateModel({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    putBlog({ id: _id, data });
+    putBlog(_id, data);
   };
 
   return (

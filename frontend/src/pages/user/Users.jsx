@@ -1,19 +1,17 @@
-import {
-  Box,
-  Container,
-  CssBaseline,
-  FormControl,
-  InputAdornment,
-  OutlinedInput,
-  Pagination,
-  Stack,
-} from "@mui/material";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid2";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
-import useBlogCalls from "../hooks/useBlogCalls";
+import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
-import UserCard from "../components/user/UserCard";
+import UserCard from "../../components/user/UserCard";
 
 export function Search() {
   return (
@@ -40,8 +38,6 @@ export default function Users() {
   const { users, details } = useSelector((state) => state.blog);
   const { getUsers } = useBlogCalls();
   const [page, setPage] = useState(1);
-
-  console.log(users);
 
   useEffect(() => {
     getUsers(`users?page=${page}&limit=6`);

@@ -1,22 +1,20 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  styled,
-  Typography,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import styled from "@mui/material/styles/styled";
+import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
-import LikeModal from "./LikeModal";
 import { useSelector } from "react-redux";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import { useNavigate } from "react-router-dom";
+import LikeModal from "./LikeModal";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -75,7 +73,7 @@ export default function BlogCard({
 
   const handleLike = () => {
     if (username) {
-      postBlogLike({ id: _id });
+      postBlogLike(_id);
     } else {
       navigate("/login");
     }

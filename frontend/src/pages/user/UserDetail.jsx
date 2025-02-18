@@ -1,18 +1,18 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  CardContent,
-  CardMedia,
-  Container,
-  styled,
-  Typography,
-} from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useBlogCalls from "../hooks/useBlogCalls";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Container from "@mui/material/Container";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import useBlogCalls from "../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
-import UpdateModel from "../components/user/UpdateModel";
+import UpdateModel from "../../components/user/UpdateModel";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -40,24 +40,13 @@ export default function UserDetail() {
   const { singleUser } = useSelector((state) => state.blog);
   //   const { username } = useSelector((state) => state.auth);
 
-  console.log(singleUser);
-
   const { getSingleUser } = useBlogCalls();
 
-   useEffect(() => {
-    getSingleUser({ id: _id });
+  useEffect(() => {
+    getSingleUser(_id);
   }, []);
 
-  const {
-    createdAt,
-    email,
-    firstName,
-    image,
-    isActive,
-    isAdmin,
-    lastName,
-    username,
-  } = singleUser;
+  const { createdAt, email, firstName, image, lastName, username } = singleUser;
 
   const fullName = firstName + " " + lastName;
 
@@ -74,6 +63,7 @@ export default function UserDetail() {
       isActive: singleUser.isActive,
       isAdmin: singleUser.isAdmin,
       lastName: singleUser.lastName,
+      // password: singleUser.password,
       username: singleUser.username,
     });
     setUpdateOpen(true);
@@ -87,6 +77,7 @@ export default function UserDetail() {
     isActive: singleUser.isActive,
     isAdmin: singleUser.isAdmin,
     lastName: singleUser.lastName,
+    // password: singleUser.password,
     username: singleUser.username,
   });
 

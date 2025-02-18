@@ -1,31 +1,30 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import MuiCard from "@mui/material/Card";
+import useAuthCalls from "../../hooks/useAuthCalls";
+import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
+import LoginForm, { loginSchema } from "../../auth/components/LoginForm";
+
+
 // import ForgotPassword from './components/ForgotPassword';
 // import AppTheme from '../shared-theme/AppTheme';
 // import ColorModeSelect from "../shared-theme/ColorModeSelect";
 // import {
 //   GoogleIcon,
 // } from "./components/CustomIcons";
-
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Link,
-  Stack,
-  styled,
-  TextField,
-  Typography,
-} from "@mui/material";
-import MuiCard from "@mui/material/Card";
-import useAuthCalls from "../hooks/useAuthCalls";
-import { useNavigate } from "react-router-dom";
-import { Formik } from "formik";
-import LoginForm, { loginSchema } from "../components/auth/LoginForm";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -70,9 +69,6 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 export default function Login() {
   const { login, signInProvider } = useAuthCalls();
-
- 
-
   const navigate = useNavigate();
 
   return (

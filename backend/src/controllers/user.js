@@ -73,6 +73,10 @@ module.exports = {
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
         const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
+        console.log("customFilters", customFilters)
+
+        console.log("req.body:", req.body);
+
         //! Eğer admin değil ise isAdmin ve icActive güncellenemez.
         if (!req.user?.isAdmin) {
             delete req.body.isActive
@@ -81,6 +85,10 @@ module.exports = {
 
         if (req.file) {
             req.body.image = req.file.path
+        }
+
+        if (!req.body.password) {
+            delete req.body.password
         }
 
         const data = await User.updateOne(customFilters, req.body, { runValidators: true })

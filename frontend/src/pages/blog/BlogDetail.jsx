@@ -1,23 +1,21 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  CardContent,
-  CardMedia,
-  Container,
-  styled,
-  Typography,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Container from "@mui/material/Container";
+import styled from "@mui/material/styles/styled";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useBlogCalls from "../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
-import Grid from "@mui/material/Grid2";
-import LikeModal from "../components/blog/LikeModal";
-import UpdateModel from "../components/blog/UpdateModel";
+import useBlogCalls from "../../hooks/useBlogCalls";
+import LikeModal from "../../components/blog/LikeModal";
+import UpdateModel from "../../components/blog/UpdateModel";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -65,7 +63,7 @@ export default function BlogDetail() {
   });
 
   useEffect(() => {
-    getSingleBlog({ id: _id });
+    getSingleBlog(_id);
   }, [like]);
 
   const {
@@ -86,7 +84,7 @@ export default function BlogDetail() {
 
   const handleLike = () => {
     if (username) {
-      postBlogLike({ id: _id });
+      postBlogLike(_id);
     } else {
       navigate("/login");
     }

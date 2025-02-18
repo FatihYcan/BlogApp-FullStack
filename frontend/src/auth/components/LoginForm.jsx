@@ -1,19 +1,15 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  IconButton,
-  InputAdornment,
-  Link,
-  TextField,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
-import { object, string } from "yup";
+import { object } from "yup";
+import { string } from "yup";
 
 export const loginSchema = object({
   email: string()
@@ -45,8 +41,6 @@ export default function LoginForm({
   setFieldValue,
 }) {
   const [showPassword, setShowPassword] = useState(false);
-
-  console.log(values);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -82,7 +76,7 @@ export default function LoginForm({
           helperText={errors.email}
         />
       </FormControl>
-      <FormControl>
+      <FormControl fullWidth margin="normal">
         <FormLabel htmlFor="password">Password</FormLabel>
         <TextField
           id="password"
