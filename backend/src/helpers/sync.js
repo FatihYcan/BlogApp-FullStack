@@ -21,7 +21,7 @@ module.exports = async () => {
         "lastName": "admin",
         "email": "admin@site.com",
         "password": "aA?123456",
-        "image": "",
+        "image": [],
         "isActive": true,
         "isAdmin": true
     })
@@ -32,7 +32,7 @@ module.exports = async () => {
         "email": "test@site.com",
         "firstName": "test",
         "lastName": "test",
-        "image": "",
+        "image": [],
         "isActive": true,
         "isAdmin": false
     })

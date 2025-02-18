@@ -36,25 +36,28 @@ const StyledTypography = styled(Typography)({
 export default function UserDetail() {
   const { _id } = useParams();
   const navigate = useNavigate();
-
   const { singleUser } = useSelector((state) => state.blog);
-  //   const { username } = useSelector((state) => state.auth);
-
   const { getSingleUser } = useBlogCalls();
+
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [data, setData] = useState({
+    email: singleUser.email,
+    firstName: singleUser.firstName,
+    image: singleUser.image,
+    isActive: singleUser.isActive,
+    isAdmin: singleUser.isAdmin,
+    lastName: singleUser.lastName,
+    password: singleUser.password,
+    username: singleUser.username,
+  });
 
   useEffect(() => {
     getSingleUser(_id);
   }, []);
 
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
+  const fullName = `${firstName} ${lastName}`;
 
-  const fullName = firstName + " " + lastName;
-
-  //   const imagePath = images?.map((image) => image.slice(1)) || [];
-
-  //   const isLiked = likes?.some((like) => like.userId.username === username);
-
-  const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateOpen = () => {
     setData({
       email: singleUser.email,
@@ -63,23 +66,17 @@ export default function UserDetail() {
       isActive: singleUser.isActive,
       isAdmin: singleUser.isAdmin,
       lastName: singleUser.lastName,
-      // password: singleUser.password,
+      password: singleUser.password,
       username: singleUser.username,
     });
     setUpdateOpen(true);
   };
+
   const handleUpdateClose = () => setUpdateOpen(false);
 
-  const [data, setData] = useState({
-    email: singleUser.email,
-    firstName: singleUser.firstName,
-    image: singleUser.image,
-    isActive: singleUser.isActive,
-    isAdmin: singleUser.isAdmin,
-    lastName: singleUser.lastName,
-    // password: singleUser.password,
-    username: singleUser.username,
-  });
+  //   const imagePath = images?.map((image) => image.slice(1)) || [];
+
+  //   const isLiked = likes?.some((like) => like.userId.username === username);
 
   return (
     <Container

@@ -11,6 +11,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useFormik } from "formik";
+import { object, string, boolean } from "yup";
 
 const style = {
   position: "absolute",
@@ -26,6 +32,30 @@ const style = {
   overflowY: "auto",
 };
 
+const validationSchema = object({
+  username: string().required("Username zorunludur."),
+  firstName: string().required("First Name zorunludur."),
+  lastName: string().required("Last Name zorunludur."),
+  email: string()
+    .matches(
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Lütfen geçerli bir email adresi giriniz."
+    )
+    .required("Email zorunludur."),
+  password: string()
+    .min(8, "Şifre en az 8 karakter olmalıdır.")
+    .matches(/\d/, "Şifre en az bir rakam içermelidir.")
+    .matches(/[a-z]/, "Şifre en az bir küçük harf içermelidir.")
+    .matches(/[A-Z]/, "Şifre en az bir büyük harf içermelidir.")
+    .matches(
+      /[@$!%*?&]/,
+      "Şifre en az bir özel karakter (@$!%*?&) içermelidir."
+    )
+    .nullable(), // Şifre boşsa doğrulama yapma
+  isActive: boolean().required("Aktif durumu zorunludur"),
+  isAdmin: boolean().required("Admin durumu zorunludur"),
+});
+
 export default function UpdateModel({
   updateOpen,
   handleUpdateClose,
@@ -35,17 +65,33 @@ export default function UpdateModel({
   const { putUser, getSingleUser } = useBlogCalls();
   const { _id } = useParams();
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      username: data.username || "",
+      firstName: data.firstName || "",
+      lastName: data.lastName || "",
+      email: data.email || "",
+      password: data.password ? "" : data.password || "",
+      isActive: data.isActive || false,
+      isAdmin: data.isAdmin || false,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      await putUser(_id, values);
+      await getSingleUser(_id);
+      handleUpdateClose();
+    },
+  });
 
-  const imagePath = data?.images?.map((image) => image.slice(1)) || [];
+  console.log(data.password);
 
-  const handleSubmit = async (e) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (e) => {
     e.preventDefault();
-    await putUser(_id, data);
-    await getSingleUser(_id);
-    handleUpdateClose();
   };
 
   return (
@@ -60,7 +106,7 @@ export default function UpdateModel({
           <Box
             encType="multipart/form-data"
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
           >
             <Typography gutterBottom variant="h6" component="div">
               Update User
@@ -73,8 +119,13 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
-                onChange={handleChange}
-                value={data.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.username}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
             </FormControl>
             <FormControl fullWidth margin="normal">
@@ -85,8 +136,13 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
-                onChange={handleChange}
-                value={data.firstName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.firstName}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </FormControl>
 
@@ -98,8 +154,13 @@ export default function UpdateModel({
                 type="text"
                 variant="outlined"
                 required
-                onChange={handleChange}
-                value={data.lastName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.lastName}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </FormControl>
 
@@ -111,23 +172,55 @@ export default function UpdateModel({
                 type="email"
                 variant="outlined"
                 required
-                onChange={handleChange}
-                value={data.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </FormControl>
 
-            {/* <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                name="password"
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder={
+                  formik.values.password === ""
+                    ? "••••••"
+                    : formik.values.password
+                }
                 variant="outlined"
-                required
-                onChange={handleChange}
-                value={data.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={
+                  formik.touched.password && formik.errors.password
+                    ? formik.errors.password
+                    : formik.values.password === ""
+                    ? "Şifreyi değiştirmek istiyorsanız bu alanı doldurun."
+                    : ""
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-            </FormControl> */}
+            </FormControl>
 
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="isActive">Active</FormLabel>
@@ -135,8 +228,13 @@ export default function UpdateModel({
                 id="isActive"
                 select
                 name="isActive"
-                value={data.isActive}
-                onChange={handleChange}
+                value={formik.values.isActive}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.isActive && Boolean(formik.errors.isActive)
+                }
+                helperText={formik.touched.isActive && formik.errors.isActive}
               >
                 <MenuItem value={false}>False</MenuItem>
                 <MenuItem value={true}>True</MenuItem>
@@ -149,88 +247,16 @@ export default function UpdateModel({
                 id="isAdmin"
                 select
                 name="isAdmin"
-                value={data.isAdmin}
-                onChange={handleChange}
+                value={formik.values.isAdmin}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.isAdmin && Boolean(formik.errors.isAdmin)}
+                helperText={formik.touched.isAdmin && formik.errors.isAdmin}
               >
                 <MenuItem value={false}>False</MenuItem>
                 <MenuItem value={true}>True</MenuItem>
               </TextField>
             </FormControl>
-
-            {/* 
-            <FormControl fullWidth margin="normal">
-              <FormLabel htmlFor="images">Images</FormLabel>
-              <Box
-                sx={{
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "10px",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "10px",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                  }}
-                >
-                  {imagePath.map((image, index) => (
-                    <Box key={index} sx={{ position: "relative" }}>
-                      <img
-                        src={`http://127.0.0.1:8000${image}`}
-                        alt={`Uploaded ${index}`}
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          objectFit: "cover",
-                          borderRadius: "5px",
-                        }}
-                      />
-                      <button
-                        // onClick={() => handleDeleteImage(image)}
-                        style={{
-                          position: "absolute",
-                          top: "5px",
-                          right: "5px",
-                          backgroundColor: "red",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "50%",
-                          width: "20px",
-                          height: "20px",
-                          cursor: "pointer",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: "12px",
-                        }}
-                      >
-                        X
-                      </button>
-                    </Box>
-                  ))}
-                </Box>
-
-                <input
-                  id="images"
-                  name="images"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  style={{
-                    width: "100%",
-                    cursor: "pointer",
-                    border: "none",
-                    outline: "none",
-                  }}
-                />
-              </Box>
-            </FormControl> */}
 
             <button
               type="submit"

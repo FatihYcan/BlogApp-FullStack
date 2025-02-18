@@ -44,8 +44,11 @@ module.exports = {
 
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
-        req.body.images = req.files.map(file => file.path)
 
+        if (req.files && req.files.length > 0) {
+            req.body.images = req.files.map(file => "./uploads/blog/" + file.filename);
+        }
+        
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
     },
@@ -105,8 +108,6 @@ module.exports = {
         req.body.images = blog.images
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
-        // const data = await Blog.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
-
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
     },
 

@@ -8,8 +8,7 @@ import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
-import { object } from "yup";
-import { string } from "yup";
+import { object, string } from "yup";
 
 export const loginSchema = object({
   email: string()
@@ -17,7 +16,7 @@ export const loginSchema = object({
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Lütfen geçerli bir email adresi giriniz."
     )
-    .required("Email alanı zorunludur."),
+    .required("Email zorunludur."),
 
   password: string()
     .min(8, "Şifre en az 8 karakter olmalıdır.")
@@ -28,7 +27,7 @@ export const loginSchema = object({
       /[@$!%*?&]/,
       "Şifre en az bir özel karakter (@$!%*?&) içermelidir."
     )
-    .required("Şifre alanı zorunludur."),
+    .required("Şifre zorunludur."),
 });
 
 export default function LoginForm({

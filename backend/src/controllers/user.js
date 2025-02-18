@@ -39,7 +39,7 @@ module.exports = {
         req.body.isAdmin = false
 
         if (req.file) {
-            req.body.image = req.file.path
+            req.body.image = "./uploads/user/" + req.file.filename
         }
 
         const data = await User.create(req.body)
@@ -73,10 +73,6 @@ module.exports = {
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
         const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
-        console.log("customFilters", customFilters)
-
-        console.log("req.body:", req.body);
-
         //! Eğer admin değil ise isAdmin ve icActive güncellenemez.
         if (!req.user?.isAdmin) {
             delete req.body.isActive
@@ -84,7 +80,9 @@ module.exports = {
         }
 
         if (req.file) {
-            req.body.image = req.file.path
+            req.body.image = "./uploads/user/" + req.file.filename;
+        } else {
+            req.body.image = User.image; 
         }
 
         if (!req.body.password) {
