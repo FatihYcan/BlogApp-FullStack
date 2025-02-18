@@ -51,7 +51,7 @@ const validationSchema = object({
       /[@$!%*?&]/,
       "Şifre en az bir özel karakter (@$!%*?&) içermelidir."
     )
-    .nullable(), // Şifre boşsa doğrulama yapma
+    .nullable(),
   isActive: boolean().required("Aktif durumu zorunludur"),
   isAdmin: boolean().required("Admin durumu zorunludur"),
 });
@@ -72,19 +72,39 @@ export default function UpdateModel({
       firstName: data.firstName || "",
       lastName: data.lastName || "",
       email: data.email || "",
+      image: data.image || [],
       password: data.password ? "" : data.password || "",
       isActive: data.isActive || false,
       isAdmin: data.isAdmin || false,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await putUser(_id, values);
+      const formData = new FormData();
+
+      formData.append("username", values.username);
+      formData.append("firstName", values.firstName);
+      formData.append("lastName", values.lastName);
+      formData.append("email", values.email);
+      formData.append("isActive", values.isActive);
+      formData.append("isAdmin", values.isAdmin);
+
+      if (values.password) {
+        formData.append("password", values.password);
+      }
+
+      if (
+        values.image &&
+        values.image instanceof FileList &&
+        values.image.length > 0
+      ) {
+        formData.append("image", values.image[0]);
+      }
+
+      await putUser(_id, formData);
       await getSingleUser(_id);
       handleUpdateClose();
     },
   });
-
-  console.log(data.password);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -93,6 +113,8 @@ export default function UpdateModel({
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
+
+  const userImage = data.image ? data?.image[0]?.slice(1) : null;
 
   return (
     <div>
@@ -220,6 +242,60 @@ export default function UpdateModel({
                   ),
                 }}
               />
+            </FormControl>
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="image">Image</FormLabel>
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box sx={{ position: "relative" }}>
+                    {userImage && (
+                      <img
+                        src={`http://127.0.0.1:8000${userImage}`}
+                        alt={formik.values.username}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    )}
+                  </Box>
+                </Box>
+
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  style={{
+                    width: "100%",
+                    cursor: "pointer",
+                    border: "none",
+                    outline: "none",
+                  }}
+                  onChange={(event) => {
+                    formik.setFieldValue("image", event.currentTarget.files);
+                  }}
+                />
+              </Box>
             </FormControl>
 
             <FormControl fullWidth margin="normal">

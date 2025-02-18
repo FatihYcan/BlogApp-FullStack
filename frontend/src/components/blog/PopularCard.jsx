@@ -92,6 +92,8 @@ export default function PopularCard({
 
   const isLiked = likes.some((like) => like.userId.username === username);
 
+  const userImage = userId.image[0].slice(1);
+
   return (
     <Grid size={{ xs: 12, sm: 6 }}>
       <Box
@@ -201,8 +203,8 @@ export default function PopularCard({
               <Avatar
                 key={userId._id}
                 alt={userId.username}
-                src={userId.image}
-                sx={{ width: 24, height: 24 }}
+                src={`http://127.0.0.1:8000${userImage}`}
+                sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
             <Typography variant="caption">{userId.username}</Typography>

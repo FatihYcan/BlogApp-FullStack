@@ -83,7 +83,8 @@ export default function BlogCard({
     navigate(`/blog/${_id}`);
   };
 
-  const imagePath = images[0].slice(1);
+  const blogImage = images[0].slice(1);
+  const userImage = userId.image[0].slice(1);
 
   const isLiked = likes.some((like) => like.userId.username === username);
 
@@ -94,7 +95,7 @@ export default function BlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={`http://127.0.0.1:8000${imagePath}`}
+          image={`http://127.0.0.1:8000${blogImage}`}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -195,8 +196,8 @@ export default function BlogCard({
               <Avatar
                 key={userId._id}
                 alt={userId.username}
-                src={userId.image}
-                sx={{ width: 24, height: 24 }}
+                src={`http://127.0.0.1:8000${userImage}`}
+                sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
             <Typography variant="caption">{userId.username}</Typography>

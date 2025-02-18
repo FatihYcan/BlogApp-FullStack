@@ -61,6 +61,7 @@ export default function UserCard({
   };
 
   const fullName = firstName + " " + lastName;
+  const userImage = image[0].slice(1);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -69,8 +70,7 @@ export default function UserCard({
           onClick={handleDetail}
           component="img"
           alt={username}
-          //   image={"`http://127.0.0.1:8000${imagePath}`"}
-          image={image}
+          image={`http://127.0.0.1:8000${userImage}`}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -109,8 +109,8 @@ export default function UserCard({
               <Avatar
                 key={_id}
                 alt={username}
-                src={image}
-                sx={{ width: 24, height: 24 }}
+                src={`http://127.0.0.1:8000${userImage}`}
+                sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
             <Typography variant="caption">{email}</Typography>

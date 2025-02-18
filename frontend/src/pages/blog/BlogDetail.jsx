@@ -78,7 +78,8 @@ export default function BlogDetail() {
     views,
   } = singleBlog;
 
-  const imagePath = images?.map((image) => image.slice(1)) || [];
+  const blogImage = images?.map((image) => image.slice(1)) || [];
+  const userImage = userId?.image[0].slice(1) || [];
 
   const isLiked = likes?.some((like) => like.userId.username === username);
 
@@ -105,7 +106,7 @@ export default function BlogDetail() {
       <CardMedia
         component="img"
         alt={title}
-        image={`http://127.0.0.1:8000${imagePath[0]}`}
+        image={`http://127.0.0.1:8000${blogImage[0]}`}
         sx={{
           width: "80%",
           margin: "auto",
@@ -136,8 +137,8 @@ export default function BlogDetail() {
             <Avatar
               key={userId?._id}
               alt={userId?.username}
-              src={userId?.image}
-              sx={{ width: 24, height: 24 }}
+              src={`http://127.0.0.1:8000${userImage}`}
+              sx={{ width: 30, height: 30 }}
             />
           </AvatarGroup>
           <Typography variant="caption">{userId?.username}</Typography>
@@ -160,7 +161,7 @@ export default function BlogDetail() {
       </SyledCardContent>
 
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
-        {imagePath.map((image, index) => (
+        {blogImage.map((image, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6 }}>
             <CardMedia
               component="img"

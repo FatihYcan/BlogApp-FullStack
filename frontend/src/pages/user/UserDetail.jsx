@@ -74,9 +74,7 @@ export default function UserDetail() {
 
   const handleUpdateClose = () => setUpdateOpen(false);
 
-  //   const imagePath = images?.map((image) => image.slice(1)) || [];
-
-  //   const isLiked = likes?.some((like) => like.userId.username === username);
+  const userImage = image ? image[0].slice(1) : null;
 
   return (
     <Container
@@ -93,8 +91,7 @@ export default function UserDetail() {
       <CardMedia
         component="img"
         alt={username}
-        // image={"`http://127.0.0.1:8000${imagePath[0]}`"}
-        image={image}
+        image={`http://127.0.0.1:8000${userImage}`}
         sx={{
           width: "80%",
           margin: "auto",
@@ -133,7 +130,7 @@ export default function UserDetail() {
             <Avatar
               key={_id}
               alt={username}
-              src={image}
+              src={`http://127.0.0.1:8000${userImage}`}
               sx={{ width: 24, height: 24 }}
             />
           </AvatarGroup>
