@@ -4,6 +4,17 @@ import { useSelector } from "react-redux";
 const useAxios = () => {
   const { token } = useSelector((state) => state.auth);
 
+  const axiosPublic = axios.create({
+    baseURL: `${process.env.REACT_APP_BASE_URL}`,
+  });
+
+  const axiosData = axios.create({
+    baseURL: `${process.env.REACT_APP_BASE_URL}`,
+    headers: {
+      "Content-type": "multipart/form-data",
+    },
+  });
+
   const axiosWithToken = axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
     headers: {
@@ -12,10 +23,7 @@ const useAxios = () => {
     },
   });
 
-  const axiosPublic = axios.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL}`,
-  });
-  return { axiosWithToken, axiosPublic };
+  return { axiosPublic, axiosData, axiosWithToken };
 };
 
 export default useAxios;

@@ -21,47 +21,48 @@ import {
 const useAuthCalls = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { axiosWithToken, axiosPublic } = useAxios();
+  const { axiosPublic, axiosData, axiosWithToken } = useAxios();
 
   const register = async (userInfo) => {
     dispatch(fetchStart());
     try {
       // Mevcut kullanıcıları localStorage'dan al
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+      // const users = JSON.parse(localStorage.getItem("users")) || [];
 
       // Yeni kullanıcıyı diziye ekle
-      users.push({ email: userInfo.email, password: userInfo.password });
+      // users.push({ email: userInfo.email, password: userInfo.password });
 
       // Diziyi tekrar localStorage'a kaydet
-      localStorage.setItem("users", JSON.stringify(users));
+      // localStorage.setItem("users", JSON.stringify(users));
 
-      const { data } = await axiosPublic.post("/users/", userInfo);
+      const { data } = await axiosData.post("/users/", userInfo);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register işlemi başarılı olmuştur.");
-      await createUserWithEmailAndPassword(
-        auth,
-        userInfo.email,
-        userInfo.password
-      );
+      // await createUserWithEmailAndPassword(
+      //   auth,
+      //   userInfo.email,
+      //   userInfo.password
+      // );
       navigate("/");
       return true;
     } catch (error) {
       dispatch(fetchFail());
-
-      if (error.response.data.message.includes("dup key: { username")) {
-        toastErrorNotify(
-          "Bu username daha önce alınmış. Lütfen başka bir username seçin."
-        );
-      } else if (error.response.data.message.includes("dup key: { email")) {
-        toastErrorNotify(
-          "Bu email daha önce alınmış. Lütfen başka bir email girin."
-        );
-      }
-      return false;
+      console.log(error);
+      // if (error.response.data.message.includes("dup key: { username")) {
+      //   toastErrorNotify(
+      //     "Bu username daha önce alınmış. Lütfen başka bir username seçin."
+      //   );
+      // } else if (error.response.data.message.includes("dup key: { email")) {
+      //   toastErrorNotify(
+      //     "Bu email daha önce alınmış. Lütfen başka bir email girin."
+      //   );
+      // }
+      // return false;
     }
   };
 
   const login = async (userInfo) => {
+    console.log(userInfo);
     dispatch(fetchStart());
     try {
       const { data } = await axiosPublic.post("/auth/login/", userInfo);
@@ -96,7 +97,7 @@ const useAuthCalls = () => {
         password: randomPassword,
       };
 
-      const { data } = await axiosPublic.post("/users/", Register);
+      const { data } = await axiosData.post("/users/", Register);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register işlemi başarılı olmuştur.");
       navigate("/");

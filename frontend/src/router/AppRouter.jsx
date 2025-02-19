@@ -23,6 +23,7 @@ import NewBlog from "../pages/blog/NewBlog";
 import BlogDetail from "../pages/blog/BlogDetail";
 import UserDetail from "../pages/user/UserDetail";
 import Footer from "../components/common/Footer";
+import Register from "../pages/auth/Register";
 
 const AppRouter = () => {
   return (
@@ -32,7 +33,7 @@ const AppRouter = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
 
-        {/* <Route path="register" element={<Register />} /> */}
+        <Route path="register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="about" element={<About />} /> */}
         <Route path="" element={<PrivateRouter />}>

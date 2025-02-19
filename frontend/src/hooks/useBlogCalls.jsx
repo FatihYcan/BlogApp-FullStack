@@ -15,7 +15,8 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
 
 const useBlogCalls = () => {
-  const { axiosWithToken, axiosPublic } = useAxios();
+  // const { axiosWithToken, axiosPublic } = useAxios();
+  const { axiosPublic, axiosData, axiosWithToken } = useAxios();
   const dispatch = useDispatch();
 
   const getUsers = async (url) => {
@@ -42,7 +43,7 @@ const useBlogCalls = () => {
   const putUser = async (user_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`/users/${user_id}`, data);
+      await axiosData.put(`/users/${user_id}`, data);
       toastSuccessNotify("User kaydı güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -88,7 +89,7 @@ const useBlogCalls = () => {
   const postBlog = async (data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.post("/blogs/", data);
+      await axiosData.post("/blogs/", data);
       toastSuccessNotify("Blog kaydı eklenmiştir.");
     } catch (error) {
       dispatch(fetchFail());
@@ -99,7 +100,7 @@ const useBlogCalls = () => {
   const getSingleBlog = async (blog_id) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`/blogs/${blog_id}/`);
+      const { data } = await axiosPublic(`/blogs/${blog_id}/`);
       const apiData = data.data;
       dispatch(getSingleBlogSuccess({ apiData }));
     } catch (error) {
@@ -110,7 +111,7 @@ const useBlogCalls = () => {
   const putBlog = async (blog_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`/blogs/${blog_id}`, data);
+      await axiosData.put(`/blogs/${blog_id}`, data);
       toastSuccessNotify("Blog kaydı güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -186,7 +187,7 @@ const useBlogCalls = () => {
   const getCategories = async (url) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(url);
+      const { data } = await axiosPublic(url);
       const apiData = data.data;
       dispatch(getCategorySuccess({ apiData }));
     } catch (error) {

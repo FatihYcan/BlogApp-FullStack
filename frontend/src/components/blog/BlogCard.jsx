@@ -83,8 +83,8 @@ export default function BlogCard({
     navigate(`/blog/${_id}`);
   };
 
-  const blogImage = images[0].slice(1);
-  const userImage = userId.image[0].slice(1);
+  const blogImage = images?.[0]?.slice(1) || [];
+  const userImage = userId?.image?.[0]?.slice(1) || [];
 
   const isLiked = likes.some((like) => like.userId.username === username);
 

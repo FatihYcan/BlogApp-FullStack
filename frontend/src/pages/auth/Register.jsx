@@ -16,7 +16,9 @@ import MuiCard from "@mui/material/Card";
 import useAuthCalls from "../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-import LoginForm, { loginSchema } from "../../auth/components/LoginForm";
+import RegisterForm, {
+  RegisterSchema,
+} from "../../auth/components/RegisterForm";
 
 // import ForgotPassword from './components/ForgotPassword';
 // import AppTheme from '../shared-theme/AppTheme';
@@ -44,7 +46,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
+const SignUpContainer = styled(Stack)(({ theme }) => ({
   minHeight: "100%",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
@@ -66,8 +68,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function Login() {
-  const { login, signInProvider } = useAuthCalls();
+export default function Register() {
+  const { register, signInProvider } = useAuthCalls();
   const navigate = useNavigate();
 
   return (
@@ -78,7 +80,7 @@ export default function Login() {
         component="main"
         sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
       >
-        <SignInContainer direction="column" justifyContent="space-between">
+        <SignUpContainer direction="column" justifyContent="space-between">
           {/* <ColorModeSelect
           sx={{ position: "fixed", top: "1rem", right: "1rem" }}
           /> */}
@@ -88,22 +90,44 @@ export default function Login() {
               variant="h4"
               sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
             >
-              Sign in
+              Sign up
             </Typography>
 
             <Formik
               initialValues={{
+                username: "",
+                firstName: "",
+                lastName: "",
                 email: "",
                 password: "",
+                image: [],
               }}
-              validationSchema={loginSchema}
+              validationSchema={RegisterSchema}
               onSubmit={(values, actions) => {
-                login(values);
-                console.log(values)
+                const formData = new FormData();
+
+                formData.append("username", values.username);
+                formData.append("firstName", values.firstName);
+                formData.append("lastName", values.lastName);
+                formData.append("email", values.email);
+                // formData.append("isActive", values.isActive);
+                // formData.append("isAdmin", values.isAdmin);
+
+                formData.append("password", values.password);
+
+                if (
+                  values.image &&
+                  values.image instanceof FileList &&
+                  values.image.length > 0
+                ) {
+                  formData.append("image", values.image[0]);
+                }
+
+                register(formData);
                 actions.resetForm();
                 actions.setSubmitting(false);
               }}
-              component={(props) => <LoginForm {...props} />}
+              component={(props) => <RegisterForm {...props} />}
             ></Formik>
 
             <Divider>or</Divider>
@@ -114,24 +138,24 @@ export default function Login() {
                 onClick={() => alert("Sign in with Google")}
                 //   startIcon={<GoogleIcon />}
               >
-                Sign in with Google
+                Sign up with Google
               </Button>
               <Typography sx={{ textAlign: "center" }}>
                 Don&apos;t have an account?{" "}
                 <span
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/login")}
                   style={{
                     cursor: "pointer",
                     textDecoration: "none",
                     color: "red",
                   }}
                 >
-                  Sign up
+                  Sign in
                 </span>
               </Typography>
             </Box>
           </Card>
-        </SignInContainer>
+        </SignUpContainer>
       </Container>
     </>
   );
