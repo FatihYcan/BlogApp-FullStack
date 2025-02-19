@@ -13,6 +13,7 @@ import { useState } from "react";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
 import UpdateModel from "../../components/user/UpdateModel";
+import avatar from "../../assets/icons/avatar.png";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -74,8 +75,6 @@ export default function UserDetail() {
 
   const handleUpdateClose = () => setUpdateOpen(false);
 
-  const userImage = image ? image[0].slice(1) : null;
-
   return (
     <Container
       maxWidth="md"
@@ -91,7 +90,11 @@ export default function UserDetail() {
       <CardMedia
         component="img"
         alt={username}
-        image={`http://127.0.0.1:8000${userImage}`}
+        image={
+          image && image.length > 0
+            ? `http://127.0.0.1:8000${image[0].slice(1)}`
+            : avatar
+        }
         sx={{
           width: "80%",
           margin: "auto",
@@ -130,7 +133,11 @@ export default function UserDetail() {
             <Avatar
               key={_id}
               alt={username}
-              src={`http://127.0.0.1:8000${userImage}`}
+              src={
+                image && image.length > 0
+                  ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                  : avatar
+              }
               sx={{ width: 24, height: 24 }}
             />
           </AvatarGroup>

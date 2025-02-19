@@ -17,6 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import { object, string, boolean } from "yup";
+import avatar from "../../assets/icons/avatar.png";
 
 const style = {
   position: "absolute",
@@ -113,8 +114,6 @@ export default function UpdateModel({
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
-
-  const userImage = data.image ? data?.image[0]?.slice(1) : null;
 
   return (
     <div>
@@ -227,7 +226,6 @@ export default function UpdateModel({
                     ? "Şifreyi değiştirmek istiyorsanız bu alanı doldurun."
                     : ""
                 }
-                
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -266,18 +264,20 @@ export default function UpdateModel({
                   }}
                 >
                   <Box sx={{ position: "relative" }}>
-                    {userImage && (
-                      <img
-                        src={`http://127.0.0.1:8000${userImage}`}
-                        alt={formik.values.username}
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          objectFit: "cover",
-                          borderRadius: "5px",
-                        }}
-                      />
-                    )}
+                    <img
+                      src={
+                        data.image && data.image.length > 0
+                          ? `http://127.0.0.1:8000${data.image[0].slice(1)}`
+                          : avatar
+                      }
+                      alt={formik.values.username}
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                      }}
+                    />
                   </Box>
                 </Box>
 

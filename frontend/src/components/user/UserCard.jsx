@@ -8,6 +8,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
 import { useNavigate } from "react-router-dom";
+import avatar from "../../assets/icons/avatar.png";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -61,7 +62,6 @@ export default function UserCard({
   };
 
   const fullName = firstName + " " + lastName;
-  const userImage = image[0].slice(1);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -70,7 +70,11 @@ export default function UserCard({
           onClick={handleDetail}
           component="img"
           alt={username}
-          image={`http://127.0.0.1:8000${userImage}`}
+          image={
+            image && image.length > 0
+              ? `http://127.0.0.1:8000${image[0].slice(1)}`
+              : avatar
+          }
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -109,7 +113,11 @@ export default function UserCard({
               <Avatar
                 key={_id}
                 alt={username}
-                src={`http://127.0.0.1:8000${userImage}`}
+                src={
+                  image && image.length > 0
+                    ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                    : avatar
+                }
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>

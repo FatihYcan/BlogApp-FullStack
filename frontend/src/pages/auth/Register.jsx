@@ -103,18 +103,14 @@ export default function Register() {
                 image: [],
               }}
               validationSchema={RegisterSchema}
-              onSubmit={(values, actions) => {
+              onSubmit={async (values, actions) => {
                 const formData = new FormData();
 
                 formData.append("username", values.username);
                 formData.append("firstName", values.firstName);
                 formData.append("lastName", values.lastName);
                 formData.append("email", values.email);
-                // formData.append("isActive", values.isActive);
-                // formData.append("isAdmin", values.isAdmin);
-
                 formData.append("password", values.password);
-
                 if (
                   values.image &&
                   values.image instanceof FileList &&
@@ -123,8 +119,11 @@ export default function Register() {
                   formData.append("image", values.image[0]);
                 }
 
-                register(formData);
-                actions.resetForm();
+                const isRegistered = await register(formData);
+
+                if (isRegistered) {
+                  actions.resetForm();
+                }
                 actions.setSubmitting(false);
               }}
               component={(props) => <RegisterForm {...props} />}

@@ -66,12 +66,11 @@ export default function RegisterForm({
       }}
     >
       <FormControl fullWidth margin="normal">
-        <FormLabel htmlFor="username">Username</FormLabel>
+        <FormLabel htmlFor="username">User name</FormLabel>
         <TextField
           id="username"
           type="text"
           name="username"
-          required
           variant="outlined"
           color={errors.username ? "error" : "primary"}
           value={values.username}
@@ -88,7 +87,6 @@ export default function RegisterForm({
           id="firstName"
           type="text"
           name="firstName"
-          required
           variant="outlined"
           color={errors.firstName ? "error" : "primary"}
           value={values.firstName}
@@ -105,7 +103,6 @@ export default function RegisterForm({
           id="lastName"
           type="text"
           name="lastName"
-          required
           variant="outlined"
           color={errors.lastName ? "error" : "primary"}
           value={values.lastName}
@@ -123,7 +120,6 @@ export default function RegisterForm({
           type="email"
           name="email"
           placeholder="your@email.com"
-          required
           variant="outlined"
           color={errors.email ? "error" : "primary"}
           value={values.email}
@@ -140,7 +136,6 @@ export default function RegisterForm({
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="••••••"
-          required
           variant="outlined"
           color={errors.password ? "error" : "primary"}
           value={values.password}

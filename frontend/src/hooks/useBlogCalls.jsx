@@ -15,8 +15,8 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
 
 const useBlogCalls = () => {
-  // const { axiosWithToken, axiosPublic } = useAxios();
-  const { axiosPublic, axiosData, axiosWithToken } = useAxios();
+  const { axiosPublic, axiosData, axiosWithToken, axiosWithTokenAndData } =
+    useAxios();
   const dispatch = useDispatch();
 
   const getUsers = async (url) => {
@@ -43,7 +43,7 @@ const useBlogCalls = () => {
   const putUser = async (user_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosData.put(`/users/${user_id}`, data);
+      await axiosWithTokenAndData.put(`/users/${user_id}`, data);
       toastSuccessNotify("User kaydı güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -89,7 +89,7 @@ const useBlogCalls = () => {
   const postBlog = async (data) => {
     dispatch(fetchStart());
     try {
-      await axiosData.post("/blogs/", data);
+      await axiosWithTokenAndData.post("/blogs/", data);
       toastSuccessNotify("Blog kaydı eklenmiştir.");
     } catch (error) {
       dispatch(fetchFail());
@@ -111,7 +111,7 @@ const useBlogCalls = () => {
   const putBlog = async (blog_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosData.put(`/blogs/${blog_id}`, data);
+      await axiosWithTokenAndData.put(`/blogs/${blog_id}`, data);
       toastSuccessNotify("Blog kaydı güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -132,7 +132,9 @@ const useBlogCalls = () => {
 
   const postBlogLike = async (blog_id) => {
     try {
-      const { data } = await axiosWithToken.post(`/blogs/${blog_id}/postLike/`);
+      const { data } = await axiosWithToken.post(
+        `/blogs/${blog_id}/postLike/`
+      );
       dispatch(postBlogLikeSuccess(data));
     } catch (error) {
       dispatch(fetchFail());

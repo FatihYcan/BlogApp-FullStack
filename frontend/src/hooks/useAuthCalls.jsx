@@ -47,17 +47,16 @@ const useAuthCalls = () => {
       return true;
     } catch (error) {
       dispatch(fetchFail());
-      console.log(error);
-      // if (error.response.data.message.includes("dup key: { username")) {
-      //   toastErrorNotify(
-      //     "Bu username daha önce alınmış. Lütfen başka bir username seçin."
-      //   );
-      // } else if (error.response.data.message.includes("dup key: { email")) {
-      //   toastErrorNotify(
-      //     "Bu email daha önce alınmış. Lütfen başka bir email girin."
-      //   );
-      // }
-      // return false;
+      if (error.response.data.message.includes("dup key: { username")) {
+        toastErrorNotify(
+          "Bu username daha önce alınmış. Lütfen başka bir username seçin."
+        );
+      } else if (error.response.data.message.includes("dup key: { email")) {
+        toastErrorNotify(
+          "Bu email daha önce alınmış. Lütfen başka bir email girin."
+        );
+      }
+      return false;
     }
   };
 
