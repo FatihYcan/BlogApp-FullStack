@@ -49,7 +49,7 @@ const useAuthCalls = () => {
       dispatch(fetchFail());
       if (error.response.data.message.includes("dup key: { username")) {
         toastErrorNotify(
-          "Bu username daha önce alınmış. Lütfen başka bir username seçin."
+          "Bu username daha önce alınmış. Lütfen başka bir username girin."
         );
       } else if (error.response.data.message.includes("dup key: { email")) {
         toastErrorNotify(

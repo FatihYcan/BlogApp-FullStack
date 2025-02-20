@@ -45,9 +45,19 @@ const useBlogCalls = () => {
     try {
       await axiosWithTokenAndData.put(`/users/${user_id}`, data);
       toastSuccessNotify("User kaydı güncellenmiştir..");
+      return true;
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("User kaydı güncellenememiştir.");
+      if (error.response.data.message.includes("dup key: { username")) {
+        toastErrorNotify(
+          "Bu username daha önce alınmış. Lütfen başka bir username girin."
+        );
+      } else if (error.response.data.message.includes("dup key: { email")) {
+        toastErrorNotify(
+          "Bu email daha önce alınmış. Lütfen başka bir email girin."
+        );
+      }
+      return false;
     }
   };
 

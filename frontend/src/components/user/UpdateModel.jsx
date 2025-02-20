@@ -1,14 +1,11 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -57,19 +54,10 @@ const validationSchema = object({
   isAdmin: boolean().required("Admin durumu zorunludur"),
 });
 
-export default function UpdateModel({
-  updateOpen,
-  handleUpdateClose,
-  setData,
-  data,
-}) {
+export default function UpdateModel({ updateOpen, handleUpdateClose, data }) {
   const { putUser, getSingleUser } = useBlogCalls();
   const { _id } = useParams();
   const [visibleImage, setVisibleImage] = useState(true);
-
-  useEffect(() => {
-    setVisibleImage(true);
-  }, []);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -108,10 +96,13 @@ export default function UpdateModel({
         formData.append("image", []);
       }
 
-      await putUser(_id, formData);
-      await getSingleUser(_id);
-      handleUpdateClose();
-      setVisibleImage(true);
+      const isUpdated = await putUser(_id, formData);
+
+      if (isUpdated) {
+        await getSingleUser(_id);
+        handleUpdateClose();
+        setVisibleImage(true);
+      }
     },
   });
 
@@ -129,11 +120,16 @@ export default function UpdateModel({
     formik.setFieldValue("image", "");
   };
 
+  const handleModalClose = () => {
+    formik.resetForm();
+    handleUpdateClose();
+  };
+
   return (
     <div>
       <Modal
         open={updateOpen}
-        onClose={handleUpdateClose}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -153,7 +149,6 @@ export default function UpdateModel({
                 id="username"
                 type="text"
                 variant="outlined"
-                required
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
@@ -170,7 +165,6 @@ export default function UpdateModel({
                 id="firstName"
                 type="text"
                 variant="outlined"
-                required
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.firstName}
@@ -188,7 +182,6 @@ export default function UpdateModel({
                 id="lastName"
                 type="text"
                 variant="outlined"
-                required
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.lastName}
@@ -206,7 +199,6 @@ export default function UpdateModel({
                 id="email"
                 type="email"
                 variant="outlined"
-                required
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}

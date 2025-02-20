@@ -70,8 +70,6 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": "" } }
         */
 
-        console.log(req.body.image === "")
-
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
         const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
@@ -81,11 +79,16 @@ module.exports = {
             delete req.body.isAdmin
         }
 
+        //! Eğer kullanıcı resim eklediyse
         if (req.file) {
             req.body.image = "./uploads/user/" + req.file.filename;
-        } else if (req.body.image === "") {
+        }
+        //! Eğer kullanıcı resmi sildiyse
+        else if (req.body.image === "") {
             req.body.image = []
-        } else {
+        }
+        //! Eğer kullanıcı resmi değiştirmediyse
+        else {
             req.body.image = User.image;
         }
 

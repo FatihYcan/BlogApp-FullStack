@@ -75,7 +75,7 @@ export default function UserDetail() {
 
   const handleUpdateClose = () => setUpdateOpen(false);
 
-  return (
+   return (
     <Container
       maxWidth="md"
       component="main"
