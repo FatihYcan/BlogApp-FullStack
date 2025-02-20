@@ -14,6 +14,7 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
 import UpdateModel from "../../components/user/UpdateModel";
 import avatar from "../../assets/icons/avatar.png";
+import DeleteModel from "../../components/user/DeleteModel";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -36,11 +37,10 @@ const StyledTypography = styled(Typography)({
 
 export default function UserDetail() {
   const { _id } = useParams();
-  const navigate = useNavigate();
   const { singleUser } = useSelector((state) => state.blog);
   const { getSingleUser } = useBlogCalls();
-
   const [updateOpen, setUpdateOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [data, setData] = useState({
     email: singleUser.email,
     firstName: singleUser.firstName,
@@ -74,8 +74,10 @@ export default function UserDetail() {
   };
 
   const handleUpdateClose = () => setUpdateOpen(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
-   return (
+  return (
     <Container
       maxWidth="md"
       component="main"
@@ -158,7 +160,7 @@ export default function UserDetail() {
 
         <button
           className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
-          // onClick={handleDeleteOpen}
+          onClick={handleDeleteOpen}
         >
           Delete User
         </button>
@@ -166,8 +168,12 @@ export default function UserDetail() {
       <UpdateModel
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
-        setData={setData}
         data={data}
+      />
+
+      <DeleteModel
+        deleteOpen={deleteOpen}
+        handleDeleteClose={handleDeleteClose}
       />
     </Container>
   );
