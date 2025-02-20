@@ -65,6 +65,11 @@ export default function UpdateModel({
 }) {
   const { putUser, getSingleUser } = useBlogCalls();
   const { _id } = useParams();
+  const [visibleImage, setVisibleImage] = useState(true);
+
+  useEffect(() => {
+    setVisibleImage(true);
+  }, []);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -99,11 +104,14 @@ export default function UpdateModel({
         values.image.length > 0
       ) {
         formData.append("image", values.image[0]);
+      } else if (values.image === "") {
+        formData.append("image", []);
       }
 
       await putUser(_id, formData);
       await getSingleUser(_id);
       handleUpdateClose();
+      setVisibleImage(true);
     },
   });
 
@@ -113,6 +121,12 @@ export default function UpdateModel({
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
+  };
+
+  const handleDeleteImage = (e) => {
+    e.preventDefault();
+    setVisibleImage(false);
+    formik.setFieldValue("image", "");
   };
 
   return (
@@ -255,31 +269,54 @@ export default function UpdateModel({
                   gap: "10px",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "10px",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Box sx={{ position: "relative" }}>
-                    <img
-                      src={
-                        data.image && data.image.length > 0
-                          ? `http://127.0.0.1:8000${data.image[0].slice(1)}`
-                          : avatar
-                      }
-                      alt={formik.values.username}
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                        borderRadius: "5px",
-                      }}
-                    />
+                {visibleImage && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Box sx={{ position: "relative" }}>
+                      <img
+                        src={
+                          data.image && data.image.length > 0
+                            ? `http://127.0.0.1:8000${data.image[0].slice(1)}`
+                            : avatar
+                        }
+                        alt={formik.values.username}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "5px",
+                        }}
+                      />
+                      <button
+                        onClick={handleDeleteImage}
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          backgroundColor: "red",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "20px",
+                          height: "20px",
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "12px",
+                        }}
+                      >
+                        X
+                      </button>
+                    </Box>
                   </Box>
-                </Box>
+                )}
 
                 <input
                   id="image"
