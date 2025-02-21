@@ -13,10 +13,11 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserCard from "../../components/user/UserCard";
 
-export function Search() {
+export function Search({ handleSearch }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
+        onChange={handleSearch}
         size="small"
         id="search"
         placeholder="Search…"
@@ -40,11 +41,22 @@ export default function Users() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getUsers(`users?page=${page}&limit=6`);
+    getUsers(`users?page=${page}&limit=2`);
   }, [page]);
 
   const handleChange = (event, value) => {
     setPage(value);
+  };
+
+  const handleSearch = (event) => {
+    setPage(1);
+    if (event.target.value) {
+      getUsers(
+        `users?page=${page}&limit=2&search[username]=${event.target.value}`
+      );
+    } else {
+      getUsers(`users?page=${page}&limit=2`);
+    }
   };
 
   return (
@@ -72,7 +84,7 @@ export default function Users() {
               overflow: "auto",
             }}
           >
-            <Search />
+            <Search handleSearch={handleSearch} />
           </Box>
           <Box
             sx={{
@@ -84,7 +96,7 @@ export default function Users() {
               margin: "auto",
             }}
           >
-            <Search />
+            <Search handleSearch={handleSearch} />
           </Box>
           <Grid
             container

@@ -22,19 +22,6 @@ module.exports = (req, res, next) => {
     // URL?sort[key1]=asc&sort[key2]=desc
     // asc: A-Z - desc: Z-A
     const sort = req.query?.sort || { createdAt: 'desc' }
-    // let manualSortViews = false;
-    // let viewsSortOrder = "desc";
-
-    // if (req.query?.sort) {
-    //     for (let key in req.query.sort) {
-    //         if (key === "views") {
-    //             manualSortViews = true;
-    //             viewsSortOrder = req.query.sort[key];
-    //         } else {
-    //             sort[key] = req.query.sort[key] === "asc" ? 1 : -1;
-    //         }
-    //     }
-    // }
     // console.log(sort);
 
     // ### PAGINATION ###
@@ -59,24 +46,6 @@ module.exports = (req, res, next) => {
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
 
     // Run for output:
-    // res.getModelList = async (Model, customFilter = {}, populate = null) => {
-    //     let data = await Model.find({ ...filter, ...search, ...customFilter })
-    //         .sort(sort)
-    //         .skip(skip)
-    //         .limit(limit)
-    //         .populate(populate);
-
-    //     if (manualSortViews) {
-    //         data = data.sort((a, b) => {
-    //             if (viewsSortOrder === "asc") {
-    //                 return a.views.length - b.views.length;
-    //             } else {
-    //                 return b.views.length - a.views.length;
-    //             }
-    //         });
-    //     }
-    //     return data;
-    // };
     res.getModelList = async (Model, customFilter = {}, populate = null) => {
         return await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate)
     }
