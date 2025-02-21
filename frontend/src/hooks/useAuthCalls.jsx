@@ -68,10 +68,25 @@ const useAuthCalls = () => {
       toastSuccessNotify("Login işlemi başarılı olmuştur.");
       // await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
       navigate("/");
+      return true;
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(userInfo);
+      console.log(error.response.data);
       dispatch(fetchFail());
-      toastErrorNotify("Yanlış email veya password yazılmış.");
+      if (
+        error.response.data.message.includes(
+          "You entered an invalid username/email and/or password"
+        )
+      ) {
+        toastErrorNotify("Geçersiz bir username ve/veya password girdiniz");
+      } else if (
+        error.response.data.message.includes("You entered an invalid password")
+      ) {
+        toastErrorNotify("Geçersiz bir password girdiniz");
+      } else if (error.response.data.message.includes("User is not active")) {
+        toastErrorNotify("Bu kullanıcı aktif değildir");
+      }
+      return false;
     }
   };
 

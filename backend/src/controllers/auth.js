@@ -20,7 +20,7 @@ module.exports = {
         //! Eksik bilgi kontrolü
         if (!(username || email) || !password) {
             res.errorStatusCode = 400;
-            throw new Error("Username/email and password are required.");
+            throw new Error("Username/email and password are required");
         }
 
         //! Kullanıcıyı veritabanında ara
@@ -29,19 +29,19 @@ module.exports = {
         //! Kullanıcı bulunamazsa
         if (!user) {
             res.errorStatusCode = 400;
-            throw new Error("You entered an invalid email or username.");
+            throw new Error("You entered an invalid username/email and/or password");
         }
 
         //! Şifre doğrulaması
         if (user.password !== passwordEncrypt(password)) {
             res.errorStatusCode = 400;
-            throw new Error("You entered an invalid password.");
+            throw new Error("You entered an invalid password");
         }
 
         //! Kullanıcı aktif değilse
         if (!user.isActive) {
             res.errorStatusCode = 400;
-            throw new Error("User is not active.");
+            throw new Error("User is not active");
         }
 
         //! Token işlemleri
