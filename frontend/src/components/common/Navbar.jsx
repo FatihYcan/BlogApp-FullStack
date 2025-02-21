@@ -15,6 +15,7 @@ import blog from "../../img/blog-app.png";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import avatar from "../../assets/icons/avatar.png";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -46,7 +47,7 @@ const login = [
 ];
 
 export default function Navbar() {
-  const { username, isAdmin } = useSelector((state) => state.auth);
+  const { username, isAdmin, image } = useSelector((state) => state.auth);
   const { logout } = useAuthCalls();
   const location = useLocation();
 
@@ -146,9 +147,19 @@ export default function Navbar() {
             }}
           >
             {username && (
-              <h5 className="border border-black text-black dark:border-white dark:text-white rounded-md px-3 py-2 text-sm font-medium capitalize">
-                {username}
-              </h5>
+              <div className="border border-black flex px-3 py-2 gap-4 items-center">
+                <img
+                  alt={username}
+                  src={
+                    image ? `http://127.0.0.1:8000${image[0].slice(1)}` : avatar
+                  }
+                  className="h-8 w-8 rounded-full"
+                  referrerPolicy="no-referrer"
+                />
+                <h5 className=" text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize">
+                  {username}
+                </h5>
+              </div>
             )}
 
             {!username && (
@@ -168,7 +179,9 @@ export default function Navbar() {
                   className={`${
                     location.pathname === "/register"
                       ? "bg-black text-white dark:bg-white dark:text-black"
-                      : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-600 dark:hover:text-black"
+                      : location.pathname === "/login"
+                      ? "bg-white text-black dark:bg-black dark:text-white hover:bg-gray-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-black"
+                      : "text-white bg-black hover:bg-gray-600 hover:text-white dark:text-black dark:bg-white"
                   } rounded-md px-3 py-2 text-sm font-medium`}
                 >
                   Sign up
@@ -261,9 +274,21 @@ export default function Navbar() {
                 <Divider sx={{ my: 3 }} />
 
                 {username && (
-                  <h5 className="border border-black text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize text-center px-3 py-2 mx-2.5">
-                    {username}
-                  </h5>
+                  <div className="border border-black flex px-3 py-2 gap-4 justify-center items-center">
+                    <img
+                      alt={username}
+                      src={
+                        image
+                          ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                          : avatar
+                      }
+                      className="h-8 w-8 rounded-full"
+                      referrerPolicy="no-referrer"
+                    />
+                    <h5 className=" text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize">
+                      {username}
+                    </h5>
+                  </div>
                 )}
                 <Divider sx={{ my: 1 }} />
                 {!username && (
@@ -286,7 +311,9 @@ export default function Navbar() {
                         className={`${
                           location.pathname === "/register"
                             ? "bg-black text-white dark:bg-white dark:text-black"
-                            : "text-white bg-black hover:bg-gray-600 hover:text-white  dark:text-black dark:bg-white dark:hover:bg-gray-300 dark:hover:text-black"
+                            : location.pathname === "/login"
+                            ? "bg-white text-black dark:bg-black dark:text-white hover:bg-gray-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-black"
+                            : "text-white bg-black hover:bg-gray-600 hover:text-white dark:text-black dark:bg-white"
                         } rounded-md px-3 py-2 text-sm font-medium text-center w-full border border-black`}
                       >
                         Sign up
