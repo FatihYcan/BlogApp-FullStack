@@ -97,9 +97,12 @@ export default function Login() {
                 password: "",
               }}
               validationSchema={loginSchema}
-              onSubmit={(values, actions) => {
-                login(values);
-                actions.resetForm();
+              onSubmit={async (values, actions) => {
+                const isLogined = await login(values);
+
+                if (isLogined) {
+                  actions.resetForm();
+                }
                 actions.setSubmitting(false);
               }}
               component={(props) => <LoginForm {...props} />}
