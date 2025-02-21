@@ -113,7 +113,7 @@ module.exports = {
             res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
         } else {
             res.errorStatusCode = 400
-            throw new Error("You can't delete your own account.")
+            throw new Error("Admin cannot delete own account")
         }
     }
 }

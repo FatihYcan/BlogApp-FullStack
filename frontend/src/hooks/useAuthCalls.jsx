@@ -61,7 +61,6 @@ const useAuthCalls = () => {
   };
 
   const login = async (userInfo) => {
-    console.log(userInfo);
     dispatch(fetchStart());
     try {
       const { data } = await axiosPublic.post("/auth/login/", userInfo);
@@ -70,6 +69,7 @@ const useAuthCalls = () => {
       // await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
       navigate("/");
     } catch (error) {
+      console.log(error.response.data.message);
       dispatch(fetchFail());
       toastErrorNotify("Yanlış email veya password yazılmış.");
     }

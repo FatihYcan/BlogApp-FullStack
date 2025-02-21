@@ -28,10 +28,10 @@ module.exports = async () => {
     await User.create({
         "_id": "65343222b67e9681f937f003",
         "username": "test",
-        "password": "aA?123456",
-        "email": "test@site.com",
         "firstName": "test",
         "lastName": "test",
+        "email": "test@site.com",
+        "password": "aA?123456",
         "image": [],
         "isActive": true,
         "isAdmin": false

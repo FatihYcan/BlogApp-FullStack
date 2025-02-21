@@ -15,33 +15,41 @@ module.exports = {
             #swagger.description = 'Login with username (or email) and password for get Token.'
             #swagger.parameters["body"] = { in: "body", required: true, schema: { "username": "test", "password": "1234" } }
         */
-        const { username, email, password } = req.body
+        const { username, email, password } = req.body;
 
-        if ((username || email) && password) {
-            const user = await User.findOne({ $or: [{ username }, { email }] })
-
-            if (user && user.password === passwordEncrypt(password)) {
-
-                if (user.isActive) {
-
-                    //? TOKEN
-                    let tokenData = await Token.findOne({ userId: user._id })
-                    if (!tokenData) tokenData = await Token.create({ userId: user._id, token: passwordEncrypt(user._id + Date.now()) })
-
-                    res.send({ error: false, token: tokenData.token, user })
-
-                } else {
-                    res.errorStatusCode = 400
-                    throw new Error("User is not active.")
-                }
-            } else {
-                res.errorStatusCode = 400
-                throw new Error("Invalid username or password.")
-            }
-        } else {
-            res.errorStatusCode = 400
-            throw new Error("Username (or email) and password are required.")
+        //! Eksik bilgi kontrolü
+        if (!(username || email) || !password) {
+            res.errorStatusCode = 400;
+            throw new Error("Username/email and password are required.");
         }
+
+        //! Kullanıcıyı veritabanında ara
+        const user = await User.findOne({ $or: [{ username }, { email }] });
+
+        //! Kullanıcı bulunamazsa
+        if (!user) {
+            res.errorStatusCode = 400;
+            throw new Error("You entered an invalid email or username.");
+        }
+
+        //! Şifre doğrulaması
+        if (user.password !== passwordEncrypt(password)) {
+            res.errorStatusCode = 400;
+            throw new Error("You entered an invalid password.");
+        }
+
+        //! Kullanıcı aktif değilse
+        if (!user.isActive) {
+            res.errorStatusCode = 400;
+            throw new Error("User is not active.");
+        }
+
+        //! Token işlemleri
+        let tokenData = await Token.findOne({ userId: user._id });
+
+        //! Token yoksa yeni token oluştur
+        if (!tokenData) { tokenData = await Token.create({ userId: user._id, token: passwordEncrypt(user._id + Date.now()) }) }
+        res.send({ error: false, token: tokenData.token, user });
     },
 
     logout: async (req, res) => {

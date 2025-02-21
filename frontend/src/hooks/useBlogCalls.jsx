@@ -67,6 +67,7 @@ const useBlogCalls = () => {
       await axiosWithToken.delete(`/users/${user_id}/`);
       toastSuccessNotify("User silinmiştir.");
     } catch (error) {
+      console.log(error);
       dispatch(fetchFail());
       toastErrorNotify("User silinememiştir");
     }

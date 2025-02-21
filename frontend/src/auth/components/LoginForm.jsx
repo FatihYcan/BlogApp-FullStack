@@ -65,7 +65,6 @@ export default function LoginForm({
           type="email"
           name="email"
           placeholder="your@email.com"
-          required
           variant="outlined"
           color={errors.email ? "error" : "primary"}
           value={values.email}
@@ -82,7 +81,6 @@ export default function LoginForm({
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="••••••"
-          required
           variant="outlined"
           color={errors.password ? "error" : "primary"}
           value={values.password}
