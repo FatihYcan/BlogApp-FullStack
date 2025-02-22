@@ -34,9 +34,11 @@ export default function UpdateModel({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await putCategory(data._id, data);
-    await getCategories("categories");
-    handleUpdateClose();
+    const isCategoryUpdated = await putCategory(data._id, data);
+    if (isCategoryUpdated) {
+      await getCategories("categories");
+      handleUpdateClose();
+    }
   };
 
   return (

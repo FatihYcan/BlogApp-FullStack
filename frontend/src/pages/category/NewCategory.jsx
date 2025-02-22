@@ -67,10 +67,12 @@ export default function NewCategory() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postCategory(data);
-    setData({ name: "" });
+    const isCategoryCreated = await postCategory(data);
+    if (isCategoryCreated) {
+      setData({ name: "" });
+    }
   };
 
   return (

@@ -88,32 +88,35 @@ const useBlogCalls = () => {
     try {
       await axiosWithToken.post("/categories/", data);
       toastSuccessNotify("Kategori eklenmiştir.");
+      return true;
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify("Bu isimli kategori olduğu için eklenememiştir.");
     }
+    return false;
   };
 
   const putCategory = async (category_id, data) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.put(`/categories/${category_id}`, data);
-      console.log(data);
-      toastSuccessNotify("Category güncellenmiştir..");
+      toastSuccessNotify("Kategori güncellenmiştir..");
+      return true;
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("Category güncellenememiştir.");
+      toastErrorNotify("Bu isimli kategori olduğu için güncellenememiştir.");
     }
+    return false;
   };
 
   const deleteCategory = async (category_id) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.delete(`/categories/${category_id}/`);
-      toastSuccessNotify("Category silinmiştir.");
+      toastSuccessNotify("Kategori silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("Bu category ait blog olduğu için silinememiştir");
+      toastErrorNotify("Bu kategoriye ait blog olduğu için silinememiştir.");
     }
   };
 
