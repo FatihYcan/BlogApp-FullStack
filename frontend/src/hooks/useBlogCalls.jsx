@@ -144,11 +144,18 @@ const useBlogCalls = () => {
     }
   };
 
-  const postBlog = async (data) => {
+  const postBlog = async (blogData) => {
     dispatch(fetchStart());
     try {
-      await axiosWithTokenAndData.post("/blogs/", data);
-      toastSuccessNotify("Blog kaydı eklenmiştir.");
+      const { data } = await axiosWithTokenAndData.post("/blogs/", blogData);
+      const apiData = data.data;
+      if (apiData.isPublish === true) {
+        toastSuccessNotify("Blog eklenmiştir.");
+      } else if (apiData.isPublish === false) {
+        toastSuccessNotify(
+          "Publish seçeneği 'Hayır' olarak işaretlendiği için, blogunuz yalnızca 'My Blogs' bölümüne eklenmiştir."
+        );
+      }
       return true;
     } catch (error) {
       dispatch(fetchFail());

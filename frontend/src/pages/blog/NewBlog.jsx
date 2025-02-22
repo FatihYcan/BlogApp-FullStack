@@ -237,8 +237,8 @@ export default function NewBlog() {
                   value={data.isPublish}
                   onChange={handleChange}
                 >
-                  <MenuItem value={true}>Published</MenuItem>
-                  <MenuItem value={false}>Draft</MenuItem>
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
                 </TextField>
               </FormControl>
 
