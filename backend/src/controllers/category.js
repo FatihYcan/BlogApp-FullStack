@@ -56,7 +56,19 @@ module.exports = {
             #swagger.tags = ["Categories"]
             #swagger.summary = "Delete Category"
         */
-        const data = await Category.deleteOne({ _id: req.params.id })
-        res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
+
+        const Blog = require('../models/blog')
+
+        //! Bu category ait blogları getir
+        const blogs = await Blog.find({ categoryId: req.params.id })
+
+        //! Bu category ait blog varsa silme yoksa sil
+        if (blogs.length > 0) {
+            res.errorStatusCode = 400
+            throw new Error("This category has blogs, cannot delete.")
+        } else {
+            const data = await Category.deleteOne({ _id: req.params.id })
+            res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
+        }
     },
 }

@@ -107,13 +107,23 @@ module.exports = {
             #swagger.summary = "Delete User"
         */
 
-        //! Hem kullanıcı hem de isAdmin kendi kaydını silemez.
-        if (req.params.id != req.user._id) {
-            const data = await User.deleteOne({ _id: req.params.id })
-            res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
-        } else {
-            res.errorStatusCode = 400
-            throw new Error("Admin cannot delete own account")
+        const Blog = require('../models/blog')
+
+        //! Bu user ait blogları getir
+        const blogs = await Blog.find({ userId: req.params.id })
+
+        //! Kullanıcılar kendi hesaplarını silemez. Ayrıca, bu kullanıcıya ait bloglar varsa, o kullanıcı silinemez. 
+        if (req.params.id == req.user._id) {
+            res.errorStatusCode = 400;
+            throw new Error("Admin cannot delete own account.")
         }
+
+        if (blogs.length > 0) {
+            res.errorStatusCode = 400;
+            throw new Error("This user has blogs, cannot delete.")
+        }
+
+        const data = await User.deleteOne({ _id: req.params.id })
+        res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     }
 }

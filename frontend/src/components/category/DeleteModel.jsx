@@ -1,9 +1,7 @@
-import * as React from "react";
+import useBlogCalls from "../../hooks/useBlogCalls";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import { useNavigate, useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -19,14 +17,13 @@ const style = {
   overflowY: "auto",
 };
 
-export default function DeleteModel({ deleteOpen, handleDeleteClose }) {
-  const { _id } = useParams();
-  const navigate = useNavigate();
-  const { deleteUser } = useBlogCalls();
+export default function DeleteModel({ deleteOpen, handleDeleteClose, data }) {
+  const { deleteCategory, getCategories } = useBlogCalls();
 
-  const handleDeleteUser = () => {
-    deleteUser(_id);
-    navigate(-1);
+  const handleDeleteCategory = async () => {
+    await deleteCategory(data._id);
+    await getCategories("categories");
+    handleDeleteClose();
   };
 
   return (
@@ -39,14 +36,14 @@ export default function DeleteModel({ deleteOpen, handleDeleteClose }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Are you sure you want to delete this user?
+            Are you sure you want to delete this category?
           </Typography>
           <Box my={2} display="flex" justifyContent="center" gap={2}>
             <button
               className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
-              onClick={handleDeleteUser}
+              onClick={handleDeleteCategory}
             >
-              Delete User
+              Delete Category
             </button>
 
             <button

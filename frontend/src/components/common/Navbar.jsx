@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import useAuthCalls from "../../hooks/useAuthCalls";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import blog from "../../img/blog-app.png";
+import blog from "../../assets/images/blog-app.png";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -34,16 +34,17 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const admin = [
-  { name: "Users", to: "/users", current: false },
+  { name: "Users", to: "/users" },
   { name: "New Category", to: "/new-category" },
+  { name: "Categories", to: "/categories" },
 ];
 const notLogin = [
-  { name: "New Blog", to: "/new-blog", current: false },
-  { name: "About", to: "/about", current: false },
+  { name: "New Blog", to: "/new-blog" },
+  { name: "About", to: "/about" },
 ];
 const login = [
-  { name: "My Blog", to: "/my-blogs", current: false },
-  { name: "Profile", to: "/profile", current: false },
+  { name: "My Blog", to: "/my-blogs" },
+  { name: "Profile", to: "/profile" },
 ];
 
 export default function Navbar() {

@@ -67,7 +67,6 @@ const useBlogCalls = () => {
       await axiosWithToken.delete(`/users/${user_id}/`);
       toastSuccessNotify("User silinmiştir.");
     } catch (error) {
-      console.log(error);
       dispatch(fetchFail());
       toastErrorNotify("User silinememiştir");
     }
@@ -162,7 +161,7 @@ const useBlogCalls = () => {
     }
   };
 
-  const postComments = async (data) => {
+  const postComment = async (data) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.post("/comments/", data);
@@ -173,7 +172,7 @@ const useBlogCalls = () => {
     }
   };
 
-  const putComments = async (comment_id, data) => {
+  const putComment = async (comment_id, data) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.put(`/comments/${comment_id}`, data);
@@ -184,7 +183,7 @@ const useBlogCalls = () => {
     }
   };
 
-  const deleteComments = async (comment_id) => {
+  const deleteComment = async (comment_id) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.delete(`/comments/${comment_id}/`);
@@ -206,7 +205,7 @@ const useBlogCalls = () => {
     }
   };
 
-  const postCategories = async (data) => {
+  const postCategory = async (data) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.post("/categories/", data);
@@ -217,10 +216,11 @@ const useBlogCalls = () => {
     }
   };
 
-  const putCategories = async (category_id, data) => {
+  const putCategory = async (category_id, data) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.put(`/categories/${category_id}`, data);
+      console.log(data)
       toastSuccessNotify("Category güncellenmiştir..");
     } catch (error) {
       dispatch(fetchFail());
@@ -228,14 +228,14 @@ const useBlogCalls = () => {
     }
   };
 
-  const deleteCategories = async (category_id) => {
+  const deleteCategory = async (category_id) => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.delete(`/categories/${category_id}/`);
       toastSuccessNotify("Category silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("Category silinememiştir");
+      toastErrorNotify("Bu category ait blog olduğu için silinememiştir");
     }
   };
 
@@ -252,13 +252,13 @@ const useBlogCalls = () => {
     deleteBlog,
     postBlogLike,
     getUserBlog,
-    postComments,
-    putComments,
-    deleteComments,
+    postComment,
+    putComment,
+    deleteComment,
     getCategories,
-    postCategories,
-    putCategories,
-    deleteCategories,
+    postCategory,
+    putCategory,
+    deleteCategory,
   };
 };
 

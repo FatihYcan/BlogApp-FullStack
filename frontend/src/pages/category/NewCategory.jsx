@@ -1,14 +1,15 @@
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import MuiCard from "@mui/material/Card";
-import useAuthCalls from "../../hooks/useAuthCalls";
-import { useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
+import { useState } from "react";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 // import ForgotPassword from './components/ForgotPassword';
 // import AppTheme from '../shared-theme/AppTheme';
@@ -59,8 +60,18 @@ const CategoryContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function NewCategory() {
-  const { login, signInProvider } = useAuthCalls();
-  const navigate = useNavigate();
+  const { postCategory } = useBlogCalls();
+  const [data, setData] = useState({ name: "" });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postCategory(data);
+    setData({ name: "" });
+  };
 
   return (
     <>
@@ -83,24 +94,35 @@ export default function NewCategory() {
               New Category
             </Typography>
 
-            <FormControl fullWidth margin="normal">
-              <FormLabel htmlFor="name">Name</FormLabel>
-              <TextField
-                id="name"
-                type="text"
-                name="name"
-                variant="outlined"
-                // value={values.email}
-                // onChange={handleChange}
-              />
-            </FormControl>
-
-            <button
-              type="submit"
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                gap: 2,
+              }}
             >
-              New Category
-            </button>
+              <FormControl fullWidth margin="normal">
+                <FormLabel htmlFor="name">Name</FormLabel>
+                <TextField
+                  id="name"
+                  type="text"
+                  name="name"
+                  variant="outlined"
+                  value={data.name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+
+              <button
+                type="submit"
+                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+              >
+                New Category
+              </button>
+            </Box>
           </Card>
         </CategoryContainer>
       </Container>

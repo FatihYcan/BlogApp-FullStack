@@ -3,9 +3,14 @@ src
 ├── App.js
 ├── app
 │   └── store.jsx
+├── assets
+│   └── icons
+│       ├── GoogleIcon.js
+│       └── avatar.png
 ├── auth
 │   ├── components
-│   │   └── LoginForm.jsx
+│   │   ├── LoginForm.jsx
+│   │   └── RegisterForm.jsx
 │   └── firebase.js
 ├── components
 │   ├── blog
@@ -18,7 +23,7 @@ src
 │   │   ├── Footer.jsx
 │   │   └── Navbar.jsx
 │   └── user
-│       ├── UpdateModel copy.jsx
+│       ├── DeleteModel.jsx
 │       ├── UpdateModel.jsx
 │       └── UserCard.jsx
 ├── features
@@ -39,10 +44,14 @@ src
 │   ├── Dashboard.jsx
 │   ├── MainContent.jsx
 │   ├── auth
-│   │   └── Login.jsx
+│   │   ├── Login.jsx
+│   │   └── Register.jsx
 │   ├── blog
 │   │   ├── BlogDetail.jsx
 │   │   └── NewBlog.jsx
+│   ├── category
+│   │   ├── Categories.jsx
+│   │   └── NewCategory.jsx
 │   └── user
 │       ├── UserDetail copy.jsx
 │       ├── UserDetail.jsx

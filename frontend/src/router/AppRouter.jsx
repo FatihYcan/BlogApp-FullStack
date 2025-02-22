@@ -25,15 +25,19 @@ import UserDetail from "../pages/user/UserDetail";
 import Footer from "../components/common/Footer";
 import Register from "../pages/auth/Register";
 import NewCategory from "../pages/category/NewCategory";
+import Categories from "../pages/category/Categories";
 
 const AppRouter = () => {
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
         <Route path="/new-category" element={<NewCategory />} />
+        <Route path="/categories" element={<Categories />} />
+        
+        
+        <Route path="/" element={<Dashboard />} />
 
 
         <Route path="register" element={<Register />} />
