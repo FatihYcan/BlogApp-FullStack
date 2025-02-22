@@ -149,9 +149,15 @@ const useBlogCalls = () => {
     try {
       await axiosWithTokenAndData.post("/blogs/", data);
       toastSuccessNotify("Blog kaydı eklenmiştir.");
+      return true;
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("Blog kaydı eklenemiştir.");
+      if (error.response.data.message.includes("Only image")) {
+        toastErrorNotify(
+          "Yalnızca JPEG, JPG, PNG, GIF ve WEBP formatında resim ekleyebilirsiniz."
+        );
+      }
+      return false;
     }
   };
 

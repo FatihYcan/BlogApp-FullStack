@@ -21,7 +21,7 @@ const blogUpload = multer({
         if (mimetype && extname) {
             return cb(null, true);
         } else {
-            cb(new Error("Sadece JPEG, JPG, PNG, GIF ve WEBP formatındaki resim dosyalarına izin verilir!"));
+            cb(new Error("Only image files in JPEG, JPG, PNG, GIF and WEBP formats are allowed!"));
         }
     }
 });
@@ -42,7 +42,7 @@ const userUpload = multer({
         if (mimetype && extname) {
             return cb(null, true);
         } else {
-            cb(new Error("Sadece JPEG, JPG, PNG, GIF ve WEBP formatındaki resim dosyalarına izin verilir!"));
+            cb(new Error("Only image files in JPEG, JPG, PNG, GIF and WEBP formats are allowed!"));
         }
     }
 });
