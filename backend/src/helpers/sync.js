@@ -10,7 +10,6 @@ module.exports = async () => {
     await mongoose.connection.dropDatabase()
     console.log('- Database and all data DELETED!')
 
-
     //? USER
     const User = require('../models/user')
     await User.deleteMany() // !!! Clear collection.

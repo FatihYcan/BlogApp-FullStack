@@ -2,12 +2,12 @@ import {
   fetchStart,
   getUserSuccess,
   getSingleUserSuccess,
+  getCategorySuccess,
   getBlogSuccess,
   getBlogViewSuccess,
   getSingleBlogSuccess,
   postBlogLikeSuccess,
   getUserBlogSuccess,
-  getCategorySuccess,
   fetchFail,
 } from "../features/blogSlice";
 import useAxios from "./useAxios";
@@ -44,7 +44,7 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       await axiosWithTokenAndData.put(`/users/${user_id}`, data);
-      toastSuccessNotify("User kaydı güncellenmiştir..");
+      toastSuccessNotify("Kullanıcı güncellenmiştir..");
       return true;
     } catch (error) {
       dispatch(fetchFail());
@@ -65,10 +65,55 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.delete(`/users/${user_id}/`);
-      toastSuccessNotify("User silinmiştir.");
+      toastSuccessNotify("Kullanıcı silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("User silinememiştir");
+      toastErrorNotify("Admin kendi hesabını silemez.");
+    }
+  };
+
+  const getCategories = async (url) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosPublic(url);
+      const apiData = data.data;
+      dispatch(getCategorySuccess({ apiData }));
+    } catch (error) {
+      dispatch(fetchFail());
+    }
+  };
+
+  const postCategory = async (data) => {
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.post("/categories/", data);
+      toastSuccessNotify("Kategori eklenmiştir.");
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify("Bu isimli kategori olduğu için eklenememiştir.");
+    }
+  };
+
+  const putCategory = async (category_id, data) => {
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.put(`/categories/${category_id}`, data);
+      console.log(data);
+      toastSuccessNotify("Category güncellenmiştir..");
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify("Category güncellenememiştir.");
+    }
+  };
+
+  const deleteCategory = async (category_id) => {
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.delete(`/categories/${category_id}/`);
+      toastSuccessNotify("Category silinmiştir.");
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify("Bu category ait blog olduğu için silinememiştir");
     }
   };
 
@@ -194,56 +239,15 @@ const useBlogCalls = () => {
     }
   };
 
-  const getCategories = async (url) => {
-    dispatch(fetchStart());
-    try {
-      const { data } = await axiosPublic(url);
-      const apiData = data.data;
-      dispatch(getCategorySuccess({ apiData }));
-    } catch (error) {
-      dispatch(fetchFail());
-    }
-  };
-
-  const postCategory = async (data) => {
-    dispatch(fetchStart());
-    try {
-      await axiosWithToken.post("/categories/", data);
-      toastSuccessNotify("Category eklenmiştir.");
-    } catch (error) {
-      dispatch(fetchFail());
-      toastErrorNotify("Category eklenememiştir.");
-    }
-  };
-
-  const putCategory = async (category_id, data) => {
-    dispatch(fetchStart());
-    try {
-      await axiosWithToken.put(`/categories/${category_id}`, data);
-      console.log(data)
-      toastSuccessNotify("Category güncellenmiştir..");
-    } catch (error) {
-      dispatch(fetchFail());
-      toastErrorNotify("Category güncellenememiştir.");
-    }
-  };
-
-  const deleteCategory = async (category_id) => {
-    dispatch(fetchStart());
-    try {
-      await axiosWithToken.delete(`/categories/${category_id}/`);
-      toastSuccessNotify("Category silinmiştir.");
-    } catch (error) {
-      dispatch(fetchFail());
-      toastErrorNotify("Bu category ait blog olduğu için silinememiştir");
-    }
-  };
-
   return {
     getUsers,
     getSingleUser,
     putUser,
     deleteUser,
+    getCategories,
+    postCategory,
+    putCategory,
+    deleteCategory,
     getBlogs,
     getBlogsView,
     postBlog,
@@ -255,10 +259,6 @@ const useBlogCalls = () => {
     postComment,
     putComment,
     deleteComment,
-    getCategories,
-    postCategory,
-    putCategory,
-    deleteCategory,
   };
 };
 
