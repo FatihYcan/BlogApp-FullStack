@@ -43,7 +43,7 @@ const notLogin = [
   { name: "About", to: "/about" },
 ];
 const login = [
-  { name: "My Blog", to: "/my-blogs" },
+  { name: "My Blogs", to: "/my-blogs" },
   { name: "Profile", to: "/profile" },
 ];
 
