@@ -45,8 +45,6 @@ export default function UpdateModel({
   const handleImageChange = (e) => {
     const files = e.target.files;
     const imagesArray = Array.from(files);
-
-    //! Mevcut resimlerle yeni resimleri birleştir
     setData((prevData) => ({
       ...prevData,
       images: [...prevData.images, ...imagesArray],
@@ -56,7 +54,7 @@ export default function UpdateModel({
   const imagePath =
     data?.images
       ?.filter((image) => typeof image === "string")
-      ?.map((image) => image.slice(1)) || [];
+      .map((image) => image.slice(1)) || [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,10 +65,8 @@ export default function UpdateModel({
     formData.append("categoryId", data.categoryId);
 
     data.images.forEach((image) => {
-      formData.append("images", image);
+      formData.append("images", image[0]);
     });
-
-    console.log(data.images)
 
     formData.append("isPublish", data.isPublish);
 
@@ -83,6 +79,8 @@ export default function UpdateModel({
     // setVisibleImage(false);
     // formik.setFieldValue("image", "");
   };
+
+  console.log(data);
 
   return (
     <div>
@@ -141,6 +139,80 @@ export default function UpdateModel({
                 ))}
               </TextField>
             </FormControl>
+            {/* 
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="images">Images</FormLabel>
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+                  {imagePath.map((image, index) => (
+                    <Box key={index} sx={{ position: "relative" }}>
+                      <img
+                        src={`http://127.0.0.1:8000${image}`}
+                        alt={`Uploaded ${index}`}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "5px",
+                        }}
+                      />
+                      <button
+                        // onClick={() => handleDeleteImage(image)}
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          backgroundColor: "red",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "20px",
+                          height: "20px",
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "12px",
+                        }}
+                      >
+                        X
+                      </button>
+                    </Box>
+                  ))}
+                </Box>
+
+                <input
+                  id="images"
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  style={{
+                    width: "100%",
+                    cursor: "pointer",
+                    border: "none",
+                    outline: "none",
+                  }}
+                />
+              </Box>
+            </FormControl> */}
 
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="images">Images</FormLabel>

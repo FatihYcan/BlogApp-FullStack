@@ -111,6 +111,7 @@ export default function Register() {
                 formData.append("lastName", values.lastName);
                 formData.append("email", values.email);
                 formData.append("password", values.password);
+
                 if (
                   values.image &&
                   values.image instanceof FileList &&

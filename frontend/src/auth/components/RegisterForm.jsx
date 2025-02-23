@@ -184,8 +184,8 @@ export default function RegisterForm({
               border: "none",
               outline: "none",
             }}
-            onChange={(event) => {
-              setFieldValue("image", event.currentTarget.files);
+            onChange={(e) => {
+              setFieldValue("image", e.currentTarget.files);
             }}
           />
         </Box>

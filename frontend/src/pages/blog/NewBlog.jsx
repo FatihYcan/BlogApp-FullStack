@@ -83,9 +83,8 @@ export default function NewBlog() {
   };
 
   const handleImageChange = (e) => {
-    const files = e.target.files;
-    const imagesArray = Array.from(files);
-    setData({ ...data, images: imagesArray });
+    const files = e.currentTarget.files;
+    setData({ ...data, images: files });
   };
 
   const handleSubmit = async (e) => {
@@ -96,9 +95,9 @@ export default function NewBlog() {
     formData.append("content", data.content);
     formData.append("categoryId", data.categoryId);
 
-    data.images.forEach((image) => {
-      formData.append("images", image);
-    });
+    for (let i = 0; i < data.images.length; i++) {
+      formData.append("images", data.images[i]);
+    }
 
     formData.append("isPublish", data.isPublish);
 
@@ -222,6 +221,9 @@ export default function NewBlog() {
                     ref={fileInputRef}
                   />
                 </Box>
+                <span className=" text-gray-500">
+                  {data.images.length ? "" : "En az 1 adet resim ekleyiniz."}
+                </span>
               </FormControl>
 
               <FormControl fullWidth margin="normal">
