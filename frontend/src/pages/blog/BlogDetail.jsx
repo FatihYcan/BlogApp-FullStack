@@ -16,6 +16,8 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeModal from "../../components/blog/LikeModal";
 import UpdateModel from "../../components/blog/UpdateModel";
+// import DeleteModel from "../../components/user/DeleteModel";
+import avatar from "../../assets/icons/avatar.png";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -79,8 +81,6 @@ export default function BlogDetail() {
   } = singleBlog;
 
   const blogImage = images?.map((image) => image.slice(1)) || [];
-  const userImage = userId?.image[0].slice(1) || [];
-
   const isLiked = likes?.some((like) => like.userId.username === username);
 
   const handleLike = () => {
@@ -137,7 +137,11 @@ export default function BlogDetail() {
             <Avatar
               key={userId?._id}
               alt={userId?.username}
-              src={`http://127.0.0.1:8000${userImage}`}
+              src={
+                userId.image && userId.image.length > 0
+                  ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
+                  : avatar
+              }
               sx={{ width: 30, height: 30 }}
             />
           </AvatarGroup>

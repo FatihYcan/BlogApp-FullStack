@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LikeModal from "./LikeModal";
 import useBlogCalls from "../../hooks/useBlogCalls";
+import avatar from "../../assets/icons/avatar.png";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
   position: "relative",
@@ -91,8 +92,6 @@ export default function PopularCard({
   };
 
   const isLiked = likes.some((like) => like.userId.username === username);
-
-  const userImage = userId?.image?.[0]?.slice(1) || [];
 
   return (
     <Grid size={{ xs: 12, sm: 6 }}>
@@ -203,7 +202,11 @@ export default function PopularCard({
               <Avatar
                 key={userId._id}
                 alt={userId.username}
-                src={`http://127.0.0.1:8000${userImage}`}
+                src={
+                  userId.image && userId.image.length > 0
+                    ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
+                    : avatar
+                }
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
