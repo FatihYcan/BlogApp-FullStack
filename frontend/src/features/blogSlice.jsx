@@ -11,7 +11,7 @@ const blogSlice = createSlice({
     details: {},
     singleBlog: {},
     likes: [],
-    userBlog: [],
+    userBlogs: [],
     categories: [],
     loading: false,
     error: false,
@@ -25,7 +25,7 @@ const blogSlice = createSlice({
 
     getUserSuccess: (state, { payload }) => {
       state.users = payload.apiData;
-      state.details = payload.details
+      state.details = payload.details;
       state.loading = false;
       state.error = false;
     },
@@ -62,7 +62,8 @@ const blogSlice = createSlice({
     },
 
     getUserBlogSuccess: (state, { payload }) => {
-      state.userBlog = payload.apiData;
+      state.userBlogs = payload.apiData;
+      state.details = payload.details;
       state.loading = false;
       state.error = false;
     },

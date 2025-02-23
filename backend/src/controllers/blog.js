@@ -29,9 +29,6 @@ module.exports = {
         }
 
         const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId blogId", populate: { path: "userId", select: "username firstName lastName image" } }, { path: "views" }])
-
-        // data.sort((a, b) => b.views.length - a.views.length);
-
         res.status(200).send({ error: false, details: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -48,7 +45,7 @@ module.exports = {
         if (req.files && req.files.length > 0) {
             req.body.images = req.files.map(file => "./uploads/blog/" + file.filename);
         }
-        
+
         const data = await Blog.create(req.body)
         res.status(201).send({ error: false, data })
     },

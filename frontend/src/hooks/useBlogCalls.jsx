@@ -210,10 +210,10 @@ const useBlogCalls = () => {
     }
   };
 
-  const getUserBlog = async (user_id) => {
+  const getUserBlog = async (url) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`/blogs?author=${user_id}`);
+      const { data } = await axiosWithToken(url);
       const apiData = data.data;
       const details = data.details;
       dispatch(getUserBlogSuccess({ apiData, details }));

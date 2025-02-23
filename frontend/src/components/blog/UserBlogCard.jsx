@@ -52,7 +52,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-export default function BlogCard({
+export default function UserBlogCard({
   _id,
   title,
   images,
@@ -72,11 +72,7 @@ export default function BlogCard({
   const navigate = useNavigate();
 
   const handleLike = () => {
-    if (username) {
-      postBlogLike(_id);
-    } else {
-      navigate("/login");
-    }
+    postBlogLike(_id);
   };
 
   const handleDetail = () => {
