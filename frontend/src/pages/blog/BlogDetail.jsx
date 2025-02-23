@@ -33,27 +33,13 @@ const SyledCardContent = styled(CardContent)({
 export default function BlogDetail() {
   const { _id } = useParams();
   const navigate = useNavigate();
-
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
   const { username } = useSelector((state) => state.auth);
-
   const { getSingleBlog, postBlogLike } = useBlogCalls();
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateOpen = () => {
-    setData({
-      categoryId: singleBlog.categoryId._id,
-      content: singleBlog.content,
-      isPublish: singleBlog.isPublish,
-      images: singleBlog.images,
-      title: singleBlog.title,
-    });
-    setUpdateOpen(true);
-  };
   const handleUpdateClose = () => setUpdateOpen(false);
 
   const [data, setData] = useState({
@@ -79,6 +65,17 @@ export default function BlogDetail() {
     userId,
     views,
   } = singleBlog;
+
+  const handleUpdateOpen = () => {
+    setData({
+      categoryId: singleBlog.categoryId._id,
+      content: singleBlog.content,
+      isPublish: singleBlog.isPublish,
+      images: singleBlog.images,
+      title: singleBlog.title,
+    });
+    setUpdateOpen(true);
+  };
 
   const blogImage = images?.map((image) => image.slice(1)) || [];
   const isLiked = likes?.some((like) => like.userId.username === username);
@@ -138,7 +135,7 @@ export default function BlogDetail() {
               key={userId?._id}
               alt={userId?.username}
               src={
-                userId.image && userId.image.length > 0
+                userId?.image && userId.image.length > 0
                   ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
                   : avatar
               }

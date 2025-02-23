@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -32,7 +31,7 @@ export default function UpdateModel({
   data,
 }) {
   const { categories } = useSelector((state) => state.blog);
-  const { getCategories, putBlog, getSingleBlog } = useBlogCalls();
+  const { getCategories, putBlog } = useBlogCalls();
   const { _id } = useParams();
 
   useEffect(() => {
@@ -181,6 +180,97 @@ export default function UpdateModel({
                 />
               </Box>
             </FormControl> */}
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="images">Images</FormLabel>
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+                  {imagePath.map((image, index) => (
+                    <Box key={index} sx={{ position: "relative" }}>
+                      <img
+                        src={`http://127.0.0.1:8000${image}`}
+                        alt={`Uploaded ${index}`}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "5px",
+                        }}
+                      />
+                      <button
+                        // onClick={() => handleDeleteImage(image)}
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          backgroundColor: "red",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "20px",
+                          height: "20px",
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "12px",
+                        }}
+                      >
+                        X
+                      </button>
+                    </Box>
+                  ))}
+                </Box>
+
+                <input
+                  id="images"
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  required
+                  multiple
+                  style={{
+                    width: "100%",
+                    cursor: "pointer",
+                    border: "none",
+                    outline: "none",
+                  }}
+                  // onChange={handleImageChange}
+                  // ref={fileInputRef}
+                />
+              </Box>
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="isPublish">Publish</FormLabel>
+              <TextField
+                id="isPublish"
+                select
+                name="isPublish"
+                value={data.isPublish}
+                onChange={handleChange}
+              >
+                <MenuItem value={true}>Yes</MenuItem>
+                <MenuItem value={false}>No</MenuItem>
+              </TextField>
+            </FormControl>
 
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="isPublish">Publish</FormLabel>
