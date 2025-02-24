@@ -36,7 +36,7 @@ module.exports = {
         /*
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Create Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": [], "isPublish": true } }
         */
 
         //! userId verisini req.user._id ile al
@@ -60,7 +60,7 @@ module.exports = {
         //! Kullanıcı IP adresini al
         const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
 
-        // //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
+        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
         const userIdentifier = req.user ? req.user._id : null;
 
         //! Kullanıcının bloga olan view durumunu kontrol et
@@ -82,7 +82,7 @@ module.exports = {
         /*
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Update Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": "http://imageURL", "isPublish": true } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": [], "isPublish": true } }
         */
 
         //! Kullanıcı sadece kendi bloglarını günceleyebilir
@@ -94,14 +94,25 @@ module.exports = {
         //! Mevcut blog resimlerini getir
         const blog = await Blog.findOne({ _id: req.params.id }, { images: 1, _id: 0 })
 
+
         //! Eğer kullanıcı resim eklediyse
         if (req.files && req.files.length > 0) {
+            //! Eğer kullanıcı tüm resimleri silmişse ve farklı resim eklemişse, blog.images dizisini temizle
+            if (!req.body.images || req.body.images.length === 0) {
+                blog.images = []
+            }
+
+            //! Yeni resimleri ekle
             for (let file of req.files) {
-                blog.images.push("./uploads/blog/" + file.filename);
+                blog.images.push("./uploads/blog/" + file.filename)
             }
         }
+        //! Eğer kullanıcı resmi sildiyse
+        else if (req.body.images && req.body.images.length > 0) {
+            blog.images = req.body.images
+        }
 
-        //! Blog resimlerini req.bodye aktar
+        //! Güncellenmiş resimleri req.body'ye ekle
         req.body.images = blog.images
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
@@ -114,7 +125,7 @@ module.exports = {
             #swagger.summary = "Delete Blog"
         */
 
-        //! Kullanıcı sadece kendi bloglarını silebilir
+        //! Kullanıcı sadece kendi bloglarını silebilir.
         let customFilter = {}
         if (!req.user.isAdmin) {
             customFilter = { userId: req.user._id }

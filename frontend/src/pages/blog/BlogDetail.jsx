@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeModal from "../../components/blog/LikeModal";
 import UpdateModel from "../../components/blog/UpdateModel";
-// import DeleteModel from "../../components/user/DeleteModel";
+import DeleteModel from "../../components/blog/DeleteModel";
 import avatar from "../../assets/icons/avatar.png";
 
 const SyledCardContent = styled(CardContent)({
@@ -87,6 +87,10 @@ export default function BlogDetail() {
       navigate("/login");
     }
   };
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
   return (
     <Container
@@ -250,7 +254,7 @@ export default function BlogDetail() {
 
         <button
           className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
-          // onClick={handleDeleteOpen}
+          onClick={handleDeleteOpen}
         >
           Delete Blog
         </button>
@@ -261,6 +265,10 @@ export default function BlogDetail() {
         handleUpdateClose={handleUpdateClose}
         setData={setData}
         data={data}
+      />
+      <DeleteModel
+        deleteOpen={deleteOpen}
+        handleDeleteClose={handleDeleteClose}
       />
     </Container>
   );

@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
@@ -31,7 +31,7 @@ export default function UpdateModel({
   data,
 }) {
   const { categories } = useSelector((state) => state.blog);
-  const { getCategories, putBlog } = useBlogCalls();
+  const { getCategories, putBlog, getSingleBlog } = useBlogCalls();
   const { _id } = useParams();
 
   useEffect(() => {
@@ -42,23 +42,13 @@ export default function UpdateModel({
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    const files = e.target.files;
-    const imagesArray = Array.from(files);
+  const imagePath = Array.isArray(data?.images)
+    ? data.images
+        ?.filter((image) => typeof image === "string")
+        ?.map((image) => image.slice(1)) || []
+    : [];
 
-    //! Mevcut resimlerle yeni resimleri birleştir
-    setData((prevData) => ({
-      ...prevData,
-      images: [...prevData.images, ...imagesArray],
-    }));
-  };
-
-  const imagePath =
-    data?.images
-      ?.filter((image) => typeof image === "string")
-      ?.map((image) => image.slice(1)) || [];
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -66,22 +56,39 @@ export default function UpdateModel({
     formData.append("content", data.content);
     formData.append("categoryId", data.categoryId);
 
-    data.images.forEach((image) => {
-      formData.append("images", image);
-    });
-
-    console.log(data.images)
+    for (let i = 0; i < data.images.length; i++) {
+      formData.append("images", data.images[i]);
+    }
 
     formData.append("isPublish", data.isPublish);
 
-    putBlog(_id, data);
+    const isUpdated = await putBlog(_id, formData);
+
+    if (isUpdated) {
+      await getSingleBlog(_id);
+      handleUpdateClose();
+    }
   };
 
   const handleDeleteImage = (e, image) => {
     e.preventDefault();
-    console.log(image);
-    // setVisibleImage(false);
-    // formik.setFieldValue("image", "");
+    const deleteImage = data.images.filter((img) => img !== `.${image}`);
+
+    setData((prevData) => ({
+      ...prevData,
+      images: deleteImage,
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    if (data?.images?.length) {
+      setData((prevData) => ({
+        ...prevData,
+        images: [...prevData.images, ...e.currentTarget.files],
+      }));
+    } else {
+      setData({ ...data, images: e.currentTarget.files });
+    }
   };
 
   return (
@@ -205,8 +212,8 @@ export default function UpdateModel({
                   name="images"
                   type="file"
                   accept="image/*"
-                  required
                   multiple
+                  required={!data?.images?.length}
                   style={{
                     width: "100%",
                     cursor: "pointer",
@@ -214,9 +221,11 @@ export default function UpdateModel({
                     outline: "none",
                   }}
                   onChange={handleImageChange}
-                  // ref={fileInputRef}
                 />
               </Box>
+              <span className=" text-gray-500">
+                {data?.images?.length ? "" : "En az 1 adet resim ekleyiniz."}
+              </span>
             </FormControl>
 
             <FormControl fullWidth margin="normal">
@@ -230,20 +239,6 @@ export default function UpdateModel({
               >
                 <MenuItem value={true}>Yes</MenuItem>
                 <MenuItem value={false}>No</MenuItem>
-              </TextField>
-            </FormControl>
-
-            <FormControl fullWidth margin="normal">
-              <FormLabel htmlFor="isPublish">Publish</FormLabel>
-              <TextField
-                id="isPublish"
-                select
-                name="isPublish"
-                value={data.isPublish}
-                onChange={handleChange}
-              >
-                <MenuItem value={false}>Draft</MenuItem>
-                <MenuItem value={true}>Published</MenuItem>
               </TextField>
             </FormControl>
 

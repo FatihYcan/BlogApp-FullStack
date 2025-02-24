@@ -83,8 +83,7 @@ export default function NewBlog() {
   };
 
   const handleImageChange = (e) => {
-    const files = e.currentTarget.files;
-    setData({ ...data, images: files });
+    setData({ ...data, images: e.currentTarget.files });
   };
 
   const handleSubmit = async (e) => {

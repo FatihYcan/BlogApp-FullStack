@@ -6,7 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -170,7 +169,6 @@ export default function UserDetail() {
         handleUpdateClose={handleUpdateClose}
         data={data}
       />
-
       <DeleteModel
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}

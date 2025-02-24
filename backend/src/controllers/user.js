@@ -32,7 +32,7 @@ module.exports = {
         /*
             #swagger.tags = ["Users"]
             #swagger.summary = "Create User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": "" } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": [] } }
         */
 
         //! Yeni kayıtlarda admin=false
@@ -67,7 +67,7 @@ module.exports = {
         /*
             #swagger.tags = ["Users"]
             #swagger.summary = "Update User"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": "" } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": [] } }
         */
 
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
