@@ -13,10 +13,11 @@ import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/BlogCard";
 import PopularCard from "../components/blog/PopularCard";
 
-export function Search() {
+export function Search({ handleSearch }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
+        onChange={handleSearch}
         size="small"
         id="search"
         placeholder="Search…"
@@ -42,35 +43,67 @@ export default function MainContent() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allSelected, setAllSelected] = useState(true);
+  const [searchWord, setSearchWord] = useState("");
+
+  const generateBlogsUrl = () => {
+    let url = `blogs?page=${page}&limit=3`;
+
+    if (selectedCategory) {
+      url += `&filter[categoryId]=${selectedCategory}`;
+    }
+
+    if (searchWord) {
+      url += `&search[title]=${searchWord}&search[content]=${searchWord}`;
+    }
+
+    return url;
+  };
 
   useEffect(() => {
-    if (selectedCategory) {
-      getBlogs(
-        `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
-      );
-    } else {
-      getBlogs(`blogs?page=${page}&limit=3`);
-    }
+    getBlogs(generateBlogsUrl());
     getCategories("categories");
     getBlogsView("blogs?sort[viewCount]=desc&limit=2");
-  }, [page, selectedCategory, likes]);
+  }, [page, selectedCategory, likes, searchWord]);
+
+  // useEffect(() => {
+  //   if (selectedCategory && !searchWord) {
+  //     getBlogs(
+  //       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
+  //     );
+  //   } else if (searchWord && !selectedCategory) {
+  //     getBlogs(
+  //       `blogs?page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+  //     );
+  //   } else if (selectedCategory && searchWord) {
+  //     getBlogs(
+  //       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+  //     );
+  //   } else {
+  //     getBlogs(`blogs?page=${page}&limit=3`);
+  //   }
+  //   getCategories("categories");
+  //   getBlogsView("blogs?sort[viewCount]=desc&limit=2");
+  // }, [page, selectedCategory, likes, searchWord]);
 
   const handleAllClick = () => {
     setPage(1);
     setSelectedCategory("");
     setAllSelected(true);
-    getBlogs(`blogs?page=${page}&limit=3`);
   };
 
   const handleClick = (id) => {
     setSelectedCategory(id);
     setPage(1);
     setAllSelected(false);
-    getBlogs(`blogs?filter[categoryId]=${id}&page=${page}&limit=3`);
   };
 
-  const handleChange = (event, value) => {
+  const handleChange = (e, value) => {
     setPage(value);
+  };
+
+  const handleSearch = (e) => {
+    setSearchWord(e.target.value);
+    setPage(1);
   };
 
   return (
@@ -91,7 +124,7 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search />
+        <Search handleSearch={handleSearch} />
       </Box>
       <Box
         sx={{
@@ -146,7 +179,7 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search />
+          <Search handleSearch={handleSearch} />
         </Box>
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">

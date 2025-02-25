@@ -39,24 +39,23 @@ export default function Users() {
   const { users, details } = useSelector((state) => state.blog);
   const { getUsers } = useBlogCalls();
   const [page, setPage] = useState(1);
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
-    getUsers(`users?page=${page}&limit=2`);
-  }, [page]);
+    if (searchWord) {
+      getUsers(`users?page=${page}&limit=2&search[username]=${searchWord}`);
+    } else {
+      getUsers(`users?page=${page}&limit=2`);
+    }
+  }, [page, searchWord]);
 
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = (e) => {
+    setSearchWord(e.target.value);
     setPage(1);
-    if (event.target.value) {
-      getUsers(
-        `users?page=${page}&limit=2&search[username]=${event.target.value}`
-      );
-    } else {
-      getUsers(`users?page=${page}&limit=2`);
-    }
   };
 
   return (

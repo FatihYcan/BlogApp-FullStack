@@ -15,8 +15,7 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
 
 const useBlogCalls = () => {
-  const { axiosPublic, axiosData, axiosWithToken, axiosWithTokenAndData } =
-    useAxios();
+  const { axiosPublic, axiosWithToken, axiosWithTokenAndData } = useAxios();
   const dispatch = useDispatch();
 
   const getUsers = async (url) => {
@@ -179,11 +178,21 @@ const useBlogCalls = () => {
     }
   };
 
-  const putBlog = async (blog_id, data) => {
+  const putBlog = async (blog_id, blogData) => {
     dispatch(fetchStart());
     try {
-      await axiosWithTokenAndData.put(`/blogs/${blog_id}`, data);
-      toastSuccessNotify("Blog güncellenmiştir..");
+      const { data } = await axiosWithTokenAndData.put(
+        `/blogs/${blog_id}`,
+        blogData
+      );
+      const apiData = data.data;
+      if (apiData.isPublish === true) {
+        toastSuccessNotify("Blog güncellenmiştir.");
+      } else if (apiData.isPublish === false) {
+        toastSuccessNotify(
+          "Publish Hayır' olarak seçildiği için, blogunuz 'My Blogs' bölümüne eklenmiştir."
+        );
+      }
       return true;
     } catch (error) {
       dispatch(fetchFail());
