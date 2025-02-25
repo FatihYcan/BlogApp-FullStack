@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/BlogCard";
 import PopularCard from "../components/blog/PopularCard";
 
-export function Search({ handleSearch }) {
+export function Search({ handleSearch, searchWord }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
@@ -22,6 +22,7 @@ export function Search({ handleSearch }) {
         id="search"
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
+        value={searchWord}
         startAdornment={
           <InputAdornment position="start" sx={{ color: "text.primary" }}>
             <SearchRoundedIcon fontSize="small" />
@@ -41,9 +42,27 @@ export default function MainContent() {
   );
   const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
   const [page, setPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [allSelected, setAllSelected] = useState(true);
-  const [searchWord, setSearchWord] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(
+    localStorage.getItem("selectedCategory") || ""
+  );
+  const [allSelected, setAllSelected] = useState(!selectedCategory);
+  const [searchWord, setSearchWord] = useState(
+    localStorage.getItem("searchWord") || ""
+  );
+
+  useEffect(() => {
+    if (selectedCategory) {
+      localStorage.setItem("selectedCategory", selectedCategory);
+    } else {
+      localStorage.removeItem("selectedCategory");
+    }
+
+    if (searchWord) {
+      localStorage.setItem("searchWord", searchWord);
+    } else {
+      localStorage.removeItem("searchWord");
+    }
+  }, [selectedCategory, searchWord]);
 
   const generateBlogsUrl = () => {
     let url = `blogs?page=${page}&limit=3`;
@@ -64,26 +83,6 @@ export default function MainContent() {
     getCategories("categories");
     getBlogsView("blogs?sort[viewCount]=desc&limit=2");
   }, [page, selectedCategory, likes, searchWord]);
-
-  // useEffect(() => {
-  //   if (selectedCategory && !searchWord) {
-  //     getBlogs(
-  //       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
-  //     );
-  //   } else if (searchWord && !selectedCategory) {
-  //     getBlogs(
-  //       `blogs?page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
-  //     );
-  //   } else if (selectedCategory && searchWord) {
-  //     getBlogs(
-  //       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
-  //     );
-  //   } else {
-  //     getBlogs(`blogs?page=${page}&limit=3`);
-  //   }
-  //   getCategories("categories");
-  //   getBlogsView("blogs?sort[viewCount]=desc&limit=2");
-  // }, [page, selectedCategory, likes, searchWord]);
 
   const handleAllClick = () => {
     setPage(1);
@@ -124,7 +123,7 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search handleSearch={handleSearch} />
+        <Search handleSearch={handleSearch} searchWord={searchWord} />
       </Box>
       <Box
         sx={{
@@ -179,7 +178,7 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search handleSearch={handleSearch} />
+          <Search handleSearch={handleSearch} searchWord={searchWord} />
         </Box>
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
@@ -230,3 +229,23 @@ export default function MainContent() {
     </Box>
   );
 }
+
+// useEffect(() => {
+//   if (selectedCategory && !searchWord) {
+//     getBlogs(
+//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
+//     );
+//   } else if (searchWord && !selectedCategory) {
+//     getBlogs(
+//       `blogs?page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+//     );
+//   } else if (selectedCategory && searchWord) {
+//     getBlogs(
+//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+//     );
+//   } else {
+//     getBlogs(`blogs?page=${page}&limit=3`);
+//   }
+//   getCategories("categories");
+//   getBlogsView("blogs?sort[viewCount]=desc&limit=2");
+// }, [page, selectedCategory, likes, searchWord]);
