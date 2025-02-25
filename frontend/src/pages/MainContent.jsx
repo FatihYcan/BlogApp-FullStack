@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/BlogCard";
 import PopularCard from "../components/blog/PopularCard";
 
-export function Search({ handleSearch, searchWord }) {
+export function Search({ handleSearch, searchBlog }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
@@ -22,7 +22,7 @@ export function Search({ handleSearch, searchWord }) {
         id="search"
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
-        value={searchWord}
+        value={searchBlog}
         startAdornment={
           <InputAdornment position="start" sx={{ color: "text.primary" }}>
             <SearchRoundedIcon fontSize="small" />
@@ -46,8 +46,8 @@ export default function MainContent() {
     localStorage.getItem("selectedCategory") || ""
   );
   const [allSelected, setAllSelected] = useState(!selectedCategory);
-  const [searchWord, setSearchWord] = useState(
-    localStorage.getItem("searchWord") || ""
+  const [searchBlog, setSearchBlog] = useState(
+    localStorage.getItem("searchBlog") || ""
   );
 
   useEffect(() => {
@@ -57,12 +57,13 @@ export default function MainContent() {
       localStorage.removeItem("selectedCategory");
     }
 
-    if (searchWord) {
-      localStorage.setItem("searchWord", searchWord);
+    if (searchBlog) {
+      localStorage.setItem("searchBlog", searchBlog);
     } else {
-      localStorage.removeItem("searchWord");
+      localStorage.removeItem("searchBlog");
     }
-  }, [selectedCategory, searchWord]);
+    localStorage.removeItem("searchUser");
+  }, [selectedCategory, searchBlog]);
 
   const generateBlogsUrl = () => {
     let url = `blogs?page=${page}&limit=3`;
@@ -71,8 +72,8 @@ export default function MainContent() {
       url += `&filter[categoryId]=${selectedCategory}`;
     }
 
-    if (searchWord) {
-      url += `&search[title]=${searchWord}&search[content]=${searchWord}`;
+    if (searchBlog) {
+      url += `&search[title]=${searchBlog}&search[content]=${searchBlog}`;
     }
 
     return url;
@@ -82,7 +83,7 @@ export default function MainContent() {
     getBlogs(generateBlogsUrl());
     getCategories("categories");
     getBlogsView("blogs?sort[viewCount]=desc&limit=2");
-  }, [page, selectedCategory, likes, searchWord]);
+  }, [page, selectedCategory, likes, searchBlog]);
 
   const handleAllClick = () => {
     setPage(1);
@@ -101,7 +102,7 @@ export default function MainContent() {
   };
 
   const handleSearch = (e) => {
-    setSearchWord(e.target.value);
+    setSearchBlog(e.target.value);
     setPage(1);
   };
 
@@ -123,7 +124,7 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search handleSearch={handleSearch} searchWord={searchWord} />
+        <Search handleSearch={handleSearch} searchBlog={searchBlog} />
       </Box>
       <Box
         sx={{
@@ -178,7 +179,7 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search handleSearch={handleSearch} searchWord={searchWord} />
+          <Search handleSearch={handleSearch} searchBlog={searchBlog} />
         </Box>
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
@@ -231,21 +232,21 @@ export default function MainContent() {
 }
 
 // useEffect(() => {
-//   if (selectedCategory && !searchWord) {
+//   if (selectedCategory && !searchBlog) {
 //     getBlogs(
 //       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
 //     );
-//   } else if (searchWord && !selectedCategory) {
+//   } else if (searchBlog && !selectedCategory) {
 //     getBlogs(
-//       `blogs?page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+//       `blogs?page=${page}&limit=3&search[title]=${searchBlog}&search[content]=${searchBlog}`
 //     );
-//   } else if (selectedCategory && searchWord) {
+//   } else if (selectedCategory && searchBlog) {
 //     getBlogs(
-//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchWord}&search[content]=${searchWord}`
+//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchBlog}&search[content]=${searchBlog}`
 //     );
 //   } else {
 //     getBlogs(`blogs?page=${page}&limit=3`);
 //   }
 //   getCategories("categories");
 //   getBlogsView("blogs?sort[viewCount]=desc&limit=2");
-// }, [page, selectedCategory, likes, searchWord]);
+// }, [page, selectedCategory, likes, searchBlog]);

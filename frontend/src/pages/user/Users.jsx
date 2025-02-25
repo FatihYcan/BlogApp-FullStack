@@ -13,13 +13,14 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserCard from "../../components/user/UserCard";
 
-export function Search({ handleSearch }) {
+export function Search({ handleSearch, searchUser }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
         onChange={handleSearch}
         size="small"
         id="search"
+        value={searchUser}
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
         startAdornment={
@@ -39,22 +40,40 @@ export default function Users() {
   const { users, details } = useSelector((state) => state.blog);
   const { getUsers } = useBlogCalls();
   const [page, setPage] = useState(1);
-  const [searchWord, setSearchWord] = useState("");
+  const [searchUser, setSearchUser] = useState(
+    localStorage.getItem("searchUser") || ""
+  );
 
   useEffect(() => {
-    if (searchWord) {
-      getUsers(`users?page=${page}&limit=2&search[username]=${searchWord}`);
+    if (searchUser) {
+      localStorage.setItem("searchUser", searchUser);
     } else {
-      getUsers(`users?page=${page}&limit=2`);
+      localStorage.removeItem("searchUser");
     }
-  }, [page, searchWord]);
+    localStorage.removeItem("searchBlog");
+    localStorage.removeItem("selectedCategory");
+  }, [searchUser]);
+
+  const generateBlogsUrl = () => {
+    let url = `users?page=${page}&limit=2`;
+
+    if (searchUser) {
+      url += `&search[username]=${searchUser}`;
+    }
+
+    return url;
+  };
+
+  useEffect(() => {
+    getUsers(generateBlogsUrl());
+  }, [page, searchUser]);
 
   const handleChange = (event, value) => {
     setPage(value);
   };
 
   const handleSearch = (e) => {
-    setSearchWord(e.target.value);
+    setSearchUser(e.target.value);
     setPage(1);
   };
 
@@ -83,7 +102,7 @@ export default function Users() {
               overflow: "auto",
             }}
           >
-            <Search handleSearch={handleSearch} />
+            <Search handleSearch={handleSearch} searchUser={searchUser} />
           </Box>
           <Box
             sx={{
@@ -95,7 +114,7 @@ export default function Users() {
               margin: "auto",
             }}
           >
-            <Search handleSearch={handleSearch} />
+            <Search handleSearch={handleSearch} searchUser={searchUser} />
           </Box>
           <Grid
             container
