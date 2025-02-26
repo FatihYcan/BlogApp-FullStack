@@ -89,7 +89,7 @@ export default function PopularCard({
   };
 
   const handleDetail = () => {
-    navigate(`/detail/${_id}`);
+    navigate(`/blog/${_id}`);
   };
 
   const isLiked = likes.some((like) => like.userId.username === username);

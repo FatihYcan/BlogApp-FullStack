@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import LikeModal from "./LikeModal";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import avatar from "../../assets/icons/avatar.png";
+import { createSlug } from "../../helper/Slug";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -82,8 +83,11 @@ export default function BlogCard({
     }
   };
 
+  const name = createSlug(title);
+  console.log(name);
+
   const handleDetail = () => {
-    navigate(`/blog/${_id}`);
+    navigate(`/blog/${name}/${_id}`);
   };
 
   const blogImage = images?.[0]?.slice(1) || [];
