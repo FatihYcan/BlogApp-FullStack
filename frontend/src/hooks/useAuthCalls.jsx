@@ -38,6 +38,11 @@ const useAuthCalls = () => {
       const { data } = await axiosData.post("/users/", userInfo);
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register işlemi başarılı olmuştur.");
+
+      //! Kullanıcı bilgilerini localStorage'e kaydet
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userInfo", JSON.stringify(data.user));
+
       // await createUserWithEmailAndPassword(
       //   auth,
       //   userInfo.email,
@@ -65,13 +70,16 @@ const useAuthCalls = () => {
     try {
       const { data } = await axiosPublic.post("/auth/login/", userInfo);
       dispatch(loginSuccess(data));
+
+      //! Kullanıcı bilgilerini localStorage'e kaydet
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userInfo", JSON.stringify(data.user));
+
       toastSuccessNotify("Login işlemi başarılı olmuştur.");
       // await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
       navigate("/");
       return true;
     } catch (error) {
-      console.log(userInfo);
-      console.log(error.response.data);
       dispatch(fetchFail());
       if (
         error.response.data.message.includes(
@@ -191,6 +199,11 @@ const useAuthCalls = () => {
     try {
       await axiosWithToken("/auth/logout/");
       toastSuccessNotify("Çıkış işlemi başarılı olmuştur.");
+
+      //! Kullanıcı bilgilerini localStorage'den sil
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userInfo");
+
       // signOut(auth);
       dispatch(logoutSuccess());
       navigate("/");

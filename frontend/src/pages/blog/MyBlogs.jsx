@@ -39,14 +39,17 @@ export default function MyBlogs() {
   const { userBlogs, details, categories, likes } = useSelector(
     (state) => state.blog
   );
-  const { userId } = useSelector((state) => state.auth);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+
+  const { _id } = userInfo || {};
+
   const { getUserBlog, getCategories } = useBlogCalls();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allSelected, setAllSelected] = useState(true);
 
   useEffect(() => {
-    getUserBlog(`/blogs?page=${page}&limit=3&author=${userId}`);
+    getUserBlog(`/blogs?page=${page}&limit=3&author=${_id}`);
     getCategories("categories");
   }, [page, selectedCategory, likes]);
 

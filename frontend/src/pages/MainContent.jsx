@@ -43,26 +43,26 @@ export default function MainContent() {
   const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(
-    localStorage.getItem("selectedCategory") || ""
+    sessionStorage.getItem("selectedCategory") || ""
   );
   const [allSelected, setAllSelected] = useState(!selectedCategory);
   const [searchBlog, setSearchBlog] = useState(
-    localStorage.getItem("searchBlog") || ""
+    sessionStorage.getItem("searchBlog") || ""
   );
 
   useEffect(() => {
     if (selectedCategory) {
-      localStorage.setItem("selectedCategory", selectedCategory);
+      sessionStorage.setItem("selectedCategory", selectedCategory);
     } else {
-      localStorage.removeItem("selectedCategory");
+      sessionStorage.removeItem("selectedCategory");
     }
 
     if (searchBlog) {
-      localStorage.setItem("searchBlog", searchBlog);
+      sessionStorage.setItem("searchBlog", searchBlog);
     } else {
-      localStorage.removeItem("searchBlog");
+      sessionStorage.removeItem("searchBlog");
     }
-    localStorage.removeItem("searchUser");
+    sessionStorage.removeItem("searchUser");
   }, [selectedCategory, searchBlog]);
 
   const generateBlogsUrl = () => {

@@ -48,7 +48,7 @@ const login = [
 ];
 
 export default function Navbar() {
-  const { username, isAdmin, image } = useSelector((state) => state.auth);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { logout } = useAuthCalls();
   const location = useLocation();
 
@@ -57,6 +57,8 @@ export default function Navbar() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const { username, isAdmin, image } = userInfo || {};
 
   return (
     <AppBar

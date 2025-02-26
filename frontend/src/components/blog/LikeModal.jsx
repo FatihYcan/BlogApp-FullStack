@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Avatar, AvatarGroup, Box, Modal, Typography } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import avatar from "../../assets/icons/avatar.png";
 
 const style = {
   position: "absolute",
@@ -38,7 +43,11 @@ export default function LikeModal({ open, handleClose, likes }) {
                 <Avatar
                   key={like._id}
                   alt={like.userId.username}
-                  src={like.userId.image}
+                  src={
+                    like.userId.image && like.userId.image.length > 0
+                      ? `http://127.0.0.1:8000${like.userId.image[0].slice(1)}`
+                      : avatar
+                  }
                   sx={{ width: 40, height: 40 }}
                 />
               </AvatarGroup>

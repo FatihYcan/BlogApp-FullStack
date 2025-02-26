@@ -41,17 +41,17 @@ export default function Users() {
   const { getUsers } = useBlogCalls();
   const [page, setPage] = useState(1);
   const [searchUser, setSearchUser] = useState(
-    localStorage.getItem("searchUser") || ""
+    sessionStorage.getItem("searchUser") || ""
   );
 
   useEffect(() => {
     if (searchUser) {
-      localStorage.setItem("searchUser", searchUser);
+      sessionStorage.setItem("searchUser", searchUser);
     } else {
-      localStorage.removeItem("searchUser");
+      sessionStorage.removeItem("searchUser");
     }
-    localStorage.removeItem("searchBlog");
-    localStorage.removeItem("selectedCategory");
+    sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("selectedCategory");
   }, [searchUser]);
 
   const generateBlogsUrl = () => {

@@ -74,14 +74,15 @@ export default function PopularCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { username } = useSelector((state) => state.auth);
-  const { getBlogsView, postBlogLike } = useBlogCalls();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
+
+  const { username } = userInfo || {};
 
   const handleLike = () => {
     if (username) {
-      postBlogLike("blogs", _id);
-      getBlogsView("blogs?sort[views]=desc&limit=2");
+      postBlogLike(_id);
     } else {
       navigate("/login");
     }
@@ -123,6 +124,7 @@ export default function PopularCard({
           sx={{
             display: "flex",
             gap: 2,
+            height: "50px",
             alignItems: "center",
             justifyContent: "space-evenly",
           }}
@@ -131,6 +133,8 @@ export default function PopularCard({
             sx={{
               display: "flex",
               alignItems: "center",
+              width: "50px",
+              height: "50px",
             }}
           >
             <FavoriteIcon
@@ -156,6 +160,8 @@ export default function PopularCard({
               display: "flex",
               alignItems: "center",
               cursor: "default",
+              width: "50px",
+              height: "50px",
             }}
           >
             <ChatBubbleOutlineIcon />
@@ -170,6 +176,8 @@ export default function PopularCard({
               display: "flex",
               alignItems: "center",
               cursor: "default",
+              width: "50px",
+              height: "50px",
             }}
           >
             <VisibilityOutlinedIcon />

@@ -67,9 +67,11 @@ export default function UserBlogCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { username } = useSelector((state) => state.auth);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
+
+  const { username } = userInfo || {};
 
   const handleLike = () => {
     postBlogLike(_id);

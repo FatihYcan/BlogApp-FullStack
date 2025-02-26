@@ -34,13 +34,15 @@ export default function BlogDetail() {
   const { _id } = useParams();
   const navigate = useNavigate();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
-  const { username } = useSelector((state) => state.auth);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog, postBlogLike } = useBlogCalls();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateClose = () => setUpdateOpen(false);
+
+  const { username } = userInfo || {};
 
   const [data, setData] = useState({
     categoryId: singleBlog.categoryId,
