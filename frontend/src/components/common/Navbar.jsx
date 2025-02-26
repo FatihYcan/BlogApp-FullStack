@@ -7,7 +7,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import { useSelector } from "react-redux";
 import useAuthCalls from "../../hooks/useAuthCalls";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -158,7 +157,7 @@ export default function Navbar() {
                       ? `http://127.0.0.1:8000${image[0].slice(1)}`
                       : avatar
                   }
-                  className="h-8 w-8 rounded-full"
+                  className="h-6 w-8 rounded-full"
                   referrerPolicy="no-referrer"
                 />
                 <h5 className=" text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize">

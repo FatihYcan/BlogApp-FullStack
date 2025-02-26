@@ -185,7 +185,7 @@ const useBlogCalls = () => {
         `/blogs/${blog_id}`,
         blogData
       );
-      const apiData = data.data;
+      const apiData = data.new;
       if (apiData.isPublish === true) {
         toastSuccessNotify("Blog güncellenmiştir.");
       } else if (apiData.isPublish === false) {

@@ -56,7 +56,7 @@ export default function UserDetail() {
   }, []);
 
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
-  const fullName = `${firstName} ${lastName}`;
+  const fullName = firstName + " " + lastName;
 
   const handleUpdateOpen = () => {
     setData({

@@ -1,14 +1,14 @@
+import avatar from "../../assets/icons/avatar.png";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid2";
 import { useNavigate } from "react-router-dom";
-import avatar from "../../assets/icons/avatar.png";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
