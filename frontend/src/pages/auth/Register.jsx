@@ -19,6 +19,7 @@ import { Formik } from "formik";
 import RegisterForm, {
   RegisterSchema,
 } from "../../auth/components/RegisterForm";
+import { useEffect } from "react";
 
 // import ForgotPassword from './components/ForgotPassword';
 // import AppTheme from '../shared-theme/AppTheme';
@@ -71,6 +72,10 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 export default function Register() {
   const { register, signInProvider } = useAuthCalls();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    sessionStorage.removeItem("searchBlog");
+  }, []);
 
   return (
     <>

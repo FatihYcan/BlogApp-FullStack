@@ -8,7 +8,7 @@ import MuiCard from "@mui/material/Card";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useBlogCalls from "../../hooks/useBlogCalls";
 
 // import ForgotPassword from './components/ForgotPassword';
@@ -62,6 +62,13 @@ const CategoryContainer = styled(Stack)(({ theme }) => ({
 export default function NewCategory() {
   const { postCategory } = useBlogCalls();
   const [data, setData] = useState({ name: "" });
+
+  useEffect(() => {
+    sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
+  });
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

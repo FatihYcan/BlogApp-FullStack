@@ -13,11 +13,12 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserBlogCard from "../../components/blog/UserBlogCard";
 
-export function Search({ handleSearch }) {
+export function Search({ handleSearch, searchBlog }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
         onChange={handleSearch}
+        value={searchBlog}
         size="small"
         id="search"
         placeholder="Search…"
@@ -45,28 +46,69 @@ export default function MyBlogs() {
 
   const { getUserBlog, getCategories } = useBlogCalls();
   const [page, setPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [allSelected, setAllSelected] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState(
+    sessionStorage.getItem("selectedMyCategory") || ""
+  );
+  const [allSelected, setAllSelected] = useState(!selectedCategory);
+  const [searchBlog, setSearchBlog] = useState(
+    sessionStorage.getItem("searchMyBlog") || ""
+  );
 
   useEffect(() => {
-    getUserBlog(`/blogs?page=${page}&limit=3&author=${_id}`);
-    getCategories("categories");
-  }, [page, selectedCategory, likes]);
+    if (selectedCategory) {
+      sessionStorage.setItem("selectedMyCategory", selectedCategory);
+    } else {
+      sessionStorage.removeItem("selectedMyCategory");
+    }
 
-  const handleChange = (event, value) => {
+    if (searchBlog) {
+      sessionStorage.setItem("searchMyBlog", searchBlog);
+    } else {
+      sessionStorage.removeItem("searchMyBlog");
+    }
+    sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("searchBlog");
+  }, [selectedCategory, searchBlog]);
+
+  const generateBlogsUrl = () => {
+    let url = `/blogs?page=${page}&limit=3&author=${_id}`;
+
+    if (selectedCategory) {
+      url += `&filter[categoryId]=${selectedCategory}`;
+    }
+
+    if (searchBlog) {
+      url += `&search[title]=${searchBlog}&search[content]=${searchBlog}`;
+    }
+
+    return url;
+  };
+
+  useEffect(() => {
+    getUserBlog(generateBlogsUrl());
+    getCategories("categories");
+  }, [page, selectedCategory, likes, searchBlog]);
+
+  const handleAllClick = () => {
+    setPage(1);
+    setSelectedCategory("");
+    setAllSelected(true);
+  };
+
+  const handleClick = (id) => {
+    setSelectedCategory(id);
+    setPage(1);
+    setAllSelected(false);
+  };
+
+  const handleChange = (e, value) => {
     setPage(value);
   };
 
-  //   const handleSearch = (event) => {
-  //     setPage(1);
-  //     if (event.target.value) {
-  //       getUsers(
-  //         `users?page=${page}&limit=2&search[username]=${event.target.value}`
-  //       );
-  //     } else {
-  //       getUsers(`users?page=${page}&limit=2`);
-  //     }
-  //   };
+  const handleSearch = (e) => {
+    setSearchBlog(e.target.value);
+    setPage(1);
+  };
 
   return (
     <>
@@ -93,9 +135,7 @@ export default function MyBlogs() {
               overflow: "auto",
             }}
           >
-            <Search
-            // handleSearch={handleSearch}
-            />
+            <Search handleSearch={handleSearch} searchBlog={searchBlog} />
           </Box>
           <Box
             sx={{
@@ -122,7 +162,7 @@ export default function MyBlogs() {
                     ? "bg-black text-white dark:bg-white dark:text-black"
                     : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                 } rounded-full px-3 py-2 text-sm font-medium`}
-                // onClick={handleAllClick}
+                onClick={handleAllClick}
               >
                 All categories
               </button>
@@ -135,7 +175,7 @@ export default function MyBlogs() {
                       ? "bg-black text-white dark:bg-white dark:text-black"
                       : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                   } rounded-full px-3 py-2 text-sm font-medium`}
-                  //   onClick={() => handleClick(category._id)}
+                  onClick={() => handleClick(category._id)}
                 >
                   {category.name}
                 </button>
@@ -150,9 +190,7 @@ export default function MyBlogs() {
                 overflow: "auto",
               }}
             >
-              <Search
-              // handleSearch={handleSearch}
-              />
+              <Search handleSearch={handleSearch} searchBlog={searchBlog} />
             </Box>
           </Box>
           <Grid

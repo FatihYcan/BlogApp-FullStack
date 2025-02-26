@@ -11,6 +11,7 @@ import useAuthCalls from "../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import LoginForm, { loginSchema } from "../../auth/components/LoginForm";
+import { useEffect } from "react";
 
 // import ForgotPassword from './components/ForgotPassword';
 // import AppTheme from '../shared-theme/AppTheme';
@@ -63,6 +64,10 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function Login() {
   const { login, signInProvider } = useAuthCalls();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    sessionStorage.removeItem("searchBlog");
+  }, []);
 
   return (
     <>

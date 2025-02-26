@@ -18,11 +18,11 @@ export function Search({ handleSearch, searchBlog }) {
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
         onChange={handleSearch}
+        value={searchBlog}
         size="small"
         id="search"
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
-        value={searchBlog}
         startAdornment={
           <InputAdornment position="start" sx={{ color: "text.primary" }}>
             <SearchRoundedIcon fontSize="small" />
@@ -63,6 +63,8 @@ export default function MainContent() {
       sessionStorage.removeItem("searchBlog");
     }
     sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
   }, [selectedCategory, searchBlog]);
 
   const generateBlogsUrl = () => {

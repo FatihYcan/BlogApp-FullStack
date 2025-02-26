@@ -52,6 +52,8 @@ export default function Users() {
     }
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("selectedCategory");
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
   }, [searchUser]);
 
   const generateBlogsUrl = () => {
