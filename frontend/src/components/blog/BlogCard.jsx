@@ -84,10 +84,9 @@ export default function BlogCard({
   };
 
   const name = createSlug(title);
-  console.log(name);
 
   const handleDetail = () => {
-    navigate(`/blog/${name}/${_id}`);
+    navigate(`/blog/${userId.username}/${_id}`);
   };
 
   const blogImage = images?.[0]?.slice(1) || [];

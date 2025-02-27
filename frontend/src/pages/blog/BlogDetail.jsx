@@ -31,7 +31,7 @@ const SyledCardContent = styled(CardContent)({
 });
 
 export default function BlogDetail() {
-  const { _id, title: name } = useParams();
+  const { _id, username: name } = useParams();
   const navigate = useNavigate();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
