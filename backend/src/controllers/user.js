@@ -57,7 +57,7 @@ module.exports = {
         */
 
         //! Kullanıcı sadece kendi kaydını görebilir.
-        const customFilters = req.user?.isAdmin ? { username: req.params.username } : { username: req.user.username }
+        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
         const data = await User.findOne(customFilters)
         res.status(200).send({ error: false, data })
@@ -71,7 +71,7 @@ module.exports = {
         */
 
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
-        const customFilters = req.user?.isAdmin ? { username: req.params.username } : { username: req.user.username }
+        const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
         //! Eğer admin değil ise isAdmin ve icActive güncellenemez.
         if (!req.user?.isAdmin) {
@@ -110,14 +110,14 @@ module.exports = {
         const Blog = require('../models/blog')
 
         //! Kullanıcılar kendi hesaplarını silemez. Ayrıca, bu kullanıcıya ait bloglar varsa, o kullanıcı ile o kullanıcının bloglarını sil 
-        if (req.params.username === req.user.username) {
+        if (req.params.id == req.user._id) {
             res.errorStatusCode = 400;
             throw new Error("Admin cannot delete own account.")
         }
 
-        await Blog.deleteMany({ username: req.params.username })
+        await Blog.deleteMany({ userId: req.params.id })
 
-        const data = await User.deleteOne({ username: req.params.username })
+        const data = await User.deleteOne({ _id: req.params.id })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     }
 }

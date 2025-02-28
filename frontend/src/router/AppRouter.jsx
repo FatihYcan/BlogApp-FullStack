@@ -31,7 +31,7 @@ const AppRouter = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="/blog/:username/:_id" element={<BlogDetail />} />
+        <Route path="/:username/:_id" element={<BlogDetail />} />
         <Route path="/user/:_id" element={<UserDetail />} />
       </Routes>
       <Footer />

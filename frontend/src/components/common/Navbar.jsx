@@ -15,6 +15,7 @@ import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import avatar from "../../assets/icons/avatar.png";
+import { useSelector } from "react-redux";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -48,6 +49,8 @@ const login = [
 
 export default function Navbar() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { myUser } = useSelector((state) => state.blog);
+
   const { logout } = useAuthCalls();
   const location = useLocation();
 

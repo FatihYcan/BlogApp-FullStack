@@ -2,6 +2,7 @@ import {
   fetchStart,
   getUserSuccess,
   getSingleUserSuccess,
+  putMyUserSuccess,
   getCategorySuccess,
   getBlogSuccess,
   getBlogViewSuccess,
@@ -43,6 +44,33 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       await axiosWithTokenAndData.put(`/users/${user_id}`, data);
+      toastSuccessNotify("Kullanıcı güncellenmiştir..");
+      return true;
+    } catch (error) {
+      dispatch(fetchFail());
+      if (error.response.data.message.includes("dup key: { username")) {
+        toastErrorNotify(
+          "Bu username daha önce alınmış. Lütfen başka bir username girin."
+        );
+      } else if (error.response.data.message.includes("dup key: { email")) {
+        toastErrorNotify(
+          "Bu email daha önce alınmış. Lütfen başka bir email girin."
+        );
+      }
+      return false;
+    }
+  };
+
+  const putMyUser = async (user_id, userData) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithTokenAndData.put(
+        `/users/${user_id}`,
+        userData
+      );
+      const apiData = data.new;
+      localStorage.setItem("userInfo", JSON.stringify(apiData));
+      dispatch(putMyUserSuccess({ apiData }));
       toastSuccessNotify("Kullanıcı güncellenmiştir..");
       return true;
     } catch (error) {
@@ -270,6 +298,7 @@ const useBlogCalls = () => {
     getUsers,
     getSingleUser,
     putUser,
+    putMyUser,
     deleteUser,
     getCategories,
     postCategory,
