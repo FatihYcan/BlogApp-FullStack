@@ -71,6 +71,7 @@ export default function Profile() {
 
   useEffect(() => {
     getSingleUser(_id);
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");

@@ -64,6 +64,7 @@ export default function NewCategory() {
   const [data, setData] = useState({ name: "" });
 
   useEffect(() => {
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");

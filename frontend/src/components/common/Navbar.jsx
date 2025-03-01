@@ -33,20 +33,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: "8px 12px",
 }));
 
-const admin = [
-  { name: "Users", to: "/users" },
-  { name: "New Category", to: "/new-category" },
-  { name: "Categories", to: "/categories" },
-];
-const notLogin = [
-  { name: "New Blog", to: "/new-blog" },
-  { name: "About", to: "/about" },
-];
-const login = [
-  { name: "My Blogs", to: "/my-blogs" },
-  { name: "Profile", to: "/profile" },
-];
-
 export default function Navbar() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { myUser } = useSelector((state) => state.blog);
@@ -61,6 +47,20 @@ export default function Navbar() {
   };
 
   const { username, isAdmin, image } = userInfo || {};
+
+  const admin = [
+    { name: "Users", to: "/users" },
+    { name: "New Category", to: "/new-category" },
+    { name: "Categories", to: "/categories" },
+  ];
+  const notLogin = [
+    { name: "New Blog", to: "/new-blog" },
+    { name: "About", to: "/about" },
+  ];
+  const login = [
+    { name: "My Blogs", to: "/my-blogs" },
+    { name: "Profile", to: `/${username}` },
+  ];
 
   return (
     <AppBar

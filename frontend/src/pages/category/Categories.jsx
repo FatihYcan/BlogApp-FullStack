@@ -13,6 +13,7 @@ export default function Categories() {
 
   useEffect(() => {
     getCategories("categories");
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");

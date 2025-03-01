@@ -76,6 +76,7 @@ export default function NewBlog() {
 
   useEffect(() => {
     getCategories("categories");
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");

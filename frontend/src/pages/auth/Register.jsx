@@ -74,6 +74,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
   }, []);
 

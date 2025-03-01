@@ -66,6 +66,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
   }, []);
 
