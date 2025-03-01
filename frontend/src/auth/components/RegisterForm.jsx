@@ -196,9 +196,9 @@ export default function RegisterForm({
         label="Remember me"
       /> */}
       {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-      <Button type="submit" fullWidth variant="contained">
-        Sign in
-      </Button>
+      <button className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
+        Sign up
+      </button>
       {/* <Link
         component="button"
         type="button"

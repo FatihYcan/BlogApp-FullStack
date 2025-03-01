@@ -152,7 +152,7 @@ export default function Navbar() {
             }}
           >
             {username && (
-              <div className="border border-black flex px-3 py-2 gap-4 items-center">
+              <div className="border border-black dark:border-white flex px-3 py-2 gap-4 items-center">
                 <img
                   alt={username}
                   src={
@@ -160,7 +160,7 @@ export default function Navbar() {
                       ? `http://127.0.0.1:8000${image[0].slice(1)}`
                       : avatar
                   }
-                  className="h-6 w-8 rounded-full"
+                  className="h-8 w-8 rounded-full"
                   referrerPolicy="no-referrer"
                 />
                 <h5 className=" text-black dark:border-white dark:text-white rounded-md text-sm font-medium capitalize">
@@ -269,7 +269,7 @@ export default function Navbar() {
                       <Link
                         to={item.to}
                         className={`${
-                         location.pathname.startsWith(item.to)
+                          location.pathname.startsWith(item.to)
                             ? "bg-black text-white dark:bg-white dark:text-black"
                             : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black"
                         } rounded-md px-2 py-3 text-sm font-medium w-full h-100`}
@@ -281,7 +281,7 @@ export default function Navbar() {
                 <Divider sx={{ my: 3 }} />
 
                 {username && (
-                  <div className="border border-black flex px-3 py-2 gap-4 justify-center items-center">
+                  <div className="border border-black dark:border-white flex px-3 py-2 gap-4 justify-center items-center">
                     <img
                       alt={username}
                       src={

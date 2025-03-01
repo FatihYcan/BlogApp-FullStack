@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import styled from "@mui/material/styles/styled";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
@@ -19,6 +18,7 @@ import LikeModal from "../../components/blog/LikeModal";
 import UpdateModel from "../../components/blog/UpdateModel";
 import DeleteModel from "../../components/blog/DeleteModel";
 import avatar from "../../assets/icons/avatar.png";
+import Comment from "../comment/Comment";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -42,6 +42,7 @@ export default function BlogDetail() {
   const handleClose = () => setOpen(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateClose = () => setUpdateOpen(false);
+  const [commentOpen, setCommentOpen] = useState(false);
 
   const { username } = userInfo || {};
 
@@ -94,6 +95,8 @@ export default function BlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
+
+  console.log(comments);
 
   return (
     <Container
@@ -229,7 +232,7 @@ export default function BlogDetail() {
             height: "50px",
           }}
         >
-          <ChatBubbleOutlineIcon />
+          <ChatBubbleOutlineIcon onClick={() => setCommentOpen(!commentOpen)} />
           {comments?.length > 0 && (
             <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
               {comments.length}
@@ -254,6 +257,10 @@ export default function BlogDetail() {
         </Box>
       </Box>
 
+      {commentOpen && (
+        <Comment comments={comments} setCommentOpen={setCommentOpen} />
+      )}
+
       <Box my={2} display="flex" justifyContent="center" gap={2}>
         <button
           className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
@@ -270,6 +277,7 @@ export default function BlogDetail() {
         </button>
       </Box>
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
+
       <UpdateModel
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}

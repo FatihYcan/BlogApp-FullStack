@@ -66,7 +66,7 @@ export default function LoginForm({
           name="email"
           placeholder="your@email.com"
           variant="outlined"
-          color={errors.email ? "error" : "primary"}
+          color={errors.email ? "error" : "success"}
           value={values.email}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -82,7 +82,7 @@ export default function LoginForm({
           name="password"
           placeholder="••••••"
           variant="outlined"
-          color={errors.password ? "error" : "primary"}
+          color={errors.password ? "error" : "success"}
           value={values.password}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -96,6 +96,7 @@ export default function LoginForm({
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
@@ -109,9 +110,11 @@ export default function LoginForm({
         label="Remember me"
       /> */}
       {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-      <Button type="submit" fullWidth variant="contained">
+
+      <button className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
         Sign in
-      </Button>
+      </button>
+
       {/* <Link
         component="button"
         type="button"

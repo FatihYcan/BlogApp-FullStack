@@ -1,11 +1,8 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import { inputsCustomizations } from "./components/inputs";
 import { dataDisplayCustomizations } from "./components/dataDisplay";
-import { feedbackCustomizations } from "./components/feedback";
-import { navigationCustomizations } from "./components/navigation";
 import { surfacesCustomizations } from "./components/surfaces";
 import {
   colorSchemes,
@@ -32,8 +29,6 @@ function AppTheme(props) {
           components: {
             ...inputsCustomizations,
             ...dataDisplayCustomizations,
-            ...feedbackCustomizations,
-            ...navigationCustomizations,
             ...surfacesCustomizations,
             ...themeComponents,
           },
