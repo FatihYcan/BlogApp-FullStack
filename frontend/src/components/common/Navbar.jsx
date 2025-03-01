@@ -105,7 +105,7 @@ export default function Navbar() {
                     key={item.name}
                     to={item.to}
                     className={`${
-                      location.pathname === item.to
+                      location.pathname.startsWith(item.to)
                         ? "bg-black text-white dark:bg-white dark:text-black"
                         : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                     } rounded-md px-3 py-2 text-sm font-medium mr-3`}

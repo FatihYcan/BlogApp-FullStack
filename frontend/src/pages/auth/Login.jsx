@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -71,70 +70,67 @@ export default function Login() {
   }, []);
 
   return (
-    <>
-      <CssBaseline enableColorScheme />
-      <Container
-        maxWidth="xl"
-        component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
-      >
-        <SignInContainer direction="column" justifyContent="space-between">
-          {/* <ColorModeSelect
+    <Container
+      maxWidth="xl"
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
+    >
+      <SignInContainer direction="column" justifyContent="space-between">
+        {/* <ColorModeSelect
           sx={{ position: "fixed", top: "1rem", right: "1rem" }}
           /> */}
-          <Card variant="outlined">
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+        <Card variant="outlined">
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+          >
+            Sign in
+          </Typography>
+
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={loginSchema}
+            onSubmit={async (values, actions) => {
+              const isLogined = await login(values);
+
+              if (isLogined) {
+                actions.resetForm();
+              }
+              actions.setSubmitting(false);
+            }}
+            component={(props) => <LoginForm {...props} />}
+          ></Formik>
+
+          <Divider>or</Divider>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={() => alert("Sign in with Google")}
+              //   startIcon={<GoogleIcon />}
             >
-              Sign in
-            </Typography>
-
-            <Formik
-              initialValues={{
-                email: "",
-                password: "",
-              }}
-              validationSchema={loginSchema}
-              onSubmit={async (values, actions) => {
-                const isLogined = await login(values);
-
-                if (isLogined) {
-                  actions.resetForm();
-                }
-                actions.setSubmitting(false);
-              }}
-              component={(props) => <LoginForm {...props} />}
-            ></Formik>
-
-            <Divider>or</Divider>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => alert("Sign in with Google")}
-                //   startIcon={<GoogleIcon />}
+              Sign in with Google
+            </Button>
+            <Typography sx={{ textAlign: "center" }}>
+              Don&apos;t have an account?{" "}
+              <span
+                onClick={() => navigate("/register")}
+                style={{
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  color: "red",
+                }}
               >
-                Sign in with Google
-              </Button>
-              <Typography sx={{ textAlign: "center" }}>
-                Don&apos;t have an account?{" "}
-                <span
-                  onClick={() => navigate("/register")}
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "none",
-                    color: "red",
-                  }}
-                >
-                  Sign up
-                </span>
-              </Typography>
-            </Box>
-          </Card>
-        </SignInContainer>
-      </Container>
-    </>
+                Sign up
+              </span>
+            </Typography>
+          </Box>
+        </Card>
+      </SignInContainer>
+    </Container>
   );
 }

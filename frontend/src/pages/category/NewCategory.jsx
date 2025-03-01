@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -84,58 +83,55 @@ export default function NewCategory() {
   };
 
   return (
-    <>
-      <CssBaseline enableColorScheme />
-      <Container
-        maxWidth="xl"
-        component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
-      >
-        <CategoryContainer direction="column" justifyContent="space-between">
-          {/* <ColorModeSelect
+    <Container
+      maxWidth="xl"
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
+    >
+      <CategoryContainer direction="column" justifyContent="space-between">
+        {/* <ColorModeSelect
           sx={{ position: "fixed", top: "1rem", right: "1rem" }}
           /> */}
-          <Card variant="outlined">
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+        <Card variant="outlined">
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+          >
+            New Category
+          </Typography>
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              gap: 2,
+            }}
+          >
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <TextField
+                id="name"
+                type="text"
+                name="name"
+                variant="outlined"
+                value={data.name}
+                onChange={handleChange}
+              />
+            </FormControl>
+
+            <button
+              type="submit"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
             >
               New Category
-            </Typography>
-
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                gap: 2,
-              }}
-            >
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="name">Name</FormLabel>
-                <TextField
-                  id="name"
-                  type="text"
-                  name="name"
-                  variant="outlined"
-                  value={data.name}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <button
-                type="submit"
-                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
-              >
-                New Category
-              </button>
-            </Box>
-          </Card>
-        </CategoryContainer>
-      </Container>
-    </>
+            </button>
+          </Box>
+        </Card>
+      </CategoryContainer>
+    </Container>
   );
 }

@@ -6,10 +6,12 @@ import AppRouter from "./router/AppRouter.jsx";
 import { ToastContainer } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 import AppTheme from "./theme/AppTheme.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
   return (
     <AppTheme>
+      <CssBaseline enableColorScheme />
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <AppRouter />

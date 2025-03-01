@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -80,81 +79,78 @@ export default function Users() {
   };
 
   return (
-    <>
-      <CssBaseline enableColorScheme />
-      <Container
-        maxWidth="xl"
-        component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+    <Container
+      maxWidth="xl"
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+          marginTop: "1rem",
+        }}
       >
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 4,
-            marginTop: "1rem",
+            display: { xs: "flex", sm: "none" },
+            flexDirection: "row",
+            gap: 1,
+            width: { xs: "100%", md: "fit-content" },
+            overflow: "auto",
           }}
         >
-          <Box
-            sx={{
-              display: { xs: "flex", sm: "none" },
-              flexDirection: "row",
-              gap: 1,
-              width: { xs: "100%", md: "fit-content" },
-              overflow: "auto",
-            }}
-          >
-            <Search handleSearch={handleSearch} searchUser={searchUser} />
-          </Box>
-          <Box
-            sx={{
-              display: { xs: "none", sm: "flex" },
-              flexDirection: "row",
-              gap: 1,
-              width: { xs: "100%", md: "30%" },
-              overflow: "auto",
-              margin: "auto",
-            }}
-          >
-            <Search handleSearch={handleSearch} searchUser={searchUser} />
-          </Box>
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={2}
-            justifyContent="center"
-          >
-            {users.map((user) => (
-              <UserCard key={user._id} {...user} page={page} />
-            ))}
-          </Grid>
-
-          <div>
-            {details.totalRecords > details.limit && (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  pt: 4,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Stack spacing={2}>
-                  <Pagination
-                    color="primary"
-                    count={details?.pages?.total}
-                    onChange={handleChange}
-                    page={page}
-                    showFirstButton
-                    showLastButton
-                  />
-                </Stack>
-              </Box>
-            )}
-          </div>
+          <Search handleSearch={handleSearch} searchUser={searchUser} />
         </Box>
-      </Container>
-    </>
+        <Box
+          sx={{
+            display: { xs: "none", sm: "flex" },
+            flexDirection: "row",
+            gap: 1,
+            width: { xs: "100%", md: "30%" },
+            overflow: "auto",
+            margin: "auto",
+          }}
+        >
+          <Search handleSearch={handleSearch} searchUser={searchUser} />
+        </Box>
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={2}
+          justifyContent="center"
+        >
+          {users.map((user) => (
+            <UserCard key={user._id} {...user} page={page} />
+          ))}
+        </Grid>
+
+        <div>
+          {details.totalRecords > details.limit && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                pt: 4,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Stack spacing={2}>
+                <Pagination
+                  color="primary"
+                  count={details?.pages?.total}
+                  onChange={handleChange}
+                  page={page}
+                  showFirstButton
+                  showLastButton
+                />
+              </Stack>
+            </Box>
+          )}
+        </div>
+      </Box>
+    </Container>
   );
 }

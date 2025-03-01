@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -123,138 +122,135 @@ export default function NewBlog() {
   };
 
   return (
-    <>
-      <CssBaseline enableColorScheme />
-      <Container
-        maxWidth="xl"
-        component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
-      >
-        <CategoryContainer direction="column" justifyContent="space-between">
-          <Card variant="outlined">
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+    <Container
+      maxWidth="xl"
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
+    >
+      <CategoryContainer direction="column" justifyContent="space-between">
+        <Card variant="outlined">
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+          >
+            New Blog
+          </Typography>
+
+          <Box
+            encType="multipart/form-data"
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              gap: 2,
+            }}
+          >
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="title">Title</FormLabel>
+              <TextField
+                id="title"
+                type="text"
+                name="title"
+                variant="outlined"
+                required
+                value={data.title}
+                onChange={handleChange}
+              />
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="title">Content</FormLabel>
+              <TextField
+                id="content"
+                type="text"
+                name="content"
+                variant="outlined"
+                required
+                value={data.content}
+                onChange={handleChange}
+              />
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="category">Category</FormLabel>
+              <TextField
+                id="categoryId"
+                select
+                name="categoryId"
+                required
+                value={data.categoryId}
+                onChange={handleChange}
+              >
+                {categories?.map((category) => (
+                  <MenuItem key={category._id} value={category._id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="images">Images</FormLabel>
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <input
+                  id="images"
+                  name="images"
+                  type="file"
+                  accept="image/*"
+                  required
+                  multiple
+                  style={{
+                    width: "100%",
+                    cursor: "pointer",
+                    border: "none",
+                    outline: "none",
+                  }}
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                />
+              </Box>
+              <span className=" text-gray-500">
+                {data.images.length ? "" : "En az 1 adet resim ekleyiniz."}
+              </span>
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <FormLabel htmlFor="isPublish">Publish</FormLabel>
+              <TextField
+                id="isPublish"
+                select
+                name="isPublish"
+                required
+                value={data.isPublish}
+                onChange={handleChange}
+              >
+                <MenuItem value={true}>Yes</MenuItem>
+                <MenuItem value={false}>No</MenuItem>
+              </TextField>
+            </FormControl>
+
+            <button
+              type="submit"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
             >
               New Blog
-            </Typography>
-
-            <Box
-              encType="multipart/form-data"
-              component="form"
-              onSubmit={handleSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                gap: 2,
-              }}
-            >
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="title">Title</FormLabel>
-                <TextField
-                  id="title"
-                  type="text"
-                  name="title"
-                  variant="outlined"
-                  required
-                  value={data.title}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="title">Content</FormLabel>
-                <TextField
-                  id="content"
-                  type="text"
-                  name="content"
-                  variant="outlined"
-                  required
-                  value={data.content}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="category">Category</FormLabel>
-                <TextField
-                  id="categoryId"
-                  select
-                  name="categoryId"
-                  required
-                  value={data.categoryId}
-                  onChange={handleChange}
-                >
-                  {categories?.map((category) => (
-                    <MenuItem key={category._id} value={category._id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="images">Images</FormLabel>
-                <Box
-                  sx={{
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <input
-                    id="images"
-                    name="images"
-                    type="file"
-                    accept="image/*"
-                    required
-                    multiple
-                    style={{
-                      width: "100%",
-                      cursor: "pointer",
-                      border: "none",
-                      outline: "none",
-                    }}
-                    onChange={handleImageChange}
-                    ref={fileInputRef}
-                  />
-                </Box>
-                <span className=" text-gray-500">
-                  {data.images.length ? "" : "En az 1 adet resim ekleyiniz."}
-                </span>
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <FormLabel htmlFor="isPublish">Publish</FormLabel>
-                <TextField
-                  id="isPublish"
-                  select
-                  name="isPublish"
-                  required
-                  value={data.isPublish}
-                  onChange={handleChange}
-                >
-                  <MenuItem value={true}>Yes</MenuItem>
-                  <MenuItem value={false}>No</MenuItem>
-                </TextField>
-              </FormControl>
-
-              <button
-                type="submit"
-                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
-              >
-                New Blog
-              </button>
-            </Box>
-          </Card>
-        </CategoryContainer>
-      </Container>
-    </>
+            </button>
+          </Box>
+        </Card>
+      </CategoryContainer>
+    </Container>
   );
 }

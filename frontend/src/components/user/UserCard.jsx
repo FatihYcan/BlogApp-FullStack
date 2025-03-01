@@ -58,7 +58,7 @@ export default function UserCard({
   const navigate = useNavigate();
 
   const handleDetail = () => {
-    navigate(`/user/${_id}`);
+    navigate(`/users/${_id}`);
   };
 
   const fullName = firstName + " " + lastName;

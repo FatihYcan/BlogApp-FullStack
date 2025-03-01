@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -79,90 +78,87 @@ export default function Register() {
   }, []);
 
   return (
-    <>
-      <CssBaseline enableColorScheme />
-      <Container
-        maxWidth="xl"
-        component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
-      >
-        <SignUpContainer direction="column" justifyContent="space-between">
-          {/* <ColorModeSelect
+    <Container
+      maxWidth="xl"
+      component="main"
+      sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
+    >
+      <SignUpContainer direction="column" justifyContent="space-between">
+        {/* <ColorModeSelect
           sx={{ position: "fixed", top: "1rem", right: "1rem" }}
           /> */}
-          <Card variant="outlined">
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+        <Card variant="outlined">
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+          >
+            Sign up
+          </Typography>
+
+          <Formik
+            initialValues={{
+              username: "",
+              firstName: "",
+              lastName: "",
+              email: "",
+              password: "",
+              image: [],
+            }}
+            validationSchema={RegisterSchema}
+            onSubmit={async (values, actions) => {
+              const formData = new FormData();
+
+              formData.append("username", values.username);
+              formData.append("firstName", values.firstName);
+              formData.append("lastName", values.lastName);
+              formData.append("email", values.email);
+              formData.append("password", values.password);
+
+              if (
+                values.image &&
+                values.image instanceof FileList &&
+                values.image.length > 0
+              ) {
+                formData.append("image", values.image[0]);
+              }
+
+              const isRegistered = await register(formData);
+
+              if (isRegistered) {
+                actions.resetForm();
+              }
+              actions.setSubmitting(false);
+            }}
+            component={(props) => <RegisterForm {...props} />}
+          ></Formik>
+
+          <Divider>or</Divider>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={() => alert("Sign in with Google")}
+              //   startIcon={<GoogleIcon />}
             >
-              Sign up
-            </Typography>
-
-            <Formik
-              initialValues={{
-                username: "",
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                image: [],
-              }}
-              validationSchema={RegisterSchema}
-              onSubmit={async (values, actions) => {
-                const formData = new FormData();
-
-                formData.append("username", values.username);
-                formData.append("firstName", values.firstName);
-                formData.append("lastName", values.lastName);
-                formData.append("email", values.email);
-                formData.append("password", values.password);
-
-                if (
-                  values.image &&
-                  values.image instanceof FileList &&
-                  values.image.length > 0
-                ) {
-                  formData.append("image", values.image[0]);
-                }
-
-                const isRegistered = await register(formData);
-
-                if (isRegistered) {
-                  actions.resetForm();
-                }
-                actions.setSubmitting(false);
-              }}
-              component={(props) => <RegisterForm {...props} />}
-            ></Formik>
-
-            <Divider>or</Divider>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => alert("Sign in with Google")}
-                //   startIcon={<GoogleIcon />}
+              Sign up with Google
+            </Button>
+            <Typography sx={{ textAlign: "center" }}>
+              Don&apos;t have an account?{" "}
+              <span
+                onClick={() => navigate("/login")}
+                style={{
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  color: "red",
+                }}
               >
-                Sign up with Google
-              </Button>
-              <Typography sx={{ textAlign: "center" }}>
-                Don&apos;t have an account?{" "}
-                <span
-                  onClick={() => navigate("/login")}
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "none",
-                    color: "red",
-                  }}
-                >
-                  Sign in
-                </span>
-              </Typography>
-            </Box>
-          </Card>
-        </SignUpContainer>
-      </Container>
-    </>
+                Sign in
+              </span>
+            </Typography>
+          </Box>
+        </Card>
+      </SignUpContainer>
+    </Container>
   );
 }

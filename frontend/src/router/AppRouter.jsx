@@ -13,6 +13,7 @@ import NewCategory from "../pages/category/NewCategory";
 import Categories from "../pages/category/Categories";
 import MyBlogs from "../pages/blog/MyBlogs";
 import Profile from "../pages/user/Profile";
+import About from "../pages/about/About";
 
 const AppRouter = () => {
   return (
@@ -26,13 +27,13 @@ const AppRouter = () => {
         <Route path="" element={<PrivateRouter />}>
           <Route path="new-blog" element={<NewBlog />} />
         </Route>
-        {/* <Route path="about" element={<About />} /> */}
+        <Route path="about" element={<About />} />
         <Route path="my-blogs" element={<MyBlogs />} />
         <Route path=":username" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/:username/:_id" element={<BlogDetail />} />
-        <Route path="/user/:_id" element={<UserDetail />} />
+        <Route path="/users/:_id" element={<UserDetail />} />
       </Routes>
       <Footer />
     </Router>
