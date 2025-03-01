@@ -78,7 +78,7 @@ export default function UserBlogCard({
   };
 
   const handleDetail = () => {
-    navigate(`/blog/${_id}`);
+    navigate(`/my-blogs/${username}/${_id}`);
   };
 
   const blogImage = images?.[0]?.slice(1) || [];

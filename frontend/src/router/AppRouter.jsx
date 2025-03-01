@@ -14,6 +14,7 @@ import Categories from "../pages/category/Categories";
 import MyBlogs from "../pages/blog/MyBlogs";
 import Profile from "../pages/user/Profile";
 import About from "../pages/about/About";
+import MyBlogDetail from "../pages/blog/MyBlogDetail";
 
 const AppRouter = () => {
   return (
@@ -32,8 +33,9 @@ const AppRouter = () => {
         <Route path=":username" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="/:username/:_id" element={<BlogDetail />} />
+        <Route path="/blogs/:username/:_id" element={<BlogDetail />} />
         <Route path="/users/:_id" element={<UserDetail />} />
+        <Route path="/my-blogs/:username/:_id" element={<MyBlogDetail />} />
       </Routes>
       <Footer />
     </Router>
