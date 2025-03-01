@@ -187,6 +187,7 @@ export default function MyBlogDetail() {
         sx={{
           display: "flex",
           gap: 2,
+          height: "50px",
           alignItems: "center",
           justifyContent: "space-evenly",
         }}
@@ -195,6 +196,8 @@ export default function MyBlogDetail() {
           sx={{
             display: "flex",
             alignItems: "center",
+            width: "50px",
+            height: "50px",
           }}
         >
           <FavoriteIcon
@@ -221,6 +224,8 @@ export default function MyBlogDetail() {
             display: "flex",
             alignItems: "center",
             cursor: "default",
+            width: "50px",
+            height: "50px",
           }}
         >
           <ChatBubbleOutlineIcon />
@@ -235,6 +240,8 @@ export default function MyBlogDetail() {
             display: "flex",
             alignItems: "center",
             cursor: "default",
+            width: "50px",
+            height: "50px",
           }}
         >
           <VisibilityOutlinedIcon />
