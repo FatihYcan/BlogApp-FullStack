@@ -26,7 +26,7 @@ export default function DeleteModel({ deleteOpen, handleDeleteClose }) {
 
   const handleDeleteBlog = () => {
     deleteBlog(_id);
-    navigate(-1);
+    navigate("/");
   };
 
   return (

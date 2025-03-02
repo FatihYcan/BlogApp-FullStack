@@ -32,7 +32,7 @@ export default function UpdateModel({
 }) {
   const { categories } = useSelector((state) => state.blog);
   const { getCategories, putBlog, getSingleBlog } = useBlogCalls();
-  const { _id } = useParams();
+  const { _id, username } = useParams();
 
   useEffect(() => {
     getCategories("categories");
@@ -65,7 +65,7 @@ export default function UpdateModel({
     const isUpdated = await putBlog(_id, formData);
 
     if (isUpdated) {
-      await getSingleBlog(_id);
+      await getSingleBlog(username, _id);
       handleUpdateClose();
     }
   };

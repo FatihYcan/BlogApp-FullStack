@@ -18,7 +18,8 @@ import LikeModal from "../../components/blog/LikeModal";
 import UpdateModel from "../../components/blog/UpdateModel";
 import DeleteModel from "../../components/blog/DeleteModel";
 import avatar from "../../assets/icons/avatar.png";
-import Comment from "../comment/Comment";
+import CommentForm from "../comment/CommentForm";
+import CommentCard from "../comment/CommentCard";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -258,7 +259,13 @@ export default function BlogDetail() {
       </Box>
 
       {commentOpen && (
-        <Comment comments={comments} setCommentOpen={setCommentOpen} />
+        <>
+          <CommentForm comments={comments} setCommentOpen={setCommentOpen} />
+
+          {comments?.map((item) => (
+            <CommentCard key={item._id} {...item} />
+          ))}
+        </>
       )}
 
       <Box my={2} display="flex" justifyContent="center" gap={2}>
