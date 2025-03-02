@@ -108,9 +108,10 @@ export default function UpdateModel({
             <Typography gutterBottom variant="h6" component="div">
               Update Blog
             </Typography>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="title">Title</FormLabel>
               <TextField
+                size="small"
                 name="title"
                 id="title"
                 type="text"
@@ -120,9 +121,10 @@ export default function UpdateModel({
                 value={data.title}
               />
             </FormControl>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="content">Content</FormLabel>
               <TextField
+                size="small"
                 name="content"
                 id="content"
                 type="text"
@@ -132,9 +134,10 @@ export default function UpdateModel({
                 value={data.content}
               />
             </FormControl>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="category">Category</FormLabel>
               <TextField
+                size="small"
                 id="categoryId"
                 select
                 name="categoryId"
@@ -149,7 +152,7 @@ export default function UpdateModel({
               </TextField>
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="images">Images</FormLabel>
               <Box
                 sx={{
@@ -228,9 +231,10 @@ export default function UpdateModel({
               </span>
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="isPublish">Publish</FormLabel>
               <TextField
+                size="small"
                 id="isPublish"
                 select
                 name="isPublish"
@@ -244,7 +248,7 @@ export default function UpdateModel({
 
             <button
               type="submit"
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full uppercase"
             >
               Update Blog
             </button>

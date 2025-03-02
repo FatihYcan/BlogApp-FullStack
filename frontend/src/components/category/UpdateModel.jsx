@@ -55,9 +55,10 @@ export default function UpdateModel({
               Update Category
             </Typography>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="name">Name</FormLabel>
               <TextField
+                size="small"
                 name="name"
                 id="name"
                 type="text"
@@ -70,7 +71,7 @@ export default function UpdateModel({
 
             <button
               type="submit"
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full uppercase"
             >
               Update Category
             </button>

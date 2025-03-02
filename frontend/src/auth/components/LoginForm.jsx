@@ -58,9 +58,10 @@ export default function LoginForm({
         gap: 2,
       }}
     >
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="email">Email</FormLabel>
         <TextField
+          size="small"
           id="email"
           type="email"
           name="email"
@@ -74,9 +75,10 @@ export default function LoginForm({
           helperText={errors.email}
         />
       </FormControl>
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="password">Password</FormLabel>
         <TextField
+          size="small"
           id="password"
           type={showPassword ? "text" : "password"}
           name="password"
@@ -96,7 +98,6 @@ export default function LoginForm({
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
-                  
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>

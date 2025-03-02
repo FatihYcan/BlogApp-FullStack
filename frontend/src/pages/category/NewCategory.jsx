@@ -10,13 +10,6 @@ import FormLabel from "@mui/material/FormLabel";
 import { useEffect, useState } from "react";
 import useBlogCalls from "../../hooks/useBlogCalls";
 
-// import ForgotPassword from './components/ForgotPassword';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from "../shared-theme/ColorModeSelect";
-// import {
-//   GoogleIcon,
-// } from "./components/CustomIcons";
-
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -89,9 +82,6 @@ export default function NewCategory() {
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
       <CategoryContainer direction="column" justifyContent="space-between">
-        {/* <ColorModeSelect
-          sx={{ position: "fixed", top: "1rem", right: "1rem" }}
-          /> */}
         <Card variant="outlined">
           <Typography
             component="h1"
@@ -111,9 +101,10 @@ export default function NewCategory() {
               gap: 2,
             }}
           >
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="name">Name</FormLabel>
               <TextField
+                size="small"
                 id="name"
                 type="text"
                 name="name"

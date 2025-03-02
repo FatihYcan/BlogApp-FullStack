@@ -140,9 +140,10 @@ export default function UpdateUserModel({
             <Typography gutterBottom variant="h6" component="div">
               Update User
             </Typography>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="username">User Name</FormLabel>
               <TextField
+                size="small"
                 name="username"
                 id="username"
                 type="text"
@@ -156,9 +157,10 @@ export default function UpdateUserModel({
                 helperText={formik.touched.username && formik.errors.username}
               />
             </FormControl>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="firstName">First Name</FormLabel>
               <TextField
+                size="small"
                 name="firstName"
                 id="firstName"
                 type="text"
@@ -173,9 +175,10 @@ export default function UpdateUserModel({
               />
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="lastName">Last Name</FormLabel>
               <TextField
+                size="small"
                 name="lastName"
                 id="lastName"
                 type="text"
@@ -190,9 +193,10 @@ export default function UpdateUserModel({
               />
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
+                size="small"
                 name="email"
                 id="email"
                 type="email"
@@ -205,9 +209,10 @@ export default function UpdateUserModel({
               />
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
+                size="small"
                 id="password"
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -246,7 +251,7 @@ export default function UpdateUserModel({
                 }}
               />
             </FormControl>
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="image">Image</FormLabel>
               <Box
                 sx={{
@@ -328,7 +333,7 @@ export default function UpdateUserModel({
 
             <button
               type="submit"
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full uppercase"
             >
               Update User
             </button>

@@ -35,9 +35,10 @@ export default function Comment() {
         gap: 2,
       }}
     >
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="comment">Comment</FormLabel>
         <TextField
+          size="small"
           id="comment"
           type="text"
           name="comment"
@@ -48,8 +49,11 @@ export default function Comment() {
           // onChange={handleChange}
         />
       </FormControl>
-      <button className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
-        Add Comment
+      <button
+        type="submit"
+        className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
+      >
+        New Comment
       </button>
     </Box>
   );

@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import IconButton from "@mui/material/IconButton";
@@ -65,9 +64,10 @@ export default function RegisterForm({
         gap: 2,
       }}
     >
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="username">User name</FormLabel>
         <TextField
+          size="small"
           id="username"
           type="text"
           name="username"
@@ -81,9 +81,10 @@ export default function RegisterForm({
         />
       </FormControl>
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="firstName">First Name</FormLabel>
         <TextField
+          size="small"
           id="firstName"
           type="text"
           name="firstName"
@@ -97,9 +98,10 @@ export default function RegisterForm({
         />
       </FormControl>
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="lastName">Last Name</FormLabel>
         <TextField
+          size="small"
           id="lastName"
           type="text"
           name="lastName"
@@ -113,9 +115,10 @@ export default function RegisterForm({
         />
       </FormControl>
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="email">Email</FormLabel>
         <TextField
+          size="small"
           id="email"
           type="email"
           name="email"
@@ -129,9 +132,10 @@ export default function RegisterForm({
           helperText={errors.email}
         />
       </FormControl>
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="password">Password</FormLabel>
         <TextField
+          size="small"
           id="password"
           type={showPassword ? "text" : "password"}
           name="password"
@@ -160,7 +164,7 @@ export default function RegisterForm({
         />
       </FormControl>
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="dense">
         <FormLabel htmlFor="image">Image</FormLabel>
         <Box
           sx={{
@@ -190,24 +194,9 @@ export default function RegisterForm({
           />
         </Box>
       </FormControl>
-
-      {/* <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      /> */}
-      {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
       <button className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
         Sign up
       </button>
-      {/* <Link
-        component="button"
-        type="button"
-        // onClick={handleClickOpen}
-        variant="body2"
-        sx={{ alignSelf: "center" }}
-      >
-        Forgot your password?
-      </Link> */}
     </Box>
   );
 }
