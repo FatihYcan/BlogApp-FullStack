@@ -20,11 +20,11 @@ const blogSchema = new mongoose.Schema({
 
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
-    viewCount: { type: Number, default: 0 },
-
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: Like.modelName }],
-
+    
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    
+    viewCount: { type: Number, default: 0 },
 
     isPublish: { type: Boolean, default: true }
 },

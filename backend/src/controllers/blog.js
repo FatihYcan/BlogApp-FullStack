@@ -28,7 +28,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username firstName lastName image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId blogId", populate: { path: "userId", select: "username firstName lastName image" } }, { path: "views" }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }])
         res.status(200).send({ error: false, details: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -74,7 +74,8 @@ module.exports = {
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: view }, $inc: { viewCount: 1 } })
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username firstName lastName image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId blogId", populate: { path: "userId", select: "username firstName lastName image" } }, { path: "comments", select: "blogId userId comment createdAt updatedAt", populate: { path: "userId", select: "username firstName lastName image" } }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "views" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: { path: "userId", select: "username image" }, populate: { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } } }])
+
         res.status(200).send({ error: false, data })
     },
 

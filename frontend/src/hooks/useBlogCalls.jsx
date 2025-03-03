@@ -198,7 +198,7 @@ const useBlogCalls = () => {
   const getSingleBlog = async (username, blog_id) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosPublic(`/blogs/${username}/${blog_id}/`);
+      const { data } = await axiosWithToken(`/blogs/${username}/${blog_id}/`);
       const apiData = data.data;
       dispatch(getSingleBlogSuccess({ apiData }));
     } catch (error) {

@@ -10,16 +10,38 @@ import Button from "@mui/material/Button";
 import avatar from "../../assets/icons/avatar.png";
 import Divider from "@mui/material/Divider";
 
-export default function CommentCard({ comment, createdAt, userId }) {
+export default function CommentCard({
+  comment,
+  createdAt,
+  userId,
+  _id,
+  setIsReply,
+  setShowReplyCard,
+  showReplyCard,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleReplyClick = (e, _id) => {
+    e.preventDefault();
+    setIsReply(true);
+    // setShowReplyCard(_id);
+  };
+
+  const handleAnswersClick = (e, _id) => {
+    e.preventDefault();
+    setShowReplyCard(_id);
+  };
+
+  console.log("_id", _id);
+  console.log("showReplyCard", showReplyCard);
 
   return (
     <Box sx={{ width: "75%", margin: "auto" }}>
@@ -58,53 +80,66 @@ export default function CommentCard({ comment, createdAt, userId }) {
           >
             <MenuItem onClick={handleClose}>Edit</MenuItem>
             <MenuItem onClick={handleClose}>Remove</MenuItem>
-            <MenuItem onClick={handleClose}>Report</MenuItem>
           </Menu>
         </Box>
         <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
           {comment}
         </Typography>
-        <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
+        <Button
+          startIcon={<ReplyIcon />}
+          sx={{ color: "text.secondary" }}
+          onClick={(e) => handleReplyClick(e, _id)}
+        >
           Reply
         </Button>
+
+        <Button
+          sx={{ color: "text.secondary" }}
+          onClick={(e) => handleAnswersClick(e, _id)}
+        >
+          See Answers
+        </Button>
       </Box>
-      <Box
-        sx={{
-          borderRadius: 2,
-          mx: 6,
-        }}
-      >
+
+      {showReplyCard === _id && (
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 2,
+            borderRadius: 2,
+            mx: 6,
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              sx={{ mr: 2 }}
-            />
-            <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
-              Jese Leos
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Feb. 12, 2022
-            </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Avatar
+                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                sx={{ mr: 2 }}
+              />
+              <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
+                Jese Leos
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Feb. 12, 2022
+              </Typography>
+            </Box>
+            <div className="border border-black p-1 cursor-pointer dark:border-white ">
+              <MoreVertIcon onClick={handleClick} />
+            </div>
           </Box>
-          <div className="border border-black p-1 cursor-pointer dark:border-white ">
-            <MoreVertIcon onClick={handleClick} />
-          </div>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Much appreciated! Glad you liked it ☺️
+          </Typography>
+          <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
+            Reply
+          </Button>
         </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Much appreciated! Glad you liked it ☺️
-        </Typography>
-        <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
-          Reply
-        </Button>
-      </Box>
+      )}
       <Divider sx={{ mt: 2 }}></Divider>
     </Box>
   );
