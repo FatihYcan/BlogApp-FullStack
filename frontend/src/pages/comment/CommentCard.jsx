@@ -15,9 +15,14 @@ export default function CommentCard({
   createdAt,
   userId,
   _id,
+  bottomcomments,
   setIsReply,
   setShowReplyCard,
   showReplyCard,
+  setSeeAnswers,
+  seeAnswers,
+  setSeeAnswersCard,
+  seeAnswersCard,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,8 +45,16 @@ export default function CommentCard({
     setShowReplyCard(_id);
   };
 
-  console.log("_id", _id);
-  console.log("showReplyCard", showReplyCard);
+  const handleAnswers = (e, comment_id) => {
+    e.preventDefault();
+    setSeeAnswers(true);
+    setSeeAnswersCard(comment_id);
+  };
+
+  // console.log("_id", _id);
+  // console.log("showReplyCard", showReplyCard);
+
+  console.log(_id === seeAnswersCard);
 
   return (
     <Box sx={{ width: "75%", margin: "auto" }}>
@@ -85,23 +98,41 @@ export default function CommentCard({
         <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
           {comment}
         </Typography>
-        <Button
-          startIcon={<ReplyIcon />}
-          sx={{ color: "text.secondary" }}
-          onClick={(e) => handleReplyClick(e, _id)}
-        >
-          Reply
-        </Button>
 
-        <Button
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            // height: "50px",
+            alignItems: "center",
+            // justifyContent: "space-evenly",
+          }}
+        >
+          <Button
+            startIcon={<ReplyIcon />}
+            sx={{ color: "text.secondary" }}
+            onClick={(e) => handleReplyClick(e, _id)}
+          >
+            Reply
+          </Button>
+
+          {/* <Button
           sx={{ color: "text.secondary" }}
           onClick={(e) => handleAnswersClick(e, _id)}
-        >
+          >
           See Answers
-        </Button>
+          </Button> */}
+
+          <span
+            className="cursor-pointer text-gray-600"
+            onClick={(e) => handleAnswers(e, _id)}
+          >
+            See {bottomcomments.length} Answers
+          </span>
+        </Box>
       </Box>
 
-      {showReplyCard === _id && (
+      {seeAnswers && _id === seeAnswersCard && (
         <Box
           sx={{
             borderRadius: 2,

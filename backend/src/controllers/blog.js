@@ -74,7 +74,8 @@ module.exports = {
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: view }, $inc: { viewCount: 1 } })
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "views" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: { path: "userId", select: "username image" }, populate: { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } } }])
+        // const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "views" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: { path: "userId", select: "username image" }, populate: { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } } }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
 
         res.status(200).send({ error: false, data })
     },
