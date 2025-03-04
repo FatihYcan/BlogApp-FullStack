@@ -9,7 +9,7 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
-export default function CommentForm({ isReply, setIsReply }) {
+export default function CommentForm() {
   const { _id, username } = useParams();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { postComment, getSingleBlog } = useBlogCalls();
@@ -32,7 +32,6 @@ export default function CommentForm({ isReply, setIsReply }) {
     await postComment(commentData);
     await getSingleBlog(username, _id);
     setCommentData({ blogId: _id, comment: "" });
-    setIsReply(false);
   };
 
   return (
@@ -79,7 +78,8 @@ export default function CommentForm({ isReply, setIsReply }) {
         type="submit"
         className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
       >
-        {isReply ? "Add Answer" : "Add Comment"}
+        {/* {isReply ? "Add Answer" : "Add Comment"} */}
+        Add Comment
       </button>
     </Box>
   );
