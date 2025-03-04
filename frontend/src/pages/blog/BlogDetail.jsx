@@ -45,9 +45,11 @@ export default function BlogDetail() {
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCard, setSeeAnswersCard] = useState("");
-  // const [isReply, setIsReply] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [isReplyId, setIsReplyId] = useState("");
   const [isReplyName, setIsReplyName] = useState("");
+  const [editComment, setEditComment] = useState("");
+  const [editCommentId, setEditCommentId] = useState("");
 
   const { username } = userInfo || {};
 
@@ -62,6 +64,13 @@ export default function BlogDetail() {
   useEffect(() => {
     getSingleBlog(name, _id);
   }, [like]);
+
+  const handleEditClick = (e, comment_id, comment) => {
+    e.preventDefault();
+    setEditCommentId(comment_id);
+    setEditComment(comment);
+    setAnchorEl(null);
+  };
 
   const {
     categoryId,
@@ -100,8 +109,6 @@ export default function BlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
-
-  // console.log(isReply);
 
   return (
     <Container
@@ -264,18 +271,30 @@ export default function BlogDetail() {
 
       {commentOpen && (
         <>
-          <CommentForm isReplyId={isReplyId} isReplyName={isReplyName} setIsReplyId={setIsReplyId} setIsReplyName={setIsReplyName} />
+          <CommentForm
+            isReplyId={isReplyId}
+            isReplyName={isReplyName}
+            setIsReplyId={setIsReplyId}
+            setIsReplyName={setIsReplyName}
+            editComment={editComment}
+            setEditComment={setEditComment}
+            editCommentId={editCommentId}
+            setEditCommentId={setEditComment}
+          />
 
           {comments?.map((item) => (
             <CommentCard
               key={item._id}
               {...item}
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
               seeAnswersCard={seeAnswersCard}
               setSeeAnswersCard={setSeeAnswersCard}
               setIsReplyId={setIsReplyId}
               isReplyId={isReplyId}
               isReplyName={isReplyName}
               setIsReplyName={setIsReplyName}
+              handleEditClick={handleEditClick}
             />
           ))}
         </>

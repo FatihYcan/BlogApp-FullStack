@@ -27,7 +27,7 @@ export default function BottomCommentCard({ item }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          mb: 1,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -37,7 +37,7 @@ export default function BottomCommentCard({ item }) {
                 ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
                 : avatar
             }
-            sx={{ mr: 2 }}
+            sx={{ width: 30, height: 30, mr: 2 }}
           />
           <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
             {userId?.username}
@@ -61,6 +61,7 @@ export default function BottomCommentCard({ item }) {
       <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
         {comment}
       </Typography>
+      {/* <Divider sx={{ my: 2 }}></Divider> */}
       {/* <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
         Reply
       </Button> */}

@@ -14,10 +14,15 @@ export default function CommentForm({
   setIsReplyId,
   isReplyName,
   setIsReplyName,
+  editComment,
+  setEditComment,
+  editCommentId,
+  setEditCommentId,
 }) {
   const { _id, username } = useParams();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { postComment, getSingleBlog, postBottomComment } = useBlogCalls();
+  const { postComment, getSingleBlog, postBottomComment, putComment } =
+    useBlogCalls();
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: "",
@@ -30,8 +35,12 @@ export default function CommentForm({
         ...prevData,
         commentId: isReplyId,
       }));
+      setCommentData({ blogId: _id, comment: "" });
+    } else if (editComment) {
+      setCommentData({ blogId: _id, comment: editComment });
     }
-  }, [isReplyId]);
+    setBottomCommentData({ commentId: isReplyId, comment: "" });
+  }, [isReplyId, editComment]);
 
   const handleChange = (e) => {
     if (isReplyId) {
@@ -66,14 +75,17 @@ export default function CommentForm({
       setBottomCommentData({ commentId: "", comment: "" });
       setIsReplyId("");
       setIsReplyName("");
+    } else if (editComment) {
+      await putComment(editCommentId, commentData);
+      setEditComment("");
+      setEditCommentId("");
+      setCommentData({ blogId: _id, comment: "" });
     } else {
       await postComment(commentData);
       setCommentData({ blogId: _id, comment: "" });
     }
     await getSingleBlog(username, _id);
   };
-
-  console.log();
 
   return (
     <Box
@@ -97,7 +109,7 @@ export default function CommentForm({
           id="comment"
           type="text"
           name="comment"
-          placeholder={isReplyName ? isReplyName : ""}
+          placeholder={isReplyName ? `to answer ${isReplyName}` : "to comment"}
           variant="outlined"
           required
           multiline
@@ -120,7 +132,11 @@ export default function CommentForm({
         type="submit"
         className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
       >
-        {isReplyId ? "Add Answer" : "Add Comment"}
+        {isReplyId
+          ? "Add Answer"
+          : editComment
+          ? "Edit Comment"
+          : "Add Comment"}
       </button>
     </Box>
   );

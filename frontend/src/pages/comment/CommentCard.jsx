@@ -9,6 +9,8 @@ import { useState } from "react";
 import avatar from "../../assets/icons/avatar.png";
 import Divider from "@mui/material/Divider";
 import BottomCommentCard from "./BottomCommentCard";
+import { useParams } from "react-router-dom";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 export default function CommentCard({
   comment,
@@ -18,12 +20,16 @@ export default function CommentCard({
   bottomcomments,
   seeAnswersCard,
   setSeeAnswersCard,
+  anchorEl,
+  setAnchorEl,
   setIsReplyId,
   isReplyId,
   isReplyName,
   setIsReplyName,
+  handleEditClick,
 }) {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { _id: id, username: name } = useParams();
+  const { getSingleBlog, deleteComment } = useBlogCalls();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -53,9 +59,12 @@ export default function CommentCard({
     }
   };
 
-  // console.log("_id", _id);
-  // console.log("showReplyCard", showReplyCard);
-  // console.log(_id === seeAnswersCard);
+  const handleDeleteClick = async (e, delete_id) => {
+    e.preventDefault();
+    await deleteComment(delete_id);
+    await getSingleBlog(name, id);
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ width: "75%", margin: "auto" }}>
@@ -65,7 +74,7 @@ export default function CommentCard({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 2,
+            mb: 1,
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -75,7 +84,7 @@ export default function CommentCard({
                   ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
                   : avatar
               }
-              sx={{ mr: 2 }}
+              sx={{ width: 30, height: 30, mr: 2 }}
             />
             <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
               {userId?.username}
@@ -92,8 +101,12 @@ export default function CommentCard({
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Remove</MenuItem>
+            <MenuItem onClick={(e) => handleEditClick(e, _id, comment)}>
+              Edit
+            </MenuItem>
+            <MenuItem onClick={(e) => handleDeleteClick(e, _id)}>
+              Remove
+            </MenuItem>
           </Menu>
         </Box>
         <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
@@ -104,9 +117,7 @@ export default function CommentCard({
           sx={{
             display: "flex",
             gap: 2,
-            // height: "50px",
             alignItems: "center",
-            // justifyContent: "space-evenly",
           }}
         >
           <button
