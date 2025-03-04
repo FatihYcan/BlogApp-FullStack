@@ -45,6 +45,9 @@ export default function BlogDetail() {
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCard, setSeeAnswersCard] = useState("");
+  // const [isReply, setIsReply] = useState(false);
+  const [isReplyId, setIsReplyId] = useState("");
+  const [isReplyName, setIsReplyName] = useState("");
 
   const { username } = userInfo || {};
 
@@ -97,6 +100,8 @@ export default function BlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
+
+  // console.log(isReply);
 
   return (
     <Container
@@ -259,7 +264,7 @@ export default function BlogDetail() {
 
       {commentOpen && (
         <>
-          <CommentForm />
+          <CommentForm isReplyId={isReplyId} isReplyName={isReplyName} setIsReplyId={setIsReplyId} setIsReplyName={setIsReplyName} />
 
           {comments?.map((item) => (
             <CommentCard
@@ -267,6 +272,10 @@ export default function BlogDetail() {
               {...item}
               seeAnswersCard={seeAnswersCard}
               setSeeAnswersCard={setSeeAnswersCard}
+              setIsReplyId={setIsReplyId}
+              isReplyId={isReplyId}
+              isReplyName={isReplyName}
+              setIsReplyName={setIsReplyName}
             />
           ))}
         </>

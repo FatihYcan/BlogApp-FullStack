@@ -7,32 +7,73 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function CommentForm() {
+export default function CommentForm({
+  isReplyId,
+  setIsReplyId,
+  isReplyName,
+  setIsReplyName,
+}) {
   const { _id, username } = useParams();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { postComment, getSingleBlog } = useBlogCalls();
+  const { postComment, getSingleBlog, postBottomComment } = useBlogCalls();
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
+  const [bottomCommentData, setBottomCommentData] = useState({
+    commentId: "",
+    comment: "",
+  });
+
+  useEffect(() => {
+    if (isReplyId) {
+      setBottomCommentData((prevData) => ({
+        ...prevData,
+        commentId: isReplyId,
+      }));
+    }
+  }, [isReplyId]);
 
   const handleChange = (e) => {
-    setCommentData({ ...commentData, [e.target.name]: e.target.value });
+    if (isReplyId) {
+      setBottomCommentData({
+        ...bottomCommentData,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setCommentData({ ...commentData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleEmojiSelect = (emoji) => {
-    setCommentData((prevData) => ({
-      ...prevData,
-      comment: prevData.comment + emoji.native,
-    }));
+    if (isReplyId) {
+      setBottomCommentData((prevData) => ({
+        ...prevData,
+        comment: prevData.comment + emoji.native,
+      }));
+    } else {
+      setCommentData((prevData) => ({
+        ...prevData,
+        comment: prevData.comment + emoji.native,
+      }));
+    }
     setShowEmojiPicker(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postComment(commentData);
+    if (isReplyId) {
+      await postBottomComment(bottomCommentData);
+      setBottomCommentData({ commentId: "", comment: "" });
+      setIsReplyId("");
+      setIsReplyName("");
+    } else {
+      await postComment(commentData);
+      setCommentData({ blogId: _id, comment: "" });
+    }
     await getSingleBlog(username, _id);
-    setCommentData({ blogId: _id, comment: "" });
   };
+
+  console.log();
 
   return (
     <Box
@@ -56,10 +97,11 @@ export default function CommentForm() {
           id="comment"
           type="text"
           name="comment"
+          placeholder={isReplyName ? isReplyName : ""}
           variant="outlined"
           required
           multiline
-          value={commentData.comment}
+          value={isReplyId ? bottomCommentData.comment : commentData.comment}
           onChange={handleChange}
         />
         <Button
@@ -78,8 +120,7 @@ export default function CommentForm() {
         type="submit"
         className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
       >
-        {/* {isReply ? "Add Answer" : "Add Comment"} */}
-        Add Comment
+        {isReplyId ? "Add Answer" : "Add Comment"}
       </button>
     </Box>
   );

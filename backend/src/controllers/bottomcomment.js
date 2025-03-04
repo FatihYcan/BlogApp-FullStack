@@ -37,7 +37,7 @@ module.exports = {
         const data = await BottomComment.create(req.body)
 
         //! Kullanıcının commente olan bottom comment durumunu ekle
-        await Comment.updateOne({ _id: req.body.commentId }, { $push: { comments: data._id } })
+        await Comment.updateOne({ _id: req.body.commentId }, { $push: { bottomcomments: data._id } })
         res.status(201).send({ error: false, data })
     },
 
@@ -86,7 +86,7 @@ module.exports = {
         const data = await BottomComment.deleteOne({ _id: req.params.id, ...customFilter })
 
         //! Kullanıcının commente olan bottom comment durumunu sil
-        await Comment.updateOne({ _id: blogBottomComment.commentId }, { $pull: { comments: req.params.id } })
+        await Comment.updateOne({ _id: blogBottomComment.commentId }, { $pull: { bottomcomments: req.params.id } })
 
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },

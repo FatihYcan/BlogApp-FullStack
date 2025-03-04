@@ -18,8 +18,6 @@ export default function BottomCommentCard({ item }) {
     setAnchorEl(null);
   };
 
-  console.log(item);
-
   const { comment, createdAt, userId } = item;
 
   return (
@@ -42,10 +40,10 @@ export default function BottomCommentCard({ item }) {
             sx={{ mr: 2 }}
           />
           <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
-          {userId?.username}
+            {userId?.username}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-          {new Date(createdAt).toLocaleDateString("tr-TR")}
+            {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
         <div className="border border-black p-1 cursor-pointer dark:border-white ">
@@ -61,7 +59,7 @@ export default function BottomCommentCard({ item }) {
         </Menu>
       </Box>
       <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-      {comment}
+        {comment}
       </Typography>
       {/* <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
         Reply

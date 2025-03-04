@@ -18,9 +18,12 @@ export default function CommentCard({
   bottomcomments,
   seeAnswersCard,
   setSeeAnswersCard,
+  setIsReplyId,
+  isReplyId,
+  isReplyName,
+  setIsReplyName,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -30,12 +33,23 @@ export default function CommentCard({
     setAnchorEl(null);
   };
 
-  const handleClickAnswers = (e) => {
+  const handleAnswersClick = (e) => {
     e.preventDefault();
     if (seeAnswersCard === _id) {
       setSeeAnswersCard("");
     } else {
       setSeeAnswersCard(_id);
+    }
+  };
+
+  const handleReplyClick = (e, comment_id, comment_name) => {
+    e.preventDefault();
+    if (isReplyId === _id && isReplyName === userId.username) {
+      setIsReplyId("");
+      setIsReplyName("");
+    } else {
+      setIsReplyId(comment_id);
+      setIsReplyName(comment_name);
     }
   };
 
@@ -95,7 +109,10 @@ export default function CommentCard({
             // justifyContent: "space-evenly",
           }}
         >
-          <button className="flex items-center text-gray-600">
+          <button
+            className="flex items-center text-gray-600"
+            onClick={(e) => handleReplyClick(e, _id, userId.username)}
+          >
             <ReplyIcon />
             <span>Reply</span>
           </button>
@@ -103,7 +120,7 @@ export default function CommentCard({
           {bottomcomments.length > 0 && (
             <span
               className="cursor-pointer text-gray-600"
-              onClick={handleClickAnswers}
+              onClick={handleAnswersClick}
             >
               {seeAnswersCard === _id ? "Hide" : "See"} {bottomcomments.length}{" "}
               Answers
