@@ -16,27 +16,22 @@ export default function CommentCard({
   userId,
   _id,
   bottomcomments,
-  isOpen,
-  onMenuClick,
+  isCommentOpen,
+  onCommentMenuClick,
+
+  openBottomCommentId,
+  handleBottomCommentMenuClick,
+
   seeAnswersCard,
   setSeeAnswersCard,
   setIsReplyId,
   isReplyId,
   isReplyName,
   setIsReplyName,
-  handleEditClick,
+  handleCommentEditClick,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteComment } = useBlogCalls();
-  const [openBottomCommentId, setOpenBottomCommentId] = useState("");
-
-  const handleMenuClick = (commentId) => {
-    if (openBottomCommentId === commentId) {
-      setOpenBottomCommentId("");
-    } else {
-      setOpenBottomCommentId(commentId);
-    }
-  };
 
   const handleAnswersClick = (e) => {
     e.preventDefault();
@@ -58,11 +53,11 @@ export default function CommentCard({
     }
   };
 
-  const handleDeleteClick = async (e, delete_id) => {
+  const handleCommentDeleteClick = async (e, delete_id) => {
     e.preventDefault();
     await deleteComment(delete_id);
     await getSingleBlog(name, id);
-    onMenuClick();
+    onCommentMenuClick();
   };
 
   return (
@@ -95,11 +90,11 @@ export default function CommentCard({
           <div className="relative">
             <div
               className="border border-black p-1 cursor-pointer dark:border-white"
-              onClick={onMenuClick}
+              onClick={onCommentMenuClick}
             >
               <MoreVertIcon />
             </div>
-            {isOpen && (
+            {isCommentOpen && (
               <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
                 <div
                   className="py-1"
@@ -108,14 +103,14 @@ export default function CommentCard({
                   aria-labelledby="options-menu"
                 >
                   <button
-                    onClick={(e) => handleEditClick(e, _id, comment)}
+                    onClick={(e) => handleCommentEditClick(e, _id, comment)}
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={(e) => handleDeleteClick(e, _id)}
+                    onClick={(e) => handleCommentDeleteClick(e, _id)}
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
@@ -168,8 +163,10 @@ export default function CommentCard({
             <BottomCommentCard
               key={item._id}
               item={item}
-              isBottomOpen={openBottomCommentId === item._id}
-              onMenuBottomClick={() => handleMenuClick(item._id)}
+              isBottomCommentOpen={openBottomCommentId === item._id}
+              onBottomCommentMenuClick={() =>
+                handleBottomCommentMenuClick(item._id)
+              }
             />
           ))}
         </Box>

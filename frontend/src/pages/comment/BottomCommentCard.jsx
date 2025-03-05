@@ -11,19 +11,19 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 
 export default function BottomCommentCard({
   item,
-  isBottomOpen,
-  onMenuBottomClick,
+  isBottomCommentOpen,
+  onBottomCommentMenuClick,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
 
   const { comment, createdAt, userId, _id } = item;
 
-  const handleDeleteClick = async (e, delete_id) => {
+  const handleBottomCommentDeleteClick = async (e, delete_id) => {
     e.preventDefault();
     await deleteBottomComment(delete_id);
     await getSingleBlog(name, id);
-    onMenuBottomClick();
+    onBottomCommentMenuClick();
   };
 
   return (
@@ -55,11 +55,11 @@ export default function BottomCommentCard({
         <div className="relative">
           <div
             className="border border-black p-1 cursor-pointer dark:border-white"
-            onClick={onMenuBottomClick}
+            onClick={onBottomCommentMenuClick}
           >
             <MoreVertIcon />
           </div>
-          {isBottomOpen && (
+          {isBottomCommentOpen && (
             <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
               <div
                 className="py-1"
@@ -75,7 +75,7 @@ export default function BottomCommentCard({
                   Edit
                 </button>
                 <button
-                  onClick={(e) => handleDeleteClick(e, _id)}
+                  onClick={(e) => handleBottomCommentDeleteClick(e, _id)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >

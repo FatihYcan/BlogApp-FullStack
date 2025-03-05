@@ -45,11 +45,12 @@ export default function BlogDetail() {
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCard, setSeeAnswersCard] = useState("");
-  const [openCommentId, setOpenCommentId] = useState("");
   const [isReplyId, setIsReplyId] = useState("");
   const [isReplyName, setIsReplyName] = useState("");
   const [editComment, setEditComment] = useState("");
   const [editCommentId, setEditCommentId] = useState("");
+  const [openCommentId, setOpenCommentId] = useState("");
+  const [openBottomCommentId, setOpenBottomCommentId] = useState("");
 
   const { username } = userInfo || {};
 
@@ -65,18 +66,26 @@ export default function BlogDetail() {
     getSingleBlog(name, _id);
   }, [like]);
 
-  const handleEditClick = (e, comment_id, comment) => {
+  const handleCommentEditClick = (e, comment_id, comment) => {
     e.preventDefault();
     setEditCommentId(comment_id);
     setEditComment(comment);
     setOpenCommentId("");
   };
 
-  const handleMenuClick = (commentId) => {
+  const handleCommentMenuClick = (commentId) => {
     if (openCommentId === commentId) {
       setOpenCommentId("");
     } else {
       setOpenCommentId(commentId);
+    }
+  };
+
+  const handleBottomCommentMenuClick = (bottomCommentId) => {
+    if (openBottomCommentId === bottomCommentId) {
+      setOpenBottomCommentId("");
+    } else {
+      setOpenBottomCommentId(bottomCommentId);
     }
   };
 
@@ -294,15 +303,22 @@ export default function BlogDetail() {
             <CommentCard
               key={item._id}
               {...item}
-              isOpen={openCommentId === item._id}
-              onMenuClick={() => handleMenuClick(item._id)}
+              isCommentOpen={openCommentId === item._id}
+              onCommentMenuClick={() => handleCommentMenuClick(item._id)}
+
+              openBottomCommentId={openBottomCommentId}
+              handleBottomCommentMenuClick={handleBottomCommentMenuClick}
+
+              // isBottomCommentOpen={openBottomCommentId === item._id}
+              // onBottomCommentMenuClick={() => handleBottomCommentMenuClick(item._id)}
+
               seeAnswersCard={seeAnswersCard}
               setSeeAnswersCard={setSeeAnswersCard}
               setIsReplyId={setIsReplyId}
               isReplyId={isReplyId}
               isReplyName={isReplyName}
               setIsReplyName={setIsReplyName}
-              handleEditClick={handleEditClick}
+              handleCommentEditClick={handleCommentEditClick}
             />
           ))}
         </>
