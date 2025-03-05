@@ -18,11 +18,21 @@ export default function CommentForm({
   setEditComment,
   editCommentId,
   setEditCommentId,
+  editBottomComment,
+  setEditBottomComment,
+  editBottomCommentId,
+  setEditBottomCommentId,
+  topCommentId,
 }) {
   const { _id, username } = useParams();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { postComment, getSingleBlog, postBottomComment, putComment } =
-    useBlogCalls();
+  const {
+    postComment,
+    getSingleBlog,
+    postBottomComment,
+    putComment,
+    putBottomComment,
+  } = useBlogCalls();
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: "",
@@ -31,19 +41,29 @@ export default function CommentForm({
 
   useEffect(() => {
     if (isReplyId) {
-      setBottomCommentData((prevData) => ({
-        ...prevData,
-        commentId: isReplyId,
-      }));
+      setBottomCommentData({ commentId: isReplyId, comment: "" });
       setCommentData({ blogId: _id, comment: "" });
     } else if (editComment) {
       setCommentData({ blogId: _id, comment: editComment });
+      setBottomCommentData({ commentId: "", comment: "" });
+    } else if (editBottomComment) {
+      setBottomCommentData({
+        commentId: topCommentId,
+        comment: editBottomComment,
+      });
+      setCommentData({ blogId: _id, comment: "" });
+    } else {
+      setBottomCommentData({ commentId: "", comment: "" });
     }
-    setBottomCommentData({ commentId: isReplyId, comment: "" });
-  }, [isReplyId, editComment]);
+  }, [isReplyId, editComment, editBottomComment]);
 
   const handleChange = (e) => {
     if (isReplyId) {
+      setBottomCommentData({
+        ...bottomCommentData,
+        [e.target.name]: e.target.value,
+      });
+    } else if (editBottomComment) {
       setBottomCommentData({
         ...bottomCommentData,
         [e.target.name]: e.target.value,
@@ -55,6 +75,11 @@ export default function CommentForm({
 
   const handleEmojiSelect = (emoji) => {
     if (isReplyId) {
+      setBottomCommentData((prevData) => ({
+        ...prevData,
+        comment: prevData.comment + emoji.native,
+      }));
+    } else if (editBottomComment) {
       setBottomCommentData((prevData) => ({
         ...prevData,
         comment: prevData.comment + emoji.native,
@@ -80,6 +105,11 @@ export default function CommentForm({
       setEditComment("");
       setEditCommentId("");
       setCommentData({ blogId: _id, comment: "" });
+    } else if (editBottomComment) {
+      await putBottomComment(editBottomCommentId, bottomCommentData);
+      setEditBottomComment("");
+      setEditBottomCommentId("");
+      setBottomCommentData({ commentId: "", comment: "" });
     } else {
       await postComment(commentData);
       setCommentData({ blogId: _id, comment: "" });
@@ -113,7 +143,15 @@ export default function CommentForm({
           variant="outlined"
           required
           multiline
-          value={isReplyId ? bottomCommentData.comment : commentData.comment}
+          value={
+            isReplyId
+              ? bottomCommentData.comment
+              : editComment
+              ? commentData.comment
+              : editBottomComment
+              ? bottomCommentData.comment
+              : commentData.comment
+          }
           onChange={handleChange}
         />
         <Button
@@ -136,6 +174,8 @@ export default function CommentForm({
           ? "Add Answer"
           : editComment
           ? "Edit Comment"
+          : editBottomComment
+          ? "Edit Bottom Comment"
           : "Add Comment"}
       </button>
     </Box>

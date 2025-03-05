@@ -52,6 +52,10 @@ export default function BlogDetail() {
   const [openCommentId, setOpenCommentId] = useState("");
   const [openBottomCommentId, setOpenBottomCommentId] = useState("");
 
+  const [editBottomCommentId, setEditBottomCommentId] = useState("");
+  const [editBottomComment, setEditBottomComment] = useState("");
+  const [topCommentId, setTopCommentId] = useState("");
+
   const { username } = userInfo || {};
 
   const [data, setData] = useState({
@@ -71,6 +75,28 @@ export default function BlogDetail() {
     setEditCommentId(comment_id);
     setEditComment(comment);
     setOpenCommentId("");
+    setIsReplyId("");
+    setIsReplyName("");
+    setEditBottomCommentId("");
+    setEditBottomComment("");
+    setTopCommentId("");
+  };
+
+  const handleBottomCommentEditClick = (
+    e,
+    bottomComment_id,
+    bottomComment,
+    commentId
+  ) => {
+    e.preventDefault();
+    setEditBottomCommentId(bottomComment_id);
+    setEditBottomComment(bottomComment);
+    setTopCommentId(commentId);
+    setOpenBottomCommentId("");
+    setIsReplyId("");
+    setIsReplyName("");
+    setEditCommentId("");
+    setEditComment("");
   };
 
   const handleCommentMenuClick = (commentId) => {
@@ -297,6 +323,11 @@ export default function BlogDetail() {
             setEditComment={setEditComment}
             editCommentId={editCommentId}
             setEditCommentId={setEditComment}
+            editBottomComment={editBottomComment}
+            setEditBottomComment={setEditBottomComment}
+            editBottomCommentId={editBottomCommentId}
+            setEditBottomCommentId={setEditBottomCommentId}
+            topCommentId={topCommentId}
           />
 
           {comments?.map((item) => (
@@ -305,13 +336,8 @@ export default function BlogDetail() {
               {...item}
               isCommentOpen={openCommentId === item._id}
               onCommentMenuClick={() => handleCommentMenuClick(item._id)}
-
               openBottomCommentId={openBottomCommentId}
               handleBottomCommentMenuClick={handleBottomCommentMenuClick}
-
-              // isBottomCommentOpen={openBottomCommentId === item._id}
-              // onBottomCommentMenuClick={() => handleBottomCommentMenuClick(item._id)}
-
               seeAnswersCard={seeAnswersCard}
               setSeeAnswersCard={setSeeAnswersCard}
               setIsReplyId={setIsReplyId}
@@ -319,6 +345,11 @@ export default function BlogDetail() {
               isReplyName={isReplyName}
               setIsReplyName={setIsReplyName}
               handleCommentEditClick={handleCommentEditClick}
+              handleBottomCommentEditClick={handleBottomCommentEditClick}
+              setEditComment={setEditComment}
+              setEditCommentId={setEditComment}
+              setEditBottomComment={setEditBottomComment}
+              setEditBottomCommentId={setEditBottomCommentId}
             />
           ))}
         </>

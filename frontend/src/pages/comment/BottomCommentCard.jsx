@@ -11,8 +11,10 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 
 export default function BottomCommentCard({
   item,
+  _id: commentId,
   isBottomCommentOpen,
   onBottomCommentMenuClick,
+  handleBottomCommentEditClick,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
@@ -68,7 +70,9 @@ export default function BottomCommentCard({
                 aria-labelledby="options-menu"
               >
                 <button
-                  // onClick={(e) => handleEditClick(e, _id, comment)}
+                  onClick={(e) =>
+                    handleBottomCommentEditClick(e, _id, comment, commentId)
+                  }
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >

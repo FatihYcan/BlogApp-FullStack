@@ -18,10 +18,8 @@ export default function CommentCard({
   bottomcomments,
   isCommentOpen,
   onCommentMenuClick,
-
   openBottomCommentId,
   handleBottomCommentMenuClick,
-
   seeAnswersCard,
   setSeeAnswersCard,
   setIsReplyId,
@@ -29,6 +27,11 @@ export default function CommentCard({
   isReplyName,
   setIsReplyName,
   handleCommentEditClick,
+  handleBottomCommentEditClick,
+  setEditComment,
+  setEditCommentId,
+  setEditBottomComment,
+  setEditBottomCommentId,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteComment } = useBlogCalls();
@@ -50,6 +53,10 @@ export default function CommentCard({
     } else {
       setIsReplyId(comment_id);
       setIsReplyName(comment_name);
+      setEditComment("");
+      setEditCommentId("");
+      setEditBottomComment("");
+      setEditBottomCommentId("");
     }
   };
 
@@ -163,10 +170,12 @@ export default function CommentCard({
             <BottomCommentCard
               key={item._id}
               item={item}
+              _id={_id}
               isBottomCommentOpen={openBottomCommentId === item._id}
               onBottomCommentMenuClick={() =>
                 handleBottomCommentMenuClick(item._id)
               }
+              handleBottomCommentEditClick={handleBottomCommentEditClick}
             />
           ))}
         </Box>
