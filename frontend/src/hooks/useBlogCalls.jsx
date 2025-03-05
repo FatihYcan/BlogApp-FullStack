@@ -276,7 +276,7 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.put(`/comments/${comment_id}`, data);
-      toastSuccessNotify("Yorum güncellenmiştir..");
+      toastSuccessNotify("Yorum güncellenmiştir.");
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify("Yorum güncellenememiştir.");
@@ -309,7 +309,7 @@ const useBlogCalls = () => {
     dispatch(fetchStart());
     try {
       await axiosWithToken.put(`/bottomcomments/${bottomcomment_id}`, data);
-      toastSuccessNotify("Cevap güncellenmiştir..");
+      toastSuccessNotify("Cevap güncellenmiştir.");
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify("Cevap güncellenememiştir.");
@@ -323,7 +323,7 @@ const useBlogCalls = () => {
       toastSuccessNotify("Cevap silinmiştir.");
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("Cevap silinememiştir");
+      toastErrorNotify("Cevap silinememiştir.");
     }
   };
 

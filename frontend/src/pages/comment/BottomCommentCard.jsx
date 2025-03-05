@@ -1,27 +1,33 @@
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ReplyIcon from "@mui/icons-material/Reply";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import avatar from "../../assets/icons/avatar.png";
+import Divider from "@mui/material/Divider";
+import { useParams } from "react-router-dom";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
-export default function BottomCommentCard({ item }) {
-  const [anchorEl, setAnchorEl] = useState(null);
+export default function BottomCommentCard({
+  item,
+  isBottomOpen,
+  onMenuBottomClick,
+}) {
+  const { _id: id, username: name } = useParams();
+  const { getSingleBlog, deleteBottomComment } = useBlogCalls();
 
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
+  const { comment, createdAt, userId, _id } = item;
+
+  const handleDeleteClick = async (e, delete_id) => {
+    e.preventDefault();
+    await deleteBottomComment(delete_id);
+    await getSingleBlog(name, id);
+    onMenuBottomClick();
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const { comment, createdAt, userId } = item;
 
   return (
-    <>
+    <Box sx={{ borderRadius: 2, mb: 2 }}>
       <Box
         sx={{
           display: "flex",
@@ -46,25 +52,59 @@ export default function BottomCommentCard({ item }) {
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <div className="border border-black p-1 cursor-pointer dark:border-white ">
-          <MoreVertIcon onClick={handleClick} />
+        <div className="relative">
+          <div
+            className="border border-black p-1 cursor-pointer dark:border-white"
+            onClick={onMenuBottomClick}
+          >
+            <MoreVertIcon />
+          </div>
+          {isBottomOpen && (
+            <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
+              <div
+                className="py-1"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <button
+                  // onClick={(e) => handleEditClick(e, _id, comment)}
+                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  role="menuitem"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => handleDeleteClick(e, _id)}
+                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  role="menuitem"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>Edit</MenuItem>
-          <MenuItem onClick={handleClose}>Remove</MenuItem>
-        </Menu>
       </Box>
       <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
         {comment}
       </Typography>
-      {/* <Divider sx={{ my: 2 }}></Divider> */}
-      {/* <Button startIcon={<ReplyIcon />} sx={{ color: "text.secondary" }}>
-        Reply
-      </Button> */}
-    </>
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+        }}
+      >
+        {/* <button
+            className="flex items-center text-gray-600"
+            onClick={(e) => handleReplyClick(e, _id, userId.username)}
+          >
+            <ReplyIcon />
+            <span>Reply</span>
+          </button> */}
+      </Box>
+    </Box>
   );
 }

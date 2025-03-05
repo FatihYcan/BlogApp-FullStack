@@ -45,7 +45,7 @@ export default function BlogDetail() {
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCard, setSeeAnswersCard] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [openCommentId, setOpenCommentId] = useState("");
   const [isReplyId, setIsReplyId] = useState("");
   const [isReplyName, setIsReplyName] = useState("");
   const [editComment, setEditComment] = useState("");
@@ -69,7 +69,15 @@ export default function BlogDetail() {
     e.preventDefault();
     setEditCommentId(comment_id);
     setEditComment(comment);
-    setAnchorEl(null);
+    setOpenCommentId("");
+  };
+
+  const handleMenuClick = (commentId) => {
+    if (openCommentId === commentId) {
+      setOpenCommentId("");
+    } else {
+      setOpenCommentId(commentId);
+    }
   };
 
   const {
@@ -239,7 +247,7 @@ export default function BlogDetail() {
           sx={{
             display: "flex",
             alignItems: "center",
-            cursor: "default",
+            cursor: "pointer",
             width: "50px",
             height: "50px",
           }}
@@ -286,8 +294,8 @@ export default function BlogDetail() {
             <CommentCard
               key={item._id}
               {...item}
-              anchorEl={anchorEl}
-              setAnchorEl={setAnchorEl}
+              isOpen={openCommentId === item._id}
+              onMenuClick={() => handleMenuClick(item._id)}
               seeAnswersCard={seeAnswersCard}
               setSeeAnswersCard={setSeeAnswersCard}
               setIsReplyId={setIsReplyId}

@@ -1,8 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { useState } from "react";
@@ -18,10 +16,10 @@ export default function CommentCard({
   userId,
   _id,
   bottomcomments,
+  isOpen,
+  onMenuClick,
   seeAnswersCard,
   setSeeAnswersCard,
-  anchorEl,
-  setAnchorEl,
   setIsReplyId,
   isReplyId,
   isReplyName,
@@ -30,13 +28,14 @@ export default function CommentCard({
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteComment } = useBlogCalls();
+  const [openBottomCommentId, setOpenBottomCommentId] = useState("");
 
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleMenuClick = (commentId) => {
+    if (openBottomCommentId === commentId) {
+      setOpenBottomCommentId("");
+    } else {
+      setOpenBottomCommentId(commentId);
+    }
   };
 
   const handleAnswersClick = (e) => {
@@ -63,7 +62,7 @@ export default function CommentCard({
     e.preventDefault();
     await deleteComment(delete_id);
     await getSingleBlog(name, id);
-    setAnchorEl(null);
+    onMenuClick();
   };
 
   return (
@@ -93,21 +92,39 @@ export default function CommentCard({
               {new Date(createdAt).toLocaleDateString("tr-TR")}
             </Typography>
           </Box>
-          <div className="border border-black p-1 cursor-pointer dark:border-white ">
-            <MoreVertIcon onClick={handleClick} />
+          <div className="relative">
+            <div
+              className="border border-black p-1 cursor-pointer dark:border-white"
+              onClick={onMenuClick}
+            >
+              <MoreVertIcon />
+            </div>
+            {isOpen && (
+              <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
+                <div
+                  className="py-1"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  <button
+                    onClick={(e) => handleEditClick(e, _id, comment)}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(e) => handleDeleteClick(e, _id)}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={(e) => handleEditClick(e, _id, comment)}>
-              Edit
-            </MenuItem>
-            <MenuItem onClick={(e) => handleDeleteClick(e, _id)}>
-              Remove
-            </MenuItem>
-          </Menu>
         </Box>
         <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
           {comment}
@@ -148,7 +165,12 @@ export default function CommentCard({
           }}
         >
           {bottomcomments?.map((item) => (
-            <BottomCommentCard key={item._id} item={item} />
+            <BottomCommentCard
+              key={item._id}
+              item={item}
+              isBottomOpen={openBottomCommentId === item._id}
+              onMenuBottomClick={() => handleMenuClick(item._id)}
+            />
           ))}
         </Box>
       )}
