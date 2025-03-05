@@ -47,6 +47,10 @@ export default function BlogDetail() {
   const [seeAnswersCard, setSeeAnswersCard] = useState("");
   const [isReplyId, setIsReplyId] = useState("");
   const [isReplyName, setIsReplyName] = useState("");
+
+  const [isReplyBottomId, setIsReplyBottomId] = useState("");
+  const [isReplyBottomName, setIsReplyBottomName] = useState("");
+
   const [editComment, setEditComment] = useState("");
   const [editCommentId, setEditCommentId] = useState("");
   const [openCommentId, setOpenCommentId] = useState("");
@@ -80,6 +84,8 @@ export default function BlogDetail() {
     setEditBottomCommentId("");
     setEditBottomComment("");
     setTopCommentId("");
+    setIsReplyBottomId("");
+    setIsReplyBottomName("");
   };
 
   const handleBottomCommentEditClick = (
@@ -97,6 +103,8 @@ export default function BlogDetail() {
     setIsReplyName("");
     setEditCommentId("");
     setEditComment("");
+    setIsReplyBottomId("");
+    setIsReplyBottomName("");
   };
 
   const handleCommentMenuClick = (commentId) => {
@@ -319,6 +327,10 @@ export default function BlogDetail() {
             isReplyName={isReplyName}
             setIsReplyId={setIsReplyId}
             setIsReplyName={setIsReplyName}
+            isReplyBottomId={isReplyBottomId}
+            isReplyBottomName={isReplyBottomName}
+            setIsReplyBottomId={setIsReplyBottomId}
+            setIsReplyBottomName={setIsReplyBottomName}
             editComment={editComment}
             setEditComment={setEditComment}
             editCommentId={editCommentId}
@@ -344,6 +356,10 @@ export default function BlogDetail() {
               isReplyId={isReplyId}
               isReplyName={isReplyName}
               setIsReplyName={setIsReplyName}
+              isReplyBottomId={isReplyBottomId}
+              isReplyBottomName={isReplyBottomName}
+              setIsReplyBottomId={setIsReplyBottomId}
+              setIsReplyBottomName={setIsReplyBottomName}
               handleCommentEditClick={handleCommentEditClick}
               handleBottomCommentEditClick={handleBottomCommentEditClick}
               setEditComment={setEditComment}

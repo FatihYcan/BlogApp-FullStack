@@ -26,6 +26,12 @@ export default function CommentCard({
   isReplyId,
   isReplyName,
   setIsReplyName,
+
+  isReplyBottomId,
+  isReplyBottomName,
+  setIsReplyBottomId,
+  setIsReplyBottomName,
+
   handleCommentEditClick,
   handleBottomCommentEditClick,
   setEditComment,
@@ -57,6 +63,8 @@ export default function CommentCard({
       setEditCommentId("");
       setEditBottomComment("");
       setEditBottomCommentId("");
+      setIsReplyBottomId("");
+      setIsReplyBottomName("");
     }
   };
 
@@ -176,6 +184,18 @@ export default function CommentCard({
                 handleBottomCommentMenuClick(item._id)
               }
               handleBottomCommentEditClick={handleBottomCommentEditClick}
+              setIsReplyId={setIsReplyId}
+              isReplyId={isReplyId}
+              isReplyName={isReplyName}
+              setIsReplyName={setIsReplyName}
+              isReplyBottomId={isReplyBottomId}
+              isReplyBottomName={isReplyBottomName}
+              setIsReplyBottomId={setIsReplyBottomId}
+              setIsReplyBottomName={setIsReplyBottomName}
+              setEditComment={setEditComment}
+              setEditCommentId={setEditComment}
+              setEditBottomComment={setEditBottomComment}
+              setEditBottomCommentId={setEditBottomCommentId}
             />
           ))}
         </Box>

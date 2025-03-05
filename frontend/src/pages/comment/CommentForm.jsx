@@ -11,9 +11,13 @@ import { useEffect, useState } from "react";
 
 export default function CommentForm({
   isReplyId,
-  setIsReplyId,
   isReplyName,
+  setIsReplyId,
   setIsReplyName,
+  isReplyBottomId,
+  isReplyBottomName,
+  setIsReplyBottomId,
+  setIsReplyBottomName,
   editComment,
   setEditComment,
   editCommentId,
@@ -43,6 +47,9 @@ export default function CommentForm({
     if (isReplyId) {
       setBottomCommentData({ commentId: isReplyId, comment: "" });
       setCommentData({ blogId: _id, comment: "" });
+    } else if (isReplyBottomId) {
+      setBottomCommentData({ commentId: isReplyBottomId, comment: "" });
+      setCommentData({ blogId: _id, comment: "" });
     } else if (editComment) {
       setCommentData({ blogId: _id, comment: editComment });
       setBottomCommentData({ commentId: "", comment: "" });
@@ -55,10 +62,15 @@ export default function CommentForm({
     } else {
       setBottomCommentData({ commentId: "", comment: "" });
     }
-  }, [isReplyId, editComment, editBottomComment]);
+  }, [isReplyId, isReplyBottomId, editComment, editBottomComment]);
 
   const handleChange = (e) => {
     if (isReplyId) {
+      setBottomCommentData({
+        ...bottomCommentData,
+        [e.target.name]: e.target.value,
+      });
+    } else if (isReplyBottomId) {
       setBottomCommentData({
         ...bottomCommentData,
         [e.target.name]: e.target.value,
@@ -75,6 +87,11 @@ export default function CommentForm({
 
   const handleEmojiSelect = (emoji) => {
     if (isReplyId) {
+      setBottomCommentData((prevData) => ({
+        ...prevData,
+        comment: prevData.comment + emoji.native,
+      }));
+    } else if (isReplyBottomId) {
       setBottomCommentData((prevData) => ({
         ...prevData,
         comment: prevData.comment + emoji.native,
@@ -100,6 +117,11 @@ export default function CommentForm({
       setBottomCommentData({ commentId: "", comment: "" });
       setIsReplyId("");
       setIsReplyName("");
+    } else if (isReplyBottomId) {
+      await postBottomComment(bottomCommentData);
+      setBottomCommentData({ commentId: "", comment: "" });
+      setIsReplyBottomId("");
+      setIsReplyBottomName("");
     } else if (editComment) {
       await putComment(editCommentId, commentData);
       setEditComment("");
@@ -139,12 +161,20 @@ export default function CommentForm({
           id="comment"
           type="text"
           name="comment"
-          placeholder={isReplyName ? `to answer ${isReplyName}` : "to comment"}
+          placeholder={
+            isReplyName
+              ? `to answer ${isReplyName}`
+              : isReplyBottomName
+              ? `to answer ${isReplyBottomName}`
+              : "to comment"
+          }
           variant="outlined"
           required
           multiline
           value={
             isReplyId
+              ? bottomCommentData.comment
+              : isReplyBottomId
               ? bottomCommentData.comment
               : editComment
               ? commentData.comment
@@ -171,6 +201,8 @@ export default function CommentForm({
         className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
       >
         {isReplyId
+          ? "Add Answer"
+          : isReplyBottomId
           ? "Add Answer"
           : editComment
           ? "Edit Comment"

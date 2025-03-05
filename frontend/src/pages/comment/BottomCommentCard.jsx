@@ -15,6 +15,16 @@ export default function BottomCommentCard({
   isBottomCommentOpen,
   onBottomCommentMenuClick,
   handleBottomCommentEditClick,
+  setIsReplyId,
+  setIsReplyName,
+  isReplyBottomId,
+  isReplyBottomName,
+  setIsReplyBottomId,
+  setIsReplyBottomName,
+  setEditComment,
+  setEditCommentId,
+  setEditBottomComment,
+  setEditBottomCommentId,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
@@ -26,6 +36,26 @@ export default function BottomCommentCard({
     await deleteBottomComment(delete_id);
     await getSingleBlog(name, id);
     onBottomCommentMenuClick();
+  };
+
+  const handleReplyBottomClick = (e, comment_id, comment_name) => {
+    e.preventDefault();
+    if (
+      isReplyBottomId === commentId &&
+      isReplyBottomName === userId.username
+    ) {
+      setIsReplyBottomId("");
+      setIsReplyBottomName("");
+    } else {
+      setIsReplyBottomId(comment_id);
+      setIsReplyBottomName(comment_name);
+      setEditComment("");
+      setEditCommentId("");
+      setEditBottomComment("");
+      setEditBottomCommentId("");
+      setIsReplyId("");
+      setIsReplyName("");
+    }
   };
 
   return (
@@ -90,7 +120,7 @@ export default function BottomCommentCard({
           )}
         </div>
       </Box>
-      <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
+      <Typography variant="body2" color="text.primary" sx={{ mb: 1 }}>
         {comment}
       </Typography>
 
@@ -101,13 +131,13 @@ export default function BottomCommentCard({
           alignItems: "center",
         }}
       >
-        {/* <button
-            className="flex items-center text-gray-600"
-            onClick={(e) => handleReplyClick(e, _id, userId.username)}
-          >
-            <ReplyIcon />
-            <span>Reply</span>
-          </button> */}
+        <button
+          className="flex items-center text-gray-600"
+          onClick={(e) => handleReplyBottomClick(e, commentId, userId.username)}
+        >
+          <ReplyIcon />
+          <span>Reply</span>
+        </button>
       </Box>
     </Box>
   );
