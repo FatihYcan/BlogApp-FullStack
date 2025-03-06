@@ -9,8 +9,6 @@ import Divider from "@mui/material/Divider";
 import BottomCommentCard from "./BottomCommentCard";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import EditCommentForm from "./EditCommentForm";
-import BottomCommentForm from "./BottomCommentForm";
 
 export default function CommentCard({
   comment,
@@ -18,72 +16,63 @@ export default function CommentCard({
   userId,
   _id,
   bottomcomments,
-  seeAnswersCardId,
-  setSeeAnswersCardId,
-  isReplyCardId,
-  setIsReplyCardId,
-  openMenu,
-  setOpenMenu,
-  editComment,
+  isCommentOpen,
+  onCommentMenuClick,
+  openBottomCommentId,
+  handleBottomCommentMenuClick,
+  seeAnswersCard,
+  setSeeAnswersCard,
+  setIsReplyId,
+  isReplyId,
+  isReplyName,
+  setIsReplyName,
+
+  isReplyBottomId,
+  isReplyBottomName,
+  setIsReplyBottomId,
+  setIsReplyBottomName,
+
+  handleCommentEditClick,
+  handleBottomCommentEditClick,
   setEditComment,
+  setEditCommentId,
+  setEditBottomComment,
+  setEditBottomCommentId,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteComment } = useBlogCalls();
-  const [openBottomMenu, setOpenBottomMenu] = useState("");
-  const [commentData, setCommentData] = useState({ blogId: id, comment: "" });
-  const [bottomCommentCard, setBottomCommentCard] = useState(false);
-  const [isReplyName, setIsReplyName] = useState("");
 
   const handleAnswersClick = (e) => {
     e.preventDefault();
-    if (seeAnswersCardId === _id) {
-      setSeeAnswersCardId("");
-      setBottomCommentCard(false);
+    if (seeAnswersCard === _id) {
+      setSeeAnswersCard("");
     } else {
-      setSeeAnswersCardId(_id);
-      setBottomCommentCard(true);
-      setIsReplyCardId("");
+      setSeeAnswersCard(_id);
     }
   };
 
-  const handleReplyClick = (e, username) => {
+  const handleReplyClick = (e, comment_id, comment_name) => {
     e.preventDefault();
-    if (isReplyCardId === _id) {
-      setIsReplyCardId("");
-      setBottomCommentCard(false);
+    if (isReplyId === _id && isReplyName === userId.username) {
+      setIsReplyId("");
       setIsReplyName("");
     } else {
-      setIsReplyCardId(_id);
-      setSeeAnswersCardId("");
-      setBottomCommentCard(true);
-      setIsReplyName(username);
+      setIsReplyId(comment_id);
+      setIsReplyName(comment_name);
+      setEditComment("");
+      setEditCommentId("");
+      setEditBottomComment("");
+      setEditBottomCommentId("");
+      setIsReplyBottomId("");
+      setIsReplyBottomName("");
     }
   };
 
-  const onMenuClick = (e) => {
+  const handleCommentDeleteClick = async (e, delete_id) => {
     e.preventDefault();
-    if (openMenu === _id) {
-      setOpenMenu("");
-    } else {
-      setOpenMenu(_id);
-    }
-  };
-
-  const handlEditClick = (e, comment_id, comment) => {
-    e.preventDefault();
-    setEditComment(comment_id);
-    setCommentData((prevData) => ({
-      ...prevData,
-      comment: comment,
-    }));
-    setOpenMenu("");
-  };
-
-  const handleDeleteClick = async (e, comment_id) => {
-    e.preventDefault();
-    await deleteComment(comment_id);
+    await deleteComment(delete_id);
     await getSingleBlog(name, id);
-    setOpenMenu("");
+    onCommentMenuClick();
   };
 
   return (
@@ -116,11 +105,11 @@ export default function CommentCard({
           <div className="relative">
             <div
               className="border border-black p-1 cursor-pointer dark:border-white"
-              onClick={onMenuClick}
+              onClick={onCommentMenuClick}
             >
               <MoreVertIcon />
             </div>
-            {openMenu === _id && (
+            {isCommentOpen && (
               <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
                 <div
                   className="py-1"
@@ -129,14 +118,14 @@ export default function CommentCard({
                   aria-labelledby="options-menu"
                 >
                   <button
-                    onClick={(e) => handlEditClick(e, _id, comment)}
+                    onClick={(e) => handleCommentEditClick(e, _id, comment)}
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={(e) => handleDeleteClick(e, _id)}
+                    onClick={(e) => handleCommentDeleteClick(e, _id)}
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
@@ -147,21 +136,9 @@ export default function CommentCard({
             )}
           </div>
         </Box>
-
-        {editComment !== _id && (
-          <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-            {comment}
-          </Typography>
-        )}
-
-        {editComment === _id && (
-          <EditCommentForm
-            commentData={commentData}
-            setCommentData={setCommentData}
-            editComment={editComment}
-            setEditComment={setEditComment}
-          />
-        )}
+        <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
+          {comment}
+        </Typography>
 
         <Box
           sx={{
@@ -172,7 +149,7 @@ export default function CommentCard({
         >
           <button
             className="flex items-center text-gray-600"
-            onClick={(e) => handleReplyClick(e, userId?.username)}
+            onClick={(e) => handleReplyClick(e, _id, userId.username)}
           >
             <ReplyIcon />
             <span>Reply</span>
@@ -183,41 +160,44 @@ export default function CommentCard({
               className="cursor-pointer text-gray-600"
               onClick={handleAnswersClick}
             >
-              {seeAnswersCardId === _id ? "Hide" : "See"}{" "}
-              {bottomcomments.length} Answers
+              {seeAnswersCard === _id ? "Hide" : "See"} {bottomcomments.length}{" "}
+              Answers
             </span>
           )}
         </Box>
       </Box>
 
-      {bottomCommentCard && (
+      {seeAnswersCard === _id && (
         <Box
           sx={{
             borderRadius: 2,
             mx: 6,
           }}
         >
-          {seeAnswersCardId === _id && (
-            <>
-              {bottomcomments?.map((item) => (
-                <BottomCommentCard
-                  key={item._id}
-                  item={item}
-                  openBottomMenu={openBottomMenu}
-                  setOpenBottomMenu={setOpenBottomMenu}
-                />
-              ))}
-            </>
-          )}
-
-          {isReplyCardId === _id && (
-            <BottomCommentForm
-              isReplyCardId={isReplyCardId}
-              setIsReplyCardId={setIsReplyCardId}
-              setSeeAnswersCardId={setSeeAnswersCardId}
+          {bottomcomments?.map((item) => (
+            <BottomCommentCard
+              key={item._id}
+              item={item}
+              _id={_id}
+              isBottomCommentOpen={openBottomCommentId === item._id}
+              onBottomCommentMenuClick={() =>
+                handleBottomCommentMenuClick(item._id)
+              }
+              handleBottomCommentEditClick={handleBottomCommentEditClick}
+              setIsReplyId={setIsReplyId}
+              isReplyId={isReplyId}
               isReplyName={isReplyName}
+              setIsReplyName={setIsReplyName}
+              isReplyBottomId={isReplyBottomId}
+              isReplyBottomName={isReplyBottomName}
+              setIsReplyBottomId={setIsReplyBottomId}
+              setIsReplyBottomName={setIsReplyBottomName}
+              setEditComment={setEditComment}
+              setEditCommentId={setEditComment}
+              setEditBottomComment={setEditBottomComment}
+              setEditBottomCommentId={setEditBottomCommentId}
             />
-          )}
+          ))}
         </Box>
       )}
       <Divider sx={{ mt: 2 }}></Divider>

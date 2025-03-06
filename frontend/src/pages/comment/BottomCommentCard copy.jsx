@@ -11,27 +11,51 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 
 export default function BottomCommentCard({
   item,
-  openBottomMenu,
-  setOpenBottomMenu,
+  _id: commentId,
+  isBottomCommentOpen,
+  onBottomCommentMenuClick,
+  handleBottomCommentEditClick,
+  setIsReplyId,
+  setIsReplyName,
+  isReplyBottomId,
+  isReplyBottomName,
+  setIsReplyBottomId,
+  setIsReplyBottomName,
+  setEditComment,
+  setEditCommentId,
+  setEditBottomComment,
+  setEditBottomCommentId,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
 
   const { comment, createdAt, userId, _id } = item;
 
-  const onBottomtMenuClick = (e) => {
-    e.preventDefault();
-    if (openBottomMenu === _id) {
-      setOpenBottomMenu("");
-    } else {
-      setOpenBottomMenu(_id);
-    }
-  };
-
   const handleBottomCommentDeleteClick = async (e, delete_id) => {
     e.preventDefault();
     await deleteBottomComment(delete_id);
     await getSingleBlog(name, id);
+    onBottomCommentMenuClick();
+  };
+
+  const handleReplyBottomClick = (e, comment_id, comment_name) => {
+    e.preventDefault();
+    if (
+      isReplyBottomId === commentId &&
+      isReplyBottomName === userId.username
+    ) {
+      setIsReplyBottomId("");
+      setIsReplyBottomName("");
+    } else {
+      setIsReplyBottomId(comment_id);
+      setIsReplyBottomName(comment_name);
+      setEditComment("");
+      setEditCommentId("");
+      setEditBottomComment("");
+      setEditBottomCommentId("");
+      setIsReplyId("");
+      setIsReplyName("");
+    }
   };
 
   return (
@@ -63,12 +87,11 @@ export default function BottomCommentCard({
         <div className="relative">
           <div
             className="border border-black p-1 cursor-pointer dark:border-white"
-            onClick={onBottomtMenuClick}
+            onClick={onBottomCommentMenuClick}
           >
             <MoreVertIcon />
           </div>
-
-          {openBottomMenu === _id && (
+          {isBottomCommentOpen && (
             <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
               <div
                 className="py-1"
@@ -77,16 +100,16 @@ export default function BottomCommentCard({
                 aria-labelledby="options-menu"
               >
                 <button
-                  // onClick={(e) =>
-                  //   handleBottomCommentEditClick(e, _id, comment, commentId)
-                  // }
+                  onClick={(e) =>
+                    handleBottomCommentEditClick(e, _id, comment, commentId)
+                  }
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >
                   Edit
                 </button>
                 <button
-                  // onClick={(e) => handleBottomCommentDeleteClick(e, _id)}
+                  onClick={(e) => handleBottomCommentDeleteClick(e, _id)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >
@@ -110,7 +133,7 @@ export default function BottomCommentCard({
       >
         <button
           className="flex items-center text-gray-600"
-          // onClick={(e) => handleReplyBottomClick(e, commentId, userId.username)}
+          onClick={(e) => handleReplyBottomClick(e, commentId, userId.username)}
         >
           <ReplyIcon />
           <span>Reply</span>

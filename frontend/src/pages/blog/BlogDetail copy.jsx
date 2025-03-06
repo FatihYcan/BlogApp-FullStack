@@ -44,10 +44,21 @@ export default function BlogDetail() {
   const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
-  const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
-  const [isReplyCardId, setIsReplyCardId] = useState("");
-  const [openMenu, setOpenMenu] = useState("");
+  const [seeAnswersCard, setSeeAnswersCard] = useState("");
+  const [isReplyId, setIsReplyId] = useState("");
+  const [isReplyName, setIsReplyName] = useState("");
+
+  const [isReplyBottomId, setIsReplyBottomId] = useState("");
+  const [isReplyBottomName, setIsReplyBottomName] = useState("");
+
   const [editComment, setEditComment] = useState("");
+  const [editCommentId, setEditCommentId] = useState("");
+  const [openCommentId, setOpenCommentId] = useState("");
+  const [openBottomCommentId, setOpenBottomCommentId] = useState("");
+
+  const [editBottomCommentId, setEditBottomCommentId] = useState("");
+  const [editBottomComment, setEditBottomComment] = useState("");
+  const [topCommentId, setTopCommentId] = useState("");
 
   const { username } = userInfo || {};
 
@@ -62,6 +73,55 @@ export default function BlogDetail() {
   useEffect(() => {
     getSingleBlog(name, _id);
   }, [like]);
+
+  const handleCommentEditClick = (e, comment_id, comment) => {
+    e.preventDefault();
+    setEditCommentId(comment_id);
+    setEditComment(comment);
+    setOpenCommentId("");
+    setIsReplyId("");
+    setIsReplyName("");
+    setEditBottomCommentId("");
+    setEditBottomComment("");
+    setTopCommentId("");
+    setIsReplyBottomId("");
+    setIsReplyBottomName("");
+  };
+
+  const handleBottomCommentEditClick = (
+    e,
+    bottomComment_id,
+    bottomComment,
+    commentId
+  ) => {
+    e.preventDefault();
+    setEditBottomCommentId(bottomComment_id);
+    setEditBottomComment(bottomComment);
+    setTopCommentId(commentId);
+    setOpenBottomCommentId("");
+    setIsReplyId("");
+    setIsReplyName("");
+    setEditCommentId("");
+    setEditComment("");
+    setIsReplyBottomId("");
+    setIsReplyBottomName("");
+  };
+
+  const handleCommentMenuClick = (commentId) => {
+    if (openCommentId === commentId) {
+      setOpenCommentId("");
+    } else {
+      setOpenCommentId(commentId);
+    }
+  };
+
+  const handleBottomCommentMenuClick = (bottomCommentId) => {
+    if (openBottomCommentId === bottomCommentId) {
+      setOpenBottomCommentId("");
+    } else {
+      setOpenBottomCommentId(bottomCommentId);
+    }
+  };
 
   const {
     categoryId,
@@ -262,20 +322,50 @@ export default function BlogDetail() {
 
       {commentOpen && (
         <>
-          <CommentForm />
+          <CommentForm
+            isReplyId={isReplyId}
+            isReplyName={isReplyName}
+            setIsReplyId={setIsReplyId}
+            setIsReplyName={setIsReplyName}
+            isReplyBottomId={isReplyBottomId}
+            isReplyBottomName={isReplyBottomName}
+            setIsReplyBottomId={setIsReplyBottomId}
+            setIsReplyBottomName={setIsReplyBottomName}
+            editComment={editComment}
+            setEditComment={setEditComment}
+            editCommentId={editCommentId}
+            setEditCommentId={setEditComment}
+            editBottomComment={editBottomComment}
+            setEditBottomComment={setEditBottomComment}
+            editBottomCommentId={editBottomCommentId}
+            setEditBottomCommentId={setEditBottomCommentId}
+            topCommentId={topCommentId}
+          />
 
           {comments?.map((item) => (
             <CommentCard
               key={item._id}
               {...item}
-              seeAnswersCardId={seeAnswersCardId}
-              setSeeAnswersCardId={setSeeAnswersCardId}
-              isReplyCardId={isReplyCardId}
-              setIsReplyCardId={setIsReplyCardId}
-              openMenu={openMenu}
-              setOpenMenu={setOpenMenu}
-              editComment={editComment}
+              isCommentOpen={openCommentId === item._id}
+              onCommentMenuClick={() => handleCommentMenuClick(item._id)}
+              openBottomCommentId={openBottomCommentId}
+              handleBottomCommentMenuClick={handleBottomCommentMenuClick}
+              seeAnswersCard={seeAnswersCard}
+              setSeeAnswersCard={setSeeAnswersCard}
+              setIsReplyId={setIsReplyId}
+              isReplyId={isReplyId}
+              isReplyName={isReplyName}
+              setIsReplyName={setIsReplyName}
+              isReplyBottomId={isReplyBottomId}
+              isReplyBottomName={isReplyBottomName}
+              setIsReplyBottomId={setIsReplyBottomId}
+              setIsReplyBottomName={setIsReplyBottomName}
+              handleCommentEditClick={handleCommentEditClick}
+              handleBottomCommentEditClick={handleBottomCommentEditClick}
               setEditComment={setEditComment}
+              setEditCommentId={setEditComment}
+              setEditBottomComment={setEditBottomComment}
+              setEditBottomCommentId={setEditBottomCommentId}
             />
           ))}
         </>
