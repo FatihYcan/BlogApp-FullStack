@@ -5,7 +5,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { useState } from "react";
 import avatar from "../../assets/icons/avatar.png";
-import Divider from "@mui/material/Divider";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import EditBottomCommentForm from "./EditBottomCommentForm";
@@ -46,11 +45,11 @@ export default function BottomCommentCard({
     setOpenBottomMenu("");
   };
 
-  // const handleBottomCommentDeleteClick = async (e, delete_id) => {
-  //   e.preventDefault();
-  //   await deleteBottomComment(delete_id);
-  //   await getSingleBlog(name, id);
-  // };
+  const handleBottomDeleteClick = async (e, delete_id) => {
+    e.preventDefault();
+    await deleteBottomComment(delete_id);
+    await getSingleBlog(name, id);
+  };
 
   return (
     <Box sx={{ borderRadius: 2, mb: 2 }}>
@@ -102,7 +101,7 @@ export default function BottomCommentCard({
                   Edit
                 </button>
                 <button
-                  // onClick={(e) => handleBottomCommentDeleteClick(e, _id)}
+                  onClick={(e) => handleBottomDeleteClick(e, _id)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >

@@ -38,6 +38,7 @@ const document = {
 		"Category": require('./src/models/category').schema.obj,
 		"Blog": require('./src/models/blog').schema.obj,
 		"Comment": require('./src/models/comment').schema.obj,
+		"Bottom Comment": require('./src/models/bottomcomment').schema.obj,
 	}
 }
 

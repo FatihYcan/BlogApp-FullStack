@@ -20,8 +20,6 @@ export default function EditBottomCommentForm({
   const { _id, username } = useParams();
   const { getSingleBlog, putBottomComment } = useBlogCalls();
 
-  console.log(commentId);
-
   const handleChange = (e) => {
     setBottomCommentData({
       ...bottomCommentData,

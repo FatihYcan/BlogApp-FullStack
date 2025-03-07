@@ -130,8 +130,9 @@
                   "example": "1234"
                 },
                 "image": {
-                  "type": "string",
-                  "example": ""
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 }
               }
             }
@@ -206,8 +207,9 @@
                   "example": "1234"
                 },
                 "image": {
-                  "type": "string",
-                  "example": ""
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 }
               }
             }
@@ -283,8 +285,9 @@
                   "example": "1234"
                 },
                 "image": {
-                  "type": "string",
-                  "example": ""
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 }
               }
             }
@@ -344,8 +347,9 @@
                   "example": "Blog Content 1"
                 },
                 "image": {
-                  "type": "string",
-                  "example": "http://imageURL"
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 },
                 "isPublish": {
                   "type": "boolean",
@@ -363,26 +367,6 @@
       }
     },
     "/blogs/{id}": {
-      "get": {
-        "tags": [
-          "Blogs"
-        ],
-        "summary": "Get Single Blog",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
       "put": {
         "tags": [
           "Blogs"
@@ -416,8 +400,9 @@
                   "example": "Blog Content 1"
                 },
                 "image": {
-                  "type": "string",
-                  "example": "http://imageURL"
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 },
                 "isPublish": {
                   "type": "boolean",
@@ -489,8 +474,9 @@
                   "example": "Blog Content 1"
                 },
                 "image": {
-                  "type": "string",
-                  "example": "http://imageURL"
+                  "type": "array",
+                  "example": [],
+                  "items": {}
                 },
                 "isPublish": {
                   "type": "boolean",
@@ -498,6 +484,39 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blogs/{username}/{id}": {
+      "get": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Get Single Blog",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-forwarded-for",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -706,6 +725,173 @@
                 "comment": {
                   "type": "string",
                   "example": "Comment 1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bottomcomments/": {
+      "get": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "List Bottom Comments",
+        "description": "You can send query with endpoint for filter[], search[], sort[], page and limit.\r  <ul>\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r   <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "Create Bottom Comment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commentId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Bottom Comment 1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/bottomcomments/{id}": {
+      "get": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "Get Single Bottom Comment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "Update Bottom Comment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commentId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Bottom Comment 1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "Delete Bottom Comment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Bottom Comments"
+        ],
+        "summary": "Update Bottom Comment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commentId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f201"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Bottom Comment 1"
                 }
               }
             }
@@ -979,6 +1165,11 @@
             }
           }
         },
+        "image": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
         "isActive": {
           "type": "object",
           "properties": {
@@ -1025,6 +1216,9 @@
             "trim": {
               "type": "boolean",
               "example": true
+            },
+            "set": {
+              "type": "function"
             }
           }
         }
@@ -1105,6 +1299,11 @@
             }
           }
         },
+        "images": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
         "views": {
           "type": "array",
           "items": {
@@ -1150,6 +1349,18 @@
             }
           }
         },
+        "viewCount": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
         "isPublish": {
           "type": "object",
           "properties": {
@@ -1167,6 +1378,26 @@
     "Comment": {
       "type": "object",
       "properties": {
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
         "blogId": {
           "type": "object",
           "properties": {
@@ -1187,6 +1418,42 @@
             }
           }
         },
+        "comment": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "bottomcomments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "BottomComment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Bottom Comment": {
+      "type": "object",
+      "properties": {
         "userId": {
           "type": "object",
           "properties": {
@@ -1196,6 +1463,26 @@
             "ref": {
               "type": "string",
               "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "commentId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Comment"
             },
             "required": {
               "type": "boolean",
