@@ -3,7 +3,6 @@ import Navbar from "../components/common/Navbar";
 import Dashboard from "../pages/Dashboard";
 import Users from "../pages/user/Users";
 import Login from "../pages/auth/Login";
-import PrivateRouter from "./PrivateRouter";
 import NewBlog from "../pages/blog/NewBlog";
 import BlogDetail from "../pages/blog/BlogDetail";
 import UserDetail from "../pages/user/UserDetail";
@@ -25,9 +24,7 @@ const AppRouter = () => {
         <Route path="/users" element={<Users />} />
         <Route path="/new-category" element={<NewCategory />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="" element={<PrivateRouter />}>
-          <Route path="new-blog" element={<NewBlog />} />
-        </Route>
+        <Route path="new-blog" element={<NewBlog />} />
         <Route path="about" element={<About />} />
         <Route path="my-blogs" element={<MyBlogs />} />
         <Route path=":username" element={<Profile />} />

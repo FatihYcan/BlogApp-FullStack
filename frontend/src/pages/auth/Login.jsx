@@ -64,11 +64,6 @@ export default function Login() {
   const { login, signInProvider } = useAuthCalls();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    sessionStorage.removeItem("selectedCategory");
-    sessionStorage.removeItem("searchBlog");
-  }, []);
-
   return (
     <Container
       maxWidth="xl"

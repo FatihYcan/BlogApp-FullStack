@@ -20,6 +20,7 @@ import DeleteModel from "../../components/blog/DeleteModel";
 import avatar from "../../assets/icons/avatar.png";
 import CommentForm from "../comment/CommentForm";
 import CommentCard from "../comment/CommentCard";
+import LoginModal from "../../components/blog/LoginModal";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -34,13 +35,14 @@ const SyledCardContent = styled(CardContent)({
 
 export default function BlogDetail() {
   const { _id, username: name } = useParams();
-  const navigate = useNavigate();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog, postBlogLike } = useBlogCalls();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
@@ -93,7 +95,7 @@ export default function BlogDetail() {
     if (username) {
       postBlogLike(_id);
     } else {
-      navigate("/login");
+      setLoginOpen(true);
     }
   };
 
@@ -297,6 +299,7 @@ export default function BlogDetail() {
         </button>
       </Box>
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
+      <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
 
       <UpdateModel
         updateOpen={updateOpen}

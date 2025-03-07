@@ -194,7 +194,10 @@ export default function RegisterForm({
           />
         </Box>
       </FormControl>
-      <button className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
+      <button
+        type="submit"
+        className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase"
+      >
         Sign up
       </button>
     </Box>

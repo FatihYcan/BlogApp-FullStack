@@ -27,12 +27,15 @@ export default function CommentCard({
   editComment,
   setEditComment,
 }) {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteComment } = useBlogCalls();
   const [openBottomMenu, setOpenBottomMenu] = useState("");
   const [commentData, setCommentData] = useState({ blogId: id, comment: "" });
   const [bottomCommentCard, setBottomCommentCard] = useState(false);
   const [isReplyName, setIsReplyName] = useState("");
+
+  const { username } = userInfo || {};
 
   const handleAnswersClick = (e) => {
     e.preventDefault();
@@ -170,13 +173,15 @@ export default function CommentCard({
             alignItems: "center",
           }}
         >
-          <button
-            className="flex items-center text-gray-600"
-            onClick={(e) => handleReplyClick(e, userId?.username)}
-          >
-            <ReplyIcon />
-            <span>Reply</span>
-          </button>
+          {username && (
+            <button
+              className="flex items-center text-gray-600"
+              onClick={(e) => handleReplyClick(e, userId?.username)}
+            >
+              <ReplyIcon />
+              <span>Reply</span>
+            </button>
+          )}
 
           {bottomcomments.length > 0 && (
             <span

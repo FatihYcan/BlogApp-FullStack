@@ -11,11 +11,11 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LikeModal from "./LikeModal";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import avatar from "../../assets/icons/avatar.png";
+import LoginModal from "./LoginModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -68,6 +68,10 @@ export default function BlogCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
@@ -78,7 +82,7 @@ export default function BlogCard({
     if (username) {
       postBlogLike(_id);
     } else {
-      navigate("/login");
+      setLoginOpen(true);
     }
   };
 
@@ -219,6 +223,7 @@ export default function BlogCard({
           </Typography>
         </Box>
         <LikeModal open={open} handleClose={handleClose} likes={likes} />
+        <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </SyledCard>
     </Grid>
   );

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import LikeModal from "./LikeModal";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import avatar from "../../assets/icons/avatar.png";
+import LoginModal from "./LoginModal";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
   position: "relative",
@@ -74,6 +75,8 @@ export default function PopularCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
@@ -84,7 +87,7 @@ export default function PopularCard({
     if (username) {
       postBlogLike(_id);
     } else {
-      navigate("/login");
+      setLoginOpen(true);
     }
   };
 
@@ -225,6 +228,7 @@ export default function PopularCard({
           </Typography>
         </Box>
         <LikeModal open={open} handleClose={handleClose} likes={likes} />
+        <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </Box>
     </Grid>
   );

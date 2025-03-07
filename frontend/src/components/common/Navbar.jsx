@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import useAuthCalls from "../../hooks/useAuthCalls";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import blog from "../../assets/images/blog-app.png";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import avatar from "../../assets/icons/avatar.png";
 import { useSelector } from "react-redux";
+import LoginModal from "../blog/LoginModal";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -36,11 +37,15 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 export default function Navbar() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { myUser } = useSelector((state) => state.blog);
+  const navigate = useNavigate();
 
   const { logout } = useAuthCalls();
   const location = useLocation();
 
   const [open, setOpen] = useState(false);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -53,14 +58,18 @@ export default function Navbar() {
     { name: "New Category", to: "/new-category" },
     { name: "Categories", to: "/categories" },
   ];
-  const notLogin = [
-    { name: "New Blog", to: "/new-blog" },
-    { name: "About", to: "/about" },
-  ];
+  const notLogin = [{ name: "About", to: "/about" }];
   const login = [
     { name: "My Blogs", to: "/my-blogs" },
     { name: "Profile", to: `/${username}` },
   ];
+
+  const handleNewBlogClick = (e) => {
+    if (!username) {
+      e.preventDefault();
+      setLoginOpen(true);
+    }
+  };
 
   return (
     <AppBar
@@ -113,6 +122,18 @@ export default function Navbar() {
                     {item.name}
                   </Link>
                 ))}
+
+              <Link
+                to="/new-blog"
+                onClick={handleNewBlogClick}
+                className={`${
+                  location.pathname === "/new-blog"
+                    ? "bg-black text-white dark:bg-white dark:text-black"
+                    : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black "
+                } rounded-md px-3 py-2 text-sm font-medium mr-3`}
+              >
+                New Blog
+              </Link>
 
               {notLogin.map((item) => (
                 <Link
@@ -249,6 +270,21 @@ export default function Navbar() {
                       </Link>
                     </MenuItem>
                   ))}
+
+                <MenuItem style={{ background: "none" }}>
+                  <Link
+                    to="/new-blog"
+                    onClick={handleNewBlogClick}
+                    className={`${
+                      location.pathname === "/new-blog"
+                        ? "bg-black text-white dark:bg-white dark:text-black"
+                        : "text-black hover:bg-black hover:text-white  dark:text-white dark:hover:bg-white dark:hover:text-black "
+                    } rounded-md px-2 py-3 text-sm font-medium w-full h-100`}
+                  >
+                    New Blog
+                  </Link>
+                </MenuItem>
+
                 {notLogin.map((item) => (
                   <MenuItem style={{ background: "none" }} key={item.name}>
                     <Link
@@ -345,6 +381,7 @@ export default function Navbar() {
           </Box>
         </StyledToolbar>
       </Container>
+      <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
     </AppBar>
   );
 }

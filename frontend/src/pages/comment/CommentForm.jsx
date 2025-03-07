@@ -7,10 +7,12 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
 
-export default function CommentForm({}) {
+export default function CommentForm() {
   const { _id, username } = useParams();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { postComment, getSingleBlog } = useBlogCalls();
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
@@ -18,6 +20,8 @@ export default function CommentForm({}) {
   const handleChange = (e) => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value });
   };
+
+  const IsUserInfo = Object.keys(userInfo).length === 0;
 
   const handleEmojiSelect = (emoji) => {
     setCommentData((prevData) => ({
@@ -56,30 +60,47 @@ export default function CommentForm({}) {
           id="comment"
           type="text"
           name="comment"
-                variant="outlined"
+          variant="outlined"
           required
           multiline
-          value={commentData.comment}
+          disabled={IsUserInfo}
+          value={
+            IsUserInfo
+              ? "Yorum yapabilmek için giriş yapmalısınız."
+              : commentData.comment
+          }
           onChange={handleChange}
         />
-        <Button
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          sx={{ position: "absolute", right: 0, bottom: 0 }}
-        >
-          😀
-        </Button>
+
+        {!IsUserInfo && (
+          <Box
+            sx={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Button
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              sx={{ minWidth: "auto", padding: "6px" }}
+            >
+              😀
+            </Button>
+            <Button type="submit" sx={{ minWidth: "auto", padding: "6px" }}>
+              <SendIcon />
+            </Button>
+          </Box>
+        )}
+
         {showEmojiPicker && (
           <Box sx={{ position: "absolute", zIndex: 1, right: 0, top: 60 }}>
             <Picker data={data} onEmojiSelect={handleEmojiSelect} />
           </Box>
         )}
       </FormControl>
-      <button
-        type="submit"
-        className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-2/4 m-auto uppercase"
-      >
-        Add Comment
-      </button>
     </Box>
   );
 }
