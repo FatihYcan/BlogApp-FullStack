@@ -35,6 +35,8 @@ export default function CommentCard({
   const [bottomCommentCard, setBottomCommentCard] = useState(false);
   const [isReplyName, setIsReplyName] = useState("");
 
+  const [editBottomComment, setEditBottomComment] = useState("");
+
   const { username } = userInfo || {};
 
   const handleAnswersClick = (e) => {
@@ -72,7 +74,7 @@ export default function CommentCard({
     }
   };
 
-  const handlEditClick = (e, comment_id, comment) => {
+  const handleEditClick = (e, comment_id, comment) => {
     e.preventDefault();
     setEditComment(comment_id);
     setCommentData((prevData) => ({
@@ -132,7 +134,7 @@ export default function CommentCard({
                   aria-labelledby="options-menu"
                 >
                   <button
-                    onClick={(e) => handlEditClick(e, _id, comment)}
+                    onClick={(e) => handleEditClick(e, _id, comment)}
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
@@ -210,6 +212,9 @@ export default function CommentCard({
                   item={item}
                   openBottomMenu={openBottomMenu}
                   setOpenBottomMenu={setOpenBottomMenu}
+                  editBottomComment={editBottomComment}
+                  setEditBottomComment={setEditBottomComment}
+                  _id={_id}
                 />
               ))}
             </>

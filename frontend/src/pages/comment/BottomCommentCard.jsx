@@ -8,14 +8,22 @@ import avatar from "../../assets/icons/avatar.png";
 import Divider from "@mui/material/Divider";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
+import EditBottomCommentForm from "./EditBottomCommentForm";
 
 export default function BottomCommentCard({
   item,
   openBottomMenu,
   setOpenBottomMenu,
+  editBottomComment,
+  setEditBottomComment,
+  _id: commentId,
 }) {
   const { _id: id, username: name } = useParams();
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
+  const [bottomCommentData, setBottomCommentData] = useState({
+    commentId: commentId,
+    comment: "",
+  });
 
   const { comment, createdAt, userId, _id } = item;
 
@@ -28,11 +36,21 @@ export default function BottomCommentCard({
     }
   };
 
-  const handleBottomCommentDeleteClick = async (e, delete_id) => {
+  const handleBottomEditClick = (e, comment_id, comment) => {
     e.preventDefault();
-    await deleteBottomComment(delete_id);
-    await getSingleBlog(name, id);
+    setEditBottomComment(comment_id);
+    setBottomCommentData((prevData) => ({
+      ...prevData,
+      comment: comment,
+    }));
+    setOpenBottomMenu("");
   };
+
+  // const handleBottomCommentDeleteClick = async (e, delete_id) => {
+  //   e.preventDefault();
+  //   await deleteBottomComment(delete_id);
+  //   await getSingleBlog(name, id);
+  // };
 
   return (
     <Box sx={{ borderRadius: 2, mb: 2 }}>
@@ -77,9 +95,7 @@ export default function BottomCommentCard({
                 aria-labelledby="options-menu"
               >
                 <button
-                  // onClick={(e) =>
-                  //   handleBottomCommentEditClick(e, _id, comment, commentId)
-                  // }
+                  onClick={(e) => handleBottomEditClick(e, _id, comment)}
                   className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                 >
@@ -97,9 +113,22 @@ export default function BottomCommentCard({
           )}
         </div>
       </Box>
-      <Typography variant="body2" color="text.primary" sx={{ mb: 1 }}>
-        {comment}
-      </Typography>
+
+      {editBottomComment !== _id && (
+        <Typography variant="body2" color="text.primary" sx={{ mb: 1 }}>
+          {comment}
+        </Typography>
+      )}
+
+      {editBottomComment === _id && (
+        <EditBottomCommentForm
+          bottomCommentData={bottomCommentData}
+          setBottomCommentData={setBottomCommentData}
+          editBottomComment={editBottomComment}
+          setEditBottomComment={setEditBottomComment}
+          commentId={commentId}
+        />
+      )}
 
       <Box
         sx={{
