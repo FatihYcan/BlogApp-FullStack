@@ -18,6 +18,7 @@ export default function BottomCommentCard({
   _id: commentId,
 }) {
   const { _id: id, username: name } = useParams();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog, deleteBottomComment } = useBlogCalls();
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: commentId,
@@ -25,6 +26,27 @@ export default function BottomCommentCard({
   });
 
   const { comment, createdAt, userId, _id } = item;
+
+  const { username } = userInfo || {};
+
+  function getTimeDifference(date, created) {
+    const timeDifference = date - created;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days} gün önce`;
+    } else if (hours > 0) {
+      return `${hours} saat önce`;
+    } else if (minutes > 0) {
+      return `${minutes} dakika önce`;
+    } else {
+      return `${seconds} saniye önce`;
+    }
+  }
 
   const onBottomtMenuClick = (e) => {
     e.preventDefault();
@@ -74,43 +96,46 @@ export default function BottomCommentCard({
             {userId?.username}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {new Date(createdAt).toLocaleDateString("tr-TR")}
+            {getTimeDifference(new Date(), new Date(createdAt))}
           </Typography>
         </Box>
-        <div className="relative">
-          <div
-            className="border border-black p-1 cursor-pointer dark:border-white"
-            onClick={onBottomtMenuClick}
-          >
-            <MoreVertIcon />
-          </div>
 
-          {openBottomMenu === _id && (
-            <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
-              <div
-                className="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <button
-                  onClick={(e) => handleBottomEditClick(e, _id, comment)}
-                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={(e) => handleBottomDeleteClick(e, _id)}
-                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
-                >
-                  Delete
-                </button>
-              </div>
+        {username === userId?.username && (
+          <div className="relative">
+            <div
+              className="border border-black p-1 cursor-pointer dark:border-white"
+              onClick={onBottomtMenuClick}
+            >
+              <MoreVertIcon />
             </div>
-          )}
-        </div>
+
+            {openBottomMenu === _id && (
+              <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
+                <div
+                  className="py-1"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  <button
+                    onClick={(e) => handleBottomEditClick(e, _id, comment)}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(e) => handleBottomDeleteClick(e, _id)}
+                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </Box>
 
       {editBottomComment !== _id && (

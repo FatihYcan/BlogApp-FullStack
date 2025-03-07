@@ -232,23 +232,3 @@ export default function MainContent() {
     </Box>
   );
 }
-
-// useEffect(() => {
-//   if (selectedCategory && !searchBlog) {
-//     getBlogs(
-//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3`
-//     );
-//   } else if (searchBlog && !selectedCategory) {
-//     getBlogs(
-//       `blogs?page=${page}&limit=3&search[title]=${searchBlog}&search[content]=${searchBlog}`
-//     );
-//   } else if (selectedCategory && searchBlog) {
-//     getBlogs(
-//       `blogs?filter[categoryId]=${selectedCategory}&page=${page}&limit=3&search[title]=${searchBlog}&search[content]=${searchBlog}`
-//     );
-//   } else {
-//     getBlogs(`blogs?page=${page}&limit=3`);
-//   }
-//   getCategories("categories");
-//   getBlogsView("blogs?sort[viewCount]=desc&limit=2");
-// }, [page, selectedCategory, likes, searchBlog]);

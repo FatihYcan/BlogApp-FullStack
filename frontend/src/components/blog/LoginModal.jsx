@@ -67,7 +67,7 @@ export default function LoginModal({ loginOpen, handleCloseLogin }) {
             component={(props) => <LoginForm {...props} />}
           ></Formik>
 
-          <Divider>or</Divider>
+          <Divider sx={{ my: 1 }}>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
               fullWidth

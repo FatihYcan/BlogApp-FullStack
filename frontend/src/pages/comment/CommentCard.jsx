@@ -34,10 +34,28 @@ export default function CommentCard({
   const [commentData, setCommentData] = useState({ blogId: id, comment: "" });
   const [bottomCommentCard, setBottomCommentCard] = useState(false);
   const [isReplyName, setIsReplyName] = useState("");
-
   const [editBottomComment, setEditBottomComment] = useState("");
 
   const { username } = userInfo || {};
+
+  function getTimeDifference(date, created) {
+    const timeDifference = date - created;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days} gün önce`;
+    } else if (hours > 0) {
+      return `${hours} saat önce`;
+    } else if (minutes > 0) {
+      return `${minutes} dakika önce`;
+    } else {
+      return `${seconds} saniye önce`;
+    }
+  }
 
   const handleAnswersClick = (e) => {
     e.preventDefault();
@@ -48,6 +66,8 @@ export default function CommentCard({
       setSeeAnswersCardId(_id);
       setBottomCommentCard(true);
       setIsReplyCardId("");
+      setEditComment("");
+      setEditBottomComment("");
     }
   };
 
@@ -62,6 +82,8 @@ export default function CommentCard({
       setSeeAnswersCardId("");
       setBottomCommentCard(true);
       setIsReplyName(username);
+      setEditComment("");
+      setEditBottomComment("");
     }
   };
 
@@ -81,6 +103,8 @@ export default function CommentCard({
       ...prevData,
       comment: comment,
     }));
+    setIsReplyCardId("");
+    setSeeAnswersCardId("");
     setOpenMenu("");
   };
 
@@ -115,42 +139,45 @@ export default function CommentCard({
               {userId?.username}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {new Date(createdAt).toLocaleDateString("tr-TR")}
+              {getTimeDifference(new Date(), new Date(createdAt))}
             </Typography>
           </Box>
-          <div className="relative">
-            <div
-              className="border border-black p-1 cursor-pointer dark:border-white"
-              onClick={onMenuClick}
-            >
-              <MoreVertIcon />
-            </div>
-            {openMenu === _id && (
-              <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
-                <div
-                  className="py-1"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <button
-                    onClick={(e) => handleEditClick(e, _id, comment)}
-                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    role="menuitem"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={(e) => handleDeleteClick(e, _id)}
-                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    role="menuitem"
-                  >
-                    Delete
-                  </button>
-                </div>
+
+          {username === userId?.username && (
+            <div className="relative">
+              <div
+                className="border border-black p-1 cursor-pointer dark:border-white"
+                onClick={onMenuClick}
+              >
+                <MoreVertIcon />
               </div>
-            )}
-          </div>
+              {openMenu === _id && (
+                <div className="absolute right-0 bg-white rounded-md shadow-lg z-10">
+                  <div
+                    className="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    <button
+                      onClick={(e) => handleEditClick(e, _id, comment)}
+                      className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={(e) => handleDeleteClick(e, _id)}
+                      className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </Box>
 
         {editComment !== _id && (

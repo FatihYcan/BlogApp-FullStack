@@ -8,6 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function EditCommentForm({
   commentData,
@@ -37,6 +38,11 @@ export default function EditCommentForm({
     await getSingleBlog(username, _id);
     setEditComment("");
     setCommentData({ blogId: _id, comment: "" });
+  };
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    setEditComment("");
   };
 
   return (
@@ -70,17 +76,19 @@ export default function EditCommentForm({
             bottom: 0,
             display: "flex",
             alignItems: "center",
-            gap: 1,
           }}
         >
           <Button
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            sx={{ minWidth: "auto", padding: "6px" }}
+            sx={{ minWidth: "auto" }}
           >
             😀
           </Button>
-          <Button type="submit" sx={{ minWidth: "auto", padding: "6px" }}>
+          <Button type="submit" sx={{ minWidth: "auto" }}>
             <SendIcon />
+          </Button>
+          <Button sx={{ minWidth: "auto" }} onClick={handleClose}>
+            <CloseIcon />
           </Button>
         </Box>
 

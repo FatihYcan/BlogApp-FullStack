@@ -103,6 +103,9 @@ export default function BlogDetail() {
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
 
+  console.log(username);
+  console.log(userId?.username);
+
   return (
     <Container
       maxWidth="md"
@@ -283,21 +286,24 @@ export default function BlogDetail() {
         </>
       )}
 
-      <Box my={2} display="flex" justifyContent="center" gap={2}>
-        <button
-          className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
-          onClick={handleUpdateOpen}
-        >
-          Update Blog
-        </button>
+      {username === userId?.username && (
+        <Box my={2} display="flex" justifyContent="center" gap={2}>
+          <button
+            className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+            onClick={handleUpdateOpen}
+          >
+            Update Blog
+          </button>
 
-        <button
-          className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
-          onClick={handleDeleteOpen}
-        >
-          Delete Blog
-        </button>
-      </Box>
+          <button
+            className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
+            onClick={handleDeleteOpen}
+          >
+            Delete Blog
+          </button>
+        </Box>
+      )}
+
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
       <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
 
