@@ -58,6 +58,11 @@ export default function UpdateModel({ updateOpen, handleUpdateClose, data }) {
   const { putUser, getSingleUser } = useBlogCalls();
   const { _id } = useParams();
   const [visibleImage, setVisibleImage] = useState(true);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+
+  const { isAdmin } = userInfo || {};
+
+  console.log(isAdmin === data.isAdmin);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -333,43 +338,51 @@ export default function UpdateModel({ updateOpen, handleUpdateClose, data }) {
               </Box>
             </FormControl>
 
-            <FormControl fullWidth margin="dense">
-              <FormLabel htmlFor="isActive">Active</FormLabel>
-              <TextField
-                size="small"
-                id="isActive"
-                select
-                name="isActive"
-                value={formik.values.isActive}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.isActive && Boolean(formik.errors.isActive)
-                }
-                helperText={formik.touched.isActive && formik.errors.isActive}
-              >
-                <MenuItem value={false}>False</MenuItem>
-                <MenuItem value={true}>True</MenuItem>
-              </TextField>
-            </FormControl>
+            {isAdmin !== data.isAdmin && (
+              <>
+                <FormControl fullWidth margin="dense">
+                  <FormLabel htmlFor="isActive">Active</FormLabel>
+                  <TextField
+                    size="small"
+                    id="isActive"
+                    select
+                    name="isActive"
+                    value={formik.values.isActive}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.isActive && Boolean(formik.errors.isActive)
+                    }
+                    helperText={
+                      formik.touched.isActive && formik.errors.isActive
+                    }
+                  >
+                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value={true}>True</MenuItem>
+                  </TextField>
+                </FormControl>
 
-            <FormControl fullWidth margin="dense">
-              <FormLabel htmlFor="isAdmin">Admin</FormLabel>
-              <TextField
-                size="small"
-                id="isAdmin"
-                select
-                name="isAdmin"
-                value={formik.values.isAdmin}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.isAdmin && Boolean(formik.errors.isAdmin)}
-                helperText={formik.touched.isAdmin && formik.errors.isAdmin}
-              >
-                <MenuItem value={false}>False</MenuItem>
-                <MenuItem value={true}>True</MenuItem>
-              </TextField>
-            </FormControl>
+                <FormControl fullWidth margin="dense">
+                  <FormLabel htmlFor="isAdmin">Admin</FormLabel>
+                  <TextField
+                    size="small"
+                    id="isAdmin"
+                    select
+                    name="isAdmin"
+                    value={formik.values.isAdmin}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.isAdmin && Boolean(formik.errors.isAdmin)
+                    }
+                    helperText={formik.touched.isAdmin && formik.errors.isAdmin}
+                  >
+                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value={true}>True</MenuItem>
+                  </TextField>
+                </FormControl>
+              </>
+            )}
 
             <button
               type="submit"

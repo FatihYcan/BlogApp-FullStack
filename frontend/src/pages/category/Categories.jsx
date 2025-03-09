@@ -23,7 +23,14 @@ export default function Categories() {
     <Container
       maxWidth="xl"
       component="main"
-      sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        mt: 16,
+        mb: 8,
+        gap: 4,
+        minHeight: "60vh",
+      }}
     >
       <Box
         sx={{

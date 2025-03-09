@@ -73,8 +73,14 @@ module.exports = {
         //! Kullanıcı sadece kendi kaydını güncelleyebilir.
         const customFilters = req.user?.isAdmin ? { _id: req.params.id } : { _id: req.user._id }
 
-        //! Eğer admin değil ise isAdmin ve icActive güncellenemez.
+        //! Eğer kullanıcı admin değil ise isAdmin ve icActive durmunu güncelleyemez.
         if (!req.user?.isAdmin) {
+            delete req.body.isActive
+            delete req.body.isAdmin
+        }
+
+        //! Eğer kullanıcı admin ise kendi isAdmin ve isActive durumunu güncelleyemez
+        if (req.user?.isAdmin && req.params.id == req.user._id) {
             delete req.body.isActive
             delete req.body.isAdmin
         }
