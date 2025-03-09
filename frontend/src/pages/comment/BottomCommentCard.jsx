@@ -8,6 +8,7 @@ import avatar from "../../assets/icons/avatar.png";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import EditBottomCommentForm from "./EditBottomCommentForm";
+import CommentBottomForm from "./CommentBottomForm";
 
 export default function BottomCommentCard({
   item,
@@ -16,6 +17,8 @@ export default function BottomCommentCard({
   editBottomComment,
   setEditBottomComment,
   _id: commentId,
+  isReplyBottomCardId,
+  setIsReplyBottomCardId,
 }) {
   const { _id: id, username: name } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -24,6 +27,7 @@ export default function BottomCommentCard({
     commentId: commentId,
     comment: "",
   });
+  const [isReplyBottomName, setIsReplyBottomName] = useState("");
 
   const { comment, createdAt, userId, _id } = item;
 
@@ -65,12 +69,27 @@ export default function BottomCommentCard({
       comment: comment,
     }));
     setOpenBottomMenu("");
+    setIsReplyBottomCardId();
   };
 
   const handleBottomDeleteClick = async (e, delete_id) => {
     e.preventDefault();
     await deleteBottomComment(delete_id);
     await getSingleBlog(name, id);
+    setIsReplyBottomCardId();
+  };
+
+  const handleReplyBottomClick = (e, username) => {
+    e.preventDefault();
+
+    if (isReplyBottomCardId === _id) {
+      setIsReplyBottomCardId("");
+      setIsReplyBottomName("");
+    } else {
+      setIsReplyBottomCardId(_id);
+      setIsReplyBottomName(username);
+      setEditBottomComment("");
+    }
   };
 
   return (
@@ -144,6 +163,14 @@ export default function BottomCommentCard({
         </Typography>
       )}
 
+      {isReplyBottomCardId === _id && (
+        <CommentBottomForm
+          commentId={commentId}
+          setIsReplyBottomCardId={setIsReplyBottomCardId}
+          isReplyBottomName={isReplyBottomName}
+        />
+      )}
+
       {editBottomComment === _id && (
         <EditBottomCommentForm
           bottomCommentData={bottomCommentData}
@@ -161,13 +188,15 @@ export default function BottomCommentCard({
           alignItems: "center",
         }}
       >
-        <button
-          className="flex items-center text-gray-600"
-          // onClick={(e) => handleReplyBottomClick(e, commentId, userId.username)}
-        >
-          <ReplyIcon />
-          <span>Reply</span>
-        </button>
+        {username && (
+          <button
+            className="flex items-center text-gray-600"
+            onClick={(e) => handleReplyBottomClick(e, userId?.username)}
+          >
+            <ReplyIcon />
+            <span>Reply</span>
+          </button>
+        )}
       </Box>
     </Box>
   );

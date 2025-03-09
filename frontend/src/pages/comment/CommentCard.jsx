@@ -35,6 +35,7 @@ export default function CommentCard({
   const [bottomCommentCard, setBottomCommentCard] = useState(false);
   const [isReplyName, setIsReplyName] = useState("");
   const [editBottomComment, setEditBottomComment] = useState("");
+  const [isReplyBottomCardId, setIsReplyBottomCardId] = useState("");
 
   const { username } = userInfo || {};
 
@@ -68,6 +69,7 @@ export default function CommentCard({
       setIsReplyCardId("");
       setEditComment("");
       setEditBottomComment("");
+      setIsReplyBottomCardId("");
     }
   };
 
@@ -84,6 +86,7 @@ export default function CommentCard({
       setIsReplyName(username);
       setEditComment("");
       setEditBottomComment("");
+      setIsReplyBottomCardId("");
     }
   };
 
@@ -242,6 +245,8 @@ export default function CommentCard({
                   editBottomComment={editBottomComment}
                   setEditBottomComment={setEditBottomComment}
                   _id={_id}
+                  isReplyBottomCardId={isReplyBottomCardId}
+                  setIsReplyBottomCardId={setIsReplyBottomCardId}
                 />
               ))}
             </>

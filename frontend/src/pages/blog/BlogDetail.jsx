@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
@@ -102,9 +102,6 @@ export default function BlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
-
-  console.log(username);
-  console.log(userId?.username);
 
   return (
     <Container
