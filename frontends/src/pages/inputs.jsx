@@ -1,4 +1,3 @@
-import * as React from "react";
 import { alpha } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { svgIconClasses } from "@mui/material/SvgIcon";
@@ -11,22 +10,6 @@ import { gray, brand } from "./themePrimitives";
 
 /* eslint-disable import/prefer-default-export */
 export const inputsCustomizations = {
-  // MuiButtonBase: {
-  //   defaultProps: {
-  //     disableTouchRipple: true,
-  //     disableRipple: true,
-  //   },
-  //   styleOverrides: {
-  //     root: ({ theme }) => ({
-  //       boxSizing: 'border-box',
-  //       transition: 'all 100ms ease-in',
-  //       '&:focus-visible': {
-  //         outline: `3px solid ${alpha(theme.palette.primary.main, 0.5)}`,
-  //         outlineOffset: '2px',
-  //       },
-  //     }),
-  //   },
-  // },
   MuiButton: {
     styleOverrides: {
       root: ({ theme }) => ({
@@ -48,7 +31,7 @@ export const inputsCustomizations = {
               size: "medium",
             },
             style: {
-              height: "2.5rem", // 40px
+              height: "2.5rem", 
             },
           },
           {

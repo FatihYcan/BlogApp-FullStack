@@ -1,7 +1,5 @@
-import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import AppTheme from "./AppTheme";
 import AppAppBar from "./AppAppBar";
 import MainContent from "./MainContent";
 import Latest from "./Latest";
@@ -9,7 +7,6 @@ import Footer from "./Footer";
 
 export default function Blog(props) {
   return (
-    // <AppTheme {...props}>
     <>
       <CssBaseline enableColorScheme />
       <AppAppBar />
@@ -22,7 +19,6 @@ export default function Blog(props) {
         <Latest />
       </Container>
       <Footer />
-      {/* </AppTheme> */}
     </>
   );
 }

@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import IconButton from "@mui/material/IconButton";
@@ -112,7 +111,10 @@ export default function LoginForm({
       /> */}
       {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
 
-      <button type="submit" className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase">
+      <button
+        type="submit"
+        className="bg-black text-white dark:bg-white dark:text-black font-medium py-2 px-2 rounded-lg uppercase"
+      >
         Sign in
       </button>
 

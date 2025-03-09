@@ -1,4 +1,3 @@
-import * as React from "react";
 import Modal from "@mui/material/Modal";
 import { Box, Button, Typography } from "@mui/material";
 import useBlogCalls from "../../hooks/useBlogCalls";
