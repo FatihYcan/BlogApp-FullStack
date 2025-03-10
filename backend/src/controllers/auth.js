@@ -15,41 +15,72 @@ module.exports = {
             #swagger.description = 'Login with username (or email) and password for get Token.'
             #swagger.parameters["body"] = { in: "body", required: true, schema: { "username": "test", "password": "1234" } }
         */
-        const { username, email, password } = req.body;
+        const { username, email, password } = req.body
 
         //! Eksik bilgi kontrolü
         if (!(username || email) || !password) {
-            res.errorStatusCode = 400;
-            throw new Error("Username/email and password are required");
+            res.errorStatusCode = 400
+            throw new Error("Username/email and password are required")
         }
 
         //! Kullanıcıyı veritabanında ara
-        const user = await User.findOne({ $or: [{ username }, { email }] });
+        const user = await User.findOne({ $or: [{ username }, { email }] })
 
         //! Kullanıcı bulunamazsa
         if (!user) {
-            res.errorStatusCode = 400;
-            throw new Error("You entered an invalid username/email and/or password");
+            res.errorStatusCode = 400
+            throw new Error("User not found")
         }
 
         //! Şifre doğrulaması
         if (user.password !== passwordEncrypt(password)) {
-            res.errorStatusCode = 400;
-            throw new Error("You entered an invalid password");
+            res.errorStatusCode = 400
+            throw new Error("You entered an invalid password")
         }
 
         //! Kullanıcı aktif değilse
         if (!user.isActive) {
-            res.errorStatusCode = 400;
-            throw new Error("User is not active");
+            res.errorStatusCode = 400
+            throw new Error("User is not active")
         }
 
         //! Token işlemleri
-        let tokenData = await Token.findOne({ userId: user._id });
+        let tokenData = await Token.findOne({ userId: user._id })
 
         //! Token yoksa yeni token oluştur
         if (!tokenData) { tokenData = await Token.create({ userId: user._id, token: passwordEncrypt(user._id + Date.now()) }) }
-        res.send({ error: false, token: tokenData.token, user });
+        res.send({ error: false, token: tokenData.token, user })
+    },
+
+    forgotPassword: async (req, res) => {
+        /*
+            #swagger.tags = ["Authentication"]
+            #swagger.summary = "Forgot Password"
+            #swagger.description = 'Reset password for the user with the given email.'
+            #swagger.parameters["body"] = { in: "body", required: true, schema: { "email": "test@site.com", "password": "12345" } }
+        */
+        const { username, email, password } = req.body
+
+        //! Eksik bilgi kontrolü
+        if (!(username || email) || !password) {
+            res.errorStatusCode = 400
+            throw new Error("Username/email and password are required")
+        }
+
+        //! Kullanıcıyı veritabanında ara
+        const user = await User.findOne({ $or: [{ username }, { email }] })
+
+        //! Kullanıcı bulunamazsa
+        if (!user) {
+            res.errorStatusCode = 404
+            throw new Error("User not found")
+        }
+
+        //! Yeni şifreyi güncelle
+        user.password = password
+        await user.save()
+
+        res.status(200).send({ error: false, message: "Password change successful." })
     },
 
     logout: async (req, res) => {

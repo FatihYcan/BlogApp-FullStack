@@ -8,6 +8,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import { object, string } from "yup";
+import Link from "@mui/material/Link";
+import ForgotPasswordForm, { forgotSchema } from "./ForgotPasswordForm";
+import { Formik } from "formik";
+import useAuthCalls from "../../hooks/useAuthCalls";
 
 export const loginSchema = object({
   email: string()
@@ -36,14 +40,23 @@ export default function LoginForm({
   touched,
   handleBlur,
   handleSubmit,
-  setFieldValue,
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { forgotPassword } = useAuthCalls();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -74,8 +87,22 @@ export default function LoginForm({
           helperText={errors.email}
         />
       </FormControl>
+
       <FormControl fullWidth margin="dense">
-        <FormLabel htmlFor="password">Password</FormLabel>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <FormLabel htmlFor="password">Password</FormLabel>
+
+          <Link
+            component="button"
+            type="button"
+            onClick={handleClickOpen}
+            variant="body2"
+            sx={{ alignSelf: "baseline", textDecoration: "none", color: "red" }}
+          >
+            Forgot your password?
+          </Link>
+        </Box>
+
         <TextField
           size="small"
           id="password"
@@ -105,11 +132,30 @@ export default function LoginForm({
           }}
         />
       </FormControl>
-      {/* <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      /> */}
-      {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
+
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validationSchema={forgotSchema}
+        onSubmit={async (values, actions) => {
+          const isChanged = await forgotPassword(values);
+
+          if (isChanged) {
+            actions.resetForm();
+            handleClose();
+          }
+          actions.setSubmitting(false);
+        }}
+        component={(props) => (
+          <ForgotPasswordForm
+            {...props}
+            open={open}
+            handleClose={handleClose}
+          />
+        )}
+      ></Formik>
 
       <button
         type="submit"
@@ -117,16 +163,6 @@ export default function LoginForm({
       >
         Sign in
       </button>
-
-      {/* <Link
-        component="button"
-        type="button"
-        // onClick={handleClickOpen}
-        variant="body2"
-        sx={{ alignSelf: "center" }}
-      >
-        Forgot your password?
-      </Link> */}
     </Box>
   );
 }

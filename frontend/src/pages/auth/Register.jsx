@@ -3,13 +3,8 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import MuiCard from "@mui/material/Card";
 import useAuthCalls from "../../hooks/useAuthCalls";
@@ -17,15 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import RegisterForm, {
   RegisterSchema,
-} from "../../auth/components/RegisterForm";
+} from "../../components/auth/RegisterForm";
 import { useEffect } from "react";
-
-// import ForgotPassword from './components/ForgotPassword';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from "../shared-theme/ColorModeSelect";
-// import {
-//   GoogleIcon,
-// } from "./components/CustomIcons";
+import GoogleIcon from "../../assets/icons/GoogleIcon";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -69,7 +58,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function Register() {
-  const { register, signInProvider } = useAuthCalls();
+  const { register } = useAuthCalls();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,9 +73,6 @@ export default function Register() {
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
       <SignUpContainer direction="column" justifyContent="space-between">
-        {/* <ColorModeSelect
-          sx={{ position: "fixed", top: "1rem", right: "1rem" }}
-          /> */}
         <Card variant="outlined">
           <Typography
             component="h1"
@@ -135,14 +121,6 @@ export default function Register() {
 
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert("Sign in with Google")}
-              //   startIcon={<GoogleIcon />}
-            >
-              Sign up with Google
-            </Button>
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
               <span

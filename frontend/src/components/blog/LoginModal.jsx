@@ -2,7 +2,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Formik } from "formik";
-import LoginForm, { loginSchema } from "../../auth/components/LoginForm";
+import LoginForm, { loginSchema } from "../auth/LoginForm";
 import useAuthCalls from "../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
