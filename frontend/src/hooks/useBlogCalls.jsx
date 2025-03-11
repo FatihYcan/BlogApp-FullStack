@@ -4,6 +4,7 @@ import {
   getSingleUserSuccess,
   putMyUserSuccess,
   getCategorySuccess,
+  getAllBlogSuccess,
   getBlogSuccess,
   getBlogViewSuccess,
   getSingleBlogSuccess,
@@ -147,6 +148,17 @@ const useBlogCalls = () => {
     }
   };
 
+  const getAllBlogs = async (url) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosPublic(url);
+      const apiData = data.data;
+      dispatch(getAllBlogSuccess({ apiData }));
+    } catch (error) {
+      dispatch(fetchFail());
+    }
+  };
+
   const getBlogs = async (url) => {
     dispatch(fetchStart());
     try {
@@ -164,8 +176,7 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosPublic(url);
       const apiData = data.data;
-      const details = data.details;
-      dispatch(getBlogViewSuccess({ apiData, details }));
+      dispatch(getBlogViewSuccess({ apiData }));
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -337,6 +348,7 @@ const useBlogCalls = () => {
     postCategory,
     putCategory,
     deleteCategory,
+    getAllBlogs,
     getBlogs,
     getBlogsView,
     postBlog,

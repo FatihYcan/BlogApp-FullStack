@@ -51,18 +51,20 @@ export default function Footer() {
             sx={{ justifyContent: "left", color: "text.secondary" }}
           >
             <IconButton
+              target="blank"
               color="inherit"
               size="small"
-              href="https://github.com/mui"
+              href="https://github.com/FatihYcan"
               aria-label="GitHub"
               sx={{ alignSelf: "center" }}
             >
               <FacebookIcon />
             </IconButton>
             <IconButton
+              target="blank"
               color="inherit"
               size="small"
-              href="https://www.linkedin.com/company/mui/"
+              href="https://www.linkedin.com/in/fatih-yakutcan"
               aria-label="LinkedIn"
               sx={{ alignSelf: "center" }}
             >

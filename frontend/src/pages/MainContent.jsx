@@ -37,10 +37,10 @@ export function Search({ handleSearch, searchBlog }) {
 }
 
 export default function MainContent() {
-  const { blogs, categories, viewBlogs, details, likes } = useSelector(
+  const { blogs, viewBlogs, details, likes, allBlogs } = useSelector(
     (state) => state.blog
   );
-  const { getBlogs, getCategories, getBlogsView } = useBlogCalls();
+  const { getAllBlogs, getBlogs, getBlogsView } = useBlogCalls();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(
     sessionStorage.getItem("selectedCategory") || ""
@@ -49,6 +49,10 @@ export default function MainContent() {
   const [searchBlog, setSearchBlog] = useState(
     sessionStorage.getItem("searchBlog") || ""
   );
+
+  const uniqueCategories = [
+    ...new Set(allBlogs.map((blog) => JSON.stringify(blog.categoryId))),
+  ].map((str) => JSON.parse(str));
 
   useEffect(() => {
     if (selectedCategory) {
@@ -62,13 +66,14 @@ export default function MainContent() {
     } else {
       sessionStorage.removeItem("searchBlog");
     }
+
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
   }, [selectedCategory, searchBlog]);
 
   const generateBlogsUrl = () => {
-    let url = `blogs?page=${page}&limit=3`;
+    let url = `blogs?page=${page}&limit=6`;
 
     if (selectedCategory) {
       url += `&filter[categoryId]=${selectedCategory}`;
@@ -82,9 +87,9 @@ export default function MainContent() {
   };
 
   useEffect(() => {
+    getAllBlogs("blogs");
     getBlogs(generateBlogsUrl());
-    getCategories("categories");
-    getBlogsView("blogs?sort[viewCount]=desc&limit=2");
+    getBlogsView("blogs?sort[viewCount]=desc&limit=4");
   }, [page, selectedCategory, likes, searchBlog]);
 
   const handleAllClick = () => {
@@ -145,6 +150,7 @@ export default function MainContent() {
             flexDirection: "row",
             gap: 3,
             overflow: "auto",
+            width: { xs: "100%", md: "80%" },
           }}
         >
           <button
@@ -158,7 +164,7 @@ export default function MainContent() {
             All categories
           </button>
 
-          {categories.map((category) => (
+          {uniqueCategories.map((category) => (
             <button
               key={category._id}
               className={`${
@@ -214,7 +220,7 @@ export default function MainContent() {
           </Box>
         )}
 
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h2" gutterBottom sx={{ mt: 4 }}>
           Most Popular
         </Typography>
         <Grid

@@ -233,7 +233,7 @@ export default function UpdateUserModel({
                     ? formik.errors.password
                     : formik.values.password === ""
                     ? "Şifreyi değiştirmek istiyorsanız bu alanı doldurun."
-                    : ""
+                    : formik.errors.password
                 }
                 InputProps={{
                   endAdornment: (
