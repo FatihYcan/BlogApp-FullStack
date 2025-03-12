@@ -18,7 +18,7 @@ const style = {
   overflowY: "auto",
 };
 
-export default function DeleteBlogModal({ deleteOpen, handleDeleteClose }) {
+export default function DeleteModal({ deleteOpen, handleDeleteClose }) {
   const { _id } = useParams();
   const navigate = useNavigate();
   const { deleteBlog } = useBlogCalls();

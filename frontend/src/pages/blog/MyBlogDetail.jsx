@@ -16,8 +16,8 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeModal from "../../components/blog/modals/LikeModal";
 import avatar from "../../assets/icons/avatar.png";
-import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
-import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
+import DeleteModal from "../../components/blog/modals/DeleteModal";
+import UpdateModal from "../../components/blog/modals/UpdateModal";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -269,13 +269,13 @@ export default function MyBlogDetail() {
         </button>
       </Box>
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
-      <UpdateBlogModal
+      <UpdateModal
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
         setData={setData}
         data={data}
       />
-      <DeleteBlogModal
+      <DeleteModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
       />

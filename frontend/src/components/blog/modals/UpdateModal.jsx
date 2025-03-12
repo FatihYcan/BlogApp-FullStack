@@ -16,7 +16,7 @@ const style = {
   overflowY: "auto",
 };
 
-export default function UpdateBlogModal({
+export default function UpdateModal({
   updateOpen,
   handleUpdateClose,
   setData,

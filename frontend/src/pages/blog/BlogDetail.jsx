@@ -15,8 +15,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeModal from "../../components/blog/modals/LikeModal";
-import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
-import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
+import DeleteModal from "../../components/blog/modals/DeleteModal";
+import UpdateModal from "../../components/blog/modals/UpdateModal";
 import avatar from "../../assets/icons/avatar.png";
 import LoginModal from "../../components/blog/modals/LoginModal";
 import "../../assets/styles/editorStyles.css";
@@ -308,13 +308,13 @@ export default function BlogDetail() {
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
       <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
 
-      <UpdateBlogModal
+      <UpdateModal
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
         setData={setData}
         data={data}
       />
-      <DeleteBlogModal
+      <DeleteModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
       />
