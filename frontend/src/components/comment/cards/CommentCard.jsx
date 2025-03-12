@@ -8,9 +8,9 @@ import avatar from "../../assets/icons/avatar.png";
 import Divider from "@mui/material/Divider";
 import BottomCommentCard from "./BottomCommentCard";
 import { useParams } from "react-router-dom";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import EditCommentForm from "./EditCommentForm";
-import BottomCommentForm from "./BottomCommentForm";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import EditCommentForm from "../forms/EditCommentForm";
+import BottomCommentForm from "../forms/BottomCommentForm";
 
 export default function CommentCard({
   comment,

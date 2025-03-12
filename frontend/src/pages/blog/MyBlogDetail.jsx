@@ -14,10 +14,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import LikeModal from "../../components/blog/LikeModal";
-import UpdateModel from "../../components/blog/UpdateModel";
-import DeleteModel from "../../components/blog/DeleteModel";
+import LikeModal from "../../components/blog/modals/LikeModal";
 import avatar from "../../assets/icons/avatar.png";
+import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
+import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -269,13 +269,13 @@ export default function MyBlogDetail() {
         </button>
       </Box>
       <LikeModal open={open} handleClose={handleClose} likes={likes} />
-      <UpdateModel
+      <UpdateBlogModal
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
         setData={setData}
         data={data}
       />
-      <DeleteModel
+      <DeleteBlogModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
       />

@@ -7,20 +7,19 @@ import Picker from "@emoji-mart/react";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useBlogCalls from "../../hooks/useBlogCalls";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function BottomCommentForm({
-  isReplyCardId,
-  setIsReplyCardId,
-  setSeeAnswersCardId,
-  isReplyName,
+export default function CommentBottomForm({
+  setIsReplyBottomCardId,
+  commentId,
+  isReplyBottomName,
 }) {
   const { _id, username } = useParams();
   const { getSingleBlog, postBottomComment } = useBlogCalls();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [bottomCommentData, setBottomCommentData] = useState({
-    commentId: isReplyCardId,
+    commentId: commentId,
     comment: "",
   });
 
@@ -43,13 +42,13 @@ export default function BottomCommentForm({
     await postBottomComment(bottomCommentData);
     await getSingleBlog(username, _id);
     setBottomCommentData({ blogId: _id, comment: "" });
-    setSeeAnswersCardId(isReplyCardId);
-    setIsReplyCardId("");
+    setIsReplyBottomCardId(commentId);
+    setIsReplyBottomCardId("");
   };
 
   const handleClose = (e) => {
     e.preventDefault();
-    setIsReplyCardId("");
+    setIsReplyBottomCardId("");
   };
 
   return (
@@ -70,7 +69,7 @@ export default function BottomCommentForm({
           type="text"
           name="comment"
           variant="outlined"
-          placeholder={isReplyName ? `reply to ${isReplyName}` : ""}
+          placeholder={isReplyBottomName ? `reply to ${isReplyBottomName}` : ""}
           required
           multiline
           value={bottomCommentData.comment}

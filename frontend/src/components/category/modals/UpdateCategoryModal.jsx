@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import useBlogCalls from "../../hooks/useBlogCalls";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 
 const style = {
   position: "absolute",
@@ -20,7 +20,7 @@ const style = {
   overflowY: "auto",
 };
 
-export default function UpdateModel({
+export default function UpdateCategoryModal({
   updateOpen,
   handleUpdateClose,
   data,

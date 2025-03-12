@@ -6,9 +6,9 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import { useState } from "react";
 import avatar from "../../assets/icons/avatar.png";
 import { useParams } from "react-router-dom";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import EditBottomCommentForm from "./EditBottomCommentForm";
-import CommentBottomForm from "./CommentBottomForm";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import EditBottomCommentForm from "../forms/EditBottomCommentForm";
+import CommentBottomForm from "../forms/CommentBottomForm";
 
 export default function BottomCommentCard({
   item,

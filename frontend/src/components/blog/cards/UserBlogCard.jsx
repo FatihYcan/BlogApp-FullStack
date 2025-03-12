@@ -12,10 +12,8 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeModal from "./LikeModal";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import avatar from "../../assets/icons/avatar.png";
-import LoginModal from "./LoginModal";
+import LikeModal from "../modals/LikeModal";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -53,7 +51,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-export default function BlogCard({
+export default function UserBlogCard({
   _id,
   title,
   images,
@@ -68,10 +66,6 @@ export default function BlogCard({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const [loginOpen, setLoginOpen] = useState(false);
-  const handleCloseLogin = () => setLoginOpen(false);
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
@@ -79,18 +73,16 @@ export default function BlogCard({
   const { username } = userInfo || {};
 
   const handleLike = () => {
-    if (username) {
-      postBlogLike(_id);
-    } else {
-      setLoginOpen(true);
-    }
+    postBlogLike(_id);
   };
 
   const handleDetail = () => {
-    navigate(`/blogs/${userId.username}/${_id}`);
+    navigate(`/my-blogs/${username}/${_id}`);
   };
 
   const blogImage = images?.[0]?.slice(1) || [];
+  const userImage = userId?.image?.[0]?.slice(1) || [];
+
   const isLiked = likes.some((like) => like.userId.username === username);
 
   return (
@@ -115,12 +107,9 @@ export default function BlogCard({
           <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
-          <StyledTypography
-            variant="body2"
-            color="text.secondary"
-            gutterBottom
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+            {content}
+          </StyledTypography>
         </SyledCardContent>
 
         <Box
@@ -211,11 +200,7 @@ export default function BlogCard({
               <Avatar
                 key={userId._id}
                 alt={userId.username}
-                src={
-                  userId.image && userId.image.length > 0
-                    ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
-                    : avatar
-                }
+                src={`http://127.0.0.1:8000${userImage}`}
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
@@ -226,7 +211,6 @@ export default function BlogCard({
           </Typography>
         </Box>
         <LikeModal open={open} handleClose={handleClose} likes={likes} />
-        <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </SyledCard>
     </Grid>
   );

@@ -10,10 +10,10 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeModal from "./LikeModal";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import avatar from "../../assets/icons/avatar.png";
-import LoginModal from "./LoginModal";
+import LikeModal from "../modals/LikeModal";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import avatar from "../../../assets/icons/avatar.png";
+import LoginModal from "../modals/LoginModal";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
   position: "relative",

@@ -10,8 +10,8 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
-import BlogCard from "../components/blog/BlogCard";
-import PopularCard from "../components/blog/PopularCard";
+import BlogCard from "../components/blog/cards/BlogCard";
+import PopularCard from "../components/blog/cards/PopularCard";
 
 export function Search({ handleSearch, searchBlog }) {
   return (

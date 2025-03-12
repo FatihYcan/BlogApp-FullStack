@@ -16,7 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import avatar from "../../assets/icons/avatar.png";
 import { useSelector } from "react-redux";
-import LoginModal from "../blog/LoginModal";
+import LoginModal from "../blog/modals/LoginModal";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",

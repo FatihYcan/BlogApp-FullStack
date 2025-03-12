@@ -5,8 +5,8 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
-import UpdateModel from "./UpdateModel";
-import DeleteModel from "./DeleteModel";
+import UpdateCategoryModal from "./modals/UpdateCategoryModal";
+import DeleteCategoryModal from "./modals/DeleteCategoryModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -87,14 +87,14 @@ export default function CategoryCard({ name, _id }) {
         </Box>
       </SyledCard>
 
-      <UpdateModel
+      <UpdateCategoryModal
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
         data={data}
         setData={setData}
       />
 
-      <DeleteModel
+      <DeleteCategoryModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
         data={data}

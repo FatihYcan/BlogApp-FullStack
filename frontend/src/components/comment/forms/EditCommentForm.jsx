@@ -7,29 +7,25 @@ import Picker from "@emoji-mart/react";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useBlogCalls from "../../hooks/useBlogCalls";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function EditBottomCommentForm({
-  bottomCommentData,
-  setBottomCommentData,
-  editBottomComment,
-  setEditBottomComment,
-  commentId,
+export default function EditCommentForm({
+  commentData,
+  setCommentData,
+  editComment,
+  setEditComment,
 }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { _id, username } = useParams();
-  const { getSingleBlog, putBottomComment } = useBlogCalls();
+  const { getSingleBlog, putComment } = useBlogCalls();
 
   const handleChange = (e) => {
-    setBottomCommentData({
-      ...bottomCommentData,
-      [e.target.name]: e.target.value,
-    });
+    setCommentData({ ...commentData, [e.target.name]: e.target.value });
   };
 
   const handleEmojiSelect = (emoji) => {
-    setBottomCommentData((prevData) => ({
+    setCommentData((prevData) => ({
       ...prevData,
       comment: prevData.comment + emoji.native,
     }));
@@ -38,15 +34,15 @@ export default function EditBottomCommentForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await putBottomComment(editBottomComment, bottomCommentData);
+    await putComment(editComment, commentData);
     await getSingleBlog(username, _id);
-    setEditBottomComment("");
-    setBottomCommentData({ commentId: commentId, comment: "" });
+    setEditComment("");
+    setCommentData({ blogId: _id, comment: "" });
   };
 
   const handleClose = (e) => {
     e.preventDefault();
-    setEditBottomComment("");
+    setEditComment("");
   };
 
   return (
@@ -70,7 +66,7 @@ export default function EditBottomCommentForm({
           variant="outlined"
           required
           multiline
-          value={bottomCommentData.comment}
+          value={commentData.comment}
           onChange={handleChange}
         />
         <Box
