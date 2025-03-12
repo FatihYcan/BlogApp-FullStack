@@ -7,10 +7,12 @@ import TextEditor from "./TextEditor";
 import { useEffect, useRef, useState } from "react";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
+import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 export default function NewBlogForm() {
-  const { getCategories, postBlog } = useBlogCalls();
-  const { categories } = useSelector((state) => state.blog);
+  const {  postBlog } = useBlogCalls();
+  const { getCategories,  } = useCategoryCalls();
+  const { categories } = useSelector((state) => state.category);
   const [formKey, setFormKey] = useState(0);
   const [isContent, setIsContent] = useState(false);
 

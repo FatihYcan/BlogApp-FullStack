@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { useState } from "react";
-import avatar from "../../assets/icons/avatar.png";
+import avatar from "../../../assets/icons/avatar.png";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import EditBottomCommentForm from "../forms/EditBottomCommentForm";

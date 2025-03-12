@@ -5,8 +5,8 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
-import UpdateCategoryModal from "./modals/UpdateCategoryModal";
-import DeleteCategoryModal from "./modals/DeleteCategoryModal";
+import UpdateCategoryModal from "../modals/UpdateCategoryModal";
+import DeleteCategoryModal from "../modals/DeleteCategoryModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",

@@ -11,9 +11,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
-import UpdateModel from "../../components/user/UpdateModel";
 import avatar from "../../assets/icons/avatar.png";
-import DeleteModel from "../../components/user/DeleteModel";
+import DeleteModal from "../../components/user/modals/DeleteModal";
+import UpdateModal from "../../components/user/modals/UpdateModal";
+import useUserCalls from "../../hooks/useUserCalls";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -36,8 +37,8 @@ const StyledTypography = styled(Typography)({
 
 export default function UserDetail() {
   const { _id } = useParams();
-  const { singleUser } = useSelector((state) => state.blog);
-  const { getSingleUser } = useBlogCalls();
+  const { getSingleUser } = useUserCalls();
+  const { singleUser } = useSelector((state) => state.user);
   const [updateOpen, setUpdateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [data, setData] = useState({
@@ -164,12 +165,12 @@ export default function UserDetail() {
           Delete User
         </button>
       </Box>
-      <UpdateModel
+      <UpdateModal
         updateOpen={updateOpen}
         handleUpdateClose={handleUpdateClose}
         data={data}
       />
-      <DeleteModel
+      <DeleteModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
       />

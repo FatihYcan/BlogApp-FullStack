@@ -9,13 +9,14 @@ import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
-  const { getCategories, putBlog, getSingleBlog } = useBlogCalls();
+  const { putBlog, getSingleBlog } = useBlogCalls();
+  const { getCategories } = useCategoryCalls();
   const { _id, username } = useParams();
   const [isContent, setIsContent] = useState(false);
-
-  const { categories } = useSelector((state) => state.blog);
+  const { categories } = useSelector((state) => state.category);
 
   useEffect(() => {
     getCategories("categories");

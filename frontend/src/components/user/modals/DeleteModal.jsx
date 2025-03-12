@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import useBlogCalls from "../../hooks/useBlogCalls";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useNavigate, useParams } from "react-router-dom";
 
 const style = {
@@ -18,7 +18,7 @@ const style = {
   overflowY: "auto",
 };
 
-export default function DeleteModel({ deleteOpen, handleDeleteClose }) {
+export default function DeleteModal({ deleteOpen, handleDeleteClose }) {
   const { _id } = useParams();
   const navigate = useNavigate();
   const { deleteUser } = useBlogCalls();

@@ -1,4 +1,4 @@
-import avatar from "../../assets/icons/avatar.png";
+import avatar from "../../../assets/icons/avatar.png";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -8,7 +8,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import UpdateUserModal from "../modals/UpdateUserModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -46,28 +47,39 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-export default function UserCard({
-  createdAt,
-  email,
-  firstName,
-  image,
-  lastName,
-  username,
-  _id,
-}) {
-  const navigate = useNavigate();
+export default function ProfileCard({ singleUser, _id }) {
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleUpdateClose = () => setUpdateOpen(false);
 
-  const handleDetail = () => {
-    navigate(`/users/${_id}`);
-  };
+  const [data, setData] = useState({
+    email: singleUser.email,
+    firstName: singleUser.firstName,
+    image: singleUser.image,
+    lastName: singleUser.lastName,
+    password: singleUser.password,
+    username: singleUser.username,
+  });
+
+  const { createdAt, email, firstName, image, lastName, username } = singleUser;
 
   const fullName = firstName + " " + lastName;
+
+  const handleUpdateOpen = () => {
+    setData({
+      email: singleUser.email,
+      firstName: singleUser.firstName,
+      image: singleUser.image,
+      lastName: singleUser.lastName,
+      password: singleUser.password,
+      username: singleUser.username,
+    });
+    setUpdateOpen(true);
+  };
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 3 }}>
       <SyledCard variant="outlined">
         <CardMedia
-          onClick={handleDetail}
           component="img"
           alt={username}
           image={
@@ -127,6 +139,20 @@ export default function UserCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
+
+        <Box my={2} display="flex" justifyContent="center" gap={2}>
+          <button
+            className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+            onClick={handleUpdateOpen}
+          >
+            Update User
+          </button>
+        </Box>
+        <UpdateUserModal
+          updateOpen={updateOpen}
+          handleUpdateClose={handleUpdateClose}
+          data={data}
+        />
       </SyledCard>
     </Grid>
   );

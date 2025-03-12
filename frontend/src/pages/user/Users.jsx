@@ -8,9 +8,9 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
-import UserCard from "../../components/user/UserCard";
+import UserCard from "../../components/user/cards/UserCard";
+import useUserCalls from "../../hooks/useUserCalls";
 
 export function Search({ handleSearch, searchUser }) {
   return (
@@ -36,8 +36,8 @@ export function Search({ handleSearch, searchUser }) {
 }
 
 export default function Users() {
-  const { users, details } = useSelector((state) => state.blog);
-  const { getUsers } = useBlogCalls();
+  const { getUsers } = useUserCalls();
+  const { users, details } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [searchUser, setSearchUser] = useState(
     sessionStorage.getItem("searchUser") || ""

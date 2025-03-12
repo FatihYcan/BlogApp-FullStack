@@ -4,9 +4,6 @@ const blogSlice = createSlice({
   name: "blog",
 
   initialState: {
-    users: [],
-    singleUser: {},
-    myUser: {},
     allBlogs: [],
     blogs: [],
     viewBlogs: [],
@@ -14,7 +11,6 @@ const blogSlice = createSlice({
     singleBlog: {},
     likes: [],
     userBlogs: [],
-    categories: [],
     loading: false,
     error: false,
   },
@@ -23,25 +19,6 @@ const blogSlice = createSlice({
     fetchStart: (state) => {
       state.error = false;
       state.loading = true;
-    },
-
-    getUserSuccess: (state, { payload }) => {
-      state.users = payload.apiData;
-      state.details = payload.details;
-      state.loading = false;
-      state.error = false;
-    },
-
-    getSingleUserSuccess: (state, { payload }) => {
-      state.singleUser = payload.apiData;
-      state.loading = false;
-      state.error = false;
-    },
-
-    putMyUserSuccess: (state, { payload }) => {
-      state.myUser = payload.apiData;
-      state.loading = false;
-      state.error = false;
     },
 
     getBlogSuccess: (state, { payload }) => {
@@ -82,12 +59,6 @@ const blogSlice = createSlice({
       state.error = false;
     },
 
-    getCategorySuccess: (state, { payload }) => {
-      state.categories = payload.apiData;
-      state.loading = false;
-      state.error = false;
-    },
-
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
@@ -97,16 +68,12 @@ const blogSlice = createSlice({
 
 export const {
   fetchStart,
-  getUserSuccess,
-  getSingleUserSuccess,
-  putMyUserSuccess,
   getAllBlogSuccess,
   getBlogSuccess,
   getBlogViewSuccess,
   getSingleBlogSuccess,
   postBlogLikeSuccess,
   getUserBlogSuccess,
-  getCategorySuccess,
   fetchFail,
 } = blogSlice.actions;
 

@@ -1,18 +1,20 @@
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import useBlogCalls from "../../hooks/useBlogCalls";
+import { useParams } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
-import { object, string } from "yup";
-import avatar from "../../assets/icons/avatar.png";
+import { object, string, boolean } from "yup";
+import avatar from "../../../assets/icons/avatar.png";
+import useUserCalls from "../../../hooks/useUserCalls";
 
 const style = {
   position: "absolute",
@@ -48,18 +50,17 @@ const validationSchema = object({
       "Şifre en az bir özel karakter (@$!%*?&) içermelidir."
     )
     .nullable(),
+  isActive: boolean().required("Aktif durumu zorunludur"),
+  isAdmin: boolean().required("Admin durumu zorunludur"),
 });
 
-export default function UpdateUserModel({
-  updateOpen,
-  handleUpdateClose,
-  data,
-}) {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const { putMyUser, getSingleUser } = useBlogCalls();
+export default function UpdateModal({ updateOpen, handleUpdateClose, data }) {
+  const { putUser, getSingleUser } = useUserCalls();
+  const { _id } = useParams();
   const [visibleImage, setVisibleImage] = useState(true);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
 
-  const { _id } = userInfo || {};
+  const { isAdmin } = userInfo || {};
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -70,6 +71,8 @@ export default function UpdateUserModel({
       email: data.email || "",
       image: data.image || [],
       password: data.password ? "" : data.password || "",
+      isActive: data.isActive || false,
+      isAdmin: data.isAdmin || false,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -79,6 +82,8 @@ export default function UpdateUserModel({
       formData.append("firstName", values.firstName);
       formData.append("lastName", values.lastName);
       formData.append("email", values.email);
+      formData.append("isActive", values.isActive);
+      formData.append("isAdmin", values.isAdmin);
 
       if (values.password) {
         formData.append("password", values.password);
@@ -94,7 +99,7 @@ export default function UpdateUserModel({
         formData.append("image", []);
       }
 
-      const isUpdated = await putMyUser(_id, formData);
+      const isUpdated = await putUser(_id, formData);
 
       if (isUpdated) {
         await getSingleUser(_id);
@@ -330,6 +335,52 @@ export default function UpdateUserModel({
                 />
               </Box>
             </FormControl>
+
+            {isAdmin !== data.isAdmin && (
+              <>
+                <FormControl fullWidth margin="dense">
+                  <FormLabel htmlFor="isActive">Active</FormLabel>
+                  <TextField
+                    size="small"
+                    id="isActive"
+                    select
+                    name="isActive"
+                    value={formik.values.isActive}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.isActive && Boolean(formik.errors.isActive)
+                    }
+                    helperText={
+                      formik.touched.isActive && formik.errors.isActive
+                    }
+                  >
+                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value={true}>True</MenuItem>
+                  </TextField>
+                </FormControl>
+
+                <FormControl fullWidth margin="dense">
+                  <FormLabel htmlFor="isAdmin">Admin</FormLabel>
+                  <TextField
+                    size="small"
+                    id="isAdmin"
+                    select
+                    name="isAdmin"
+                    value={formik.values.isAdmin}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.isAdmin && Boolean(formik.errors.isAdmin)
+                    }
+                    helperText={formik.touched.isAdmin && formik.errors.isAdmin}
+                  >
+                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value={true}>True</MenuItem>
+                  </TextField>
+                </FormControl>
+              </>
+            )}
 
             <button
               type="submit"

@@ -1,7 +1,7 @@
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 const style = {
   position: "absolute",
@@ -18,7 +18,7 @@ const style = {
 };
 
 export default function DeleteCategoryModal({ deleteOpen, handleDeleteClose, data }) {
-  const { deleteCategory, getCategories } = useBlogCalls();
+  const { deleteCategory, getCategories } = useCategoryCalls();
 
   const handleDeleteCategory = async () => {
     await deleteCategory(data._id);

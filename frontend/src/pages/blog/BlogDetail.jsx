@@ -18,10 +18,10 @@ import LikeModal from "../../components/blog/modals/LikeModal";
 import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
 import avatar from "../../assets/icons/avatar.png";
-import CommentForm from "../comment/CommentForm";
-import CommentCard from "../comment/CommentCard";
 import LoginModal from "../../components/blog/modals/LoginModal";
 import "../../assets/styles/editorStyles.css";
+import CommentForm from "../../components/comment/forms/CommentForm";
+import CommentCard from "../../components/comment/cards/CommentCard";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",

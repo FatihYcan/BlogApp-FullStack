@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import useBlogCalls from "../../../hooks/useBlogCalls";
+import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 const style = {
   position: "absolute",
@@ -26,7 +26,7 @@ export default function UpdateCategoryModal({
   data,
   setData,
 }) {
-  const { putCategory, getCategories } = useBlogCalls();
+  const { putCategory, getCategories } = useCategoryCalls();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserBlogCard from "../../components/blog/cards/UserBlogCard";
+import useCategoryCalls from "../../hooks/useCategoryCalls";
 
 export function Search({ handleSearch, searchBlog }) {
   return (
@@ -36,14 +37,16 @@ export function Search({ handleSearch, searchBlog }) {
 }
 
 export default function MyBlogs() {
-  const { userBlogs, details, categories, likes } = useSelector(
-    (state) => state.blog
-  );
+  const { getUserBlog } = useBlogCalls();
+  const { getCategories } = useCategoryCalls();
+
+  const { userBlogs, details, likes } = useSelector((state) => state.blog);
+  const { categories } = useSelector((state) => state.category);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
 
   const { _id } = userInfo || {};
 
-  const { getUserBlog, getCategories } = useBlogCalls();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(
     sessionStorage.getItem("selectedMyCategory") || ""

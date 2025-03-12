@@ -2,13 +2,13 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import { useSelector } from "react-redux";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect } from "react";
-import CategoryCard from "../../components/category/CategoryCard";
+import CategoryCard from "../../components/category/cards/CategoryCard";
+import useCategoryCalls from "../../hooks/useCategoryCalls";
 
 export default function Categories() {
-  const { categories } = useSelector((state) => state.blog);
-  const { getCategories } = useBlogCalls();
+  const { categories } = useSelector((state) => state.category);
+  const { getCategories } = useCategoryCalls();
 
   useEffect(() => {
     getCategories("categories");
