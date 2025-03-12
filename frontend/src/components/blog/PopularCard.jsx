@@ -118,9 +118,12 @@ export default function PopularCard({
           />
         </TitleTypography>
 
-        <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-          {content}
-        </StyledTypography>
+        <StyledTypography
+          variant="body2"
+          color="text.secondary"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></StyledTypography>
 
         <Box
           sx={{

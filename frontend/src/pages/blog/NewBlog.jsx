@@ -11,13 +11,7 @@ import FormLabel from "@mui/material/FormLabel";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-
-// import ForgotPassword from './components/ForgotPassword';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from "../shared-theme/ColorModeSelect";
-// import {
-//   GoogleIcon,
-// } from "./components/CustomIcons";
+import TextEditor from "./TextEditor";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -70,6 +64,7 @@ export default function NewBlog() {
     images: [],
     isPublish: true,
   });
+  const [formKey, setFormKey] = useState(0);
 
   const fileInputRef = useRef(null);
 
@@ -84,6 +79,10 @@ export default function NewBlog() {
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleContentChange = (content) => {
+    setData({ ...data, content });
   };
 
   const handleImageChange = (e) => {
@@ -115,6 +114,8 @@ export default function NewBlog() {
         isPublish: true,
       });
 
+      setFormKey((prevKey) => prevKey + 1);
+
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -138,6 +139,7 @@ export default function NewBlog() {
           </Typography>
 
           <Box
+            key={formKey}
             encType="multipart/form-data"
             component="form"
             onSubmit={handleSubmit}
@@ -163,17 +165,8 @@ export default function NewBlog() {
             </FormControl>
 
             <FormControl fullWidth margin="dense">
-              <FormLabel htmlFor="title">Content</FormLabel>
-              <TextField
-                size="small"
-                id="content"
-                type="text"
-                name="content"
-                variant="outlined"
-                required
-                value={data.content}
-                onChange={handleChange}
-              />
+              <FormLabel htmlFor="content">Content</FormLabel>
+              <TextEditor value={data.content} onChange={handleContentChange} />
             </FormControl>
 
             <FormControl fullWidth margin="dense">

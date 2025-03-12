@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../hooks/useBlogCalls";
+import TextEditor from "../../pages/blog/TextEditor";
 
 const style = {
   position: "absolute",
@@ -40,6 +41,10 @@ export default function UpdateModel({
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleContentChange = (content) => {
+    setData({ ...data, content });
   };
 
   const imagePath = Array.isArray(data?.images)
@@ -121,19 +126,12 @@ export default function UpdateModel({
                 value={data.title}
               />
             </FormControl>
+
             <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="content">Content</FormLabel>
-              <TextField
-                size="small"
-                name="content"
-                id="content"
-                type="text"
-                variant="outlined"
-                required
-                onChange={handleChange}
-                value={data.content}
-              />
+              <TextEditor value={data.content} onChange={handleContentChange} />
             </FormControl>
+
             <FormControl fullWidth margin="dense">
               <FormLabel htmlFor="category">Category</FormLabel>
               <TextField

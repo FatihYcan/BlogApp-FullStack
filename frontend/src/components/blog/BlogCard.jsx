@@ -115,9 +115,12 @@ export default function BlogCard({
           <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
-          <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-            {content}
-          </StyledTypography>
+          <StyledTypography
+            variant="body2"
+            color="text.secondary"
+            gutterBottom
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
         </SyledCardContent>
 
         <Box

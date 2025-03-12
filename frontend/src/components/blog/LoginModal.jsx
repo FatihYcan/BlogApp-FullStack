@@ -7,7 +7,6 @@ import useAuthCalls from "../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
 
 const style = {
   position: "absolute",
@@ -24,13 +23,19 @@ const style = {
 };
 
 export default function LoginModal({ loginOpen, handleCloseLogin }) {
-  const { login, signInProvider } = useAuthCalls();
+  const { login } = useAuthCalls();
   const navigate = useNavigate();
 
   useEffect(() => {
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
   }, []);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/register");
+    handleCloseLogin();
+  };
 
   return (
     <div>
@@ -69,18 +74,10 @@ export default function LoginModal({ loginOpen, handleCloseLogin }) {
 
           <Divider sx={{ my: 1 }}>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert("Sign in with Google")}
-              //   startIcon={<GoogleIcon />}
-            >
-              Sign in with Google
-            </Button>
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
               <span
-                onClick={() => navigate("/register")}
+                onClick={handleClick}
                 style={{
                   cursor: "pointer",
                   textDecoration: "none",

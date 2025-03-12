@@ -1,6 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
@@ -14,7 +12,6 @@ import RegisterForm, {
   RegisterSchema,
 } from "../../components/auth/RegisterForm";
 import { useEffect } from "react";
-import GoogleIcon from "../../assets/icons/GoogleIcon";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",

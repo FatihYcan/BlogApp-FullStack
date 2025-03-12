@@ -21,6 +21,7 @@ import avatar from "../../assets/icons/avatar.png";
 import CommentForm from "../comment/CommentForm";
 import CommentCard from "../comment/CommentCard";
 import LoginModal from "../../components/blog/LoginModal";
+import "./editorStyles.css";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -171,9 +172,12 @@ export default function BlogDetail() {
         <Typography gutterBottom variant="h6" component="div">
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {content}
-        </Typography>
+        <Typography
+          component="div"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: content }}
+          className="editor-content"
+        />
       </SyledCardContent>
 
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
