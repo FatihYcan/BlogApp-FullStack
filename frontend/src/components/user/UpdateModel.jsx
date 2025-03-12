@@ -62,8 +62,6 @@ export default function UpdateModel({ updateOpen, handleUpdateClose, data }) {
 
   const { isAdmin } = userInfo || {};
 
-  console.log(isAdmin === data.isAdmin);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {

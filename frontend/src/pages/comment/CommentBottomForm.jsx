@@ -23,8 +23,6 @@ export default function CommentBottomForm({
     comment: "",
   });
 
-  console.log(bottomCommentData);
-
   const handleChange = (e) => {
     setBottomCommentData({
       ...bottomCommentData,

@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import useAuthCalls from "../../hooks/useAuthCalls";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import blog from "../../assets/images/blog-app.png";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
