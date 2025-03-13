@@ -23,9 +23,11 @@ export default function DeleteModal({ deleteOpen, handleDeleteClose }) {
   const navigate = useNavigate();
   const { deleteBlog } = useBlogCalls();
 
-  const handleDeleteBlog = () => {
-    deleteBlog(_id);
-    navigate("/");
+  const handleDeleteBlog = async () => {
+    await deleteBlog(_id);
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
+    navigate("/my-blogs");
   };
 
   return (

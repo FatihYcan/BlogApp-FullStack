@@ -24,10 +24,10 @@ const AppRouter = () => {
         <Route path="/users" element={<Users />} />
         <Route path="/new-category" element={<NewCategory />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="new-blog" element={<NewBlog />} />
-        <Route path="about" element={<About />} />
-        <Route path="my-blogs" element={<MyBlogs />} />
-        <Route path=":username" element={<Profile />} />
+        <Route path="/new-blog" element={<NewBlog />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/my-blogs" element={<MyBlogs />} />
+        <Route path="/:username" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/blogs/:username/:_id" element={<BlogDetail />} />

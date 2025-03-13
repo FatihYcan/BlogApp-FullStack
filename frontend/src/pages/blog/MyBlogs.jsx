@@ -11,9 +11,10 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserBlogCard from "../../components/blog/cards/UserBlogCard";
-import useCategoryCalls from "../../hooks/useCategoryCalls";
+import Typography from "@mui/material/Typography";
 import BlogCardSkeleton from "../../components/blog/cards/BlogCardSkeleton";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 export function Search({ handleSearch, searchMyBlog }) {
   return (
@@ -39,16 +40,13 @@ export function Search({ handleSearch, searchMyBlog }) {
 }
 
 export default function MyBlogs() {
-  const { getUserBlog } = useBlogCalls();
-  const { getCategories } = useCategoryCalls();
-
-  const { userBlogs, details, likes } = useSelector((state) => state.blog);
-  const { categories } = useSelector((state) => state.category);
-
+  const { getUserBlog, getAllUserBlog } = useBlogCalls();
+  const navigate = useNavigate();
+  const { userBlogs, details, likes, allUserBlogs } = useSelector(
+    (state) => state.blog
+  );
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-
   const { _id } = userInfo || {};
-
   const [page, setPage] = useState(1);
   const [selectedMyCategory, setSelectedMyCategory] = useState(
     sessionStorage.getItem("selectedMyCategory") || ""
@@ -77,7 +75,7 @@ export default function MyBlogs() {
   }, [selectedMyCategory, searchMyBlog]);
 
   const generateBlogsUrl = () => {
-    let url = `/blogs?page=${page}&limit=3&author=${_id}`;
+    let url = `/blogs?page=${page}&limit=1&author=${_id}`;
 
     if (selectedMyCategory) {
       url += `&filter[categoryId]=${selectedMyCategory}`;
@@ -91,8 +89,8 @@ export default function MyBlogs() {
   };
 
   useEffect(() => {
+    getAllUserBlog(`/blogs?author=${_id}`);
     getUserBlog(generateBlogsUrl());
-    getCategories("categories");
   }, [page, selectedMyCategory, likes, searchMyBlog]);
 
   const handleAllClick = () => {
@@ -124,6 +122,61 @@ export default function MyBlogs() {
     return () => clearTimeout(timer);
   }, []);
 
+  const uniqueCategories = [
+    ...new Set(allUserBlogs.map((blog) => JSON.stringify(blog.categoryId))),
+  ].map((str) => JSON.parse(str));
+
+  if (loading) {
+    return (
+      <Container maxWidth="xl" component="main" sx={{ mt: 16, mb: 8 }}>
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={2}
+          justifyContent="center"
+        >
+          {Array.from({ length: 6 }).map((_, index) => (
+            <BlogCardSkeleton key={index} />
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
+
+  if (userBlogs.length === 0) {
+    return (
+      <Container maxWidth="xl" component="main" sx={{ mt: 16, mb: 8 }}>
+        <Helmet>
+          <title>Blog App - My Blogs</title>
+        </Helmet>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "69vh",
+          }}
+        >
+          <Typography
+            variant="h4"
+            color="error"
+            align="center"
+            marginBottom={3}
+          >
+            You don't have a blog...
+          </Typography>
+          <button
+            onClick={() => navigate("/new-blog")}
+            className="bg-green-600 text-white font-medium py-2 px-2 rounded-md mt-4 w-1/3"
+          >
+            Write Blog
+          </button>
+        </Box>
+      </Container>
+    );
+  }
+
   return (
     <Container
       maxWidth="xl"
@@ -135,6 +188,7 @@ export default function MyBlogs() {
         <title>Blog App - My Blogs</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
+
       <Box
         sx={{
           display: "flex",
@@ -152,7 +206,7 @@ export default function MyBlogs() {
             overflow: "auto",
           }}
         >
-          <Search handleSearch={handleSearch} searchBlog={searchMyBlog} />
+          <Search handleSearch={handleSearch} searchMyBlog={searchMyBlog} />
         </Box>
         <Box
           sx={{
@@ -184,7 +238,7 @@ export default function MyBlogs() {
               All categories
             </button>
 
-            {categories.map((category) => (
+            {uniqueCategories.map((category) => (
               <button
                 key={category._id}
                 className={`${
@@ -207,7 +261,7 @@ export default function MyBlogs() {
               overflow: "auto",
             }}
           >
-            <Search handleSearch={handleSearch} searchBlog={searchMyBlog} />
+            <Search handleSearch={handleSearch} searchMyBlog={searchMyBlog} />
           </Box>
         </Box>
         <Grid
@@ -216,13 +270,9 @@ export default function MyBlogs() {
           columnSpacing={2}
           justifyContent="center"
         >
-          {loading
-            ? Array.from({ length: 6 }).map((_, index) => (
-                <BlogCardSkeleton key={index} />
-              ))
-            : userBlogs.map((userBlog) => (
-                <UserBlogCard key={userBlog._id} {...userBlog} page={page} />
-              ))}
+          {userBlogs.map((userBlog) => (
+            <UserBlogCard key={userBlog._id} {...userBlog} page={page} />
+          ))}
         </Grid>
 
         <div>

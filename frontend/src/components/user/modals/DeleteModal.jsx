@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useNavigate, useParams } from "react-router-dom";
+import useUserCalls from "../../../hooks/useUserCalls";
 
 const style = {
   position: "absolute",
@@ -21,11 +21,12 @@ const style = {
 export default function DeleteModal({ deleteOpen, handleDeleteClose }) {
   const { _id } = useParams();
   const navigate = useNavigate();
-  const { deleteUser } = useBlogCalls();
+  const { deleteUser } = useUserCalls();
 
-  const handleDeleteUser = () => {
-    deleteUser(_id);
-    navigate(-1);
+  const handleDeleteUser = async () => {
+    await deleteUser(_id);
+    sessionStorage.removeItem("searchUser");
+    navigate("/users");
   };
 
   return (

@@ -5,6 +5,7 @@ import {
   getBlogViewSuccess,
   getSingleBlogSuccess,
   postBlogLikeSuccess,
+  getAllUserBlogSuccess,
   getUserBlogSuccess,
   fetchFail,
 } from "../features/blogSlice";
@@ -128,6 +129,17 @@ const useBlogCalls = () => {
     }
   };
 
+  const getAllUserBlog = async (url) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken(url);
+      const apiData = data.data;
+      dispatch(getAllUserBlogSuccess({ apiData }));
+    } catch (error) {
+      dispatch(fetchFail());
+    }
+  };
+
   const getUserBlog = async (url) => {
     dispatch(fetchStart());
     try {
@@ -215,6 +227,7 @@ const useBlogCalls = () => {
     putBlog,
     deleteBlog,
     postBlogLike,
+    getAllUserBlog,
     getUserBlog,
     postComment,
     putComment,

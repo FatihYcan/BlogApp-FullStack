@@ -3,8 +3,6 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import MuiCard from "@mui/material/Card";
-import { useEffect, useState } from "react";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import NewCategoryForm from "../../components/category/forms/NewCategoryForm";
 import { Helmet } from "react-helmet";
 
@@ -54,7 +52,13 @@ export default function NewCategory() {
     <Container
       maxWidth="xl"
       component="main"
-      sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        mt: 16,
+        gap: 4,
+        height: { xs: "80vh", sm: "70vh" },
+      }}
     >
       <Helmet>
         <meta charSet="utf-8" />
@@ -66,7 +70,7 @@ export default function NewCategory() {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+            sx={{ width: "100%", fontSize: "clamp(2rem, 8vw, 2.15rem)" }}
           >
             New Category
           </Typography>

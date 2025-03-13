@@ -57,7 +57,7 @@ export default function Users() {
   }, [searchUser]);
 
   const generateBlogsUrl = () => {
-    let url = `users?page=${page}&limit=2`;
+    let url = `users?page=${page}&limit=8`;
 
     if (searchUser) {
       url += `&search[username]=${searchUser}`;
@@ -83,7 +83,13 @@ export default function Users() {
     <Container
       maxWidth="xl"
       component="main"
-      sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        mt: 16,
+        mb: 8,
+        gap: 4,
+      }}
     >
       <Helmet>
         <meta charSet="utf-8" />
