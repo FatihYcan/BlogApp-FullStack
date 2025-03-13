@@ -26,11 +26,6 @@ export default function LoginModal({ loginOpen, handleCloseLogin }) {
   const { login } = useAuthCalls();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    sessionStorage.removeItem("selectedCategory");
-    sessionStorage.removeItem("searchBlog");
-  }, []);
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/register");

@@ -13,12 +13,12 @@ import { useEffect, useState } from "react";
 import UserBlogCard from "../../components/blog/cards/UserBlogCard";
 import useCategoryCalls from "../../hooks/useCategoryCalls";
 
-export function Search({ handleSearch, searchBlog }) {
+export function Search({ handleSearch, searchMyBlog }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "100%" } }} variant="outlined">
       <OutlinedInput
         onChange={handleSearch}
-        value={searchBlog}
+        value={searchMyBlog}
         size="small"
         id="search"
         placeholder="Search…"
@@ -48,40 +48,40 @@ export default function MyBlogs() {
   const { _id } = userInfo || {};
 
   const [page, setPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState(
+  const [selectedMyCategory, setSelectedMyCategory] = useState(
     sessionStorage.getItem("selectedMyCategory") || ""
   );
-  const [allSelected, setAllSelected] = useState(!selectedCategory);
-  const [searchBlog, setSearchBlog] = useState(
+  const [allSelected, setAllSelected] = useState(!selectedMyCategory);
+  const [searchMyBlog, setSearchMyBlog] = useState(
     sessionStorage.getItem("searchMyBlog") || ""
   );
 
   useEffect(() => {
-    if (selectedCategory) {
-      sessionStorage.setItem("selectedMyCategory", selectedCategory);
+    if (selectedMyCategory) {
+      sessionStorage.setItem("selectedMyCategory", selectedMyCategory);
     } else {
       sessionStorage.removeItem("selectedMyCategory");
     }
 
-    if (searchBlog) {
-      sessionStorage.setItem("searchMyBlog", searchBlog);
+    if (searchMyBlog) {
+      sessionStorage.setItem("searchMyBlog", searchMyBlog);
     } else {
       sessionStorage.removeItem("searchMyBlog");
     }
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
-  }, [selectedCategory, searchBlog]);
+  }, [selectedMyCategory, searchMyBlog]);
 
   const generateBlogsUrl = () => {
     let url = `/blogs?page=${page}&limit=3&author=${_id}`;
 
-    if (selectedCategory) {
-      url += `&filter[categoryId]=${selectedCategory}`;
+    if (selectedMyCategory) {
+      url += `&filter[categoryId]=${selectedMyCategory}`;
     }
 
-    if (searchBlog) {
-      url += `&search[title]=${searchBlog}&search[content]=${searchBlog}`;
+    if (searchMyBlog) {
+      url += `&search[title]=${searchMyBlog}&search[content]=${searchMyBlog}`;
     }
 
     return url;
@@ -90,16 +90,16 @@ export default function MyBlogs() {
   useEffect(() => {
     getUserBlog(generateBlogsUrl());
     getCategories("categories");
-  }, [page, selectedCategory, likes, searchBlog]);
+  }, [page, selectedMyCategory, likes, searchMyBlog]);
 
   const handleAllClick = () => {
     setPage(1);
-    setSelectedCategory("");
+    setSelectedMyCategory("");
     setAllSelected(true);
   };
 
   const handleClick = (id) => {
-    setSelectedCategory(id);
+    setSelectedMyCategory(id);
     setPage(1);
     setAllSelected(false);
   };
@@ -109,7 +109,7 @@ export default function MyBlogs() {
   };
 
   const handleSearch = (e) => {
-    setSearchBlog(e.target.value);
+    setSearchMyBlog(e.target.value);
     setPage(1);
   };
 
@@ -136,7 +136,7 @@ export default function MyBlogs() {
             overflow: "auto",
           }}
         >
-          <Search handleSearch={handleSearch} searchBlog={searchBlog} />
+          <Search handleSearch={handleSearch} searchBlog={searchMyBlog} />
         </Box>
         <Box
           sx={{
@@ -172,7 +172,7 @@ export default function MyBlogs() {
               <button
                 key={category._id}
                 className={`${
-                  selectedCategory === category._id
+                  selectedMyCategory === category._id
                     ? "bg-black text-white dark:bg-white dark:text-black"
                     : "text-black hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-black"
                 } rounded-full px-3 py-2 text-sm font-medium`}
@@ -191,7 +191,7 @@ export default function MyBlogs() {
               overflow: "auto",
             }}
           >
-            <Search handleSearch={handleSearch} searchBlog={searchBlog} />
+            <Search handleSearch={handleSearch} searchBlog={searchMyBlog} />
           </Box>
         </Box>
         <Grid
