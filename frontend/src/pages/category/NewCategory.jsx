@@ -6,6 +6,7 @@ import MuiCard from "@mui/material/Card";
 import { useEffect, useState } from "react";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import NewCategoryForm from "../../components/category/forms/NewCategoryForm";
+import { Helmet } from "react-helmet";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -49,13 +50,17 @@ const CategoryContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function NewCategory() {
-
   return (
     <Container
       maxWidth="xl"
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - New Category</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <CategoryContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography

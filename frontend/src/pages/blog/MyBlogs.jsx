@@ -12,6 +12,8 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import UserBlogCard from "../../components/blog/cards/UserBlogCard";
 import useCategoryCalls from "../../hooks/useCategoryCalls";
+import BlogCardSkeleton from "../../components/blog/cards/BlogCardSkeleton";
+import { Helmet } from "react-helmet";
 
 export function Search({ handleSearch, searchMyBlog }) {
   return (
@@ -55,6 +57,7 @@ export default function MyBlogs() {
   const [searchMyBlog, setSearchMyBlog] = useState(
     sessionStorage.getItem("searchMyBlog") || ""
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (selectedMyCategory) {
@@ -113,12 +116,25 @@ export default function MyBlogs() {
     setPage(1);
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Container
       maxWidth="xl"
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - My Blogs</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Box
         sx={{
           display: "flex",
@@ -200,9 +216,13 @@ export default function MyBlogs() {
           columnSpacing={2}
           justifyContent="center"
         >
-          {userBlogs.map((userBlog) => (
-            <UserBlogCard key={userBlog._id} {...userBlog} page={page} />
-          ))}
+          {loading
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <BlogCardSkeleton key={index} />
+              ))
+            : userBlogs.map((userBlog) => (
+                <UserBlogCard key={userBlog._id} {...userBlog} page={page} />
+              ))}
         </Grid>
 
         <div>

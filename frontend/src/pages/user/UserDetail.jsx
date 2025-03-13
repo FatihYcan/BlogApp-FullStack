@@ -15,6 +15,7 @@ import avatar from "../../assets/icons/avatar.png";
 import DeleteModal from "../../components/user/modals/DeleteModal";
 import UpdateModal from "../../components/user/modals/UpdateModal";
 import useUserCalls from "../../hooks/useUserCalls";
+import { Helmet } from "react-helmet";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -89,6 +90,11 @@ export default function UserDetail() {
         gap: 4,
       }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Blog App${username ? " - " + username : ""}`}</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <CardMedia
         component="img"
         alt={username}

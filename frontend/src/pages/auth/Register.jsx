@@ -12,6 +12,7 @@ import RegisterForm, {
   RegisterSchema,
 } from "../../components/auth/RegisterForm";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -69,6 +70,11 @@ export default function Register() {
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - Register</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography

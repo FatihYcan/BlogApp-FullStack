@@ -36,7 +36,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export default function Navbar() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const { myUser } = useSelector((state) => state.blog);
+  const { myUser } = useSelector((state) => state.user);
 
   const { logout } = useAuthCalls();
   const location = useLocation();

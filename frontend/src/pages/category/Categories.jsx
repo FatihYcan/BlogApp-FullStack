@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import CategoryCard from "../../components/category/cards/CategoryCard";
 import useCategoryCalls from "../../hooks/useCategoryCalls";
+import { Helmet } from "react-helmet";
 
 export default function Categories() {
   const { categories } = useSelector((state) => state.category);
@@ -32,6 +33,11 @@ export default function Categories() {
         minHeight: "60vh",
       }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - Categories</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Box
         sx={{
           display: "flex",

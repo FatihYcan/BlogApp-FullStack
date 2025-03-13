@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import UserCard from "../../components/user/cards/UserCard";
 import useUserCalls from "../../hooks/useUserCalls";
+import { Helmet } from "react-helmet";
 
 export function Search({ handleSearch, searchUser }) {
   return (
@@ -84,6 +85,11 @@ export default function Users() {
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - Users</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Box
         sx={{
           display: "flex",

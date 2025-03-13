@@ -22,6 +22,7 @@ import LoginModal from "../../components/blog/modals/LoginModal";
 import "../../assets/styles/editorStyles.css";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
+import { Helmet } from "react-helmet";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -116,6 +117,11 @@ export default function BlogDetail() {
         gap: 4,
       }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Blog App${title ? " - " + title : ""}`}</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <CardMedia
         component="img"
         alt={title}

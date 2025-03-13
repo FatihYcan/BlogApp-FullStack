@@ -18,6 +18,7 @@ import LikeModal from "../../components/blog/modals/LikeModal";
 import avatar from "../../assets/icons/avatar.png";
 import DeleteModal from "../../components/blog/modals/DeleteModal";
 import UpdateModal from "../../components/blog/modals/UpdateModal";
+import { Helmet } from "react-helmet";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -106,6 +107,11 @@ export default function MyBlogDetail() {
         gap: 4,
       }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Blog App${title ? " - " + title : ""}`}</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <CardMedia
         component="img"
         alt={title}

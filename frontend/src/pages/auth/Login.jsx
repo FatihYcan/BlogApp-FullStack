@@ -9,6 +9,7 @@ import useAuthCalls from "../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import LoginForm, { loginSchema } from "../../components/auth/LoginForm";
+import { Helmet } from "react-helmet";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -61,6 +62,11 @@ export default function Login() {
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - Login</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography

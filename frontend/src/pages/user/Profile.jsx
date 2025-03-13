@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProfileCard from "../../components/user/cards/ProfileCard";
 import useUserCalls from "../../hooks/useUserCalls";
+import { Helmet } from "react-helmet";
 
 export default function Profile() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -28,6 +29,13 @@ export default function Profile() {
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Blog App${
+          singleUser?.username ? " - " + singleUser.username : ""
+        }`}</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Box
         sx={{
           display: "flex",

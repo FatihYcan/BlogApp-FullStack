@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import MuiCard from "@mui/material/Card";
 import NewBlogForm from "../../components/blog/forms/NewBlogForm";
+import { Helmet } from "react-helmet";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -53,6 +54,11 @@ export default function NewBlog() {
       component="main"
       sx={{ display: "flex", flexDirection: "column", mt: 16, gap: 4 }}
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blog App - New Blog</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <CategoryContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography
