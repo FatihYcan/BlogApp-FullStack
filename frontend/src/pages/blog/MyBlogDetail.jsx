@@ -162,9 +162,12 @@ export default function MyBlogDetail() {
         <Typography gutterBottom variant="h6" component="div">
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {content}
-        </Typography>
+        <Typography
+          component="div"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: content }}
+          className="editor-content"
+        />
       </SyledCardContent>
 
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
