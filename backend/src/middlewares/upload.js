@@ -1,14 +1,29 @@
-"use strict"
+"use strict";
 
 /* --- BLOG API UPLOAD --- */
 
-const multer = require("multer")
+const multer = require("multer");
 const path = require("path");
+
+const fixFileName = (fileName) => {
+    return Buffer.from(fileName, "latin1").toString("utf8")
+        .replace(/Ä/g, "ğ")
+        .replace(/Ä±/g, "ı")
+        .replace(/Ã¼/gi, "ü")
+        .replace(/Ã§/gi, "ç")
+        .replace(/Ã¶/gi, "ö")
+        .replace(/Å/gi, "ş")
+        .replace(/Ä°/g, "İ")
+        .replace(/Ã/g, "Ö")
+        .replace(/Ã/g, "Ç")
+        .replace(/Ãœ/gi, "Ü");
+};
 
 const blogStorage = multer.diskStorage({
     destination: "./uploads/blog",
     filename: (req, file, callback) => {
-        callback(null, Date.now() + "-" + file.originalname);
+        const fixedName = fixFileName(file.originalname);
+        callback(null, Date.now() + "-" + fixedName);
     }
 });
 
@@ -29,7 +44,8 @@ const blogUpload = multer({
 const userStorage = multer.diskStorage({
     destination: "./uploads/user",
     filename: (req, file, callback) => {
-        callback(null, Date.now() + "-" + file.originalname);
+        const fixedName = fixFileName(file.originalname);
+        callback(null, Date.now() + "-" + fixedName);
     }
 });
 

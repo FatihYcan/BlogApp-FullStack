@@ -1,80 +1,117 @@
-.editor-content {
-  h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-  }
+/* Başlık Stilleri */
+.editor-content h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
 
-  h2 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 0.65rem;
-  }
+.editor-content h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
 
-  h3 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 0.55rem;
-  }
+.editor-content h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.55rem;
+}
 
-  h4 {
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 0.45rem;
-  }
+.editor-content h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+}
 
-  h5 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 0.35rem;
-  }
+.editor-content h5 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
 
-  h6 {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-bottom: 0.25rem;
-  }
+.editor-content h6 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
 
-  strong {
-    font-weight: 600;
-  }
+/* Metin Stilleri */
+.editor-content strong {
+  font-weight: 600;
+}
 
-  u {
-    text-decoration: underline;
-  }
+.editor-content u {
+  text-decoration: underline;
+}
 
-  ol {
-    padding-left: 1.5rem;
-    list-style-type: decimal;
-    margin-bottom: 1rem;
-  }
+/* Listeler */
+.editor-content ol,
+.editor-content ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
 
-  li {
-    margin-bottom: 0.5rem;
-  }
+.editor-content li {
+  margin-bottom: 0.5rem;
+}
 
-  .ql-align-right {
-    text-align: right;
-  }
+/* Ordered List (Numaralı Liste) */
+.editor-content li[data-list="ordered"] {
+  list-style-type: none;
+  counter-increment: ordered-list-counter;
+}
 
-  .ql-align-center {
-    text-align: center;
-  }
+.editor-content li[data-list="ordered"]::before {
+  content: counter(ordered-list-counter) ".";
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
 
-  .ql-align-justify {
-    text-align: justify;
-  }
+/* Bullet List (Madde İşaretli Liste) */
+.editor-content li[data-list="bullet"] {
+  list-style-type: disc;
+}
 
-  .ql-align-left {
-    text-align: left;
-  }
+/* Hizalamalar */
+.editor-content .ql-align-right {
+  text-align: right;
+}
 
-  [style^="color:"] {
-    font-weight: normal;
-  }
+.editor-content .ql-align-center {
+  text-align: center;
+}
 
-  [style^="background:"] {
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
+.editor-content .ql-align-justify {
+  text-align: justify;
+}
+
+.editor-content .ql-align-left {
+  text-align: left;
+}
+
+/* Liste İşaretlerini Hizala */
+.editor-content .ql-align-right li,
+.editor-content .ql-align-center li,
+.editor-content .ql-align-justify li,
+.editor-content .ql-align-left li {
+  display: flex;
+  align-items: center;
+}
+
+.editor-content .ql-align-right li::before,
+.editor-content .ql-align-center li::before,
+.editor-content .ql-align-justify li::before,
+.editor-content .ql-align-left li::before {
+  margin-right: 0.5rem;
+}
+
+/* Renkli Metinler */
+.editor-content [style^="color:"] {
+  font-weight: normal;
+}
+
+/* Arka Plan Renkleri */
+.editor-content [style^="background:"] {
+  padding: 2px 5px;
+  border-radius: 3px;
 }

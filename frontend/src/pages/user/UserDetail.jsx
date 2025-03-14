@@ -112,7 +112,7 @@ export default function UserDetail() {
       />
       <SyledCardContent>
         <Typography gutterBottom variant="h6" component="div">
-          {username}
+        {username.charAt(0).toUpperCase() + username.slice(1)}
         </Typography>
         <StyledTypography variant="body2" color="text.secondary" gutterBottom>
           {fullName}

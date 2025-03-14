@@ -3,9 +3,9 @@ import "react-quill-new/dist/quill.snow.css";
 
 const TextEditor = ({ value, onChange, isContent }) => {
   const toolbarOptions = [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ header: [1, 2, 3, 4, 5, 6] }],
     ["bold", "italic", "underline"],
-    [{ list: "ordered" }],
+    [{ list: "ordered" }, { list: "bullet" }],
     [{ align: [] }],
     [{ color: [] }, { background: [] }],
   ];

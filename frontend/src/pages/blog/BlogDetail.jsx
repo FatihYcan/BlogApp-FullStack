@@ -164,7 +164,12 @@ export default function BlogDetail() {
               sx={{ width: 30, height: 30 }}
             />
           </AvatarGroup>
-          <Typography variant="caption">{userId?.username}</Typography>
+          <Typography variant="caption">
+            <Typography variant="caption">
+              {userId.username.charAt(0).toUpperCase() +
+                userId.username.slice(1)}
+            </Typography>
+          </Typography>
         </Box>
         <Typography variant="caption">
           {new Date(createdAt).toLocaleDateString("tr-TR")}
@@ -187,19 +192,39 @@ export default function BlogDetail() {
       </SyledCardContent>
 
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
-        {blogImage.map((image, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6 }}>
-            <CardMedia
-              component="img"
-              alt={`${title} image ${index + 1}`}
-              image={`http://127.0.0.1:8000${image}`}
-              sx={{
-                aspectRatio: "16 / 9",
-                objectFit: "initial",
-              }}
-            />
-          </Grid>
-        ))}
+        {blogImage.map((image, index) => {
+          const decoder = new TextDecoder("utf-8");
+          const fixedString = decoder.decode(new TextEncoder().encode(image));
+
+          const fileName = fixedString
+            .split("/")
+            .pop()
+            .split(".")[0]
+            .replace(/^\d+-/, "")
+            .split(/[-\s]+/)
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" - ");
+
+          return (
+            <Grid key={index} size={{ xs: 12, sm: 6 }}>
+              <CardMedia
+                component="img"
+                alt={`${title} image ${index + 1}`}
+                image={`http://127.0.0.1:8000${image}`}
+                sx={{
+                  aspectRatio: "16 / 9",
+                  objectFit: "initial",
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={{ textAlign: "center", display: "block", mt: 1 }}
+              >
+                {fileName}
+              </Typography>
+            </Grid>
+          );
+        })}
       </Grid>
 
       <Box

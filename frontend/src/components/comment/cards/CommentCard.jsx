@@ -139,7 +139,8 @@ export default function CommentCard({
               sx={{ width: 30, height: 30, mr: 2 }}
             />
             <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
-              {userId?.username}
+              {userId.username.charAt(0).toUpperCase() +
+                userId.username.slice(1)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {getTimeDifference(new Date(), new Date(createdAt))}

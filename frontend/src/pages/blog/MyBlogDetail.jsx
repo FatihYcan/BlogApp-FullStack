@@ -19,6 +19,8 @@ import avatar from "../../assets/icons/avatar.png";
 import DeleteMyModal from "../../components/blog/modals/DeleteMyModal";
 import UpdateModal from "../../components/blog/modals/UpdateModal";
 import { Helmet } from "react-helmet";
+import CommentForm from "../../components/comment/forms/CommentForm";
+import CommentCard from "../../components/comment/cards/CommentCard";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -42,6 +44,11 @@ export default function MyBlogDetail() {
   const handleClose = () => setOpen(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const handleUpdateClose = () => setUpdateOpen(false);
+  const [commentOpen, setCommentOpen] = useState(false);
+  const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
+  const [isReplyCardId, setIsReplyCardId] = useState("");
+  const [openMenu, setOpenMenu] = useState("");
+  const [editComment, setEditComment] = useState("");
 
   const { username } = userInfo || {};
 
@@ -154,7 +161,7 @@ export default function MyBlogDetail() {
               sx={{ width: 30, height: 30 }}
             />
           </AvatarGroup>
-          <Typography variant="caption">{userId?.username}</Typography>
+          {userId.username.charAt(0).toUpperCase() + userId.username.slice(1)}
         </Box>
         <Typography variant="caption">
           {new Date(createdAt).toLocaleDateString("tr-TR")}
@@ -177,19 +184,39 @@ export default function MyBlogDetail() {
       </SyledCardContent>
 
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
-        {blogImage.map((image, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6 }}>
-            <CardMedia
-              component="img"
-              alt={`${title} image ${index + 1}`}
-              image={`http://127.0.0.1:8000${image}`}
-              sx={{
-                aspectRatio: "16 / 9",
-                objectFit: "initial",
-              }}
-            />
-          </Grid>
-        ))}
+        {blogImage.map((image, index) => {
+          const decoder = new TextDecoder("utf-8");
+          const fixedString = decoder.decode(new TextEncoder().encode(image));
+
+          const fileName = fixedString
+            .split("/")
+            .pop()
+            .split(".")[0]
+            .replace(/^\d+-/, "")
+            .split(/[-\s]+/)
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" - ");
+
+          return (
+            <Grid key={index} size={{ xs: 12, sm: 6 }}>
+              <CardMedia
+                component="img"
+                alt={`${title} image ${index + 1}`}
+                image={`http://127.0.0.1:8000${image}`}
+                sx={{
+                  aspectRatio: "16 / 9",
+                  objectFit: "initial",
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={{ textAlign: "center", display: "block", mt: 1 }}
+              >
+                {fileName}
+              </Typography>
+            </Grid>
+          );
+        })}
       </Grid>
 
       <Box
@@ -237,7 +264,7 @@ export default function MyBlogDetail() {
             height: "50px",
           }}
         >
-          <ChatBubbleOutlineIcon />
+          <ChatBubbleOutlineIcon onClick={() => setCommentOpen(!commentOpen)} />
           {comments?.length > 0 && (
             <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
               {comments.length}
@@ -261,6 +288,27 @@ export default function MyBlogDetail() {
           )}
         </Box>
       </Box>
+
+      {commentOpen && (
+        <>
+          <CommentForm />
+
+          {comments?.map((item) => (
+            <CommentCard
+              key={item._id}
+              {...item}
+              seeAnswersCardId={seeAnswersCardId}
+              setSeeAnswersCardId={setSeeAnswersCardId}
+              isReplyCardId={isReplyCardId}
+              setIsReplyCardId={setIsReplyCardId}
+              openMenu={openMenu}
+              setOpenMenu={setOpenMenu}
+              editComment={editComment}
+              setEditComment={setEditComment}
+            />
+          ))}
+        </>
+      )}
 
       <Box my={2} display="flex" justifyContent="center" gap={2}>
         <button

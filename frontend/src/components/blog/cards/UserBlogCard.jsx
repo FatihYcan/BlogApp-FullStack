@@ -207,7 +207,10 @@ export default function UserBlogCard({
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>
-            <Typography variant="caption">{userId.username}</Typography>
+            <Typography variant="caption">
+              {userId.username.charAt(0).toUpperCase() +
+                userId.username.slice(1)}
+            </Typography>
           </Box>
           <Typography variant="caption">
             {new Date(createdAt).toLocaleDateString("tr-TR")}
