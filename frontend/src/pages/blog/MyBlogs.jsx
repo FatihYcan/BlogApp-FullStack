@@ -75,7 +75,7 @@ export default function MyBlogs() {
   }, [selectedMyCategory, searchMyBlog]);
 
   const generateBlogsUrl = () => {
-    let url = `/blogs?page=${page}&limit=1&author=${_id}`;
+    let url = `/blogs?page=${page}&limit=6&author=${_id}`;
 
     if (selectedMyCategory) {
       url += `&filter[categoryId]=${selectedMyCategory}`;

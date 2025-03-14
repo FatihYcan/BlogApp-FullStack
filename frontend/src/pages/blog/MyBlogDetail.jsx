@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeModal from "../../components/blog/modals/LikeModal";
 import avatar from "../../assets/icons/avatar.png";
-import DeleteModal from "../../components/blog/modals/DeleteModal";
+import DeleteMyModal from "../../components/blog/modals/DeleteMyModal";
 import UpdateModal from "../../components/blog/modals/UpdateModal";
 import { Helmet } from "react-helmet";
 
@@ -284,7 +284,7 @@ export default function MyBlogDetail() {
         setData={setData}
         data={data}
       />
-      <DeleteModal
+      <DeleteMyModal
         deleteOpen={deleteOpen}
         handleDeleteClose={handleDeleteClose}
       />

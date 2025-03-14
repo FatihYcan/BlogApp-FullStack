@@ -18,16 +18,16 @@ const style = {
   overflowY: "auto",
 };
 
-export default function DeleteModal({ deleteOpen, handleDeleteClose }) {
+export default function DeleteMyModal({ deleteOpen, handleDeleteClose }) {
   const { _id } = useParams();
   const navigate = useNavigate();
   const { deleteBlog } = useBlogCalls();
 
   const handleDeleteBlog = async () => {
     await deleteBlog(_id);
-    sessionStorage.removeItem("selectedCategory");
-    sessionStorage.removeItem("searchBlog");
-    navigate("/");
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
+    navigate("/my-blogs");
   };
 
   return (
