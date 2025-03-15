@@ -23,6 +23,7 @@ import "../../assets/styles/editorStyles.css";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import { Helmet } from "react-helmet";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -122,233 +123,261 @@ export default function BlogDetail() {
         <title>{`Blog App${title ? " - " + title : ""}`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      <CardMedia
-        component="img"
-        alt={title}
-        image={`http://127.0.0.1:8000${blogImage[0]}`}
-        sx={{
-          width: "80%",
-          margin: "auto",
-          aspectRatio: "16 / 9",
-          objectFit: "initial",
-        }}
-      />
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 2,
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px",
-        }}
-      >
+      {!singleBlog || Object.keys(singleBlog).length === 0 ? (
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: 1,
+            justifyContent: "center",
             alignItems: "center",
+            height: "100vh",
           }}
         >
-          <AvatarGroup>
-            <Avatar
-              key={userId?._id}
-              alt={userId?.username}
-              src={
-                userId?.image && userId.image.length > 0
-                  ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
-                  : avatar
-              }
-              sx={{ width: 30, height: 30 }}
-            />
-          </AvatarGroup>
-          <Typography variant="caption">
-            <Typography variant="caption">
-              {userId.username.charAt(0).toUpperCase() +
-                userId.username.slice(1)}
-            </Typography>
-          </Typography>
+          <CircularProgress />
         </Box>
-        <Typography variant="caption">
-          {new Date(createdAt).toLocaleDateString("tr-TR")}
-        </Typography>
-      </Box>
-
-      <SyledCardContent>
-        <Typography gutterBottom variant="caption" component="div">
-          {categoryId?.name}
-        </Typography>
-        <Typography gutterBottom variant="h6" component="div">
-          {title}
-        </Typography>
-        <Typography
-          component="div"
-          gutterBottom
-          dangerouslySetInnerHTML={{ __html: content }}
-          className="editor-content"
-        />
-      </SyledCardContent>
-
-      <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
-        {blogImage.map((image, index) => {
-          const decoder = new TextDecoder("utf-8");
-          const fixedString = decoder.decode(new TextEncoder().encode(image));
-
-          const fileName = fixedString
-            .split("/")
-            .pop()
-            .split(".")[0]
-            .replace(/^\d+-/, "")
-            .split(/[-\s]+/)
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" - ");
-
-          return (
-            <Grid key={index} size={{ xs: 12, sm: 6 }}>
-              <CardMedia
-                component="img"
-                alt={`${title} image ${index + 1}`}
-                image={`http://127.0.0.1:8000${image}`}
-                sx={{
-                  aspectRatio: "16 / 9",
-                  objectFit: "initial",
-                }}
-              />
-              <Typography
-                variant="caption"
-                sx={{ textAlign: "center", display: "block", mt: 1 }}
-              >
-                {fileName}
-              </Typography>
-            </Grid>
-          );
-        })}
-      </Grid>
-
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          height: "50px",
-          alignItems: "center",
-          justifyContent: "space-evenly",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            width: "50px",
-            height: "50px",
-          }}
-        >
-          <FavoriteIcon
-            color={isLiked ? "error" : "inherit"}
-            sx={{ cursor: "pointer" }}
-            onClick={handleLike}
+      ) : (
+        <>
+          <CardMedia
+            component="img"
+            alt={title}
+            image={`http://127.0.0.1:8000${blogImage[0]}`}
+            sx={{
+              width: "80%",
+              margin: "auto",
+              aspectRatio: "16 / 9",
+              objectFit: "initial",
+            }}
           />
 
-          {likes?.length > 0 && (
-            <span
-              style={{
-                fontSize: "1.2rem",
-                marginLeft: "2px",
-                cursor: "pointer",
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "16px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 1,
+                alignItems: "center",
               }}
-              onClick={handleOpen}
             >
-              {likes.length}
-            </span>
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            width: "50px",
-            height: "50px",
-          }}
-        >
-          <ChatBubbleOutlineIcon onClick={() => setCommentOpen(!commentOpen)} />
-          {comments?.length > 0 && (
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {comments.length}
-            </span>
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "default",
-            width: "50px",
-            height: "50px",
-          }}
-        >
-          <VisibilityOutlinedIcon />
-          {views?.length > 0 && (
-            <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-              {views.length}
-            </span>
-          )}
-        </Box>
-      </Box>
+              <AvatarGroup>
+                <Avatar
+                  key={userId?._id}
+                  alt={userId?.username}
+                  src={
+                    userId?.image && userId.image.length > 0
+                      ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
+                      : avatar
+                  }
+                  sx={{ width: 30, height: 30 }}
+                />
+              </AvatarGroup>
+              <Typography variant="caption">
+                <Typography variant="caption">
+                  {userId?.username.charAt(0).toUpperCase() +
+                    userId?.username.slice(1)}
+                </Typography>
+              </Typography>
+            </Box>
+            <Typography variant="caption">
+              {new Date(createdAt).toLocaleDateString("tr-TR")}
+            </Typography>
+          </Box>
 
-      {commentOpen && (
-        <>
-          <CommentForm />
-
-          {comments?.map((item) => (
-            <CommentCard
-              key={item._id}
-              {...item}
-              seeAnswersCardId={seeAnswersCardId}
-              setSeeAnswersCardId={setSeeAnswersCardId}
-              isReplyCardId={isReplyCardId}
-              setIsReplyCardId={setIsReplyCardId}
-              openMenu={openMenu}
-              setOpenMenu={setOpenMenu}
-              editComment={editComment}
-              setEditComment={setEditComment}
+          <SyledCardContent>
+            <Typography gutterBottom variant="caption" component="div">
+              {categoryId?.name}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {title}
+            </Typography>
+            <Typography
+              component="div"
+              gutterBottom
+              dangerouslySetInnerHTML={{ __html: content }}
+              className="editor-content"
             />
-          ))}
+          </SyledCardContent>
+
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={2}
+            justifyContent="center"
+          >
+            {blogImage.map((image, index) => {
+              const decoder = new TextDecoder("utf-8");
+              const fixedString = decoder.decode(
+                new TextEncoder().encode(image)
+              );
+
+              const fileName = fixedString
+                .split("/")
+                .pop()
+                .split(".")[0]
+                .replace(/^\d+-/, "")
+                .split(/[-\s]+/)
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" - ");
+
+              return (
+                <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                  <CardMedia
+                    component="img"
+                    alt={`${title} image ${index + 1}`}
+                    image={`http://127.0.0.1:8000${image}`}
+                    sx={{
+                      aspectRatio: "16 / 9",
+                      objectFit: "initial",
+                    }}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{ textAlign: "center", display: "block", mt: 1 }}
+                  >
+                    {fileName}
+                  </Typography>
+                </Grid>
+              );
+            })}
+          </Grid>
+
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              height: "50px",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "50px",
+                height: "50px",
+              }}
+            >
+              <FavoriteIcon
+                color={isLiked ? "error" : "inherit"}
+                sx={{ cursor: "pointer" }}
+                onClick={handleLike}
+              />
+
+              {likes && likes.length > 0 && (
+                <span
+                  style={{
+                    fontSize: "1.2rem",
+                    marginLeft: "2px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleOpen}
+                >
+                  {likes.length}
+                </span>
+              )}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                width: "50px",
+                height: "50px",
+              }}
+            >
+              <ChatBubbleOutlineIcon
+                onClick={() => setCommentOpen(!commentOpen)}
+              />
+              {comments && comments.length > 0 && (
+                <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                  {comments.length}
+                </span>
+              )}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "default",
+                width: "50px",
+                height: "50px",
+              }}
+            >
+              <VisibilityOutlinedIcon />
+              {views && views.length > 0 && (
+                <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                  {views.length}
+                </span>
+              )}
+            </Box>
+          </Box>
+
+          {commentOpen && (
+            <>
+              <CommentForm />
+
+              {comments?.map((item) => (
+                <CommentCard
+                  key={item._id}
+                  {...item}
+                  seeAnswersCardId={seeAnswersCardId}
+                  setSeeAnswersCardId={setSeeAnswersCardId}
+                  isReplyCardId={isReplyCardId}
+                  setIsReplyCardId={setIsReplyCardId}
+                  openMenu={openMenu}
+                  setOpenMenu={setOpenMenu}
+                  editComment={editComment}
+                  setEditComment={setEditComment}
+                />
+              ))}
+            </>
+          )}
+
+          {username === userId?.username && (
+            <Box my={2} display="flex" justifyContent="center" gap={2}>
+              <button
+                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+                onClick={handleUpdateOpen}
+              >
+                Update Blog
+              </button>
+
+              <button
+                className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
+                onClick={handleDeleteOpen}
+              >
+                Delete Blog
+              </button>
+            </Box>
+          )}
+
+          <LikeModal open={open} handleClose={handleClose} likes={likes} />
+          <LoginModal
+            loginOpen={loginOpen}
+            handleCloseLogin={handleCloseLogin}
+          />
+
+          <UpdateModal
+            updateOpen={updateOpen}
+            handleUpdateClose={handleUpdateClose}
+            setData={setData}
+            data={data}
+          />
+          <DeleteModal
+            deleteOpen={deleteOpen}
+            handleDeleteClose={handleDeleteClose}
+          />
         </>
       )}
-
-      {username === userId?.username && (
-        <Box my={2} display="flex" justifyContent="center" gap={2}>
-          <button
-            className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
-            onClick={handleUpdateOpen}
-          >
-            Update Blog
-          </button>
-
-          <button
-            className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
-            onClick={handleDeleteOpen}
-          >
-            Delete Blog
-          </button>
-        </Box>
-      )}
-
-      <LikeModal open={open} handleClose={handleClose} likes={likes} />
-      <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
-
-      <UpdateModal
-        updateOpen={updateOpen}
-        handleUpdateClose={handleUpdateClose}
-        setData={setData}
-        data={data}
-      />
-      <DeleteModal
-        deleteOpen={deleteOpen}
-        handleDeleteClose={handleDeleteClose}
-      />
     </Container>
   );
 }

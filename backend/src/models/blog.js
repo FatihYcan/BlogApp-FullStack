@@ -1,16 +1,27 @@
-"use strict"
+"use strict";
 
 /* --- BLOG API blog MODEL --- */
 
-const { mongoose } = require('../configs/dbConnection')
-const Like = require('./like')
-const View = require('./view')
+const { mongoose } = require("../configs/dbConnection");
+const Like = require("./like");
+const View = require("./view");
 
 //? Blog Model
-const blogSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+const blogSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
 
-    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true, index: true },
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+      index: true,
+    },
 
     title: { type: String, required: true, trim: true },
 
@@ -18,17 +29,20 @@ const blogSchema = new mongoose.Schema({
 
     images: [],
 
+    showFileName: { type: Boolean, default: true },
+
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: Like.modelName }],
-    
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-    
+
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+
     viewCount: { type: Number, default: 0 },
 
-    isPublish: { type: Boolean, default: true }
-},
-    { collection: 'blogs', timestamps: true })
+    isPublish: { type: Boolean, default: true },
+  },
+  { collection: "blogs", timestamps: true }
+);
 
 //? Blog Model Export
-module.exports = mongoose.model('Blog', blogSchema)
+module.exports = mongoose.model("Blog", blogSchema);
