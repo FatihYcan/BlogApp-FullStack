@@ -61,6 +61,7 @@ export default function BlogDetail() {
     content: singleBlog.content,
     isPublish: singleBlog.isPublish,
     images: singleBlog.images,
+    showFileName: singleBlog.showFileName,
     title: singleBlog.title,
   });
 
@@ -74,6 +75,7 @@ export default function BlogDetail() {
     content,
     createdAt,
     images,
+    showFileName,
     likes,
     title,
     userId,
@@ -86,6 +88,7 @@ export default function BlogDetail() {
       content: singleBlog.content,
       isPublish: singleBlog.isPublish,
       images: singleBlog.images,
+      showFileName: singleBlog.showFileName,
       title: singleBlog.title,
     });
     setUpdateOpen(true);
@@ -238,12 +241,14 @@ export default function BlogDetail() {
                       objectFit: "initial",
                     }}
                   />
-                  <Typography
-                    variant="caption"
-                    sx={{ textAlign: "center", display: "block", mt: 1 }}
-                  >
-                    {fileName}
-                  </Typography>
+                  {showFileName && (
+                    <Typography
+                      variant="caption"
+                      sx={{ textAlign: "center", display: "block", mt: 1 }}
+                    >
+                      {fileName}
+                    </Typography>
+                  )}
                 </Grid>
               );
             })}

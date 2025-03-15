@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 export default function NewBlogForm() {
-  const {  postBlog } = useBlogCalls();
-  const { getCategories,  } = useCategoryCalls();
+  const { postBlog } = useBlogCalls();
+  const { getCategories } = useCategoryCalls();
   const { categories } = useSelector((state) => state.category);
   const [formKey, setFormKey] = useState(0);
   const [isContent, setIsContent] = useState(false);
@@ -21,6 +21,7 @@ export default function NewBlogForm() {
     content: "",
     categoryId: "",
     images: [],
+    showFileName: true,
     isPublish: true,
   });
 
@@ -67,6 +68,8 @@ export default function NewBlogForm() {
       formData.append("images", data.images[i]);
     }
 
+    formData.append("showFileName", data.showFileName);
+
     formData.append("isPublish", data.isPublish);
 
     if (!data.content) {
@@ -81,6 +84,7 @@ export default function NewBlogForm() {
         content: "",
         categoryId: "",
         images: [],
+        showFileName: true,
         isPublish: true,
       });
 
@@ -180,6 +184,22 @@ export default function NewBlogForm() {
         <span className=" text-gray-500">
           {data.images.length ? "" : "En az 1 adet resim ekleyiniz."}
         </span>
+      </FormControl>
+
+      <FormControl fullWidth margin="dense">
+        <FormLabel htmlFor="showFileName">Show File Name</FormLabel>
+        <TextField
+          size="small"
+          id="showFileName"
+          select
+          name="showFileName"
+          required
+          value={data.showFileName}
+          onChange={handleChange}
+        >
+          <MenuItem value={true}>Yes</MenuItem>
+          <MenuItem value={false}>No</MenuItem>
+        </TextField>
       </FormControl>
 
       <FormControl fullWidth margin="dense">
