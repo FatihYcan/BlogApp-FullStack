@@ -3,6 +3,7 @@ import authReducer from "../features/authSlice";
 import blogReducer from "../features/blogSlice";
 import categoryReducer from "../features/categorySlice";
 import userReducer from "../features/userSlice";
+import contentReducer from "../features/contentSlice";
 import {
   persistStore,
   persistReducer,
@@ -29,6 +30,7 @@ const store = configureStore({
     blog: blogReducer,
     category: categoryReducer,
     user: userReducer,
+    content: contentReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
