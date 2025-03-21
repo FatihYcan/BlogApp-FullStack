@@ -128,7 +128,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
           id="categoryId"
           select
           name="categoryId"
-          value={data.categoryId}
+          value={categories.length > 0 ? data.categoryId : ""}
           onChange={handleChange}
         >
           {categories?.map((category) => (
@@ -213,8 +213,14 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
             onChange={handleImageChange}
           />
         </Box>
-        <span className=" text-gray-500">
-          {data?.images?.length ? "" : "En az 1 adet resim ekleyiniz."}
+        {!data.images.length && (
+          <span className="text-gray-500">En az 1 adet resim ekleyiniz</span>
+        )}
+        <span className="text-black font-bold">
+          Resmin altında açıklama çıkmasını istiyorsanız, 'Show File Name'
+          seçeneğini 'Yes' yapın. Açıklama formatı, resim isminize bağlıdır:
+          'Görsel - Adı' olması için 'Görsel-Adı' veya 'Görsel - Adı', 'Görsel
+          Adı' olması için 'Görsel Adı' olarak adlandırın.
         </span>
       </FormControl>
 

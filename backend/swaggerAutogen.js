@@ -34,11 +34,12 @@ const document = {
 	security: [{ Token: [] }, { Bearer: [] }],
 	definitions: {
 		// Models:
-		"User": require('./src/models/user').schema.obj,
-		"Category": require('./src/models/category').schema.obj,
 		"Blog": require('./src/models/blog').schema.obj,
-		"Comment": require('./src/models/comment').schema.obj,
 		"Bottom Comment": require('./src/models/bottomcomment').schema.obj,
+		"Category": require('./src/models/category').schema.obj,
+		"Comment": require('./src/models/comment').schema.obj,
+		"Content": require('./src/models/content').schema.obj,
+		"User": require('./src/models/user').schema.obj,
 	}
 }
 

@@ -36,14 +36,14 @@ module.exports = {
         /*
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Create Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "contents": ["65343222b67e9681f937f102", "65343222b67e9681f937f103"], "image": [], "isPublish": true } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": [], "isPublish": true } }
         */
 
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
-        if (req.file) {
-            req.body.image = "./uploads/blog/" + req.file.filename
+        if (req.files && req.files.length > 0) {
+            req.body.images = req.files.map(file => "./uploads/blog/" + file.filename);
         }
 
         const data = await Blog.create(req.body)
@@ -82,8 +82,8 @@ module.exports = {
     update: async (req, res) => {
         /*
             #swagger.tags = ["Blogs"]
-            #swagger.summary = "Create Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "contents": ["65343222b67e9681f937f102", "65343222b67e9681f937f103"], "image": [], "isPublish": true } }
+            #swagger.summary = "Update Blog"
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "content": "Blog Content 1", "image": [], "isPublish": true } }
         */
 
         //! Kullanıcı sadece kendi bloglarını günceleyebilir
@@ -92,18 +92,29 @@ module.exports = {
             customFilter = { userId: req.user._id }
         }
 
+        //! Mevcut blog resimlerini getir
+        const blog = await Blog.findOne({ _id: req.params.id }, { images: 1, _id: 0 })
+
+
         //! Eğer kullanıcı resim eklediyse
-        if (req.file) {
-            req.body.image = "./uploads/blog/" + req.file.filename;
+        if (req.files && req.files.length > 0) {
+            //! Eğer kullanıcı tüm resimleri silmişse ve farklı resim eklemişse, blog.images dizisini temizle
+            if (!req.body.images || req.body.images.length === 0) {
+                blog.images = []
+            }
+
+            //! Yeni resimleri ekle
+            for (let file of req.files) {
+                blog.images.push("./uploads/blog/" + file.filename)
+            }
         }
         //! Eğer kullanıcı resmi sildiyse
-        else if (req.body.image === "") {
-            req.body.image = []
+        else if (req.body.images && req.body.images.length > 0) {
+            blog.images = req.body.images
         }
-        //! Eğer kullanıcı resmi değiştirmediyse
-        else {
-            req.body.image = Blog.image;
-        }
+
+        //! Güncellenmiş resimleri req.body'ye ekle
+        req.body.images = blog.images
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })

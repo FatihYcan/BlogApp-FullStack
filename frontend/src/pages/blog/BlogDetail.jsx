@@ -19,13 +19,13 @@ import DeleteModal from "../../components/blog/modals/DeleteModal";
 import UpdateModal from "../../components/blog/modals/UpdateModal";
 import avatar from "../../assets/icons/avatar.png";
 import LoginModal from "../../components/blog/modals/LoginModal";
-import "../../assets/styles/editorStyles.css";
+import "../../assets/styles/detailStyles.css";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import { Helmet } from "react-helmet";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const SyledCardContent = styled(CardContent)({
+const StyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
   gap: 4,
@@ -53,16 +53,17 @@ export default function BlogDetail() {
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { username } = userInfo || {};
 
   const [data, setData] = useState({
-    categoryId: singleBlog.categoryId,
-    content: singleBlog.content,
-    isPublish: singleBlog.isPublish,
-    images: singleBlog.images,
-    showFileName: singleBlog.showFileName,
-    title: singleBlog.title,
+    categoryId: singleBlog?.categoryId,
+    content: singleBlog?.content,
+    isPublish: singleBlog?.isPublish,
+    images: singleBlog?.images,
+    showFileName: singleBlog?.showFileName,
+    title: singleBlog?.title,
   });
 
   useEffect(() => {
@@ -84,18 +85,18 @@ export default function BlogDetail() {
 
   const handleUpdateOpen = () => {
     setData({
-      categoryId: singleBlog.categoryId._id,
-      content: singleBlog.content,
-      isPublish: singleBlog.isPublish,
-      images: singleBlog.images,
-      showFileName: singleBlog.showFileName,
-      title: singleBlog.title,
+      categoryId: singleBlog?.categoryId?._id,
+      content: singleBlog?.content,
+      isPublish: singleBlog?.isPublish,
+      images: singleBlog?.images,
+      showFileName: singleBlog?.showFileName,
+      title: singleBlog?.title,
     });
     setUpdateOpen(true);
   };
 
   const blogImage = images?.map((image) => image.slice(1)) || [];
-  const isLiked = likes?.some((like) => like.userId.username === username);
+  const isLiked = likes?.some((like) => like.userId?.username === username);
 
   const handleLike = () => {
     if (username) {
@@ -108,6 +109,18 @@ export default function BlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const likesCount = likes?.length || 0;
+  const commentsCount = comments?.length || 0;
+  const viewsCount = views?.length || 0;
 
   return (
     <Container
@@ -127,7 +140,7 @@ export default function BlogDetail() {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 
-      {!singleBlog || Object.keys(singleBlog).length === 0 ? (
+      {loading || !singleBlog ? (
         <Box
           sx={{
             display: "flex",
@@ -183,20 +196,20 @@ export default function BlogDetail() {
                 />
               </AvatarGroup>
               <Typography variant="caption">
-                <Typography variant="caption">
-                  {userId?.username.charAt(0).toUpperCase() +
-                    userId?.username.slice(1)}
-                </Typography>
+                {userId?.username
+                  ? userId.username.charAt(0).toUpperCase() +
+                    userId.username.slice(1)
+                  : ""}
               </Typography>
             </Box>
             <Typography variant="caption">
-              {new Date(createdAt).toLocaleDateString("tr-TR")}
+              {createdAt ? new Date(createdAt).toLocaleDateString("tr-TR") : ""}
             </Typography>
           </Box>
 
-          <SyledCardContent>
+          <StyledCardContent>
             <Typography gutterBottom variant="caption" component="div">
-              {categoryId?.name}
+              {categoryId?.name || ""}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
               {title}
@@ -207,7 +220,7 @@ export default function BlogDetail() {
               dangerouslySetInnerHTML={{ __html: content }}
               className="editor-content"
             />
-          </SyledCardContent>
+          </StyledCardContent>
 
           <Grid
             container
@@ -215,20 +228,30 @@ export default function BlogDetail() {
             columnSpacing={2}
             justifyContent="center"
           >
-            {blogImage.map((image, index) => {
+            {blogImage?.map((image, index) => {
               const decoder = new TextDecoder("utf-8");
               const fixedString = decoder.decode(
                 new TextEncoder().encode(image)
               );
 
-              const fileName = fixedString
+              const rawFileName = fixedString
                 .split("/")
                 .pop()
                 .split(".")[0]
-                .replace(/^\d+-/, "")
-                .split(/[-\s]+/)
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" - ");
+                .replace(/^\d+-/, "");
+
+              const formatTitleCase = (str) =>
+                str
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ");
+
+              const fileName = rawFileName.includes("-")
+                ? rawFileName.split("-").map(formatTitleCase).join(" - ")
+                : formatTitleCase(rawFileName);
 
               return (
                 <Grid key={index} size={{ xs: 12, sm: 6 }}>
@@ -277,7 +300,7 @@ export default function BlogDetail() {
                 onClick={handleLike}
               />
 
-              {likes && likes.length > 0 && (
+              {likesCount > 0 && (
                 <span
                   style={{
                     fontSize: "1.2rem",
@@ -286,10 +309,11 @@ export default function BlogDetail() {
                   }}
                   onClick={handleOpen}
                 >
-                  {likes.length}
+                  {likesCount}
                 </span>
               )}
             </Box>
+
             <Box
               sx={{
                 display: "flex",
@@ -302,9 +326,9 @@ export default function BlogDetail() {
               <ChatBubbleOutlineIcon
                 onClick={() => setCommentOpen(!commentOpen)}
               />
-              {comments && comments.length > 0 && (
+              {commentsCount > 0 && (
                 <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {comments.length}
+                  {commentsCount}
                 </span>
               )}
             </Box>
@@ -318,9 +342,9 @@ export default function BlogDetail() {
               }}
             >
               <VisibilityOutlinedIcon />
-              {views && views.length > 0 && (
+              {viewsCount > 0 && (
                 <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {views.length}
+                  {viewsCount}
                 </span>
               )}
             </Box>
@@ -350,14 +374,14 @@ export default function BlogDetail() {
           {username === userId?.username && (
             <Box my={2} display="flex" justifyContent="center" gap={2}>
               <button
-                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+                className="bg-green-600 text-white font-medium py-2 px-2 rounded-md"
                 onClick={handleUpdateOpen}
               >
                 Update Blog
               </button>
 
               <button
-                className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
+                className="bg-red-600 text-white font-medium py-2 px-2 rounded-md"
                 onClick={handleDeleteOpen}
               >
                 Delete Blog

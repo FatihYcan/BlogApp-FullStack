@@ -49,16 +49,17 @@ export default function MyBlogDetail() {
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { username } = userInfo || {};
 
   const [data, setData] = useState({
-    categoryId: singleBlog.categoryId,
-    content: singleBlog.content,
-    isPublish: singleBlog.isPublish,
-    images: singleBlog.images,
-    showFileName: singleBlog.showFileName,
-    title: singleBlog.title,
+    categoryId: singleBlog?.categoryId || "",
+    content: singleBlog?.content || "",
+    isPublish: singleBlog?.isPublish || false,
+    images: singleBlog?.images || [],
+    showFileName: singleBlog?.showFileName || false,
+    title: singleBlog?.title || "",
   });
 
   useEffect(() => {
@@ -67,25 +68,25 @@ export default function MyBlogDetail() {
 
   const {
     categoryId,
-    comments,
-    content,
-    createdAt,
-    images,
-    showFileName,
-    likes,
-    title,
-    userId,
-    views,
-  } = singleBlog;
+    comments = [],
+    content = "",
+    createdAt = "",
+    images = [],
+    showFileName = true,
+    likes = [],
+    title = "",
+    userId = {},
+    views = [],
+  } = singleBlog || {};
 
   const handleUpdateOpen = () => {
     setData({
-      categoryId: singleBlog.categoryId._id,
-      content: singleBlog.content,
-      isPublish: singleBlog.isPublish,
-      images: singleBlog.images,
-      showFileName: singleBlog.showFileName,
-      title: singleBlog.title,
+      categoryId: singleBlog?.categoryId?._id || "",
+      content: singleBlog?.content || "",
+      isPublish: singleBlog?.isPublish || true,
+      images: singleBlog?.images || [],
+      showFileName: singleBlog?.showFileName || true,
+      title: singleBlog?.title || "",
     });
     setUpdateOpen(true);
   };
@@ -100,6 +101,18 @@ export default function MyBlogDetail() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const likesCount = likes?.length || 0;
+  const commentsCount = comments?.length || 0;
+  const viewsCount = views?.length || 0;
 
   return (
     <Container
@@ -118,7 +131,8 @@ export default function MyBlogDetail() {
         <title>{`Blog App${title ? " - " + title : ""}`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      {!singleBlog || Object.keys(singleBlog).length === 0 ? (
+
+      {loading || !singleBlog ? (
         <Box
           sx={{
             display: "flex",
@@ -175,19 +189,21 @@ export default function MyBlogDetail() {
               </AvatarGroup>
               <Typography variant="caption">
                 <Typography variant="caption">
-                  {userId?.username.charAt(0).toUpperCase() +
-                    userId?.username.slice(1)}
+                  {userId?.username
+                    ? userId.username.charAt(0).toUpperCase() +
+                      userId.username.slice(1)
+                    : ""}
                 </Typography>
               </Typography>
             </Box>
             <Typography variant="caption">
-              {new Date(createdAt).toLocaleDateString("tr-TR")}
+              {createdAt ? new Date(createdAt).toLocaleDateString("tr-TR") : ""}
             </Typography>
           </Box>
 
           <SyledCardContent>
             <Typography gutterBottom variant="caption" component="div">
-              {categoryId?.name}
+              {categoryId?.name || ""}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
               {title}
@@ -268,7 +284,7 @@ export default function MyBlogDetail() {
                 onClick={handleLike}
               />
 
-              {likes && likes.length > 0 && (
+              {likesCount > 0 && (
                 <span
                   style={{
                     fontSize: "1.2rem",
@@ -277,7 +293,7 @@ export default function MyBlogDetail() {
                   }}
                   onClick={handleOpen}
                 >
-                  {likes.length}
+                  {likesCount}
                 </span>
               )}
             </Box>
@@ -293,9 +309,9 @@ export default function MyBlogDetail() {
               <ChatBubbleOutlineIcon
                 onClick={() => setCommentOpen(!commentOpen)}
               />
-              {comments && comments.length > 0 && (
+              {commentsCount > 0 && (
                 <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {comments.length}
+                  {commentsCount}
                 </span>
               )}
             </Box>
@@ -309,9 +325,9 @@ export default function MyBlogDetail() {
               }}
             >
               <VisibilityOutlinedIcon />
-              {views && views.length > 0 && (
+              {viewsCount > 0 && (
                 <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {views.length}
+                  {viewsCount}
                 </span>
               )}
             </Box>

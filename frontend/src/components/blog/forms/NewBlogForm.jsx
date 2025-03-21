@@ -14,7 +14,7 @@ export default function NewBlogForm() {
   const { getCategories } = useCategoryCalls();
   const { categories } = useSelector((state) => state.category);
   const [formKey, setFormKey] = useState(0);
-  const [isContent, setIsContent] = useState(false);
+  const [isContent, setIsContent] = useState(true);
 
   const [data, setData] = useState({
     title: "",
@@ -89,7 +89,7 @@ export default function NewBlogForm() {
       });
 
       setFormKey((prevKey) => prevKey + 1);
-      setIsContent(false);
+      setIsContent(true);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -181,8 +181,15 @@ export default function NewBlogForm() {
             ref={fileInputRef}
           />
         </Box>
-        <span className=" text-gray-500">
-          {data.images.length ? "" : "En az 1 adet resim ekleyiniz."}
+
+        {!data.images.length && (
+          <span className="text-gray-500">En az 1 adet resim ekleyiniz</span>
+        )}
+        <span className="text-black font-bold">
+          Resmin altında açıklama çıkmasını istiyorsanız, 'Show File Name'
+          seçeneğini 'Yes' yapın. Açıklama formatı, resim isminize bağlıdır:
+          'Görsel - Adı' olması için 'Görsel-Adı' veya 'Görsel - Adı', 'Görsel
+          Adı' olması için 'Görsel Adı' olarak adlandırın.
         </span>
       </FormControl>
 

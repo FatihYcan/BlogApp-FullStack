@@ -1,6 +1,6 @@
 "use strict";
 
-/* --- BLOG API blog MODEL --- */
+/* --- BLOG API BLOG MODEL --- */
 
 const { mongoose } = require("../configs/dbConnection");
 const Like = require("./like");
@@ -9,27 +9,15 @@ const View = require("./view");
 //? Blog Model
 const blogSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-      index: true,
-    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true, },
 
-    categoryId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-      index: true,
-    },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true, },
 
     title: { type: String, required: true, trim: true },
 
-    content: { type: String, required: true, trim: true },
+    contents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Content" }],
 
-    images: [],
-
-    showFileName: { type: Boolean, default: true },
+    blogImage: [],
 
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
@@ -42,7 +30,7 @@ const blogSchema = new mongoose.Schema(
     isPublish: { type: Boolean, default: true },
   },
   { collection: "blogs", timestamps: true }
-);
+)
 
 //? Blog Model Export
 module.exports = mongoose.model("Blog", blogSchema);

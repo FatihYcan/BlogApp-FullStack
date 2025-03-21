@@ -37,7 +37,6 @@ const SyledCard = styled(Card)(({ theme }) => ({
 const SyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
-  gap: 4,
   padding: 16,
   flexGrow: 1,
   "&:last-child": {
@@ -130,6 +129,8 @@ export default function BlogCard({
             height: "50px",
             alignItems: "center",
             justifyContent: "space-evenly",
+            marginTop: "-20px",
+            marginBottom:"-15px"
           }}
         >
           <Box

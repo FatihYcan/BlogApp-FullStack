@@ -66,6 +66,7 @@ app.use(require('./src/routes'))
 //? Static Files
 app.use("/uploads/blog", express.static("./uploads/blog"))
 app.use("/uploads/user", express.static("./uploads/user"))
+app.use("/uploads/content", express.static("./uploads/content"))
 
 /* ------------------------------------------------------- */
 //? Synchronization

@@ -50,7 +50,10 @@ export default function LikeModal({ open, handleClose, likes }) {
                   sx={{ width: 40, height: 40 }}
                 />
               </AvatarGroup>
-              <Typography variant="caption">{like.userId.username}</Typography>
+              <Typography variant="caption">
+                {like?.userId?.username.charAt(0).toUpperCase() +
+                  like?.userId?.username.slice(1)}
+              </Typography>
             </Box>
           ))}
         </Box>

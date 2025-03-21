@@ -1,5 +1,6 @@
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import "../../../assets/styles/editorStyles.css";
 
 const TextEditor = ({ value, onChange, isContent }) => {
   const toolbarOptions = [
@@ -16,11 +17,15 @@ const TextEditor = ({ value, onChange, isContent }) => {
         theme="snow"
         value={value}
         onChange={onChange}
-        modules={{ toolbar: toolbarOptions }}
-        className="h-64 mb-14"
+        modules={{
+          toolbar: {
+            container: toolbarOptions,
+          },
+        }}
+        className="h-auto"
       />
       {isContent && (
-        <p className="text-red-500 text-sm mt-16 ">Content alanı zorunludur</p>
+        <p className="text-red-500 text-sm">Content alanı zorunludur</p>
       )}
     </div>
   );
