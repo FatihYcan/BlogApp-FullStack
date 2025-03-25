@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Helmet } from "react-helmet";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -10,21 +6,24 @@ import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import styled from "@mui/material/styles/styled";
 import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import LikeBlogModal from "../../components/blog/modals/LikeBlogModal";
-import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
-import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
+import LikeModal from "../../components/blog/modals/LikeModal";
+import DeleteModal from "../../components/blog/modals/DeleteModal";
+import UpdateModal from "../../components/blog/modals/UpdateModal";
+import avatar from "../../assets/icons/avatar.png";
 import LoginModal from "../../components/blog/modals/LoginModal";
-import ImageBlogModal from "../../components/blog/modals/ImageBlogModal";
+import "../../assets/styles/detailStyles.css";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
-import ContentCard from "../../components/content/card/ContentCard";
-import avatar from "../../assets/icons/avatar.png";
-import "../../assets/styles/detailStyles.css";
+import { Helmet } from "react-helmet";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const StyledCardContent = styled(CardContent)({
   display: "flex",
@@ -38,24 +37,25 @@ const StyledCardContent = styled(CardContent)({
 });
 
 export default function BlogDetail() {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id, username: name } = useParams();
-  const { getSingleBlog, postBlogLike } = useBlogCalls();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
-
-  const [loading, setLoading] = useState(true);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { getSingleBlog, postBlogLike } = useBlogCalls();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleUpdateClose = () => setUpdateOpen(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
-  const [likeOpen, setLikeOpen] = useState(false);
-  const [imageOpen, setImageOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [isContentForm, setIsContentForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const { username } = userInfo || {};
 
   const [data, setData] = useState({
     categoryId: singleBlog?.categoryId,
@@ -66,66 +66,61 @@ export default function BlogDetail() {
     title: singleBlog?.title,
   });
 
+  useEffect(() => {
+    getSingleBlog(name, _id);
+  }, [like]);
+
   const {
     categoryId,
     comments,
     content,
-    contents,
     createdAt,
-    image,
+    images,
+    showFileName,
     likes,
     title,
     userId,
     views,
   } = singleBlog;
 
-  const { username } = userInfo || {};
-  const isLiked = likes?.some((like) => like.userId?.username === username);
-  const likesCount = likes?.length || 0;
-  const commentsCount = comments?.length || 0;
-  const viewsCount = views?.length || 0;
-
-  useEffect(() => {
-    getSingleBlog(name, _id);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [like]);
-
   const handleUpdateOpen = () => {
     setData({
-      title: singleBlog?.title,
       categoryId: singleBlog?.categoryId?._id,
-      image: singleBlog?.image,
+      content: singleBlog?.content,
       isPublish: singleBlog?.isPublish,
+      images: singleBlog?.images,
+      showFileName: singleBlog?.showFileName,
+      title: singleBlog?.title,
     });
     setUpdateOpen(true);
   };
 
-  const handleUpdateClose = () => {
-    setUpdateOpen(false);
-    setIsContentForm(false);
-  };
-
-  const handleImageOpen = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setImageOpen(true);
-  };
-
-  const handleImageClose = () => setImageOpen(false);
+  const blogImage = images?.map((image) => image.slice(1)) || [];
+  const isLiked = likes?.some((like) => like.userId?.username === username);
 
   const handleLike = () => {
-    username ? postBlogLike(_id) : setLoginOpen(true);
+    if (username) {
+      postBlogLike(_id);
+    } else {
+      setLoginOpen(true);
+    }
   };
 
-  const handleLikeOpen = () => setLikeOpen(true);
-  const handleLikeClose = () => setLikeOpen(false);
-
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
 
-  const handleCloseLogin = () => setLoginOpen(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const likesCount = likes?.length || 0;
+  const commentsCount = comments?.length || 0;
+  const viewsCount = views?.length || 0;
 
   return (
     <Container
@@ -161,11 +156,7 @@ export default function BlogDetail() {
           <CardMedia
             component="img"
             alt={title}
-            image={
-              image && image.length > 0
-                ? `http://127.0.0.1:8000${image[0].slice(1)}`
-                : []
-            }
+            image={`http://127.0.0.1:8000${blogImage[0]}`}
             sx={{
               width: "80%",
               margin: "auto",
@@ -229,18 +220,62 @@ export default function BlogDetail() {
               dangerouslySetInnerHTML={{ __html: content }}
               className="editor-content"
             />
-
-            {contents?.map((item, index) => (
-              <div key={index}>
-                <ContentCard
-                  item={item}
-                  handleImageOpen={handleImageOpen}
-                  username={username}
-                  userId={userId}
-                />
-              </div>
-            ))}
           </StyledCardContent>
+
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={2}
+            justifyContent="center"
+          >
+            {blogImage?.map((image, index) => {
+              const decoder = new TextDecoder("utf-8");
+              const fixedString = decoder.decode(
+                new TextEncoder().encode(image)
+              );
+
+              const rawFileName = fixedString
+                .split("/")
+                .pop()
+                .split(".")[0]
+                .replace(/^\d+-/, "");
+
+              const formatTitleCase = (str) =>
+                str
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ");
+
+              const fileName = rawFileName.includes("-")
+                ? rawFileName.split("-").map(formatTitleCase).join(" - ")
+                : formatTitleCase(rawFileName);
+
+              return (
+                <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                  <CardMedia
+                    component="img"
+                    alt={`${title} image ${index + 1}`}
+                    image={`http://127.0.0.1:8000${image}`}
+                    sx={{
+                      aspectRatio: "16 / 9",
+                      objectFit: "initial",
+                    }}
+                  />
+                  {showFileName && (
+                    <Typography
+                      variant="caption"
+                      sx={{ textAlign: "center", display: "block", mt: 1 }}
+                    >
+                      {fileName}
+                    </Typography>
+                  )}
+                </Grid>
+              );
+            })}
+          </Grid>
 
           <Box
             sx={{
@@ -272,7 +307,7 @@ export default function BlogDetail() {
                     marginLeft: "2px",
                     cursor: "pointer",
                   }}
-                  onClick={handleLikeOpen}
+                  onClick={handleOpen}
                 >
                   {likesCount}
                 </span>
@@ -354,30 +389,19 @@ export default function BlogDetail() {
             </Box>
           )}
 
-          <LikeBlogModal
-            likeOpen={likeOpen}
-            handleLikeClose={handleLikeClose}
-            likes={likes}
-          />
-          <ImageBlogModal
-            imageOpen={imageOpen}
-            handleImageClose={handleImageClose}
-            selectedImage={selectedImage}
-          />
+          <LikeModal open={open} handleClose={handleClose} likes={likes} />
           <LoginModal
             loginOpen={loginOpen}
             handleCloseLogin={handleCloseLogin}
           />
 
-          <UpdateBlogModal
+          <UpdateModal
             updateOpen={updateOpen}
             handleUpdateClose={handleUpdateClose}
             setData={setData}
             data={data}
-            isContentForm={isContentForm}
-            setIsContentForm={setIsContentForm}
           />
-          <DeleteBlogModal
+          <DeleteModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}
           />

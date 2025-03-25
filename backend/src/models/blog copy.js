@@ -1,6 +1,6 @@
 "use strict";
 
-/* --- BLOG API BLOG MODEL --- */
+/* --- BLOG API blog MODEL --- */
 
 const { mongoose } = require("../configs/dbConnection");
 const Like = require("./like");
@@ -15,9 +15,11 @@ const blogSchema = new mongoose.Schema(
 
     title: { type: String, required: true, trim: true },
 
-    contents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Content"}],
+    content: { type: String, required: true, trim: true },
 
-    image: [],
+    images: [],
+
+    showFileName: { type: Boolean, default: true },
 
     views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
@@ -30,7 +32,7 @@ const blogSchema = new mongoose.Schema(
     isPublish: { type: Boolean, default: true },
   },
   { collection: "blogs", timestamps: true }
-)
+);
 
 //? Blog Model Export
 module.exports = mongoose.model("Blog", blogSchema);

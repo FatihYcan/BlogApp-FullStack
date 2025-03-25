@@ -5,7 +5,6 @@ import { Formik } from "formik";
 import LoginForm, { loginSchema } from "../../auth/LoginForm";
 import useAuthCalls from "../../../hooks/useAuthCalls";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Divider from "@mui/material/Divider";
 
 const style = {

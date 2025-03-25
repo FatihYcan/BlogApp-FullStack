@@ -28,7 +28,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "contents" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }])
         res.status(200).send({ error: false, details: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -46,7 +46,18 @@ module.exports = {
             req.body.image = "./uploads/blog/" + req.file.filename
         }
 
-        const data = await Blog.create(req.body)
+        let data
+        if (req.body._id) {
+            // Eğer _id varsa, blogu güncelle
+            data = await Blog.findByIdAndUpdate(
+                req.body._id,
+                { ...req.body, isPublish: true },
+                { new: true }
+            )
+        } else {
+            // _id yoksa, yeni bir blog oluştur
+            data = await Blog.create({ ...req.body, isPublish: true })
+        }
         res.status(201).send({ error: false, data })
     },
 
@@ -74,7 +85,7 @@ module.exports = {
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: view }, $inc: { viewCount: 1 } })
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "contents" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
 
         res.status(200).send({ error: false, data })
     },
@@ -122,6 +133,28 @@ module.exports = {
         }
         const data = await Blog.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
+    },
+
+    createId: async (req, res) => {
+        /*
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Create Blog ID (Draft)"
+            #swagger.description = "Create a draft blog and return its ID without saving it."
+        */
+
+        //! userId verisini req.user._id ile al
+        req.body.userId = req.user._id;
+        req.body.isPublish = false;
+
+        //! Eğer dosya yüklendiyse, resim yolunu ayarla
+        if (req.file) {
+            req.body.image = "./uploads/blog/" + req.file.filename;
+        }
+
+        //! Blog'u oluştur ve ID'sini al
+        const data = await Blog.create(req.body)
+
+        res.status(200).send({ error: false, data });
     },
 
     getLike: async (req, res) => {

@@ -30,14 +30,19 @@ module.exports = {
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "sectionTitle": "Section Title 1", "text": "Section Content 1", "order": 1, "images": [ { "url": "uploads/images/resim1.jpg", "caption": "Resim 1 açıklaması } ] } }
         */
 
+        const Blog = require('../models/blog')
+
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
         if (req.files && req.files.length > 0) {
-            req.body.images = req.files.map(file => "./uploads/blog/" + file.filename);
+            req.body.images = req.files.map(file => "./uploads/content/" + file.filename);
         }
 
         const data = await Content.create(req.body)
+
+        //! Kullanıcının bloga olan contents durumunu ekle
+        await Blog.updateOne({ _id: data.blogId }, { $push: { contents: data._id } })
         res.status(201).send({ error: false, data })
     },
 
@@ -77,7 +82,7 @@ module.exports = {
 
             //! Yeni resimleri ekle
             for (let file of req.files) {
-                content.images.push("./uploads/blog/" + file.filename)
+                content.images.push("./uploads/content/" + file.filename)
             }
         }
         //! Eğer kullanıcı resmi sildiyse

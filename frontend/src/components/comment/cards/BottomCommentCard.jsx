@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import EditBottomCommentForm from "../forms/EditBottomCommentForm";
 import CommentBottomForm from "../forms/CommentBottomForm";
+import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 
 export default function BottomCommentCard({
   item,
@@ -22,7 +23,8 @@ export default function BottomCommentCard({
 }) {
   const { _id: id, username: name } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const { getSingleBlog, deleteBottomComment } = useBlogCalls();
+  const { getSingleBlog } = useBlogCalls();
+  const { deleteBottomComment } = useBottomCommentCalls();
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: commentId,
     comment: "",
@@ -112,8 +114,7 @@ export default function BottomCommentCard({
             sx={{ width: 30, height: 30, mr: 2 }}
           />
           <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
-          {userId.username.charAt(0).toUpperCase() +
-                userId.username.slice(1)}
+            {userId.username.charAt(0).toUpperCase() + userId.username.slice(1)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {getTimeDifference(new Date(), new Date(createdAt))}

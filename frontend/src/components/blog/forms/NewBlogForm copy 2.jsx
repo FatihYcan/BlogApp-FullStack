@@ -17,10 +17,8 @@ export default function NewBlogForm() {
   const { categories } = useSelector((state) => state.category);
   const [formKey, setFormKey] = useState(0);
   const [blogId, setBlogId] = useState("");
-
-  const [isContentForm, setIsContentForm] = useState(false);
-
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
+  const [isText, setIsText] = useState(true);
 
   const [data, setData] = useState({
     title: "",
@@ -31,7 +29,8 @@ export default function NewBlogForm() {
 
   const [contentData, setContentData] = useState({
     blogId: blogId,
-    content: "",
+    text: "",
+    order: 0,
     images: [],
   });
 
@@ -54,15 +53,19 @@ export default function NewBlogForm() {
     setData({ ...data, image: e.currentTarget.files });
   };
 
-  const handleContentChange = (content) => {
-    const plainContent = content.replace(/<[^>]+>/g, "").trim();
+  const handleContentChange = (e) => {
+    setContentData({ ...contentData, [e.target.name]: e.target.value });
+  };
 
-    if (plainContent.length === 0) {
-      setIsContent(true);
-      setContentData({ ...contentData, content: "" });
+  const handleTextChange = (text) => {
+    const plainText = text.replace(/<[^>]+>/g, "").trim();
+
+    if (plainText.length === 0) {
+      setIsText(true);
+      setContentData({ ...contentData, text: "" });
     } else {
-      setIsContent(false);
-      setContentData({ ...contentData, content });
+      setIsText(false);
+      setContentData({ ...contentData, text });
     }
   };
 
@@ -87,7 +90,7 @@ export default function NewBlogForm() {
 
     if (isBlogId) {
       setBlogId(isBlogId._id);
-      setIsContentForm(true);
+      setIsContent(true);
     }
   };
 
@@ -108,14 +111,15 @@ export default function NewBlogForm() {
 
     const contentFormData = new FormData();
     contentFormData.append("blogId", blogId);
-    contentFormData.append("content", contentData.content);
+    contentFormData.append("text", contentData.text);
+    contentFormData.append("order", contentData.order);
 
     for (let i = 0; i < contentData.images.length; i++) {
       contentFormData.append("images", contentData.images[i]);
     }
 
-    if (!contentData.content) {
-      setIsContent(true);
+    if (!contentData.text) {
+      setIsText(true);
     }
 
     const isBlogCreated = await postBlog(blogFormData);
@@ -131,14 +135,15 @@ export default function NewBlogForm() {
 
       setContentData({
         blogId: "",
-        content: "",
+        text: "",
+        order: 0,
         images: [],
       });
 
-      setIsContentForm(false);
+      setIsContent(false);
 
       setFormKey((prevKey) => prevKey + 1);
-      setIsContent(true);
+      setIsText(true);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -149,14 +154,15 @@ export default function NewBlogForm() {
   const handleAddContent = async () => {
     const contentFormData = new FormData();
     contentFormData.append("blogId", blogId);
-    contentFormData.append("content", contentData.content);
+    contentFormData.append("text", contentData.text);
+    contentFormData.append("order", contentData.order);
 
     for (let i = 0; i < contentData.images.length; i++) {
       contentFormData.append("images", contentData.images[i]);
     }
 
-    if (!contentData.content) {
-      setIsContent(true);
+    if (!contentData.text) {
+      setIsText(true);
     }
 
     const isContentCreated = await postContent(contentFormData);
@@ -164,11 +170,12 @@ export default function NewBlogForm() {
     if (isContentCreated) {
       setContentData({
         blogId: blogId,
-        content: "",
+        text: "",
+        order: 0,
         images: [],
       });
 
-      setIsContent(true);
+      setIsText(true);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -189,104 +196,102 @@ export default function NewBlogForm() {
         gap: 2,
       }}
     >
-      {!isContentForm && (
-        <>
-          <FormControl fullWidth margin="dense">
-            <FormLabel htmlFor="title">Title</FormLabel>
-            <TextField
-              size="small"
-              id="title"
-              type="text"
-              name="title"
-              variant="outlined"
-              required
-              value={data.title}
-              onChange={handleChange}
-            />
-          </FormControl>
+      <FormControl fullWidth margin="dense">
+        <FormLabel htmlFor="title">Title</FormLabel>
+        <TextField
+          size="small"
+          id="title"
+          type="text"
+          name="title"
+          variant="outlined"
+          required
+          value={data.title}
+          onChange={handleChange}
+        />
+      </FormControl>
 
-          <FormControl fullWidth margin="dense">
-            <FormLabel htmlFor="category">Category</FormLabel>
-            <TextField
-              size="small"
-              id="categoryId"
-              select
-              name="categoryId"
-              required
-              value={data.categoryId}
-              onChange={handleChange}
-            >
-              {categories?.map((category) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </FormControl>
+      <FormControl fullWidth margin="dense">
+        <FormLabel htmlFor="category">Category</FormLabel>
+        <TextField
+          size="small"
+          id="categoryId"
+          select
+          name="categoryId"
+          required
+          value={data.categoryId}
+          onChange={handleChange}
+        >
+          {categories?.map((category) => (
+            <MenuItem key={category._id} value={category._id}>
+              {category.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </FormControl>
 
-          <FormControl fullWidth margin="dense">
-            <FormLabel htmlFor="image">Blog Image</FormLabel>
-            <Box
-              sx={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                padding: "10px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <input
-                id="image"
-                name="image"
-                type="file"
-                accept="image/*"
-                required
-                style={{
-                  width: "100%",
-                  cursor: "pointer",
-                  border: "none",
-                  outline: "none",
-                }}
-                onChange={handleImageChange}
-                ref={fileInputRef}
-              />
-            </Box>
-          </FormControl>
+      <FormControl fullWidth margin="dense">
+        <FormLabel htmlFor="image">Blog Image</FormLabel>
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*"
+            required
+            style={{
+              width: "100%",
+              cursor: "pointer",
+              border: "none",
+              outline: "none",
+            }}
+            onChange={handleImageChange}
+            ref={fileInputRef}
+          />
+        </Box>
+      </FormControl>
 
-          <FormControl fullWidth margin="dense">
-            <FormLabel htmlFor="isPublish">Publish</FormLabel>
-            <TextField
-              size="small"
-              id="isPublish"
-              select
-              name="isPublish"
-              required
-              value={data.isPublish}
-              onChange={handleChange}
-            >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
-            </TextField>
-          </FormControl>
+      <FormControl fullWidth margin="dense">
+        <FormLabel htmlFor="isPublish">Publish</FormLabel>
+        <TextField
+          size="small"
+          id="isPublish"
+          select
+          name="isPublish"
+          required
+          value={data.isPublish}
+          onChange={handleChange}
+        >
+          <MenuItem value={true}>Yes</MenuItem>
+          <MenuItem value={false}>No</MenuItem>
+        </TextField>
+      </FormControl>
 
-          <button
-            onClick={handleClick}
-            type="button"
-            className="bg-green-600 text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
-          >
-            Add Content
-          </button>
-        </>
+      {!isContent && (
+        <button
+          onClick={handleClick}
+          type="button"
+          className="bg-green-600 text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
+        >
+          Add Content
+        </button>
       )}
 
-      {isContentForm && (
+      {isContent && (
         <ContentForm
           contentData={contentData}
           handleContentChange={handleContentChange}
           handleImagesChange={handleImagesChange}
-          isContent={isContent}
+          isText={isText}
           fileInputRef={fileInputRef}
           onSubmit={handleSubmit}
           onAddContent={handleAddContent}

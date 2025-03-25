@@ -12,7 +12,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeModal from "../modals/LikeModal";
+import LikeBlogModal from "../modals/LikeBlogModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 
 const SyledCard = styled(Card)(({ theme }) => ({
@@ -216,7 +216,7 @@ export default function UserBlogCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeModal open={open} handleClose={handleClose} likes={likes} />
+        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
       </SyledCard>
     </Grid>
   );

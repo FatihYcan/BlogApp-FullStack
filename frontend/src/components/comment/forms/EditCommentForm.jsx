@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import CloseIcon from "@mui/icons-material/Close";
+import useCommentCalls from "../../../hooks/useCommentCalls";
 
 export default function EditCommentForm({
   commentData,
@@ -18,7 +19,8 @@ export default function EditCommentForm({
 }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { _id, username } = useParams();
-  const { getSingleBlog, putComment } = useBlogCalls();
+  const { getSingleBlog } = useBlogCalls();
+  const { putComment } = useCommentCalls();
 
   const handleChange = (e) => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value });

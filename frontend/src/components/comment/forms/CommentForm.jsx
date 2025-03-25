@@ -9,12 +9,14 @@ import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
+import useCommentCalls from "../../../hooks/useCommentCalls";
 
 export default function CommentForm() {
   const { _id, username } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { postComment, getSingleBlog } = useBlogCalls();
+  const { getSingleBlog } = useBlogCalls();
+  const { postComment } = useCommentCalls();
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
 
   const handleChange = (e) => {

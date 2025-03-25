@@ -12,7 +12,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeModal from "../modals/LikeModal";
+import LikeBlogModal from "../modals/LikeBlogModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import LoginModal from "../modals/LoginModal";
@@ -55,7 +55,8 @@ const StyledTypography = styled(Typography)({
 export default function BlogCard({
   _id,
   title,
-  images,
+  contents,
+  image,
   categoryId,
   content,
   likes,
@@ -89,7 +90,6 @@ export default function BlogCard({
     navigate(`/blogs/${userId.username}/${_id}`);
   };
 
-  const blogImage = images?.[0]?.slice(1) || [];
   const isLiked = likes.some((like) => like.userId.username === username);
 
   return (
@@ -99,7 +99,11 @@ export default function BlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={`http://127.0.0.1:8000${blogImage}`}
+          image={
+            image && image.length > 0
+              ? `http://127.0.0.1:8000${image[0].slice(1)}`
+              : []
+          }
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -120,6 +124,12 @@ export default function BlogCard({
             gutterBottom
             dangerouslySetInnerHTML={{ __html: content }}
           />
+          <StyledTypography
+            variant="body2"
+            color="text.secondary"
+            gutterBottom
+            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
+          />
         </SyledCardContent>
 
         <Box
@@ -130,7 +140,7 @@ export default function BlogCard({
             alignItems: "center",
             justifyContent: "space-evenly",
             marginTop: "-20px",
-            marginBottom:"-15px"
+            marginBottom: "-15px",
           }}
         >
           <Box
@@ -229,7 +239,7 @@ export default function BlogCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeModal open={open} handleClose={handleClose} likes={likes} />
+        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
         <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </SyledCard>
     </Grid>

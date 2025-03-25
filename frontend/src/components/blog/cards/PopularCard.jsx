@@ -10,7 +10,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeModal from "../modals/LikeModal";
+import LikeBlogModal from "../modals/LikeBlogModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import LoginModal from "../modals/LoginModal";
@@ -63,6 +63,7 @@ const StyledTypography = styled(Typography)({
 export default function PopularCard({
   _id,
   title,
+  contents,
   categoryId,
   content,
   likes,
@@ -123,6 +124,13 @@ export default function PopularCard({
           color="text.secondary"
           gutterBottom
           dangerouslySetInnerHTML={{ __html: content }}
+        ></StyledTypography>
+
+        <StyledTypography
+          variant="body2"
+          color="text.secondary"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
         ></StyledTypography>
 
         <Box
@@ -232,7 +240,7 @@ export default function PopularCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeModal open={open} handleClose={handleClose} likes={likes} />
+        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
         <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </Box>
     </Grid>

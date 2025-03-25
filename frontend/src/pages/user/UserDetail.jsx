@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import avatar from "../../assets/icons/avatar.png";
-import DeleteModal from "../../components/user/modals/DeleteModal";
-import UpdateModal from "../../components/user/modals/UpdateModal";
+import DeleteUserModal from "../../components/user/modals/DeleteUserModal";
+import UpdateUserModal from "../../components/user/modals/UpdateMyUserModal";
 import useUserCalls from "../../hooks/useUserCalls";
 import { Helmet } from "react-helmet";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -189,12 +189,12 @@ export default function UserDetail() {
               Delete User
             </button>
           </Box>
-          <UpdateModal
+          <UpdateUserModal
             updateOpen={updateOpen}
             handleUpdateClose={handleUpdateClose}
             data={data}
           />
-          <DeleteModal
+          <DeleteUserModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}
           />

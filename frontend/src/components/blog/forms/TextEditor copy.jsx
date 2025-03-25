@@ -2,7 +2,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "../../../assets/styles/editorStyles.css";
 
-const TextEditor = ({ value, onChange, isContent }) => {
+const TextEditor = ({ value, onChange, isText }) => {
   const toolbarOptions = [
     [{ header: [1, 2, 3, 4, 5, 6] }],
     ["bold", "italic", "underline"],
@@ -24,14 +24,9 @@ const TextEditor = ({ value, onChange, isContent }) => {
         }}
         className="h-auto"
       />
-      {isContent && (
-        <p className="text-red-500 text-sm">Content alanı zorunludur</p>
+      {isText && (
+        <p className="text-red-500 text-sm">Text alanı zorunludur</p>
       )}
-      <p className="text-black font-bold text-sm">
-        Blog oluştururken, içeriklerinizi ayrı ayrı eklemenizi öneririz. Bu
-        sayede her bir içeriği kolayca yönetebilir ve düzenleyebilirsiniz.
-        Ayrıca, her içeriğe farklı resimler ekleyebilirsiniz.
-      </p>
     </div>
   );
 };

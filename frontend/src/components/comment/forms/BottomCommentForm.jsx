@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import CloseIcon from "@mui/icons-material/Close";
+import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 
 export default function BottomCommentForm({
   isReplyCardId,
@@ -17,7 +18,8 @@ export default function BottomCommentForm({
   isReplyName,
 }) {
   const { _id, username } = useParams();
-  const { getSingleBlog, postBottomComment } = useBlogCalls();
+  const { getSingleBlog } = useBlogCalls();
+  const { postBottomComment } = useBottomCommentCalls();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: isReplyCardId,

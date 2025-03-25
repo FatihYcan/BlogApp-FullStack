@@ -14,10 +14,10 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import LikeModal from "../../components/blog/modals/LikeModal";
+import LikeBlogModal from "../../components/blog/modals/LikeBlogModal";
 import avatar from "../../assets/icons/avatar.png";
-import DeleteMyModal from "../../components/blog/modals/DeleteMyModal";
-import UpdateModal from "../../components/blog/modals/UpdateModal";
+import DeleteMyBlogModal from "../../components/blog/modals/DeleteMyBlogModal";
+import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 import { Helmet } from "react-helmet";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
@@ -369,14 +369,14 @@ export default function MyBlogDetail() {
               Delete Blog
             </button>
           </Box>
-          <LikeModal open={open} handleClose={handleClose} likes={likes} />
-          <UpdateModal
+          <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
+          <UpdateBlogModal
             updateOpen={updateOpen}
             handleUpdateClose={handleUpdateClose}
             setData={setData}
             data={data}
           />
-          <DeleteMyModal
+          <DeleteMyBlogModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}
           />
