@@ -30,7 +30,7 @@
 }
 
 .editor-content h6 {
-  font-size: 1rem !important;
+  font-size: 1rem;
   font-weight: 400;
   margin-bottom: 0.25rem;
 }
@@ -103,15 +103,4 @@
 .editor-content .ql-align-justify li::before,
 .editor-content .ql-align-left li::before {
   margin-right: 0.5rem;
-}
-
-/* Renkli Metinler */
-.editor-content [style^="color:"] {
-  font-weight: normal;
-}
-
-/* Arka Plan Renkleri */
-.editor-content [style^="background:"] {
-  padding: 2px 5px;
-  border-radius: 3px;
 }

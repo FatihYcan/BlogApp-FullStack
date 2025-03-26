@@ -41,6 +41,9 @@ export default function UpdateContentForm({
     }
   };
 
+  // console.log(contentData.images.length);
+  // console.log(isPictureEmpty);
+
   const handleDeleteImage = (e, image) => {
     e.preventDefault();
     const updatedImages = contentData.images.filter(
@@ -65,17 +68,58 @@ export default function UpdateContentForm({
     formData.append("blogId", _id);
     formData.append("content", contentData.content);
 
-    if (contentData.images instanceof FileList) {
+    console.log("contentData.images", contentData.images);
+    console.log(
+      "contentData.images instanceof FileList",
+      contentData.images instanceof FileList
+    );
+    console.log("contentData.images.length", contentData.images.length);
+    console.log("!contentData.images.length", !contentData.images.length);
+
+    if (!contentData.images || contentData.images.length === 0) {
+      console.log("Bütün resimler silindi");
+      formData.append("images", []); // Boş dizi gönder
+    } else if (contentData.images instanceof FileList) {
+      console.log("Bütün resimler silinip farklı resimler eklendi");
       for (let i = 0; i < contentData.images.length; i++) {
         formData.append("images", contentData.images[i]);
       }
-    } else if (contentData.images.length === 0) {
-      formData.append("images", []);
-    } else {
+    } else if (contentData.images.some((img) => img instanceof File)) {
+      console.log("Resim/resimler eklendi");
       for (let i = 0; i < contentData.images.length; i++) {
         formData.append("images", contentData.images[i]);
+      }
+    } else {
+      console.log("Hiçbir resim eklenmedi");
+      for (let i = 0; i < contentData.images.length; i++) {
+        formData.append("images", contentData.images[i]); // Eski resimleri gönder
       }
     }
+
+    // if (contentData.images.length) {
+    //   for (let i = 0; i < contentData.images.length; i++) {
+    //     formData.append("images", contentData.images[i]);
+    //   }
+    // } else if (!contentData.images.length) {
+    //   formData.append("images", []);
+    // } else if (
+    //   contentData.images instanceof FileList &&
+    //   contentData.images.length
+    // ) {
+    //   for (let i = 0; i < contentData.images.length; i++) {
+    //     formData.append("images", contentData.images[i]);
+    //   }
+    // } else if (contentData.images.length === 0) {
+    //   formData.append("images", []);
+    // }
+
+    // if (contentData.images && contentData.images.length > 0) {
+    //   for (let i = 0; i < contentData.images.length; i++) {
+    //     formData.append("images", contentData.images[i]);
+    //   }
+    // } else {
+    //   formData.append("images", []);
+    // }
 
     if (!contentData.content) {
       setIsContent(true);

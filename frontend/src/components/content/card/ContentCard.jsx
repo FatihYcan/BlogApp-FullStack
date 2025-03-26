@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import UpdateContentModal from "../modal/UpdateContentModal";
 import DeleteContentModal from "../modal/DeleteContentModal";
+import "../../../assets/styles/detailStyles.css";
 
 export default function ContentCard({
   item,
@@ -60,7 +61,7 @@ export default function ContentCard({
         rowSpacing={2}
         columnSpacing={2}
         justifyContent="center"
-        sx={{ marginBottom: "2rem" }}
+        sx={{ marginBottom: "1rem" }}
       >
         {item.images?.map((image, imgIndex) => (
           <Grid size={{ xs: 12, sm: 6 }} key={imgIndex}>

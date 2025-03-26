@@ -27,7 +27,7 @@ module.exports = {
         /*
              #swagger.tags = ["Contents"]
             #swagger.summary = "Create Content"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "order": 1, "images": [ "uploads/images/resim1.jpg" ] } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "sectionTitle": "Section Title 1", "text": "Section Content 1", "order": 1, "images": [ { "url": "uploads/images/resim1.jpg", "caption": "Resim 1 açıklaması } ] } }
         */
 
         const Blog = require('../models/blog')
@@ -60,7 +60,7 @@ module.exports = {
         /*
              #swagger.tags = ["Contents"]
             #swagger.summary = "Create Content"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "order": 1, "images": [ "uploads/images/resim1.jpg" ] } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "sectionTitle": "Section Title 1", "text": "Section Content 1", "order": 1, "images": [ { "url": "uploads/images/resim1.jpg", "caption": "Resim 1 açıklaması } ] } }
         */
 
         //! Kullanıcı sadece kendi içeriklerini günceleyebilir
@@ -72,50 +72,26 @@ module.exports = {
         //! Mevcut content resimlerini getir
         const content = await Content.findOne({ _id: req.params.id }, { images: 1, _id: 0 })
 
-        //! Eğer bütün resimler silinip farklı resimler eklenirse
-        if (req.files.length > 0 && !req.body.images) {
-            content.images = []
+
+        //! Eğer kullanıcı resim eklediyse
+        if (req.files && req.files.length > 0) {
+            //! Eğer kullanıcı tüm resimleri silmişse ve farklı resim eklemişse, blog.images dizisini temizle
+            if (!req.body.images || req.body.images.length === 0) {
+                content.images = []
+            }
 
             //! Yeni resimleri ekle
             for (let file of req.files) {
                 content.images.push("./uploads/content/" + file.filename)
             }
-
-            //! Güncellenmiş resimleri req.body'ye ekle
-            req.body.images = content.images
+        }
+        //! Eğer kullanıcı resmi sildiyse
+        else if (req.body.images && req.body.images.length > 0) {
+            content.images = req.body.images
         }
 
-        //! Eğer bütün resimler silinirse
-        else if (req.body.images.length === 0) {
-            content.images = []
-
-            //! Güncellenmiş resimleri req.body'ye ekle
-            req.body.images = content.images
-        }
-
-        //! Eğer resim eklenirse/hiç resim eklenmezse/hiç resim silinmezse
-        else if (req.files && content.images.length === req.body.images.length) {
-
-            //! Yeni resimleri ekle
-            for (let file of req.files) {
-                content.images.push("./uploads/content/" + file.filename)
-            }
-
-            //! Güncellenmiş resimleri req.body'ye ekle
-            req.body.images = content.images
-        }
-
-        //! Eğer birkaç resim silinip başka resim eklenirse
-        else if (req.files && content.images.length !== req.body.images.length) {
-            let updatedImages = content.images.filter(img => req.body.images.includes(img));
-
-            for (let file of req.files) {
-                updatedImages.push("./uploads/content/" + file.filename)
-            }
-
-            //! Güncellenmiş resimleri req.body'ye ekle
-            req.body.images = updatedImages
-        }
+        //! Güncellenmiş resimleri req.body'ye ekle
+        req.body.images = content.images
 
         const data = await Content.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Content.findOne({ _id: req.params.id }) })

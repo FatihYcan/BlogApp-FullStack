@@ -8,7 +8,7 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
 
 const useContentCalls = () => {
-  const { axiosPublic, axiosWithToken } = useAxios();
+  const { axiosPublic, axiosWithToken, axiosWithTokenAndData } = useAxios();
   const dispatch = useDispatch();
 
   const getContents = async (url) => {
@@ -25,7 +25,7 @@ const useContentCalls = () => {
   const postContent = async (data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.post("/contents/", data);
+      await axiosWithTokenAndData.post("/contents/", data);
       toastSuccessNotify("İçerik eklenmiştir.");
       return true;
     } catch (error) {
@@ -38,7 +38,7 @@ const useContentCalls = () => {
   const putContent = async (content_id, data) => {
     dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`/contents/${content_id}`, data);
+      await axiosWithTokenAndData.put(`/contents/${content_id}`, data);
       toastSuccessNotify("İçerik güncellenmiştir..");
       return true;
     } catch (error) {

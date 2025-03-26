@@ -24,7 +24,7 @@ import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import ContentCard from "../../components/content/card/ContentCard";
 import avatar from "../../assets/icons/avatar.png";
-import "../../assets/styles/detailStyles.css";
+// import "../../assets/styles/detailStyles.css";
 
 const StyledCardContent = styled(CardContent)({
   display: "flex",
@@ -223,12 +223,12 @@ export default function BlogDetail() {
             <Typography gutterBottom variant="h6" component="div">
               {title}
             </Typography>
-            <Typography
+            {/* <Typography
               component="div"
               gutterBottom
               dangerouslySetInnerHTML={{ __html: content }}
               className="editor-content"
-            />
+            /> */}
 
             {contents?.map((item, index) => (
               <div key={index}>
