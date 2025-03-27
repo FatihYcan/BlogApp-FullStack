@@ -1,13 +1,8 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import UpdateBlogForm from "../forms/UpdateBlogForm";
+import AddContentForm from "../forms/AddContentForm";
 
-export default function UpdateBlogModal({
-  updateOpen,
-  handleUpdateClose,
-  setData,
-  data,
-}) {
+export default function AddContentModal({ contentOpen, handleContentClose }) {
   const style = (theme) => ({
     position: "absolute",
     top: "50%",
@@ -21,24 +16,20 @@ export default function UpdateBlogModal({
     overflowY: "auto",
     width: "95%",
     [theme.breakpoints.up("md")]: {
-      width: 400,
+      width: 870,
     },
   });
 
   return (
     <div>
       <Modal
-        open={updateOpen}
-        onClose={handleUpdateClose}
+        open={contentOpen}
+        onClose={handleContentClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <UpdateBlogForm
-            data={data}
-            setData={setData}
-            handleUpdateClose={handleUpdateClose}
-          />
+          <AddContentForm handleContentClose={handleContentClose} />
         </Box>
       </Modal>
     </div>

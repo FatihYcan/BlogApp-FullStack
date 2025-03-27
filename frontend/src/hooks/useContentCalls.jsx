@@ -30,7 +30,13 @@ const useContentCalls = () => {
       return true;
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("İçerik eklenememiştir.");
+      if (error.response.data.message.includes("Only image")) {
+        toastErrorNotify(
+          "Yalnızca JPEG, JPG, PNG, GIF ve WEBP formatında resim ekleyebilirsiniz."
+        );
+      } else {
+        toastErrorNotify("İçerik eklenememiştir.");
+      }
     }
     return false;
   };
@@ -43,7 +49,13 @@ const useContentCalls = () => {
       return true;
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify("İçerik güncellenememiştir.");
+      if (error.response.data.message.includes("Only image")) {
+        toastErrorNotify(
+          "Yalnızca JPEG, JPG, PNG, GIF ve WEBP formatında resim ekleyebilirsiniz."
+        );
+      } else {
+        toastErrorNotify("İçerik güncellenememiştir.");
+      }
     }
     return false;
   };

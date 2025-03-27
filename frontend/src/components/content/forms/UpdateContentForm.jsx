@@ -5,7 +5,7 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import TextEditor from "../../blog/forms/TextEditor";
+import TextEditor from "./TextEditor";
 
 export default function UpdateContentForm({
   contentData,
@@ -136,8 +136,8 @@ export default function UpdateContentForm({
                     src={`http://127.0.0.1:8000${image}`}
                     alt={`Uploaded ${index}`}
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "125px",
+                      height: "125px",
                       objectFit: "cover",
                       borderRadius: "5px",
                     }}
@@ -187,12 +187,22 @@ export default function UpdateContentForm({
           )}
         </FormControl>
 
-        <button
-          type="submit"
-          className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full uppercase"
-        >
-          Update Content
-        </button>
+        <Box display="flex" justifyContent="center" gap={2}>
+          <button
+            type="submit"
+            className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-1/2"
+          >
+            Update Content
+          </button>
+
+          <button
+            type="button"
+            className="bg-red-600  text-white font-medium py-2 px-2 rounded-md w-1/2"
+            onClick={handleUpdateClose}
+          >
+            Cancel
+          </button>
+        </Box>
       </Box>
     </Box>
   );

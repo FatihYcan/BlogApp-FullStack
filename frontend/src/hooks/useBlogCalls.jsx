@@ -62,6 +62,11 @@ const useBlogCalls = () => {
       return apiData;
     } catch (error) {
       dispatch(fetchFail());
+      if (error.response.data.message.includes("Only image")) {
+        toastErrorNotify(
+          "Yalnızca JPEG, JPG, PNG, GIF ve WEBP formatında resim ekleyebilirsiniz."
+        );
+      }
     }
     return false;
   };

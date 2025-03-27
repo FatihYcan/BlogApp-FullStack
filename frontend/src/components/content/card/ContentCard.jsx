@@ -53,13 +53,12 @@ export default function ContentCard({
         gutterBottom
         dangerouslySetInnerHTML={{ __html: item.content }}
         className="editor-content"
-        sx={{ marginBottom: "1rem" }}
       />
 
       <Grid
         container
-        rowSpacing={2}
-        columnSpacing={2}
+        rowSpacing={1}
+        columnSpacing={1}
         justifyContent="center"
         sx={{ marginBottom: "1rem" }}
       >

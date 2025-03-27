@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useSelector } from "react-redux";
 import useCategoryCalls from "../../../hooks/useCategoryCalls";
-import ContentForm from "./ContentForm";
+import ContentForm from "../../content/forms/ContentForm";
 import useContentCalls from "../../../hooks/useContentCalls";
 
 export default function NewBlogForm() {
@@ -21,6 +21,12 @@ export default function NewBlogForm() {
   const [isContentForm, setIsContentForm] = useState(false);
 
   const [isContent, setIsContent] = useState(true);
+
+  const [errors, setErrors] = useState({
+    title: false,
+    categoryId: false,
+    image: false,
+  });
 
   const [data, setData] = useState({
     title: "",
@@ -72,6 +78,19 @@ export default function NewBlogForm() {
 
   const handleClick = async (e) => {
     e.preventDefault();
+
+    let newErrors = {
+      title: !data.title.trim(),
+      categoryId: !data.categoryId,
+      image: !(data.image && data.image.length > 0),
+    };
+
+    setErrors(newErrors);
+
+    if (Object.values(newErrors).some((error) => error)) {
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("title", data.title);
@@ -202,6 +221,7 @@ export default function NewBlogForm() {
               required
               value={data.title}
               onChange={handleChange}
+              helperText={errors.title ? "Bu alan zorunludur" : ""}
             />
           </FormControl>
 
@@ -215,6 +235,7 @@ export default function NewBlogForm() {
               required
               value={data.categoryId}
               onChange={handleChange}
+              helperText={errors.categoryId ? "Bu alan zorunludur" : ""}
             >
               {categories?.map((category) => (
                 <MenuItem key={category._id} value={category._id}>
@@ -253,6 +274,11 @@ export default function NewBlogForm() {
                 ref={fileInputRef}
               />
             </Box>
+            {errors.image && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                Bu alan zorunludur
+              </p>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense">

@@ -39,3 +39,36 @@
 .ql-snow .ql-editor strong {
   font-weight: 600;
 }
+
+@media (max-width: 640px) {
+  .ql-snow .ql-editor h1 {
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .ql-snow .ql-editor h2 {
+    font-size: 1.45rem;
+    font-weight: 525;
+    margin-bottom: 0.5rem;
+  }
+  .ql-snow .ql-editor h3 {
+    font-size: 1.2rem;
+    font-weight: 450;
+    margin-bottom: 0.4rem;
+  }
+  .ql-snow .ql-editor h4 {
+    font-size: 1.05rem;
+    font-weight: 375;
+    margin-bottom: 0.35rem;
+  }
+  .ql-snow .ql-editor h5 {
+    font-size: 0.9rem;
+    font-weight: 375;
+    margin-bottom: 0.3rem;
+  }
+  .ql-snow .ql-editor h6 {
+    font-size: 0.75rem;
+    font-weight: 300;
+    margin-bottom: 0.2rem;
+  }
+}

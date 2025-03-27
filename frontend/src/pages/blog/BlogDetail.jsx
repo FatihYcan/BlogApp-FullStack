@@ -24,7 +24,7 @@ import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import ContentCard from "../../components/content/card/ContentCard";
 import avatar from "../../assets/icons/avatar.png";
-// import "../../assets/styles/detailStyles.css";
+import AddContentModal from "../../components/content/modal/AddContentModal";
 
 const StyledCardContent = styled(CardContent)({
   display: "flex",
@@ -54,6 +54,9 @@ export default function BlogDetail() {
   const [selectedImage, setSelectedImage] = useState("");
   const [loginOpen, setLoginOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
+
+  const [contentOpen, setContentOpen] = useState(false);
+
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isContentForm, setIsContentForm] = useState(false);
 
@@ -105,7 +108,14 @@ export default function BlogDetail() {
 
   const handleUpdateClose = () => {
     setUpdateOpen(false);
-    setIsContentForm(false);
+  };
+
+  const handleContentOpen = () => {
+    setContentOpen(true);
+  };
+
+  const handleContentClose = () => {
+    setContentOpen(false);
   };
 
   const handleImageOpen = (imageUrl) => {
@@ -223,12 +233,12 @@ export default function BlogDetail() {
             <Typography gutterBottom variant="h6" component="div">
               {title}
             </Typography>
-            {/* <Typography
+            <Typography
               component="div"
               gutterBottom
               dangerouslySetInnerHTML={{ __html: content }}
               className="editor-content"
-            /> */}
+            />
 
             {contents?.map((item, index) => (
               <div key={index}>
@@ -346,6 +356,13 @@ export default function BlogDetail() {
               </button>
 
               <button
+                className="bg-blue-600 text-white font-medium py-2 px-2 rounded-md"
+                onClick={handleContentOpen}
+              >
+                Add Content
+              </button>
+
+              <button
                 className="bg-red-600 text-white font-medium py-2 px-2 rounded-md"
                 onClick={handleDeleteOpen}
               >
@@ -374,9 +391,13 @@ export default function BlogDetail() {
             handleUpdateClose={handleUpdateClose}
             setData={setData}
             data={data}
-            isContentForm={isContentForm}
-            setIsContentForm={setIsContentForm}
           />
+
+          <AddContentModal
+            contentOpen={contentOpen}
+            handleContentClose={handleContentClose}
+          />
+
           <DeleteBlogModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}
