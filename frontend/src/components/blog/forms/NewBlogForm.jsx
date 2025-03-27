@@ -206,6 +206,7 @@ export default function NewBlogForm() {
         flexDirection: "column",
         width: "100%",
         gap: 2,
+        marginBottom: 4,
       }}
     >
       {!isContentForm && (

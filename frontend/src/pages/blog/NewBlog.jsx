@@ -10,9 +10,8 @@ export default function NewBlog() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        my: 20,
-        padding: 2,
-        gap: 4,
+        paddingTop: 20,
+        gap: 1,
       }}
     >
       <Helmet>

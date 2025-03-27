@@ -25,7 +25,7 @@ import ContentCard from "../../components/content/card/ContentCard";
 import AddContentModal from "../../components/content/modal/AddContentModal";
 import avatar from "../../assets/icons/avatar.png";
 
-const SyledCardContent = styled(CardContent)({
+const StyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
   gap: 4,
@@ -134,9 +134,8 @@ export default function MyBlogDetail() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        my: 20,
-        padding: 2,
-        gap: 4,
+        paddingTop: 20,
+        gap: 1,
       }}
     >
       <Helmet>
@@ -218,7 +217,7 @@ export default function MyBlogDetail() {
             </Typography>
           </Box>
 
-          <SyledCardContent>
+          <StyledCardContent>
             <Typography gutterBottom variant="caption" component="div">
               {categoryId?.name || ""}
             </Typography>
@@ -235,7 +234,7 @@ export default function MyBlogDetail() {
                 />
               </div>
             ))}
-          </SyledCardContent>
+          </StyledCardContent>
 
           <Box
             sx={{

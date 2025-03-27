@@ -138,9 +138,8 @@ export default function BlogDetail() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        my: 20,
-        padding: 2,
-        gap: 4,
+        paddingTop: 20,
+        gap: 1,
       }}
     >
       <Helmet>
@@ -334,7 +333,7 @@ export default function BlogDetail() {
           )}
 
           {username === userId?.username && (
-            <Box my={2} display="flex" justifyContent="center" gap={2}>
+            <Box mt={2} display="flex" justifyContent="center" gap={2}>
               <button
                 className="bg-green-600 text-white font-medium py-2 px-2 rounded-md"
                 onClick={handleUpdateOpen}
@@ -369,7 +368,7 @@ export default function BlogDetail() {
             handleImageClose={handleImageClose}
             selectedImage={selectedImage}
           />
-          
+
           <LoginModal
             loginOpen={loginOpen}
             handleCloseLogin={handleCloseLogin}
