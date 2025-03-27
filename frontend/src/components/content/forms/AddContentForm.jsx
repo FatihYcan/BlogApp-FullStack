@@ -129,7 +129,6 @@ export default function AddContentForm({ handleContentClose }) {
               name="images"
               type="file"
               accept="image/*"
-              required
               multiple
               style={{
                 width: "100%",
@@ -164,7 +163,7 @@ export default function AddContentForm({ handleContentClose }) {
             type="submit"
             className="bg-green-600 text-white font-medium py-2 px-2 rounded-md w-full sm:w-1/3"
           >
-            New Content
+            Save and Finish
           </button>
 
           <button

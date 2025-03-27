@@ -23,8 +23,8 @@ import ImageBlogModal from "../../components/blog/modals/ImageBlogModal";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import ContentCard from "../../components/content/card/ContentCard";
-import avatar from "../../assets/icons/avatar.png";
 import AddContentModal from "../../components/content/modal/AddContentModal";
+import avatar from "../../assets/icons/avatar.png";
 
 const StyledCardContent = styled(CardContent)({
   display: "flex",
@@ -54,25 +54,19 @@ export default function BlogDetail() {
   const [selectedImage, setSelectedImage] = useState("");
   const [loginOpen, setLoginOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
-
   const [contentOpen, setContentOpen] = useState(false);
-
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [isContentForm, setIsContentForm] = useState(false);
 
   const [data, setData] = useState({
-    categoryId: singleBlog?.categoryId,
-    content: singleBlog?.content,
-    isPublish: singleBlog?.isPublish,
-    images: singleBlog?.images,
-    showFileName: singleBlog?.showFileName,
     title: singleBlog?.title,
+    categoryId: singleBlog?.categoryId?._id,
+    image: singleBlog?.image,
+    isPublish: singleBlog?.isPublish,
   });
 
   const {
     categoryId,
     comments,
-    content,
     contents,
     createdAt,
     image,
@@ -233,13 +227,6 @@ export default function BlogDetail() {
             <Typography gutterBottom variant="h6" component="div">
               {title}
             </Typography>
-            <Typography
-              component="div"
-              gutterBottom
-              dangerouslySetInnerHTML={{ __html: content }}
-              className="editor-content"
-            />
-
             {contents?.map((item, index) => (
               <div key={index}>
                 <ContentCard
@@ -376,11 +363,13 @@ export default function BlogDetail() {
             handleLikeClose={handleLikeClose}
             likes={likes}
           />
+
           <ImageBlogModal
             imageOpen={imageOpen}
             handleImageClose={handleImageClose}
             selectedImage={selectedImage}
           />
+          
           <LoginModal
             loginOpen={loginOpen}
             handleCloseLogin={handleCloseLogin}

@@ -122,12 +122,6 @@ export default function BlogCard({
             variant="body2"
             color="text.secondary"
             gutterBottom
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-          <StyledTypography
-            variant="body2"
-            color="text.secondary"
-            gutterBottom
             dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
           />
         </SyledCardContent>

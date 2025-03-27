@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -6,22 +10,20 @@ import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import styled from "@mui/material/styles/styled";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid2";
+import CircularProgress from "@mui/material/CircularProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import LikeBlogModal from "../../components/blog/modals/LikeBlogModal";
-import avatar from "../../assets/icons/avatar.png";
 import DeleteMyBlogModal from "../../components/blog/modals/DeleteMyBlogModal";
 import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
-import { Helmet } from "react-helmet";
+import ImageBlogModal from "../../components/blog/modals/ImageBlogModal";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
-import CircularProgress from "@mui/material/CircularProgress";
+import ContentCard from "../../components/content/card/ContentCard";
+import AddContentModal from "../../components/content/modal/AddContentModal";
+import avatar from "../../assets/icons/avatar.png";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -35,84 +37,95 @@ const SyledCardContent = styled(CardContent)({
 });
 
 export default function MyBlogDetail() {
-  const { _id, username: name } = useParams();
-  const { singleBlog, likes: like } = useSelector((state) => state.blog);
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { _id, username: name } = useParams();
   const { getSingleBlog, postBlogLike } = useBlogCalls();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateClose = () => setUpdateOpen(false);
+  const { singleBlog, likes: like } = useSelector((state) => state.blog);
+
+  const [loading, setLoading] = useState(true);
   const [commentOpen, setCommentOpen] = useState(false);
   const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const { username } = userInfo || {};
+  const [likeOpen, setLikeOpen] = useState(false);
+  const [imageOpen, setImageOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [contentOpen, setContentOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const [data, setData] = useState({
-    categoryId: singleBlog?.categoryId || "",
-    content: singleBlog?.content || "",
-    isPublish: singleBlog?.isPublish || false,
-    images: singleBlog?.images || [],
-    showFileName: singleBlog?.showFileName || false,
-    title: singleBlog?.title || "",
+    title: singleBlog?.title,
+    categoryId: singleBlog?.categoryId?._id,
+    image: singleBlog?.image,
+    isPublish: singleBlog?.isPublish,
   });
-
-  useEffect(() => {
-    getSingleBlog(name, _id);
-  }, [like]);
 
   const {
     categoryId,
-    comments = [],
-    content = "",
-    createdAt = "",
-    images = [],
-    showFileName = true,
-    likes = [],
-    title = "",
-    userId = {},
-    views = [],
-  } = singleBlog || {};
+    comments,
+    contents,
+    createdAt,
+    image,
+    likes,
+    title,
+    userId,
+    views,
+  } = singleBlog;
+
+  const { username } = userInfo || {};
+  const isLiked = likes?.some((like) => like.userId?.username === username);
+  const likesCount = likes?.length || 0;
+  const commentsCount = comments?.length || 0;
+  const viewsCount = views?.length || 0;
+
+  useEffect(() => {
+    getSingleBlog(name, _id);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [like]);
 
   const handleUpdateOpen = () => {
     setData({
-      categoryId: singleBlog?.categoryId?._id || "",
-      content: singleBlog?.content || "",
-      isPublish: singleBlog?.isPublish || true,
-      images: singleBlog?.images || [],
-      showFileName: singleBlog?.showFileName || true,
-      title: singleBlog?.title || "",
+      title: singleBlog?.title,
+      categoryId: singleBlog?.categoryId?._id,
+      image: singleBlog?.image,
+      isPublish: singleBlog?.isPublish,
     });
     setUpdateOpen(true);
   };
 
-  const blogImage = images?.map((image) => image.slice(1)) || [];
-  const isLiked = likes?.some((like) => like.userId.username === username);
+  const handleUpdateClose = () => {
+    setUpdateOpen(false);
+  };
+
+  const handleContentOpen = () => {
+    setContentOpen(true);
+  };
+
+  const handleContentClose = () => {
+    setContentOpen(false);
+  };
+
+  const handleImageOpen = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setImageOpen(true);
+  };
+
+  const handleImageClose = () => setImageOpen(false);
 
   const handleLike = () => {
     postBlogLike(_id);
   };
 
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const likesCount = likes?.length || 0;
-  const commentsCount = comments?.length || 0;
-  const viewsCount = views?.length || 0;
 
   return (
     <Container
@@ -148,7 +161,11 @@ export default function MyBlogDetail() {
           <CardMedia
             component="img"
             alt={title}
-            image={`http://127.0.0.1:8000${blogImage[0]}`}
+            image={
+              image && image.length > 0
+                ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                : []
+            }
             sx={{
               width: "80%",
               margin: "auto",
@@ -208,58 +225,17 @@ export default function MyBlogDetail() {
             <Typography gutterBottom variant="h6" component="div">
               {title}
             </Typography>
-            <Typography
-              component="div"
-              gutterBottom
-              dangerouslySetInnerHTML={{ __html: content }}
-              className="editor-content"
-            />
+            {contents?.map((item, index) => (
+              <div key={index}>
+                <ContentCard
+                  item={item}
+                  handleImageOpen={handleImageOpen}
+                  username={username}
+                  userId={userId}
+                />
+              </div>
+            ))}
           </SyledCardContent>
-
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={2}
-            justifyContent="center"
-          >
-            {blogImage.map((image, index) => {
-              const decoder = new TextDecoder("utf-8");
-              const fixedString = decoder.decode(
-                new TextEncoder().encode(image)
-              );
-
-              const fileName = fixedString
-                .split("/")
-                .pop()
-                .split(".")[0]
-                .replace(/^\d+-/, "")
-                .split(/[-\s]+/)
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" - ");
-
-              return (
-                <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                  <CardMedia
-                    component="img"
-                    alt={`${title} image ${index + 1}`}
-                    image={`http://127.0.0.1:8000${image}`}
-                    sx={{
-                      aspectRatio: "16 / 9",
-                      objectFit: "initial",
-                    }}
-                  />
-                  {showFileName && (
-                    <Typography
-                      variant="caption"
-                      sx={{ textAlign: "center", display: "block", mt: 1 }}
-                    >
-                      {fileName}
-                    </Typography>
-                  )}
-                </Grid>
-              );
-            })}
-          </Grid>
 
           <Box
             sx={{
@@ -291,7 +267,7 @@ export default function MyBlogDetail() {
                     marginLeft: "2px",
                     cursor: "pointer",
                   }}
-                  onClick={handleOpen}
+                  onClick={handleLikeOpen}
                 >
                   {likesCount}
                 </span>
@@ -356,26 +332,51 @@ export default function MyBlogDetail() {
 
           <Box my={2} display="flex" justifyContent="center" gap={2}>
             <button
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md"
+              className="bg-green-600 text-white font-medium py-2 px-2 rounded-md"
               onClick={handleUpdateOpen}
             >
               Update Blog
             </button>
 
             <button
-              className="bg-red-600  text-white font-medium py-2 px-2 rounded-md"
+              className="bg-blue-600 text-white font-medium py-2 px-2 rounded-md"
+              onClick={handleContentOpen}
+            >
+              Add Content
+            </button>
+
+            <button
+              className="bg-red-600 text-white font-medium py-2 px-2 rounded-md"
               onClick={handleDeleteOpen}
             >
               Delete Blog
             </button>
           </Box>
-          <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
+
+          <LikeBlogModal
+            likeOpen={likeOpen}
+            handleLikeClose={handleLikeClose}
+            likes={likes}
+          />
+
+          <ImageBlogModal
+            imageOpen={imageOpen}
+            handleImageClose={handleImageClose}
+            selectedImage={selectedImage}
+          />
+
           <UpdateBlogModal
             updateOpen={updateOpen}
             handleUpdateClose={handleUpdateClose}
             setData={setData}
             data={data}
           />
+
+          <AddContentModal
+            contentOpen={contentOpen}
+            handleContentClose={handleContentClose}
+          />
+
           <DeleteMyBlogModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}

@@ -82,7 +82,7 @@ export default function MyBlogs() {
     }
 
     if (searchMyBlog) {
-      url += `&search[title]=${searchMyBlog}&search[content]=${searchMyBlog}`;
+      url += `&search[title]=${searchMyBlog}`;
     }
 
     return url;

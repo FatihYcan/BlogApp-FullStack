@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LikeBlogModal from "../modals/LikeBlogModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
+import avatar from "../../../assets/icons/avatar.png";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -54,7 +55,8 @@ const StyledTypography = styled(Typography)({
 export default function UserBlogCard({
   _id,
   title,
-  images,
+  contents,
+  image,
   categoryId,
   content,
   likes,
@@ -80,9 +82,6 @@ export default function UserBlogCard({
     navigate(`/my-blogs/${username}/${_id}`);
   };
 
-  const blogImage = images?.[0]?.slice(1) || [];
-  const userImage = userId?.image?.[0]?.slice(1) || [];
-
   const isLiked = likes.some((like) => like.userId.username === username);
 
   return (
@@ -92,7 +91,11 @@ export default function UserBlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={`http://127.0.0.1:8000${blogImage}`}
+          image={
+            image && image.length > 0
+              ? `http://127.0.0.1:8000${image[0].slice(1)}`
+              : []
+          }
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -111,7 +114,7 @@ export default function UserBlogCard({
             variant="body2"
             color="text.secondary"
             gutterBottom
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
           />
         </SyledCardContent>
 
@@ -203,7 +206,11 @@ export default function UserBlogCard({
               <Avatar
                 key={userId._id}
                 alt={userId.username}
-                src={`http://127.0.0.1:8000${userImage}`}
+                src={
+                  userId.image && userId.image.length > 0
+                    ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
+                    : avatar
+                }
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>

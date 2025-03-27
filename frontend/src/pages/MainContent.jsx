@@ -83,7 +83,7 @@ export default function MainContent() {
     }
 
     if (searchBlog) {
-      url += `&search[title]=${searchBlog}&search[content]=${searchBlog}`;
+      url += `&search[title]=${searchBlog}`;
     }
 
     return url;

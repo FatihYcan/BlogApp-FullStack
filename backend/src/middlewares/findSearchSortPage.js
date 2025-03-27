@@ -15,12 +15,14 @@ module.exports = (req, res, next) => {
     const search = req.query?.search || {}
     // console.log(search)
     // const example = { title: { $regex: 'test', $options: 'i' } } // const example = { title: /test/ }
-    // for (let key in search) search[key] = { $regex: search[key], $options: 'i' } // i: case insensitive
-    const searchConditions = []
-    for (let key in search) {
-        searchConditions.push({ [key]: { $regex: search[key], $options: 'i' } })
-    }
-    const searchQuery = searchConditions.length > 0 ? { $or: searchConditions } : {}
+    for (let key in search) search[key] = { $regex: search[key], $options: 'i' } // i: case insensitive
+    // const searchConditions = []
+    // for (let key in search) {
+    //     searchConditions.push({ [key]: { $regex: search[key], $options: 'i' } })
+    // }
+    // const searchQuery = searchConditions.length > 0 ? { $or: searchConditions } : {}
+
+    // console.log(searchQuery)
 
     // ### SORTING ###
     // URL?sort[key1]=asc&sort[key2]=desc
@@ -51,13 +53,13 @@ module.exports = (req, res, next) => {
 
     // Run for output:
     res.getModelList = async (Model, customFilter = {}, populate = null) => {
-        return await Model.find({ ...filter, ...searchQuery, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate)
+        return await Model.find({ ...filter, ...search, ...customFilter }).sort(sort).skip(skip).limit(limit).populate(populate)
     }
 
     // Details:
     res.getModelListDetails = async (Model, customFilter = {}) => {
 
-        const data = await Model.find({ ...filter, ...searchQuery, ...customFilter })
+        const data = await Model.find({ ...filter, ...search, ...customFilter })
 
         let details = {
             filter,

@@ -11,8 +11,7 @@ export default function ContentForm({
   fileInputRef,
   onSubmit,
   onAddContent,
-  isContentForm,
-}) {
+  }) {
   return (
     <Box
       component="div"
@@ -78,7 +77,7 @@ export default function ContentForm({
           onClick={onSubmit}
           className="bg-green-600 text-white font-medium py-2 px-2 rounded-md mt-4 w-full"
         >
-          {isContentForm ? "Update Blog" : "New Blog"}
+          Save and Finish
         </button>
       </Box>
     </Box>
