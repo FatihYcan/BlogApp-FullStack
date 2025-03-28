@@ -27,7 +27,7 @@ const TextEditor = ({ value, onChange, isContent }) => {
       {isContent && (
         <p className="text-red-500 text-sm">Content alanı zorunludur</p>
       )}
-      <p className="text-black font-bold text-sm">
+      <p className="text-black dark:text-white font-bold text-sm">
         Blog oluştururken, içeriklerinizi ayrı ayrı eklemenizi öneririz. Bu
         sayede her bir içeriği kolayca yönetebilir ve düzenleyebilirsiniz.
         Ayrıca, her içeriğe farklı resimler ekleyebilirsiniz.

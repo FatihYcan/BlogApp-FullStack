@@ -89,10 +89,12 @@ module.exports = {
         if (req.file) {
             req.body.image = "./uploads/user/" + req.file.filename;
         }
+
         //! Eğer kullanıcı resmi sildiyse
         else if (req.body.image === "") {
             req.body.image = []
         }
+
         //! Eğer kullanıcı resmi değiştirmediyse
         else {
             req.body.image = User.image;

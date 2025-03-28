@@ -214,7 +214,7 @@ export default function BlogDetail() {
             <Typography gutterBottom variant="caption" component="div">
               {categoryId?.name || ""}
             </Typography>
-            <Typography gutterBottom variant="h6" component="div">
+            <Typography gutterBottom variant="h6" component="div" color="error.main">
               {title}
             </Typography>
             {contents?.map((item, index) => (

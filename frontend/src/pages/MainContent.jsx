@@ -132,7 +132,15 @@ export default function MainContent() {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log(page);
+  if (loading) {
+    return (
+      <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <BlogCardSkeleton key={index} />
+        ))}
+      </Grid>
+    );
+  }
 
   return (
     <Box
@@ -217,11 +225,9 @@ export default function MainContent() {
         </Box>
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
-        {loading
-          ? Array.from({ length: 6 }).map((_, index) => (
-              <BlogCardSkeleton key={index} />
-            ))
-          : blogs.map((blog) => <BlogCard key={blog._id} {...blog} />)}
+        {blogs.map((blog) => (
+          <BlogCard key={blog._id} {...blog} />
+        ))}
       </Grid>
 
       <div>

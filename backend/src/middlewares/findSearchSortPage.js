@@ -5,49 +5,25 @@ module.exports = (req, res, next) => {
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
 
     // ### FILTERING ###
-    // URL?filter[key1]=value1&filter[key2]=value2
     const filter = req.query?.filter || {}
-    // console.log(filter)
 
     // ### SEARCHING ###
-    // URL?search[key1]=value1&search[key2]=value2
-    // https://www.mongodb.com/docs/manual/reference/operator/query/regex/
     const search = req.query?.search || {}
-    // console.log(search)
-    // const example = { title: { $regex: 'test', $options: 'i' } } // const example = { title: /test/ }
     for (let key in search) search[key] = { $regex: search[key], $options: 'i' } // i: case insensitive
-    // const searchConditions = []
-    // for (let key in search) {
-    //     searchConditions.push({ [key]: { $regex: search[key], $options: 'i' } })
-    // }
-    // const searchQuery = searchConditions.length > 0 ? { $or: searchConditions } : {}
-
-    // console.log(searchQuery)
 
     // ### SORTING ###
-    // URL?sort[key1]=asc&sort[key2]=desc
-    // asc: A-Z - desc: Z-A
     const sort = req.query?.sort || { createdAt: 'desc' }
-    // console.log(sort);
 
     // ### PAGINATION ###
-
-    // URL?page=3&limit=10
     let limit = Number(req.query?.limit)
-    // console.log(limit)
-    // limit = limit > 0 ? limit : Number(process.env.PAGE_SIZE || 20)
     limit = limit > 0 ? limit : undefined;
-    // if (!limit || limit <= 0) limit = undefined;
-    // console.log(typeof limit, limit)
 
     let page = Number(req.query?.page)
-    page = page > 0 ? (page - 1) : 0 // Backend'de sayfa sayısı her zaman (page - 1)'dir.
-    // console.log(typeof page, page)
+    page = page > 0 ? (page - 1) : 0
 
     let skip = Number(req.query?.skip)
-    // skip = skip > 0 ? skip : (page * limit)
     skip = skip > 0 ? skip : (page * (limit || 0));
-    // console.log(typeof skip, skip)
+
 
     /* FILTERING & SEARCHING & SORTING & PAGINATION */
 

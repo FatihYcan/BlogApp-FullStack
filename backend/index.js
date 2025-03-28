@@ -33,9 +33,6 @@ app.use(cors())
 //? Accept Form-Data
 app.use(express.urlencoded({ extended: true }))
 
-//? Logging
-app.use(require('./src/middlewares/logging'))
-
 //? Check Authentication
 app.use(require('./src/middlewares/authentication'))
 

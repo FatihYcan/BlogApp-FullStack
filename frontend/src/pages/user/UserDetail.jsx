@@ -136,7 +136,9 @@ export default function UserDetail() {
           />
           <SyledCardContent>
             <Typography gutterBottom variant="h6" component="div">
-              {username.charAt(0).toUpperCase() + username.slice(1)}
+              {username
+                ? username.charAt(0).toUpperCase() + username.slice(1)
+                : ""}
             </Typography>
             <StyledTypography
               variant="body2"
@@ -177,10 +179,10 @@ export default function UserDetail() {
                   sx={{ width: 24, height: 24 }}
                 />
               </AvatarGroup>
-              <Typography variant="caption">{email}</Typography>
+              <Typography variant="caption">{email || ""}</Typography>
             </Box>
             <Typography variant="caption">
-              {new Date(createdAt).toLocaleDateString("tr-TR")}
+              {createdAt ? new Date(createdAt).toLocaleDateString("tr-TR") : ""}
             </Typography>
           </Box>
 

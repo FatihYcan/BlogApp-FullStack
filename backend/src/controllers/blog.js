@@ -48,14 +48,14 @@ module.exports = {
 
         let data
         if (req.body._id) {
-            // Eğer _id varsa, blogu güncelle
+            //! Eğer _id varsa, blogu güncelle
             data = await Blog.findByIdAndUpdate(
                 req.body._id,
                 { ...req.body, isPublish: true },
                 { new: true }
             )
         } else {
-            // _id yoksa, yeni bir blog oluştur
+            //! _id yoksa, yeni bir blog oluştur
             data = await Blog.create({ ...req.body, isPublish: true })
         }
         res.status(201).send({ error: false, data })

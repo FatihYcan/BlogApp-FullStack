@@ -14,6 +14,7 @@ import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import LoginModal from "../modals/LoginModal";
+import "../../../assets/styles/detailStyles.css";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
   position: "relative",
@@ -112,7 +113,12 @@ export default function PopularBlogCard({
         <Typography gutterBottom variant="caption" component="div">
           {categoryId.name}
         </Typography>
-        <TitleTypography gutterBottom variant="h6" onClick={handleDetail}>
+        <TitleTypography
+          gutterBottom
+          variant="h6"
+          color="error.main"
+          onClick={handleDetail}
+        >
           {title}
           <NavigateNextRoundedIcon
             className="arrow"
@@ -121,7 +127,7 @@ export default function PopularBlogCard({
         </TitleTypography>
         <StyledTypography
           variant="body2"
-          color="text.secondary"
+          className="editor-content"
           gutterBottom
           dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
         ></StyledTypography>

@@ -40,6 +40,12 @@
   font-weight: 600;
 }
 
+html[data-mui-color-scheme="dark"]
+  .editor-content
+  [style="color: rgba(0, 0, 0, 0.87);"] {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
 .editor-content u {
   text-decoration: underline;
 }

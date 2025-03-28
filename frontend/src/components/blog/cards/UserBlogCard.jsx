@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
+import "../../../assets/styles/detailStyles.css";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -107,12 +108,13 @@ export default function UserBlogCard({
           <Typography gutterBottom variant="caption" component="div">
             {categoryId.name}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h6" component="div" color="error.main">
             {title}
           </Typography>
           <StyledTypography
             variant="body2"
             color="text.secondary"
+            className="editor-content"
             gutterBottom
             dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
           />

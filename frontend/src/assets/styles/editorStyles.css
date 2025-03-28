@@ -40,6 +40,12 @@
   font-weight: 600;
 }
 
+html[data-mui-color-scheme="dark"]
+.ql-snow .ql-editor
+  [style="color: rgba(0, 0, 0, 0.87);"] {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
 @media (max-width: 640px) {
   .ql-snow .ql-editor h1 {
     font-size: 1.65rem;

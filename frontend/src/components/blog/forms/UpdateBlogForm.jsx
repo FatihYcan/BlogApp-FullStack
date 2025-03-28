@@ -19,11 +19,11 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCategories("categories");
-    const timer = setTimeout(() => {
+    const fetchData = async () => {
+      await getCategories("categories");
       setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
+    };
+    fetchData();
   }, []);
 
   const handleChange = (e) => {
@@ -93,7 +93,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
           </FormControl>
 
           <FormControl fullWidth margin="dense">
-            <FormLabel htmlFor="category">Category</FormLabel>
+            <FormLabel htmlFor="categoryId">Category</FormLabel>
             <TextField
               size="small"
               id="categoryId"

@@ -98,8 +98,12 @@ export default function MyBlogs() {
   };
 
   useEffect(() => {
-    getAllUserBlog(`/blogs?author=${_id}`);
-    getUserBlog(generateBlogsUrl());
+    const fetchData = async () => {
+      await getUserBlog(generateBlogsUrl());
+      getAllUserBlog(`/blogs?author=${_id}`);
+      setLoading(false);
+    };
+    fetchData();
   }, [myPage, selectedMyCategory, likes, searchMyBlog]);
 
   const handleAllClick = () => {
@@ -122,14 +126,6 @@ export default function MyBlogs() {
     setSearchMyBlog(e.target.value);
     setMyPage(1);
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const uniqueCategories = [
     ...new Set(allUserBlogs.map((blog) => JSON.stringify(blog.categoryId))),
