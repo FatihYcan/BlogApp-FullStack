@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import AddContentForm from "../forms/AddContentForm";
 
-export default function AddContentModal({ contentOpen, handleContentClose }) {
+export default function AddContentModal({ addOpen, handleAddClose }) {
   const style = (theme) => ({
     position: "absolute",
     top: "50%",
@@ -23,13 +23,13 @@ export default function AddContentModal({ contentOpen, handleContentClose }) {
   return (
     <div>
       <Modal
-        open={contentOpen}
-        onClose={handleContentClose}
+        open={addOpen}
+        onClose={handleAddClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <AddContentForm handleContentClose={handleContentClose} />
+          <AddContentForm handleAddClose={handleAddClose} />
         </Box>
       </Modal>
     </div>

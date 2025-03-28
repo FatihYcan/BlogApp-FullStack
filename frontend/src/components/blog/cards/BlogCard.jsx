@@ -12,7 +12,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeBlogModal from "../modals/LikeBlogModal";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import LoginModal from "../modals/LoginModal";
@@ -58,32 +58,27 @@ export default function BlogCard({
   contents,
   image,
   categoryId,
-  content,
   likes,
   comments,
   views,
   userId,
   createdAt,
 }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [loginOpen, setLoginOpen] = useState(false);
-  const handleCloseLogin = () => setLoginOpen(false);
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
 
+  const [likeOpen, setLikeOpen] = useState(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
+
   const { username } = userInfo || {};
 
   const handleLike = () => {
-    if (username) {
-      postBlogLike(_id);
-    } else {
-      setLoginOpen(true);
-    }
+    username ? postBlogLike(_id) : setLoginOpen(true);
   };
 
   const handleDetail = () => {
@@ -154,7 +149,7 @@ export default function BlogCard({
             {likes.length > 0 && (
               <span
                 style={{ fontSize: "1.2rem", marginLeft: "2px" }}
-                onClick={handleOpen}
+                onClick={handleLikeOpen}
               >
                 {likes.length}
               </span>
@@ -233,7 +228,11 @@ export default function BlogCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
+        <BlogLikesModal
+          likeOpen={likeOpen}
+          handleLikeClose={handleLikeClose}
+          likes={likes}
+        />
         <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </SyledCard>
     </Grid>

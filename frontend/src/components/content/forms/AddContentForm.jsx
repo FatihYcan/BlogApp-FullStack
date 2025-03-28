@@ -7,7 +7,7 @@ import TextEditor from "./TextEditor";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-export default function AddContentForm({ handleContentClose }) {
+export default function AddContentForm({ handleAddClose }) {
   const { getSingleBlog } = useBlogCalls();
   const { postContent } = useContentCalls();
   const { _id, username } = useParams();
@@ -57,7 +57,7 @@ export default function AddContentForm({ handleContentClose }) {
 
     if (isContentCreated) {
       await getSingleBlog(username, _id);
-      handleContentClose();
+      handleAddClose();
     }
   };
 
@@ -167,7 +167,7 @@ export default function AddContentForm({ handleContentClose }) {
           </button>
 
           <button
-            onClick={handleContentClose}
+            onClick={handleAddClose}
             type="button"
             className="bg-red-600 text-white font-medium py-2 px-2 rounded-md w-full sm:w-1/3"
           >

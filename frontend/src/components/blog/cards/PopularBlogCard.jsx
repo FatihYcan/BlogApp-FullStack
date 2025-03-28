@@ -10,7 +10,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeBlogModal from "../modals/LikeBlogModal";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import LoginModal from "../modals/LoginModal";
@@ -60,23 +60,24 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-export default function PopularCard({
+export default function PopularBlogCard({
   _id,
   title,
   contents,
   categoryId,
-  content,
   likes,
   comments,
   views,
   userId,
   createdAt,
 }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [likeOpen, setLikeOpen] = useState(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+
   const [loginOpen, setLoginOpen] = useState(false);
   const handleCloseLogin = () => setLoginOpen(false);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
@@ -118,14 +119,6 @@ export default function PopularCard({
             sx={{ fontSize: "1rem" }}
           />
         </TitleTypography>
-
-        <StyledTypography
-          variant="body2"
-          color="text.secondary"
-          gutterBottom
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></StyledTypography>
-
         <StyledTypography
           variant="body2"
           color="text.secondary"
@@ -162,7 +155,7 @@ export default function PopularCard({
                   marginLeft: "2px",
                   cursor: "pointer",
                 }}
-                onClick={handleOpen}
+                onClick={handleLikeOpen}
               >
                 {likes.length}
               </span>
@@ -240,7 +233,11 @@ export default function PopularCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
+        <BlogLikesModal
+          likeOpen={likeOpen}
+          handleLikeClose={handleLikeClose}
+          likes={likes}
+        />
         <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </Box>
     </Grid>

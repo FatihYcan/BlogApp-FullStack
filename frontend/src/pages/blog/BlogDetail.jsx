@@ -15,7 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import useBlogCalls from "../../hooks/useBlogCalls";
-import LikeBlogModal from "../../components/blog/modals/LikeBlogModal";
+import BlogLikesModal from "../../components/blog/modals/BlogLikesModal";
 import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
 import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 import LoginModal from "../../components/blog/modals/LoginModal";
@@ -42,20 +42,27 @@ export default function BlogDetail() {
   const { _id, username: name } = useParams();
   const { getSingleBlog, postBlogLike } = useBlogCalls();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
-
   const [loading, setLoading] = useState(true);
+
+  const { username } = userInfo || {};
+
+  const [loginOpen, setLoginOpen] = useState(false);
+  const handleCloseLogin = () => setLoginOpen(false);
+
+  const [imageOpen, setImageOpen] = useState(false);
+  const handleImageClose = () => setImageOpen(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const [likeOpen, setLikeOpen] = useState(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+
   const [commentOpen, setCommentOpen] = useState(false);
+
   const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
-  const [likeOpen, setLikeOpen] = useState(false);
-  const [imageOpen, setImageOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
-  const [contentOpen, setContentOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const [data, setData] = useState({
     title: singleBlog?.title,
@@ -63,6 +70,29 @@ export default function BlogDetail() {
     image: singleBlog?.image,
     isPublish: singleBlog?.isPublish,
   });
+
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleUpdateClose = () => setUpdateOpen(false);
+
+  const [addOpen, setAddOpen] = useState(false);
+  const handleAddOpen = () => setAddOpen(true);
+  const handleAddClose = () => setAddOpen(false);
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
+
+  useEffect(() => {
+    getSingleBlog(name, _id);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [like]);
+
+  const handleLike = () => {
+    username ? postBlogLike(_id) : setLoginOpen(true);
+  };
 
   const {
     categoryId,
@@ -76,19 +106,15 @@ export default function BlogDetail() {
     views,
   } = singleBlog;
 
-  const { username } = userInfo || {};
   const isLiked = likes?.some((like) => like.userId?.username === username);
   const likesCount = likes?.length || 0;
   const commentsCount = comments?.length || 0;
   const viewsCount = views?.length || 0;
 
-  useEffect(() => {
-    getSingleBlog(name, _id);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [like]);
+  const handleImageOpen = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setImageOpen(true);
+  };
 
   const handleUpdateOpen = () => {
     setData({
@@ -99,37 +125,6 @@ export default function BlogDetail() {
     });
     setUpdateOpen(true);
   };
-
-  const handleUpdateClose = () => {
-    setUpdateOpen(false);
-  };
-
-  const handleContentOpen = () => {
-    setContentOpen(true);
-  };
-
-  const handleContentClose = () => {
-    setContentOpen(false);
-  };
-
-  const handleImageOpen = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setImageOpen(true);
-  };
-
-  const handleImageClose = () => setImageOpen(false);
-
-  const handleLike = () => {
-    username ? postBlogLike(_id) : setLoginOpen(true);
-  };
-
-  const handleLikeOpen = () => setLikeOpen(true);
-  const handleLikeClose = () => setLikeOpen(false);
-
-  const handleDeleteOpen = () => setDeleteOpen(true);
-  const handleDeleteClose = () => setDeleteOpen(false);
-
-  const handleCloseLogin = () => setLoginOpen(false);
 
   return (
     <Container
@@ -343,7 +338,7 @@ export default function BlogDetail() {
 
               <button
                 className="bg-blue-600 text-white font-medium py-2 px-2 rounded-md"
-                onClick={handleContentOpen}
+                onClick={handleAddOpen}
               >
                 Add Content
               </button>
@@ -357,7 +352,7 @@ export default function BlogDetail() {
             </Box>
           )}
 
-          <LikeBlogModal
+          <BlogLikesModal
             likeOpen={likeOpen}
             handleLikeClose={handleLikeClose}
             likes={likes}
@@ -382,8 +377,8 @@ export default function BlogDetail() {
           />
 
           <AddContentModal
-            contentOpen={contentOpen}
-            handleContentClose={handleContentClose}
+            addOpen={addOpen}
+            handleAddClose={handleAddClose}
           />
 
           <DeleteBlogModal

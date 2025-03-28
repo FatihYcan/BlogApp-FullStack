@@ -18,7 +18,7 @@ const style = {
   padding: "10px 10px 0 10px",
 };
 
-export default function LikeBlogModal({ likeOpen, handleLikeClose, likes }) {
+export default function BlogLikesModal({ likeOpen, handleLikeClose, likes }) {
   return (
     <div>
       <Modal

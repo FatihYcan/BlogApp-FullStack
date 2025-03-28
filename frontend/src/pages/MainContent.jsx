@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/cards/BlogCard";
-import PopularCard from "../components/blog/cards/PopularCard";
+import PopularBlogCard from "../components/blog/cards/PopularBlogCard";
 import BlogCardSkeleton from "../components/blog/cards/BlogCardSkeleton";
 import { Helmet } from "react-helmet";
 
@@ -251,7 +251,7 @@ export default function MainContent() {
           sx={{ my: 4 }}
         >
           {viewBlogs.map((viewBlog) => (
-            <PopularCard key={viewBlog._id} {...viewBlog} />
+            <PopularBlogCard key={viewBlog._id} {...viewBlog} />
           ))}
         </Grid>
       </div>

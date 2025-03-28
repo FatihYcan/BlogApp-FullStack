@@ -12,7 +12,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LikeBlogModal from "../modals/LikeBlogModal";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
 
@@ -58,16 +58,16 @@ export default function UserBlogCard({
   contents,
   image,
   categoryId,
-  content,
   likes,
   comments,
   views,
   userId,
   createdAt,
 }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [likeOpen, setLikeOpen] = useState(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
@@ -144,7 +144,7 @@ export default function UserBlogCard({
             {likes.length > 0 && (
               <span
                 style={{ fontSize: "1.2rem", marginLeft: "2px" }}
-                onClick={handleOpen}
+                onClick={handleLikeOpen}
               >
                 {likes.length}
               </span>
@@ -223,7 +223,11 @@ export default function UserBlogCard({
             {new Date(createdAt).toLocaleDateString("tr-TR")}
           </Typography>
         </Box>
-        <LikeBlogModal open={open} handleClose={handleClose} likes={likes} />
+        <BlogLikesModal
+          likeOpen={likeOpen}
+          handleLikeClose={handleLikeClose}
+          likes={likes}
+        />
       </SyledCard>
     </Grid>
   );
