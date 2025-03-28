@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import UserCard from "../../components/user/cards/UserCard";
+import UsersCard from "../../components/user/cards/UsersCard";
 import useUserCalls from "../../hooks/useUserCalls";
 import { Helmet } from "react-helmet";
 
@@ -134,7 +134,7 @@ export default function Users() {
           justifyContent="center"
         >
           {users.map((user) => (
-            <UserCard key={user._id} {...user} page={page} />
+            <UsersCard key={user._id} {...user} page={page} />
           ))}
         </Grid>
 

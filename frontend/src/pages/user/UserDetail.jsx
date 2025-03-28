@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import avatar from "../../assets/icons/avatar.png";
 import DeleteUserModal from "../../components/user/modals/DeleteUserModal";
-import UpdateUserModal from "../../components/user/modals/UpdateMyUserModal";
+import UpdateUserModal from "../../components/user/modals/UpdateUserModal";
 import useUserCalls from "../../hooks/useUserCalls";
 import { Helmet } from "react-helmet";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -38,10 +38,15 @@ const StyledTypography = styled(Typography)({
 
 export default function UserDetail() {
   const { _id } = useParams();
+
   const { getSingleUser } = useUserCalls();
   const { singleUser } = useSelector((state) => state.user);
+
+  const [loading, setLoading] = useState(true);
+
   const [updateOpen, setUpdateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+
   const [data, setData] = useState({
     email: singleUser.email,
     firstName: singleUser.firstName,
@@ -53,12 +58,21 @@ export default function UserDetail() {
     username: singleUser.username,
   });
 
+  const { createdAt, email, firstName, image, lastName, username } = singleUser;
+
+  const fullName = firstName + " " + lastName;
+
   useEffect(() => {
     getSingleUser(_id);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
-  const { createdAt, email, firstName, image, lastName, username } = singleUser;
-  const fullName = firstName + " " + lastName;
+  const handleUpdateClose = () => setUpdateOpen(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
   const handleUpdateOpen = () => {
     setData({
@@ -73,10 +87,6 @@ export default function UserDetail() {
     });
     setUpdateOpen(true);
   };
-
-  const handleUpdateClose = () => setUpdateOpen(false);
-  const handleDeleteOpen = () => setDeleteOpen(true);
-  const handleDeleteClose = () => setDeleteOpen(false);
 
   return (
     <Container
@@ -96,7 +106,7 @@ export default function UserDetail() {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 
-      {!singleUser || Object.keys(singleUser).length === 0 ? (
+      {loading || !singleUser ? (
         <Box
           sx={{
             display: "flex",

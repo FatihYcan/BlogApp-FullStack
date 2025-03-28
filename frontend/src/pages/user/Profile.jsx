@@ -9,10 +9,10 @@ import { Helmet } from "react-helmet";
 
 export default function Profile() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { _id } = userInfo || {};
+
   const { getSingleUser } = useUserCalls();
   const { singleUser } = useSelector((state) => state.user);
-
-  const { _id } = userInfo || {};
 
   useEffect(() => {
     getSingleUser(_id);

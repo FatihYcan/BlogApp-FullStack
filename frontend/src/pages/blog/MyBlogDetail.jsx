@@ -39,22 +39,21 @@ const StyledCardContent = styled(CardContent)({
 export default function MyBlogDetail() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id, username: name } = useParams();
-  const { getSingleBlog, postBlogLike } = useBlogCalls();
-  const { singleBlog, likes: like } = useSelector((state) => state.blog);
-  const [loading, setLoading] = useState(true);
-
   const { username } = userInfo || {};
 
+  const { getSingleBlog, postBlogLike } = useBlogCalls();
+  const { singleBlog, likes: like } = useSelector((state) => state.blog);
+
+  const [loading, setLoading] = useState(true);
+
   const [imageOpen, setImageOpen] = useState(false);
-  const handleImageClose = () => setImageOpen(false);
-  const [selectedImage, setSelectedImage] = useState("");
-
   const [likeOpen, setLikeOpen] = useState(false);
-  const handleLikeOpen = () => setLikeOpen(true);
-  const handleLikeClose = () => setLikeOpen(false);
-
   const [commentOpen, setCommentOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
+  const [selectedImage, setSelectedImage] = useState("");
   const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
@@ -66,29 +65,6 @@ export default function MyBlogDetail() {
     image: singleBlog?.image,
     isPublish: singleBlog?.isPublish,
   });
-
-  const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateClose = () => setUpdateOpen(false);
-
-  const [addOpen, setAddOpen] = useState(false);
-  const handleAddOpen = () => setAddOpen(true);
-  const handleAddClose = () => setAddOpen(false);
-
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const handleDeleteOpen = () => setDeleteOpen(true);
-  const handleDeleteClose = () => setDeleteOpen(false);
-
-  useEffect(() => {
-    getSingleBlog(name, _id);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [like]);
-
-  const handleLike = () => {
-    postBlogLike(_id);
-  };
 
   const {
     categoryId,
@@ -106,6 +82,27 @@ export default function MyBlogDetail() {
   const likesCount = likes?.length || 0;
   const commentsCount = comments?.length || 0;
   const viewsCount = views?.length || 0;
+
+  useEffect(() => {
+    getSingleBlog(name, _id);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [like]);
+
+  const handleImageClose = () => setImageOpen(false);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+  const handleUpdateClose = () => setUpdateOpen(false);
+  const handleAddOpen = () => setAddOpen(true);
+  const handleAddClose = () => setAddOpen(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
+
+  const handleLike = () => {
+    postBlogLike(_id);
+  };
 
   const handleImageOpen = (imageUrl) => {
     setSelectedImage(imageUrl);

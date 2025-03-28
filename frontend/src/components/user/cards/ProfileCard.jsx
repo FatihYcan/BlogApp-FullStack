@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import UpdateUserModal from "../modals/UpdateUserModal";
+import UpdateMyUserModal from "../modals/UpdateMyUserModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -49,7 +49,6 @@ const StyledTypography = styled(Typography)({
 
 export default function ProfileCard({ singleUser, _id }) {
   const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateClose = () => setUpdateOpen(false);
 
   const [data, setData] = useState({
     email: singleUser.email,
@@ -63,6 +62,8 @@ export default function ProfileCard({ singleUser, _id }) {
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
 
   const fullName = firstName + " " + lastName;
+
+  const handleUpdateClose = () => setUpdateOpen(false);
 
   const handleUpdateOpen = () => {
     setData({
@@ -148,7 +149,7 @@ export default function ProfileCard({ singleUser, _id }) {
             Update User
           </button>
         </Box>
-        <UpdateUserModal
+        <UpdateMyUserModal
           updateOpen={updateOpen}
           handleUpdateClose={handleUpdateClose}
           data={data}

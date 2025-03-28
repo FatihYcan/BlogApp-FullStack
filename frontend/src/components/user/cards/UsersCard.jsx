@@ -46,7 +46,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-export default function UserCard({
+export default function UsersCard({
   createdAt,
   email,
   firstName,
