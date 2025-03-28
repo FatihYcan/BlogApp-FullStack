@@ -43,7 +43,7 @@ export default function MainContent() {
     (state) => state.blog
   );
   const { getAllBlogs, getBlogs, getBlogsView } = useBlogCalls();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(sessionStorage.getItem("page") || 1);
   const [selectedCategory, setSelectedCategory] = useState(
     sessionStorage.getItem("selectedCategory") || ""
   );
@@ -70,10 +70,18 @@ export default function MainContent() {
       sessionStorage.removeItem("searchBlog");
     }
 
+    if (page) {
+      sessionStorage.setItem("page", page);
+    } else {
+      sessionStorage.removeItem("page");
+    }
+
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
-  }, [selectedCategory, searchBlog]);
+    sessionStorage.removeItem("myPage");
+    sessionStorage.removeItem("userPage");
+  }, [selectedCategory, searchBlog, page]);
 
   const generateBlogsUrl = () => {
     let url = `blogs?page=${page}&limit=6`;
@@ -123,6 +131,8 @@ export default function MainContent() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  console.log(page);
 
   return (
     <Box
@@ -211,9 +221,7 @@ export default function MainContent() {
           ? Array.from({ length: 6 }).map((_, index) => (
               <BlogCardSkeleton key={index} />
             ))
-          : blogs.map((blog) => (
-              <BlogCard key={blog._id} {...blog} page={page} />
-            ))}
+          : blogs.map((blog) => <BlogCard key={blog._id} {...blog} />)}
       </Grid>
 
       <div>
@@ -232,7 +240,7 @@ export default function MainContent() {
                 color="primary"
                 count={details?.pages?.total}
                 onChange={handleChange}
-                page={page}
+                page={Number(page)}
                 showFirstButton
                 showLastButton
               />

@@ -15,9 +15,12 @@ export default function Categories() {
     getCategories("categories");
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("page");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
+    sessionStorage.removeItem("myPage");
+    sessionStorage.removeItem("userPage");
   }, []);
 
   return (

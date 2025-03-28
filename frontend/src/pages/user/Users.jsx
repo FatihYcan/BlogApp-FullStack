@@ -39,7 +39,9 @@ export function Search({ handleSearch, searchUser }) {
 export default function Users() {
   const { getUsers } = useUserCalls();
   const { users, details } = useSelector((state) => state.user);
-  const [page, setPage] = useState(1);
+  const [userPage, setUserPage] = useState(
+    sessionStorage.getItem("userPage") || 1
+  );
   const [searchUser, setSearchUser] = useState(
     sessionStorage.getItem("searchUser") || ""
   );
@@ -50,14 +52,23 @@ export default function Users() {
     } else {
       sessionStorage.removeItem("searchUser");
     }
+
+    if (userPage) {
+      sessionStorage.setItem("userPage", userPage);
+    } else {
+      sessionStorage.removeItem("userPage");
+    }
+
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("selectedCategory");
+    sessionStorage.removeItem("page");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
-  }, [searchUser]);
+    sessionStorage.removeItem("myPage");
+  }, [searchUser, userPage]);
 
   const generateBlogsUrl = () => {
-    let url = `users?page=${page}&limit=8`;
+    let url = `users?page=${userPage}&limit=8`;
 
     if (searchUser) {
       url += `&search[username]=${searchUser}`;
@@ -68,15 +79,15 @@ export default function Users() {
 
   useEffect(() => {
     getUsers(generateBlogsUrl());
-  }, [page, searchUser]);
+  }, [userPage, searchUser]);
 
   const handleChange = (event, value) => {
-    setPage(value);
+    setUserPage(value);
   };
 
   const handleSearch = (e) => {
     setSearchUser(e.target.value);
-    setPage(1);
+    setUserPage(1);
   };
 
   return (
@@ -134,7 +145,7 @@ export default function Users() {
           justifyContent="center"
         >
           {users.map((user) => (
-            <UsersCard key={user._id} {...user} page={page} />
+            <UsersCard key={user._id} {...user} />
           ))}
         </Grid>
 
@@ -154,7 +165,7 @@ export default function Users() {
                   color="primary"
                   count={details?.pages?.total}
                   onChange={handleChange}
-                  page={page}
+                  page={Number(userPage)}
                   showFirstButton
                   showLastButton
                 />

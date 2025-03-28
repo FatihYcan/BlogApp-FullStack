@@ -62,6 +62,7 @@ export default function Register() {
   useEffect(() => {
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("page");
   }, []);
 
   return (

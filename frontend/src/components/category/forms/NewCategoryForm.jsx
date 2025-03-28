@@ -12,9 +12,12 @@ export default function NewCategoryForm() {
   useEffect(() => {
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("page");
     sessionStorage.removeItem("searchUser");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
+    sessionStorage.removeItem("myPage");
+    sessionStorage.removeItem("userPage");
   });
 
   const handleChange = (e) => {

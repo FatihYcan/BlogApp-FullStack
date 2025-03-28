@@ -47,7 +47,7 @@ export default function MyBlogs() {
   );
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id } = userInfo || {};
-  const [page, setPage] = useState(1);
+  const [myPage, setMyPage] = useState(sessionStorage.getItem("myPage") || 1);
   const [selectedMyCategory, setSelectedMyCategory] = useState(
     sessionStorage.getItem("selectedMyCategory") || ""
   );
@@ -69,13 +69,22 @@ export default function MyBlogs() {
     } else {
       sessionStorage.removeItem("searchMyBlog");
     }
+
+    if (myPage) {
+      sessionStorage.setItem("myPage", myPage);
+    } else {
+      sessionStorage.removeItem("myPage");
+    }
+
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
-  }, [selectedMyCategory, searchMyBlog]);
+    sessionStorage.removeItem("page");
+    sessionStorage.removeItem("userPage");
+  }, [selectedMyCategory, searchMyBlog, myPage]);
 
   const generateBlogsUrl = () => {
-    let url = `/blogs?page=${page}&limit=6&author=${_id}`;
+    let url = `/blogs?page=${myPage}&limit=6&author=${_id}`;
 
     if (selectedMyCategory) {
       url += `&filter[categoryId]=${selectedMyCategory}`;
@@ -91,27 +100,27 @@ export default function MyBlogs() {
   useEffect(() => {
     getAllUserBlog(`/blogs?author=${_id}`);
     getUserBlog(generateBlogsUrl());
-  }, [page, selectedMyCategory, likes, searchMyBlog]);
+  }, [myPage, selectedMyCategory, likes, searchMyBlog]);
 
   const handleAllClick = () => {
-    setPage(1);
+    setMyPage(1);
     setSelectedMyCategory("");
     setAllSelected(true);
   };
 
   const handleClick = (id) => {
     setSelectedMyCategory(id);
-    setPage(1);
+    setMyPage(1);
     setAllSelected(false);
   };
 
   const handleChange = (e, value) => {
-    setPage(value);
+    setMyPage(value);
   };
 
   const handleSearch = (e) => {
     setSearchMyBlog(e.target.value);
-    setPage(1);
+    setMyPage(1);
   };
 
   useEffect(() => {
@@ -271,7 +280,7 @@ export default function MyBlogs() {
           justifyContent="center"
         >
           {userBlogs.map((userBlog) => (
-            <UserBlogCard key={userBlog._id} {...userBlog} page={page} />
+            <UserBlogCard key={userBlog._id} {...userBlog} />
           ))}
         </Grid>
 
@@ -291,7 +300,7 @@ export default function MyBlogs() {
                   color="primary"
                   count={details?.pages?.total}
                   onChange={handleChange}
-                  page={page}
+                  page={Number(myPage)}
                   showFirstButton
                   showLastButton
                 />

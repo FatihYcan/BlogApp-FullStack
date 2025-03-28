@@ -27,6 +27,7 @@ export default function DeleteMyBlogModal({ deleteOpen, handleDeleteClose }) {
     await deleteBlog(_id);
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
+    sessionStorage.removeItem("myPage");
     navigate("/my-blogs");
   };
 

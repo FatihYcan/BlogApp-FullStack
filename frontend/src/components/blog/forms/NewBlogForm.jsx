@@ -48,8 +48,11 @@ export default function NewBlogForm() {
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("page");
     sessionStorage.removeItem("selectedMyCategory");
     sessionStorage.removeItem("searchMyBlog");
+    sessionStorage.removeItem("myPage");
+    sessionStorage.removeItem("userPage");
   }, []);
 
   const handleChange = (e) => {

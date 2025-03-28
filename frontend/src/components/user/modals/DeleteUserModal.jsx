@@ -26,6 +26,7 @@ export default function DeleteUserModal({ deleteOpen, handleDeleteClose }) {
   const handleDeleteUser = async () => {
     await deleteUser(_id);
     sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("userPage");
     navigate("/users");
   };
 
