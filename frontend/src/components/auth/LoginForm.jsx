@@ -1,17 +1,17 @@
+import { useState } from "react";
+import { object, string } from "yup";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useState } from "react";
-import { object, string } from "yup";
-import Link from "@mui/material/Link";
-import ForgotPasswordForm, { forgotSchema } from "./ForgotPasswordForm";
 import { Formik } from "formik";
 import useAuthCalls from "../../hooks/useAuthCalls";
+import ForgotPasswordForm, { forgotSchema } from "./ForgotPasswordForm";
 
 export const loginSchema = object({
   email: string()
@@ -43,21 +43,13 @@ export default function LoginForm({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
+
   const { forgotPassword } = useAuthCalls();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleMouseDownPassword = (e) => e.preventDefault();
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box

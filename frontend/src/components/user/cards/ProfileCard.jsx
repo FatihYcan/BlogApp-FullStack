@@ -1,4 +1,4 @@
-import avatar from "../../../assets/icons/avatar.png";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -6,10 +6,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid2";
-import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import UpdateMyUserModal from "../modals/UpdateMyUserModal";
+import avatar from "../../../assets/icons/avatar.png";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -49,7 +49,6 @@ const StyledTypography = styled(Typography)({
 
 export default function ProfileCard({ singleUser, _id }) {
   const [updateOpen, setUpdateOpen] = useState(false);
-
   const [data, setData] = useState({
     email: singleUser.email,
     firstName: singleUser.firstName,
@@ -60,11 +59,9 @@ export default function ProfileCard({ singleUser, _id }) {
   });
 
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
-
   const fullName = firstName + " " + lastName;
 
   const handleUpdateClose = () => setUpdateOpen(false);
-
   const handleUpdateOpen = () => {
     setData({
       email: singleUser.email,

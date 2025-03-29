@@ -1,29 +1,30 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import data from "@emoji-mart/data";
 import FormControl from "@mui/material/FormControl";
-import Picker from "@emoji-mart/react";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import useCommentCalls from "../../../hooks/useCommentCalls";
 
 export default function CommentForm() {
   const { _id, username } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { getSingleBlog } = useBlogCalls();
   const { postComment } = useCommentCalls();
+
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [commentData, setCommentData] = useState({ blogId: _id, comment: "" });
+
+  const IsUserInfo = Object.keys(userInfo).length === 0;
 
   const handleChange = (e) => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value });
   };
-
-  const IsUserInfo = Object.keys(userInfo).length === 0;
 
   const handleEmojiSelect = (emoji) => {
     setCommentData((prevData) => ({

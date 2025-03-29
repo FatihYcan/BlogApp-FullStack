@@ -1,21 +1,21 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import styled from "@mui/material/styles/styled";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import Typography from "@mui/material/Typography";
+import styled from "@mui/material/styles/styled";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
-import avatar from "../../../assets/icons/avatar.png";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import LoginModal from "../modals/LoginModal";
+import avatar from "../../../assets/icons/avatar.png";
 import "../../../assets/styles/detailStyles.css";
 
 const SyledCard = styled(Card)(({ theme }) => ({
@@ -65,18 +65,15 @@ export default function BlogCard({
   userId,
   createdAt,
 }) {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { username } = userInfo || {};
+  const { postBlogLike } = useBlogCalls();
 
   const [likeOpen, setLikeOpen] = useState(false);
-  const handleLikeOpen = () => setLikeOpen(true);
-  const handleLikeClose = () => setLikeOpen(false);
-
   const [loginOpen, setLoginOpen] = useState(false);
-  const handleCloseLogin = () => setLoginOpen(false);
 
-  const { username } = userInfo || {};
+  const isLiked = likes.some((like) => like.userId.username === username);
 
   const handleLike = () => {
     username ? postBlogLike(_id) : setLoginOpen(true);
@@ -86,7 +83,9 @@ export default function BlogCard({
     navigate(`/blogs/${userId.username}/${_id}`);
   };
 
-  const isLiked = likes.some((like) => like.userId.username === username);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+  const handleCloseLogin = () => setLoginOpen(false);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -111,7 +110,12 @@ export default function BlogCard({
           <Typography gutterBottom variant="caption" component="div">
             {categoryId.name}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div" color="error.main" >
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            color="error.main"
+          >
             {title}
           </Typography>
           <StyledTypography

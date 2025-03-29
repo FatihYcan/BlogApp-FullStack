@@ -1,20 +1,21 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import useBlogCalls from "../../../hooks/useBlogCalls";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import useCategoryCalls from "../../../hooks/useCategoryCalls";
-import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
   const { putBlog, getSingleBlog } = useBlogCalls();
   const { getCategories } = useCategoryCalls();
   const { _id, username } = useParams();
   const { categories } = useSelector((state) => state.category);
+  
   const [newImage, setNewImage] = useState("");
   const [loading, setLoading] = useState(true);
 

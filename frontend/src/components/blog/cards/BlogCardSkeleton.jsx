@@ -2,8 +2,8 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid2";
-import styled from "@mui/material/styles/styled";
 import Skeleton from "@mui/material/Skeleton";
+import styled from "@mui/material/styles/styled";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",

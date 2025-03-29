@@ -1,12 +1,12 @@
+import { useState } from "react";
+import { object, string } from "yup";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import { object, string } from "yup";
-import { useState } from "react";
-import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -57,11 +57,7 @@ export default function ForgotPasswordForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
-
+  const handleMouseDownPassword = (e) => e.preventDefault();
   const handleCloseAndReset = () => {
     resetForm();
     handleClose();

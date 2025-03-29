@@ -1,26 +1,31 @@
-import { useParams } from "react-router-dom";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import useContentCalls from "../../../hooks/useContentCalls";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import TextEditor from "./TextEditor";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import useContentCalls from "../../../hooks/useContentCalls";
 
 export default function UpdateContentForm({
   contentData,
   setContentData,
   handleUpdateClose,
 }) {
+  const { _id, username } = useParams();
   const { getSingleBlog } = useBlogCalls();
   const { putContent } = useContentCalls();
-  const { _id, username } = useParams();
 
   const [isContent, setIsContent] = useState(false);
 
+  const imagePath = Array.isArray(contentData?.images)
+    ? contentData.images
+        ?.filter((image) => typeof image === "string")
+        ?.map((image) => image.slice(1)) || []
+    : [];
+
   const handleContentChange = (content) => {
     const plainContent = content.replace(/<[^>]+>/g, "").trim();
-
     if (plainContent.length === 0) {
       setIsContent(true);
       setContentData({ ...contentData, content: "" });
@@ -51,12 +56,6 @@ export default function UpdateContentForm({
       images: updatedImages.length ? updatedImages : [],
     }));
   };
-
-  const imagePath = Array.isArray(contentData?.images)
-    ? contentData.images
-        ?.filter((image) => typeof image === "string")
-        ?.map((image) => image.slice(1)) || []
-    : [];
 
   const handleSubmit = async (e) => {
     e.preventDefault();

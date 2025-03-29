@@ -1,14 +1,14 @@
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
-import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useBlogCalls from "../../../hooks/useBlogCalls";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
+import SendIcon from "@mui/icons-material/Send";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 
 export default function BottomCommentForm({
@@ -20,6 +20,7 @@ export default function BottomCommentForm({
   const { _id, username } = useParams();
   const { getSingleBlog } = useBlogCalls();
   const { postBottomComment } = useBottomCommentCalls();
+
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: isReplyCardId,
@@ -40,6 +41,7 @@ export default function BottomCommentForm({
     }));
     setShowEmojiPicker(false);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await postBottomComment(bottomCommentData);
@@ -53,7 +55,6 @@ export default function BottomCommentForm({
     e.preventDefault();
     setIsReplyCardId("");
   };
-
   return (
     <Box
       component="form"

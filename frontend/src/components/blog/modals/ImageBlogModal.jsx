@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
+import Modal from "@mui/material/Modal";
 
 const style = {
   position: "absolute",

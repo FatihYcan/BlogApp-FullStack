@@ -1,9 +1,9 @@
-import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 const style = {

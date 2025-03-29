@@ -1,11 +1,11 @@
-import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { Formik } from "formik";
-import LoginForm, { loginSchema } from "../../auth/LoginForm";
 import useAuthCalls from "../../../hooks/useAuthCalls";
-import { useNavigate } from "react-router-dom";
-import Divider from "@mui/material/Divider";
+import LoginForm, { loginSchema } from "../../auth/LoginForm";
 
 const style = {
   position: "absolute",

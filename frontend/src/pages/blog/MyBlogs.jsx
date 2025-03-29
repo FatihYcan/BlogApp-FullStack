@@ -1,20 +1,20 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid2";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useSelector } from "react-redux";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import { useEffect, useState } from "react";
-import UserBlogCard from "../../components/blog/cards/UserBlogCard";
 import Typography from "@mui/material/Typography";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import useBlogCalls from "../../hooks/useBlogCalls";
 import BlogCardSkeleton from "../../components/blog/cards/BlogCardSkeleton";
-import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
+import UserBlogCard from "../../components/blog/cards/UserBlogCard";
 
 export function Search({ handleSearch, searchMyBlog }) {
   return (
@@ -40,13 +40,14 @@ export function Search({ handleSearch, searchMyBlog }) {
 }
 
 export default function MyBlogs() {
-  const { getUserBlog, getAllUserBlog } = useBlogCalls();
   const navigate = useNavigate();
+  const { getUserBlog, getAllUserBlog } = useBlogCalls();
   const { userBlogs, details, likes, allUserBlogs } = useSelector(
     (state) => state.blog
   );
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id } = userInfo || {};
+
   const [myPage, setMyPage] = useState(sessionStorage.getItem("myPage") || 1);
   const [selectedMyCategory, setSelectedMyCategory] = useState(
     sessionStorage.getItem("selectedMyCategory") || ""
@@ -56,6 +57,45 @@ export default function MyBlogs() {
     sessionStorage.getItem("searchMyBlog") || ""
   );
   const [loading, setLoading] = useState(true);
+
+  const uniqueCategories = [
+    ...new Set(allUserBlogs.map((blog) => JSON.stringify(blog.categoryId))),
+  ].map((str) => JSON.parse(str));
+
+  const generateBlogsUrl = () => {
+    let url = `/blogs?page=${myPage}&limit=6&author=${_id}`;
+
+    if (selectedMyCategory) {
+      url += `&filter[categoryId]=${selectedMyCategory}`;
+    }
+
+    if (searchMyBlog) {
+      url += `&search[title]=${searchMyBlog}`;
+    }
+
+    return url;
+  };
+
+  const handleAllClick = () => {
+    setMyPage(1);
+    setSelectedMyCategory("");
+    setAllSelected(true);
+  };
+
+  const handleClick = (id) => {
+    setSelectedMyCategory(id);
+    setMyPage(1);
+    setAllSelected(false);
+  };
+
+  const handleChange = (e, value) => {
+    setMyPage(value);
+  };
+
+  const handleSearch = (e) => {
+    setSearchMyBlog(e.target.value);
+    setMyPage(1);
+  };
 
   useEffect(() => {
     if (selectedMyCategory) {
@@ -83,53 +123,14 @@ export default function MyBlogs() {
     sessionStorage.removeItem("userPage");
   }, [selectedMyCategory, searchMyBlog, myPage]);
 
-  const generateBlogsUrl = () => {
-    let url = `/blogs?page=${myPage}&limit=6&author=${_id}`;
-
-    if (selectedMyCategory) {
-      url += `&filter[categoryId]=${selectedMyCategory}`;
-    }
-
-    if (searchMyBlog) {
-      url += `&search[title]=${searchMyBlog}`;
-    }
-
-    return url;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       await getUserBlog(generateBlogsUrl());
-      getAllUserBlog(`/blogs?author=${_id}`);
+      await getAllUserBlog(`/blogs?author=${_id}`);
       setLoading(false);
     };
     fetchData();
   }, [myPage, selectedMyCategory, likes, searchMyBlog]);
-
-  const handleAllClick = () => {
-    setMyPage(1);
-    setSelectedMyCategory("");
-    setAllSelected(true);
-  };
-
-  const handleClick = (id) => {
-    setSelectedMyCategory(id);
-    setMyPage(1);
-    setAllSelected(false);
-  };
-
-  const handleChange = (e, value) => {
-    setMyPage(value);
-  };
-
-  const handleSearch = (e) => {
-    setSearchMyBlog(e.target.value);
-    setMyPage(1);
-  };
-
-  const uniqueCategories = [
-    ...new Set(allUserBlogs.map((blog) => JSON.stringify(blog.categoryId))),
-  ].map((str) => JSON.parse(str));
 
   if (loading) {
     return (

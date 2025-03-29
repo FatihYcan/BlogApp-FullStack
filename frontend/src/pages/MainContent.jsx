@@ -1,19 +1,19 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
-import { useEffect, useState } from "react";
 import BlogCard from "../components/blog/cards/BlogCard";
-import PopularBlogCard from "../components/blog/cards/PopularBlogCard";
 import BlogCardSkeleton from "../components/blog/cards/BlogCardSkeleton";
-import { Helmet } from "react-helmet";
+import PopularBlogCard from "../components/blog/cards/PopularBlogCard";
 
 export function Search({ handleSearch, searchBlog }) {
   return (
@@ -42,7 +42,9 @@ export default function MainContent() {
   const { blogs, viewBlogs, details, likes, allBlogs } = useSelector(
     (state) => state.blog
   );
+
   const { getAllBlogs, getBlogs, getBlogsView } = useBlogCalls();
+
   const [page, setPage] = useState(sessionStorage.getItem("page") || 1);
   const [selectedCategory, setSelectedCategory] = useState(
     sessionStorage.getItem("selectedCategory") || ""
@@ -56,6 +58,41 @@ export default function MainContent() {
   const uniqueCategories = [
     ...new Set(allBlogs.map((blog) => JSON.stringify(blog.categoryId))),
   ].map((str) => JSON.parse(str));
+
+  const generateBlogsUrl = () => {
+    let url = `blogs?page=${page}&limit=6`;
+
+    if (selectedCategory) {
+      url += `&filter[categoryId]=${selectedCategory}`;
+    }
+
+    if (searchBlog) {
+      url += `&search[title]=${searchBlog}`;
+    }
+
+    return url;
+  };
+
+  const handleAllClick = () => {
+    setPage(1);
+    setSelectedCategory("");
+    setAllSelected(true);
+  };
+
+  const handleClick = (id) => {
+    setSelectedCategory(id);
+    setPage(1);
+    setAllSelected(false);
+  };
+
+  const handleChange = (e, value) => {
+    setPage(value);
+  };
+
+  const handleSearch = (e) => {
+    setSearchBlog(e.target.value);
+    setPage(1);
+  };
 
   useEffect(() => {
     if (selectedCategory) {
@@ -83,46 +120,11 @@ export default function MainContent() {
     sessionStorage.removeItem("userPage");
   }, [selectedCategory, searchBlog, page]);
 
-  const generateBlogsUrl = () => {
-    let url = `blogs?page=${page}&limit=6`;
-
-    if (selectedCategory) {
-      url += `&filter[categoryId]=${selectedCategory}`;
-    }
-
-    if (searchBlog) {
-      url += `&search[title]=${searchBlog}`;
-    }
-
-    return url;
-  };
-
   useEffect(() => {
     getAllBlogs("blogs");
     getBlogs(generateBlogsUrl());
     getBlogsView("blogs?sort[viewCount]=desc&limit=4");
   }, [page, selectedCategory, likes, searchBlog]);
-
-  const handleAllClick = () => {
-    setPage(1);
-    setSelectedCategory("");
-    setAllSelected(true);
-  };
-
-  const handleClick = (id) => {
-    setSelectedCategory(id);
-    setPage(1);
-    setAllSelected(false);
-  };
-
-  const handleChange = (e, value) => {
-    setPage(value);
-  };
-
-  const handleSearch = (e) => {
-    setSearchBlog(e.target.value);
-    setPage(1);
-  };
 
   useEffect(() => {
     const timer = setTimeout(() => {

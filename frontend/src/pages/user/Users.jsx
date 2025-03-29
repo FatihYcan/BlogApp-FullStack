@@ -1,17 +1,17 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid2";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import UsersCard from "../../components/user/cards/UsersCard";
 import useUserCalls from "../../hooks/useUserCalls";
-import { Helmet } from "react-helmet";
+import UsersCard from "../../components/user/cards/UsersCard";
 
 export function Search({ handleSearch, searchUser }) {
   return (
@@ -37,14 +37,34 @@ export function Search({ handleSearch, searchUser }) {
 }
 
 export default function Users() {
-  const { getUsers } = useUserCalls();
   const { users, details } = useSelector((state) => state.user);
+  const { getUsers } = useUserCalls();
+
   const [userPage, setUserPage] = useState(
     sessionStorage.getItem("userPage") || 1
   );
   const [searchUser, setSearchUser] = useState(
     sessionStorage.getItem("searchUser") || ""
   );
+
+  const generateBlogsUrl = () => {
+    let url = `users?page=${userPage}&limit=8`;
+
+    if (searchUser) {
+      url += `&search[username]=${searchUser}`;
+    }
+
+    return url;
+  };
+
+  const handleChange = (event, value) => {
+    setUserPage(value);
+  };
+
+  const handleSearch = (e) => {
+    setSearchUser(e.target.value);
+    setUserPage(1);
+  };
 
   useEffect(() => {
     if (searchUser) {
@@ -67,28 +87,9 @@ export default function Users() {
     sessionStorage.removeItem("myPage");
   }, [searchUser, userPage]);
 
-  const generateBlogsUrl = () => {
-    let url = `users?page=${userPage}&limit=8`;
-
-    if (searchUser) {
-      url += `&search[username]=${searchUser}`;
-    }
-
-    return url;
-  };
-
   useEffect(() => {
     getUsers(generateBlogsUrl());
   }, [userPage, searchUser]);
-
-  const handleChange = (event, value) => {
-    setUserPage(value);
-  };
-
-  const handleSearch = (e) => {
-    setSearchUser(e.target.value);
-    setUserPage(1);
-  };
 
   return (
     <Container

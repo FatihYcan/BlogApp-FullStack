@@ -1,21 +1,20 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
+import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
-import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import avatar from "../../assets/icons/avatar.png";
+import CircularProgress from "@mui/material/CircularProgress";
 import DeleteUserModal from "../../components/user/modals/DeleteUserModal";
 import UpdateUserModal from "../../components/user/modals/UpdateUserModal";
 import useUserCalls from "../../hooks/useUserCalls";
-import { Helmet } from "react-helmet";
-import CircularProgress from "@mui/material/CircularProgress";
+import avatar from "../../assets/icons/avatar.png";
 
 const SyledCardContent = styled(CardContent)({
   display: "flex",
@@ -38,15 +37,12 @@ const StyledTypography = styled(Typography)({
 
 export default function UserDetail() {
   const { _id } = useParams();
-
   const { getSingleUser } = useUserCalls();
   const { singleUser } = useSelector((state) => state.user);
 
   const [loading, setLoading] = useState(true);
-
   const [updateOpen, setUpdateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-
   const [data, setData] = useState({
     email: singleUser.email,
     firstName: singleUser.firstName,
@@ -59,7 +55,6 @@ export default function UserDetail() {
   });
 
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
-
   const fullName = firstName + " " + lastName;
 
   useEffect(() => {

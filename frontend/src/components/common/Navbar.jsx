@@ -1,4 +1,6 @@
-import { alpha, styled } from "@mui/material/styles";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -7,16 +9,14 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import useAuthCalls from "../../hooks/useAuthCalls";
-import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import blog from "../../assets/images/blog-app.png";
-import ColorModeIconDropdown from "./ColorModeIconDropdown";
+import { alpha, styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import avatar from "../../assets/icons/avatar.png";
-import { useSelector } from "react-redux";
+import useAuthCalls from "../../hooks/useAuthCalls";
+import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import LoginModal from "../blog/modals/LoginModal";
+import blog from "../../assets/images/blog-app.png";
+import avatar from "../../assets/icons/avatar.png";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -35,20 +35,15 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { myUser } = useSelector((state) => state.user);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
 
-  const { logout } = useAuthCalls();
   const location = useLocation();
 
+  const { logout } = useAuthCalls();
+
   const [open, setOpen] = useState(false);
-
   const [loginOpen, setLoginOpen] = useState(false);
-  const handleCloseLogin = () => setLoginOpen(false);
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
 
   const { username, isAdmin, image } = userInfo || {};
 
@@ -62,6 +57,11 @@ export default function Navbar() {
     { name: "My Blogs", to: "/my-blogs" },
     { name: "Profile", to: `/${username}` },
   ];
+
+  const handleCloseLogin = () => setLoginOpen(false);
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
   const handleNewBlogClick = (e) => {
     if (!username) {

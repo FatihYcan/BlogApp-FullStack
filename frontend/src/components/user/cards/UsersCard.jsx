@@ -1,4 +1,4 @@
-import avatar from "../../../assets/icons/avatar.png";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -6,9 +6,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid2";
-import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import avatar from "../../../assets/icons/avatar.png";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -57,11 +57,11 @@ export default function UsersCard({
 }) {
   const navigate = useNavigate();
 
+  const fullName = firstName + " " + lastName;
+
   const handleDetail = () => {
     navigate(`/users/${_id}`);
   };
-
-  const fullName = firstName + " " + lastName;
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 3 }}>

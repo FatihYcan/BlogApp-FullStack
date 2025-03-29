@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import styled from "@mui/material/styles/styled";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
-import styled from "@mui/material/styles/styled";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -41,12 +41,10 @@ export default function BlogDetail() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id, username: name } = useParams();
   const { username } = userInfo || {};
-
   const { getSingleBlog, postBlogLike } = useBlogCalls();
   const { singleBlog, likes: like } = useSelector((state) => state.blog);
 
   const [loading, setLoading] = useState(true);
-
   const [loginOpen, setLoginOpen] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
   const [likeOpen, setLikeOpen] = useState(false);
@@ -54,13 +52,11 @@ export default function BlogDetail() {
   const [updateOpen, setUpdateOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-
   const [selectedImage, setSelectedImage] = useState("");
   const [seeAnswersCardId, setSeeAnswersCardId] = useState("");
   const [isReplyCardId, setIsReplyCardId] = useState("");
   const [openMenu, setOpenMenu] = useState("");
   const [editComment, setEditComment] = useState("");
-
   const [data, setData] = useState({
     title: singleBlog?.title,
     categoryId: singleBlog?.categoryId?._id,
@@ -79,7 +75,6 @@ export default function BlogDetail() {
     userId,
     views,
   } = singleBlog;
-
   const isLiked = likes?.some((like) => like.userId?.username === username);
   const likesCount = likes?.length || 0;
   const commentsCount = comments?.length || 0;
@@ -102,16 +97,13 @@ export default function BlogDetail() {
   const handleAddClose = () => setAddOpen(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
-
   const handleLike = () => {
     username ? postBlogLike(_id) : setLoginOpen(true);
   };
-
   const handleImageOpen = (imageUrl) => {
     setSelectedImage(imageUrl);
     setImageOpen(true);
   };
-
   const handleUpdateOpen = () => {
     setData({
       title: singleBlog?.title,
@@ -121,7 +113,7 @@ export default function BlogDetail() {
     });
     setUpdateOpen(true);
   };
-
+  
   return (
     <Container
       maxWidth="md"
@@ -214,7 +206,12 @@ export default function BlogDetail() {
             <Typography gutterBottom variant="caption" component="div">
               {categoryId?.name || ""}
             </Typography>
-            <Typography gutterBottom variant="h6" component="div" color="error.main">
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              color="error.main"
+            >
               {title}
             </Typography>
             {contents?.map((item, index) => (

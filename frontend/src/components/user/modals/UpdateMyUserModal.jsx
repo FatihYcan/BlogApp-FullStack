@@ -1,17 +1,16 @@
+import { useState } from "react";
+import { object, string } from "yup";
+import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useFormik } from "formik";
-import { object, string } from "yup";
 import avatar from "../../../assets/icons/avatar.png";
 import useUserCalls from "../../../hooks/useUserCalls";
 
@@ -58,9 +57,10 @@ export default function UpdateMyUserModal({
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { putMyUser, getSingleUser } = useUserCalls();
-  const [visibleImage, setVisibleImage] = useState(true);
-
   const { _id } = userInfo || {};
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [visibleImage, setVisibleImage] = useState(true);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -105,20 +105,13 @@ export default function UpdateMyUserModal({
     },
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
-
+  const handleMouseDownPassword = (e) => e.preventDefault();
   const handleDeleteImage = (e) => {
     e.preventDefault();
     setVisibleImage(false);
     formik.setFieldValue("image", "");
   };
-
   const handleModalClose = () => {
     formik.resetForm();
     handleUpdateClose();

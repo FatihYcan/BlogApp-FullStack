@@ -1,19 +1,19 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
-import styled from "@mui/material/styles/styled";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import Typography from "@mui/material/Typography";
+import styled from "@mui/material/styles/styled";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BlogLikesModal from "../modals/BlogLikesModal";
 import useBlogCalls from "../../../hooks/useBlogCalls";
-import avatar from "../../../assets/icons/avatar.png";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import LoginModal from "../modals/LoginModal";
+import avatar from "../../../assets/icons/avatar.png";
 import "../../../assets/styles/detailStyles.css";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
@@ -72,32 +72,27 @@ export default function PopularBlogCard({
   userId,
   createdAt,
 }) {
-  const [likeOpen, setLikeOpen] = useState(false);
-  const handleLikeOpen = () => setLikeOpen(true);
-  const handleLikeClose = () => setLikeOpen(false);
-
-  const [loginOpen, setLoginOpen] = useState(false);
-  const handleCloseLogin = () => setLoginOpen(false);
-
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
-  const { postBlogLike } = useBlogCalls();
   const navigate = useNavigate();
-
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { username } = userInfo || {};
+  const { postBlogLike } = useBlogCalls();
+
+  const [likeOpen, setLikeOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const isLiked = likes.some((like) => like.userId.username === username);
 
   const handleLike = () => {
-    if (username) {
-      postBlogLike(_id);
-    } else {
-      setLoginOpen(true);
-    }
+    username ? postBlogLike(_id) : setLoginOpen(true);
   };
 
   const handleDetail = () => {
     navigate(`/blogs/${userId.username}/${_id}`);
   };
 
-  const isLiked = likes.some((like) => like.userId.username === username);
+  const handleLikeOpen = () => setLikeOpen(true);
+  const handleLikeClose = () => setLikeOpen(false);
+  const handleCloseLogin = () => setLoginOpen(false);
 
   return (
     <Grid size={{ xs: 12, sm: 6 }}>

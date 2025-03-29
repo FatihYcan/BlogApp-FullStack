@@ -1,21 +1,20 @@
-import React, { useRef, useState } from "react";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import useContentCalls from "../../../hooks/useContentCalls";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
-import TextEditor from "./TextEditor";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import TextEditor from "./TextEditor";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import useContentCalls from "../../../hooks/useContentCalls";
 
 export default function AddContentForm({ handleAddClose }) {
+  const { _id, username } = useParams();
   const { getSingleBlog } = useBlogCalls();
   const { postContent } = useContentCalls();
-  const { _id, username } = useParams();
-
-  const [isContent, setIsContent] = useState(true);
 
   const fileInputRef = useRef(null);
 
+  const [isContent, setIsContent] = useState(true);
   const [contentData, setContentData] = useState({
     blogId: _id,
     content: "",
@@ -40,17 +39,11 @@ export default function AddContentForm({ handleAddClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("blogId", _id);
-    formData.append("content", contentData.content);
-
-    for (let i = 0; i < contentData.images.length; i++) {
-      formData.append("images", contentData.images[i]);
-    }
+    const formData = createFormData();
 
     if (!contentData.content) {
       setIsContent(true);
+      return;
     }
 
     const isContentCreated = await postContent(formData);
@@ -62,6 +55,22 @@ export default function AddContentForm({ handleAddClose }) {
   };
 
   const handleAddContent = async () => {
+    const formData = createFormData();
+
+    if (!contentData.content) {
+      setIsContent(true);
+      return;
+    }
+
+    const isContentCreated = await postContent(formData);
+
+    if (isContentCreated) {
+      resetForm();
+      await getSingleBlog(username, _id);
+    }
+  };
+
+  const createFormData = () => {
     const formData = new FormData();
     formData.append("blogId", _id);
     formData.append("content", contentData.content);
@@ -70,24 +79,19 @@ export default function AddContentForm({ handleAddClose }) {
       formData.append("images", contentData.images[i]);
     }
 
-    if (!contentData.content) {
-      setIsContent(true);
-    }
+    return formData;
+  };
 
-    const isContentCreated = await postContent(formData);
+  const resetForm = () => {
+    setContentData({
+      blogId: _id,
+      content: "",
+      images: [],
+    });
+    setIsContent(true);
 
-    if (isContentCreated) {
-      setContentData({
-        blogId: _id,
-        content: "",
-        images: [],
-      });
-      await getSingleBlog(username, _id);
-      setIsContent(true);
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 

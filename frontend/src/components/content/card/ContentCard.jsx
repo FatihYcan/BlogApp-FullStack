@@ -1,10 +1,10 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid2";
-import CardMedia from "@mui/material/CardMedia";
-import Box from "@mui/material/Box";
 import { useState } from "react";
-import UpdateContentModal from "../modal/UpdateContentModal";
+import Box from "@mui/material/Box";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid2";
+import Typography from "@mui/material/Typography";
 import DeleteContentModal from "../modal/DeleteContentModal";
+import UpdateContentModal from "../modal/UpdateContentModal";
 import "../../../assets/styles/detailStyles.css";
 
 export default function ContentCard({
@@ -15,17 +15,17 @@ export default function ContentCard({
 }) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateClose = () => {
-    setUpdateOpen(false);
-  };
   const [contentId, setContentId] = useState("");
-
   const [contentData, setContentData] = useState({
     _id: item?._id,
     blogId: item?.blogId,
     content: item?.content,
     images: item?.images,
   });
+
+  const handleUpdateClose = () => {
+    setUpdateOpen(false);
+  };
 
   const handleUpdateOpen = () => {
     setContentData({
@@ -41,6 +41,7 @@ export default function ContentCard({
     setContentId(_id);
     setDeleteOpen(true);
   };
+
   const handleDeleteClose = () => {
     setContentId("");
     setDeleteOpen(false);

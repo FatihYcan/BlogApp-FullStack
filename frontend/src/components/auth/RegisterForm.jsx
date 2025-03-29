@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { object, string } from "yup";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -6,8 +8,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useState } from "react";
-import { object, string } from "yup";
 
 export const RegisterSchema = object({
   username: string().required("Username zorunludur."),
@@ -47,10 +47,7 @@ export default function RegisterForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
+  const handleMouseDownPassword = (e) => e.preventDefault();
 
   return (
     <Box

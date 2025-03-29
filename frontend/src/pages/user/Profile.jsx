@@ -1,11 +1,11 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import ProfileCard from "../../components/user/cards/ProfileCard";
 import useUserCalls from "../../hooks/useUserCalls";
-import { Helmet } from "react-helmet";
 
 export default function Profile() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};

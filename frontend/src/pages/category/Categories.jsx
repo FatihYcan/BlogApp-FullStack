@@ -1,14 +1,15 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import CategoryCard from "../../components/category/cards/CategoryCard";
 import useCategoryCalls from "../../hooks/useCategoryCalls";
-import { Helmet } from "react-helmet";
+import CategoryCard from "../../components/category/cards/CategoryCard";
 
 export default function Categories() {
   const { categories } = useSelector((state) => state.category);
+
   const { getCategories } = useCategoryCalls();
 
   useEffect(() => {

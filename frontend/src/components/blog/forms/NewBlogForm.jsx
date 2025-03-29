@@ -1,32 +1,28 @@
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useEffect, useRef, useState } from "react";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import { useSelector } from "react-redux";
-import useCategoryCalls from "../../../hooks/useCategoryCalls";
+import TextField from "@mui/material/TextField";
 import ContentForm from "../../content/forms/ContentForm";
+import useBlogCalls from "../../../hooks/useBlogCalls";
+import useCategoryCalls from "../../../hooks/useCategoryCalls";
 import useContentCalls from "../../../hooks/useContentCalls";
 
 export default function NewBlogForm() {
+  const { categories } = useSelector((state) => state.category);
+
   const { postBlog, postBlogId } = useBlogCalls();
   const { postContent } = useContentCalls();
   const { getCategories } = useCategoryCalls();
-  const { categories } = useSelector((state) => state.category);
+
+  const fileInputRef = useRef(null);
+
   const [formKey, setFormKey] = useState(0);
   const [blogId, setBlogId] = useState("");
-
   const [isContentForm, setIsContentForm] = useState(false);
-
   const [isContent, setIsContent] = useState(true);
-
-  const [errors, setErrors] = useState({
-    title: false,
-    categoryId: false,
-    image: false,
-  });
 
   const [data, setData] = useState({
     title: "",
@@ -41,7 +37,11 @@ export default function NewBlogForm() {
     images: [],
   });
 
-  const fileInputRef = useRef(null);
+  const [errors, setErrors] = useState({
+    title: false,
+    categoryId: false,
+    image: false,
+  });
 
   useEffect(() => {
     getCategories("categories");
@@ -65,7 +65,6 @@ export default function NewBlogForm() {
 
   const handleContentChange = (content) => {
     const plainContent = content.replace(/<[^>]+>/g, "").trim();
-
     if (plainContent.length === 0) {
       setIsContent(true);
       setContentData({ ...contentData, content: "" });
@@ -95,7 +94,6 @@ export default function NewBlogForm() {
     }
 
     const formData = new FormData();
-
     formData.append("title", data.title);
     formData.append("categoryId", data.categoryId);
 
@@ -106,7 +104,6 @@ export default function NewBlogForm() {
     formData.append("isPublish", data.isPublish);
 
     const isBlogId = await postBlogId(formData);
-
     if (isBlogId) {
       setBlogId(isBlogId._id);
       setIsContentForm(true);
@@ -117,7 +114,6 @@ export default function NewBlogForm() {
     e.preventDefault();
 
     const blogFormData = new FormData();
-
     blogFormData.append("_id", blogId);
     blogFormData.append("title", data.title);
     blogFormData.append("categoryId", data.categoryId);
@@ -158,7 +154,6 @@ export default function NewBlogForm() {
       });
 
       setIsContentForm(false);
-
       setFormKey((prevKey) => prevKey + 1);
       setIsContent(true);
 

@@ -1,8 +1,8 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import { useNavigate, useParams } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 
 const style = {
   position: "absolute",

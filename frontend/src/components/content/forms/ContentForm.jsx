@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import TextEditor from "./TextEditor";
+import TextEditor from "./TextEditor"
 
 export default function ContentForm({
   contentData,

@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
-import { useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
 import useCategoryCalls from "../../../hooks/useCategoryCalls";
 
 export default function NewCategoryForm() {

@@ -1,15 +1,15 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
-import { useState } from "react";
-import avatar from "../../../assets/icons/avatar.png";
-import { useParams } from "react-router-dom";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import EditBottomCommentForm from "../forms/EditBottomCommentForm";
 import CommentBottomForm from "../forms/CommentBottomForm";
+import EditBottomCommentForm from "../forms/EditBottomCommentForm";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
+import avatar from "../../../assets/icons/avatar.png";
 
 export default function BottomCommentCard({
   item,
@@ -25,6 +25,8 @@ export default function BottomCommentCard({
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog } = useBlogCalls();
   const { deleteBottomComment } = useBottomCommentCalls();
+  const { username } = userInfo || {};
+
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: commentId,
     comment: "",
@@ -33,11 +35,8 @@ export default function BottomCommentCard({
 
   const { comment, createdAt, userId, _id } = item;
 
-  const { username } = userInfo || {};
-
   function getTimeDifference(date, created) {
     const timeDifference = date - created;
-
     const seconds = Math.floor(timeDifference / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -49,18 +48,13 @@ export default function BottomCommentCard({
       return `${hours} saat önce`;
     } else if (minutes > 0) {
       return `${minutes} dakika önce`;
-    } else {
-      return `${seconds} saniye önce`;
     }
+    return `${seconds} saniye önce`;
   }
 
   const onBottomtMenuClick = (e) => {
     e.preventDefault();
-    if (openBottomMenu === _id) {
-      setOpenBottomMenu("");
-    } else {
-      setOpenBottomMenu(_id);
-    }
+    setOpenBottomMenu(openBottomMenu === _id ? "" : _id);
   };
 
   const handleBottomEditClick = (e, comment_id, comment) => {
@@ -83,7 +77,6 @@ export default function BottomCommentCard({
 
   const handleReplyBottomClick = (e, username) => {
     e.preventDefault();
-
     if (isReplyBottomCardId === _id) {
       setIsReplyBottomCardId("");
       setIsReplyBottomName("");

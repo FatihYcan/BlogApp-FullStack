@@ -1,12 +1,12 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
-import { useState } from "react";
-import UpdateCategoryModal from "../modals/UpdateCategoryModal";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 import DeleteCategoryModal from "../modals/DeleteCategoryModal";
+import UpdateCategoryModal from "../modals/UpdateCategoryModal";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -38,15 +38,15 @@ const SyledCardContent = styled(CardContent)({
 
 export default function CategoryCard({ name, _id }) {
   const [updateOpen, setUpdateOpen] = useState(false);
-  const handleUpdateClose = () => setUpdateOpen(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const handleDeleteOpen = () => setDeleteOpen(true);
-  const handleDeleteClose = () => setDeleteOpen(false);
-
   const [data, setData] = useState({
     name: name,
     _id: _id,
   });
+
+  const handleUpdateClose = () => setUpdateOpen(false);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
   const handleUpdateOpen = () => {
     setData({

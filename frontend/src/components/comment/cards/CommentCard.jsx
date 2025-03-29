@@ -1,18 +1,17 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
-import { useState } from "react";
-import avatar from "../../../assets/icons/avatar.png";
-import Divider from "@mui/material/Divider";
 import BottomCommentCard from "./BottomCommentCard";
-import { useParams } from "react-router-dom";
-import useBlogCalls from "../../../hooks/useBlogCalls";
-import EditCommentForm from "../forms/EditCommentForm";
 import BottomCommentForm from "../forms/BottomCommentForm";
+import EditCommentForm from "../forms/EditCommentForm";
+import useBlogCalls from "../../../hooks/useBlogCalls";
 import useCommentCalls from "../../../hooks/useCommentCalls";
-
+import avatar from "../../../assets/icons/avatar.png";
 
 export default function CommentCard({
   comment,
@@ -29,10 +28,12 @@ export default function CommentCard({
   editComment,
   setEditComment,
 }) {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id: id, username: name } = useParams();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog } = useBlogCalls();
   const { deleteComment } = useCommentCalls();
+  const { username } = userInfo || {};
+
   const [openBottomMenu, setOpenBottomMenu] = useState("");
   const [commentData, setCommentData] = useState({ blogId: id, comment: "" });
   const [bottomCommentCard, setBottomCommentCard] = useState(false);
@@ -40,11 +41,8 @@ export default function CommentCard({
   const [editBottomComment, setEditBottomComment] = useState("");
   const [isReplyBottomCardId, setIsReplyBottomCardId] = useState("");
 
-  const { username } = userInfo || {};
-
   function getTimeDifference(date, created) {
     const timeDifference = date - created;
-
     const seconds = Math.floor(timeDifference / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -95,20 +93,13 @@ export default function CommentCard({
 
   const onMenuClick = (e) => {
     e.preventDefault();
-    if (openMenu === _id) {
-      setOpenMenu("");
-    } else {
-      setOpenMenu(_id);
-    }
+    setOpenMenu(openMenu === _id ? "" : _id);
   };
 
   const handleEditClick = (e, comment_id, comment) => {
     e.preventDefault();
     setEditComment(comment_id);
-    setCommentData((prevData) => ({
-      ...prevData,
-      comment: comment,
-    }));
+    setCommentData({ ...commentData, comment });
     setIsReplyCardId("");
     setSeeAnswersCardId("");
     setOpenMenu("");

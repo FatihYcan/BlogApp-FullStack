@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
+import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
@@ -6,13 +10,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import MuiCard from "@mui/material/Card";
 import useAuthCalls from "../../hooks/useAuthCalls";
-import { useNavigate } from "react-router-dom";
-import { Formik } from "formik";
-import RegisterForm, {
-  RegisterSchema,
-} from "../../components/auth/RegisterForm";
-import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import RegisterForm, { RegisterSchema } from "../../components/auth/RegisterForm";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
