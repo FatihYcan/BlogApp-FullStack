@@ -80,7 +80,8 @@ export default function BlogCard({
   };
 
   const handleDetail = () => {
-    navigate(`/blogs/${userId.username}/${_id}`);
+    const formattedUsername = userId.username.replace(/\s+/g, "-");
+    navigate(`/blogs/${formattedUsername}/${_id}`);
   };
 
   const handleLikeOpen = () => setLikeOpen(true);

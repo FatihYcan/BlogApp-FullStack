@@ -47,6 +47,8 @@ export default function Navbar() {
 
   const { username, isAdmin, image } = userInfo || {};
 
+  const formattedUsername = username.replace(/\s+/g, "-");
+
   const admin = [
     { name: "Users", to: "/users" },
     { name: "New Category", to: "/new-category" },
@@ -55,7 +57,7 @@ export default function Navbar() {
   const notLogin = [{ name: "About", to: "/about" }];
   const login = [
     { name: "My Blogs", to: "/my-blogs" },
-    { name: "Profile", to: `/${username}` },
+    { name: "Profile", to: `/${formattedUsername}` },
   ];
 
   const handleCloseLogin = () => setLoginOpen(false);

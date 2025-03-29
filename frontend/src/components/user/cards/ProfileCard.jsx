@@ -94,7 +94,9 @@ export default function ProfileCard({ singleUser, _id }) {
         />
         <SyledCardContent>
           <Typography gutterBottom variant="h6" component="div">
-            {username?.charAt(0).toUpperCase() + username?.slice(1)}
+            {username
+              ? username.charAt(0).toUpperCase() + username.slice(1)
+              : ""}
           </Typography>
           <StyledTypography variant="body2" color="text.secondary" gutterBottom>
             {fullName}
@@ -134,7 +136,7 @@ export default function ProfileCard({ singleUser, _id }) {
             <Typography variant="caption">{email}</Typography>
           </Box>
           <Typography variant="caption">
-            {new Date(createdAt).toLocaleDateString("tr-TR")}
+            {createdAt ? new Date(createdAt).toLocaleDateString("tr-TR") : ""}
           </Typography>
         </Box>
 
