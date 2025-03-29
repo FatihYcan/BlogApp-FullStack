@@ -127,7 +127,7 @@ export default function BlogDetail() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Blog App${title ? " - " + title : ""}`}</title>
+        <title>{`Köşe Yazısı${title ? " - " + title : ""}`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 

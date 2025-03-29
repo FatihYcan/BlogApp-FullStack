@@ -62,7 +62,7 @@ export default function NewCategory() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - New Category</title>
+        <title>Köşe Yazısı - New Category</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <CategoryContainer direction="column" justifyContent="space-between">

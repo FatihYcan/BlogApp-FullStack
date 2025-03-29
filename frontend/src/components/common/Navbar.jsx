@@ -15,7 +15,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import useAuthCalls from "../../hooks/useAuthCalls";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import LoginModal from "../blog/modals/LoginModal";
-import blog from "../../assets/images/blog-app.png";
+import blog from "../../assets/images/logo-transparent.png";
 import avatar from "../../assets/icons/avatar.png";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({

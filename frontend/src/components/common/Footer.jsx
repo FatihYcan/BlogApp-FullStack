@@ -7,12 +7,13 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import EmailIcon from "@mui/icons-material/Email";
 
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
       {"Copyright © "}
-      <span color="text.secondary">Blog App</span>
+      <span color="text.secondary">Köşe Yazısı</span>
       &nbsp;
       {new Date().getFullYear()}
     </Typography>
@@ -60,6 +61,7 @@ export default function Footer() {
             >
               <FacebookIcon />
             </IconButton>
+
             <IconButton
               target="blank"
               color="inherit"
@@ -69,6 +71,17 @@ export default function Footer() {
               sx={{ alignSelf: "center" }}
             >
               <LinkedInIcon />
+            </IconButton>
+
+            <IconButton
+              target="blank"
+              color="inherit"
+              size="small"
+              href="mailto:f.yakutcan.32@gmail.com"
+              aria-label="Email"
+              sx={{ alignSelf: "center" }}
+            >
+              <EmailIcon />
             </IconButton>
           </Stack>
         </Box>

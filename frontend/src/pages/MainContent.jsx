@@ -155,7 +155,7 @@ export default function MainContent() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - Home</title>
+        <title>Köşe Yazısı - Home</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Box

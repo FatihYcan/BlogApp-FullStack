@@ -16,7 +16,7 @@ export default function NewBlog() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - New Blog</title>
+        <title>Köşe Yazısı - New Blog</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <NewBlogForm />

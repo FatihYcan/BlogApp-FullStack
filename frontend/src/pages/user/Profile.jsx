@@ -34,7 +34,7 @@ export default function Profile() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Blog App${
+        <title>{`Köşe Yazısı${
           singleUser?.username ? " - " + singleUser.username : ""
         }`}</title>
         <link rel="canonical" href="http://mysite.com/example" />

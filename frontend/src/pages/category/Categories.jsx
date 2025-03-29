@@ -39,7 +39,7 @@ export default function Categories() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - Categories</title>
+        <title>Köşe Yazısı - Categories</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Box

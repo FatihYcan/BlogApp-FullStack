@@ -153,7 +153,7 @@ export default function MyBlogs() {
     return (
       <Container maxWidth="xl" component="main" sx={{ mt: 16, mb: 8 }}>
         <Helmet>
-          <title>Blog App - My Blogs</title>
+          <title>Köşe Yazısı - My Blogs</title>
         </Helmet>
         <Box
           sx={{
@@ -191,7 +191,7 @@ export default function MyBlogs() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - My Blogs</title>
+        <title>Köşe Yazısı - My Blogs</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 

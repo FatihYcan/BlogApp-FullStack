@@ -105,7 +105,7 @@ export default function Users() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - Users</title>
+        <title>Köşe Yazısı - Users</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Box

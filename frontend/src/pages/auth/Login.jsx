@@ -64,7 +64,7 @@ export default function Login() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - Login</title>
+        <title>Köşe Yazısı - Login</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <SignInContainer direction="column" justifyContent="space-between">

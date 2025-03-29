@@ -71,7 +71,7 @@ export default function Register() {
     >
        <Helmet>
         <meta charSet="utf-8" />
-        <title>Blog App - Register</title>
+        <title>Köşe Yazısı - Register</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <SignUpContainer direction="column" justifyContent="space-between">

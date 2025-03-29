@@ -97,7 +97,7 @@ export default function UserDetail() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Blog App${username ? " - " + username : ""}`}</title>
+        <title>{`Köşe Yazısı${username ? " - " + username : ""}`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 
