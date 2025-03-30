@@ -132,6 +132,14 @@ export default function MyBlogs() {
     fetchData();
   }, [myPage, selectedMyCategory, likes, searchMyBlog]);
 
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 100);
+  
+      return () => clearTimeout(timer);
+    }, []);
+
   if (loading) {
     return (
       <Container maxWidth="xl" component="main" sx={{ mt: 16, mb: 8 }}>

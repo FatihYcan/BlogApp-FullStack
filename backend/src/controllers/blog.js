@@ -147,9 +147,9 @@ module.exports = {
         req.body.isPublish = false;
 
         //! Eğer dosya yüklendiyse, resim yolunu ayarla
-        if (req.file) {
-            req.body.image = "./uploads/blog/" + req.file.filename;
-        }
+        // if (req.file) {
+        //     req.body.image = "./uploads/blog/" + req.file.filename;
+        // }
 
         //! Blog'u oluştur ve ID'sini al
         const data = await Blog.create(req.body)
