@@ -80,7 +80,7 @@ export default function BlogCard({
   };
 
   const handleDetail = () => {
-    const formattedUsername = userId.username.replace(/\s+/g, "-");
+    const formattedUsername = userId?.username.replace(/\s+/g, "-");
     navigate(`/blogs/${formattedUsername}/${_id}`);
   };
 
