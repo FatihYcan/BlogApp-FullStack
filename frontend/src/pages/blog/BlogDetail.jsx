@@ -113,7 +113,7 @@ export default function BlogDetail() {
     });
     setUpdateOpen(true);
   };
-  
+
   return (
     <Container
       maxWidth="md"
@@ -189,6 +189,7 @@ export default function BlogDetail() {
                   }
                   sx={{ width: 30, height: 30 }}
                 />
+                
               </AvatarGroup>
               <Typography variant="caption">
                 {userId?.username
