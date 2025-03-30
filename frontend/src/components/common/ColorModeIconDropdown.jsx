@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from 'react';
 import { useEffect } from "react";
 import { useColorScheme } from "@mui/material/styles";
 import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
