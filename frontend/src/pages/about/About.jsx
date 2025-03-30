@@ -48,9 +48,9 @@ export default function About() {
             📌 Kullanıcı Deneyimi
           </Typography>
           <Typography variant="body1" color="textSecondary" my={1}>
-            BlogApp, kullanıcı dostu tasarımı ve sade arayüzü sayesinde herkesin
-            kolayca blog yazmasını sağlar. İster yeni bir yazar olun, ister
-            tecrübeli bir içerik üretici, platformumuz size yazılarınızı
+            Köşe Yazısı, kullanıcı dostu tasarımı ve sade arayüzü sayesinde
+            herkesin kolayca blog yazmasını sağlar. İster yeni bir yazar olun,
+            ister tecrübeli bir içerik üretici, platformumuz size yazılarınızı
             paylaşma ve okuyucularla etkileşim kurma imkanı sunar.
           </Typography>
           <List>
@@ -68,7 +68,7 @@ export default function About() {
             🌟 Vizyonumuz ve Misyonumuz
           </Typography>
           <Typography variant="body1" color="textSecondary" mt={1}>
-            BlogApp olarak hedefimiz, herkesin özgürce düşüncelerini
+            Köşe Yazısı, olarak hedefimiz, herkesin özgürce düşüncelerini
             paylaşabileceği, yaratıcı içerik üretebileceği ve kaliteli bilgilere
             kolayca ulaşabileceği bir ortam oluşturmaktır.
           </Typography>
@@ -105,7 +105,7 @@ export default function About() {
             yazınızı yayınlayabilirsiniz:
           </Typography>
           <List>
-            <ListItem>📌 BlogApp’e üye olun veya giriş yapın.</ListItem>
+            <ListItem>📌 Köşe Yazısı'na, üye olun veya giriş yapın.</ListItem>
             <ListItem>
               📝 Yeni bir yazı oluşturun ve içeriğinizi ekleyin.
             </ListItem>

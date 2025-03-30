@@ -47,7 +47,7 @@ export default function Navbar() {
 
   const { username, isAdmin, image } = userInfo || {};
 
-  const formattedUsername = username.replace(/\s+/g, "-");
+  const formattedUsername = username?.replace(/\s+/g, "-");
 
   const admin = [
     { name: "Users", to: "/users" },
