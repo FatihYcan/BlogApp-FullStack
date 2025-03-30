@@ -67,10 +67,10 @@ app.use("/uploads/content", express.static("./uploads/content"))
 
 /* ------------------------------------------------------- */
 //? Synchronization
-require('./src/helpers/sync')()
+// require('./src/helpers/sync')()
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))
 
 //? RUN SERVER
-app.listen(PORT, HOST, () => { console.log(`Server is running on http://${HOST}:${PORT}`) })
+app.listen(PORT, () => console.log(`Server is running on http://${HOST}:${PORT}`))
