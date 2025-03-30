@@ -132,7 +132,7 @@ export default function UpdateContentForm({
               {imagePath.map((image, index) => (
                 <Box key={index} sx={{ position: "relative" }}>
                   <img
-                    src={`http://127.0.0.1:8000${image}`}
+                    src={`https://blogapp-fullstack-zu3m.onrender.com${image}`}
                     alt={`Uploaded ${index}`}
                     style={{
                       width: "125px",

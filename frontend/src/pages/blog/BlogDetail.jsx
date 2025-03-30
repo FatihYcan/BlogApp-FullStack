@@ -149,7 +149,7 @@ export default function BlogDetail() {
             alt={title}
             image={
               image && image.length > 0
-                ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
                 : []
             }
             sx={{
@@ -184,12 +184,12 @@ export default function BlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `http://127.0.0.1:8000${userId.image[0].slice(1)}`
+                      ? `https://blogapp-fullstack-zu3m.onrender.com${userId.image[0].slice(1)}`
                       : avatar
                   }
                   sx={{ width: 30, height: 30 }}
                 />
-                
+
               </AvatarGroup>
               <Typography variant="caption">
                 {userId?.username

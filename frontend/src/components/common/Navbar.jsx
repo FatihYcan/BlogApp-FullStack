@@ -179,7 +179,7 @@ export default function Navbar() {
                   alt={username}
                   src={
                     image && image.length > 0
-                      ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                      ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
                       : avatar
                   }
                   className="h-8 w-8 rounded-full"
@@ -323,7 +323,7 @@ export default function Navbar() {
                       alt={username}
                       src={
                         image && image.length > 0
-                          ? `http://127.0.0.1:8000${image[0].slice(1)}`
+                          ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
                           : avatar
                       }
                       className="h-8 w-8 rounded-full"
