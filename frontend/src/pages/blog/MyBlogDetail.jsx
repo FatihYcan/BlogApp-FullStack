@@ -146,7 +146,7 @@ export default function MyBlogDetail() {
             alt={title}
             image={
               image && image.length > 0
-                ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
+                ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
                 : []
             }
             sx={{
@@ -181,7 +181,7 @@ export default function MyBlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                      ? `https://blogapp-fullstack-zu3m.onrender.com${userId.image[0].slice(1)}`
                       : avatar
                   }
                   sx={{ width: 30, height: 30 }}

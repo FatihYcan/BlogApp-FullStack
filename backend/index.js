@@ -65,9 +65,11 @@ app.all('/documents', (req, res) => {
 app.use(require('./src/routes'))
 
 //? Static Files
-app.use("/uploads/blog", express.static("./uploads/blog"))
-app.use("/uploads/user", express.static("./uploads/user"))
-app.use("/uploads/content", express.static("./uploads/content"))
+// app.use("/uploads/blog", express.static("./uploads/blog"))
+// app.use("/uploads/user", express.static("./uploads/user"))
+// app.use("/uploads/content", express.static("./uploads/content"))
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 /* ------------------------------------------------------- */
 

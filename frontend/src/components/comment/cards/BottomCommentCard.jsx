@@ -101,7 +101,7 @@ export default function BottomCommentCard({
           <Avatar
             src={
               userId?.image && userId.image.length > 0
-                ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                ? `https://blogapp-fullstack-zu3m.onrender.com${userId.image[0].slice(1)}`
                 : avatar
             }
             sx={{ width: 30, height: 30, mr: 2 }}
