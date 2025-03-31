@@ -48,7 +48,7 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 //? Routes
 
 //? Home Path
-app.all('/koseyazisi/documents', (req, res) => {
+app.all('/documents', (req, res) => {
     res.send({
         error: false,
         message: 'Welcome to Blog API',
@@ -62,7 +62,7 @@ app.all('/koseyazisi/documents', (req, res) => {
 })
 
 //? Routes
-app.use("/koseyazisi", require('./src/routes'))
+app.use(require('./src/routes'))
 
 //? Static Files
 app.use("/uploads/blog", express.static("./uploads/blog"))

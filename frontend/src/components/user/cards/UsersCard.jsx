@@ -72,7 +72,7 @@ export default function UsersCard({
           alt={username}
           image={
             image && image.length > 0
-              ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
+              ? `http://127.0.0.1:8000${image[0].slice(1)}`
               : avatar
           }
           sx={{
@@ -115,7 +115,7 @@ export default function UsersCard({
                 alt={username}
                 src={
                   image && image.length > 0
-                    ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
+                    ? `http://127.0.0.1:8000${image[0].slice(1)}`
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}
