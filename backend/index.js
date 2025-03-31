@@ -18,7 +18,7 @@ const HOST = process.env.HOST
 require("express-async-errors")
 
 //? Static Files
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 /* ------------------------------------------------------- */
 
@@ -72,12 +72,8 @@ app.use("/uploads/content", express.static("./uploads/content"))
 /* ------------------------------------------------------- */
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./public", "index.html"))
-})
-
-app.use("*", (req, res) => {
-    res.status(404).json({ msg: "not found" })
-})
+    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))
