@@ -271,7 +271,7 @@ export default function UpdateMyUserModal({
                       <img
                         src={
                           data.image && data.image.length > 0
-                            ? `http://127.0.0.1:8000${data.image[0].slice(1)}`
+                            ? `https://koseyazisi.onrender.com${data.image[0].slice(1)}`
                             : avatar
                         }
                         alt={formik.values.username}

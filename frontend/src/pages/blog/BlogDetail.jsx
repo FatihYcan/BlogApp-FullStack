@@ -157,7 +157,7 @@ export default function BlogDetail() {
             alt={title}
             image={
               image && image.length > 0
-                ? `http://127.0.0.1:8000${image[0].slice(
+                ? `https://koseyazisi.onrender.com${image[0].slice(
                     1
                   )}`
                 : []
@@ -194,7 +194,7 @@ export default function BlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `http://127.0.0.1:8000${userId.image[0].slice(
+                      ? `https://koseyazisi.onrender.com${userId.image[0].slice(
                           1
                         )}`
                       : avatar

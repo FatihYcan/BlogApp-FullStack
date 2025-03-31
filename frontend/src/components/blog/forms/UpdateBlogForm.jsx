@@ -134,7 +134,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
               >
                 <Box>
                   <img
-                    src={`http://127.0.0.1:8000${data.image[0].slice(1)}`}
+                    src={`https://koseyazisi.onrender.com${data.image[0].slice(1)}`}
                     alt={data.image}
                     style={{
                       width: "100%",
