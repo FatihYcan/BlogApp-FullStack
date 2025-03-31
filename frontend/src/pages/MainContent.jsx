@@ -39,7 +39,7 @@ export function Search({ handleSearch, searchBlog }) {
 }
 
 export default function MainContent() {
-  const { blogs, viewBlogs, details, likes, allBlogs } = useSelector(
+  const { blogs, viewBlogs, details, likes, allBlogs,loading } = useSelector(
     (state) => state.blog
   );
 
@@ -53,7 +53,7 @@ export default function MainContent() {
   const [searchBlog, setSearchBlog] = useState(
     sessionStorage.getItem("searchBlog") || ""
   );
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const uniqueCategories = [
     ...new Set(allBlogs.map((blog) => JSON.stringify(blog.categoryId))),
@@ -127,13 +127,13 @@ export default function MainContent() {
     getBlogsView("blogs?sort[viewCount]=desc&limit=4");
   }, [page, selectedCategory, likes, searchBlog]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 100);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   if (loading) {
     return (
