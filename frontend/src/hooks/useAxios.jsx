@@ -4,11 +4,11 @@ const useAxios = () => {
   const userToken = localStorage.getItem("userToken") || {};
 
   const axiosPublic = axios.create({
-    baseURL: "https://koseyazisi.onrender.com/"
+    baseURL: "https://koseyazisi.onrender.com/",
   });
 
   const axiosData = axios.create({
-     baseURL: "https://koseyazisi.onrender.com/",
+    baseURL: "https://koseyazisi.onrender.com/",
     headers: {
       "Content-type": "multipart/form-data",
     },
