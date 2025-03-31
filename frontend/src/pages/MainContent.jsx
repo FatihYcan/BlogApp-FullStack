@@ -94,6 +94,7 @@ export default function MainContent() {
     setPage(1);
   };
 
+ 
   useEffect(() => {
     if (selectedCategory) {
       sessionStorage.setItem("selectedCategory", selectedCategory);

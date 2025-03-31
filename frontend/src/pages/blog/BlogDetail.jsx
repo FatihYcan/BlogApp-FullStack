@@ -42,9 +42,13 @@ export default function BlogDetail() {
   const { _id, username: name } = useParams();
   const { username } = userInfo || {};
   const { getSingleBlog, postBlogLike } = useBlogCalls();
-  const { singleBlog, likes: like } = useSelector((state) => state.blog);
+  const {
+    singleBlog,
+    likes: like,
+    loading,
+  } = useSelector((state) => state.blog);
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
   const [likeOpen, setLikeOpen] = useState(false);
@@ -82,11 +86,15 @@ export default function BlogDetail() {
 
   useEffect(() => {
     getSingleBlog(name, _id);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
   }, [like]);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 100);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const handleCloseLogin = () => setLoginOpen(false);
   const handleImageClose = () => setImageOpen(false);
@@ -131,7 +139,7 @@ export default function BlogDetail() {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 
-      {loading || !singleBlog ? (
+      {loading ? (
         <Box
           sx={{
             display: "flex",
@@ -149,7 +157,9 @@ export default function BlogDetail() {
             alt={title}
             image={
               image && image.length > 0
-                ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
+                ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(
+                    1
+                  )}`
                 : []
             }
             sx={{
@@ -184,12 +194,13 @@ export default function BlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `https://blogapp-fullstack-zu3m.onrender.com${userId.image[0].slice(1)}`
+                      ? `https://blogapp-fullstack-zu3m.onrender.com${userId.image[0].slice(
+                          1
+                        )}`
                       : avatar
                   }
                   sx={{ width: 30, height: 30 }}
                 />
-
               </AvatarGroup>
               <Typography variant="caption">
                 {userId?.username

@@ -4,8 +4,20 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    sessionStorage.removeItem("selectedCategory");
+    sessionStorage.removeItem("searchBlog");
+    sessionStorage.removeItem("searchUser");
+    sessionStorage.removeItem("page");
+    sessionStorage.removeItem("selectedMyCategory");
+    sessionStorage.removeItem("searchMyBlog");
+    sessionStorage.removeItem("myPage");
+    sessionStorage.removeItem("userPage");
+  }, []);
+
   return (
     <Container
       maxWidth="md"
