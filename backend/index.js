@@ -3,6 +3,7 @@
 /* --- BLOG API --- */
 
 const express = require("express")
+const path = require("path")
 const app = express()
 
 /* ------------------------------------------------------- */
@@ -15,6 +16,9 @@ const HOST = process.env.HOST
 
 //? Aync error handling
 require("express-async-errors")
+
+//? Static Files
+app.use(express.static(path.join(__dirname, "public")))
 
 /* ------------------------------------------------------- */
 
@@ -44,7 +48,7 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 //? Routes
 
 //? Home Path
-app.all('/', (req, res) => {
+app.all('/koseyazisi/documents', (req, res) => {
     res.send({
         error: false,
         message: 'Welcome to Blog API',
@@ -58,7 +62,7 @@ app.all('/', (req, res) => {
 })
 
 //? Routes
-app.use(require('./src/routes'))
+app.use("/koseyazisi", require('./src/routes'))
 
 //? Static Files
 app.use("/uploads/blog", express.static("./uploads/blog"))
@@ -66,11 +70,23 @@ app.use("/uploads/user", express.static("./uploads/user"))
 app.use("/uploads/content", express.static("./uploads/content"))
 
 /* ------------------------------------------------------- */
-//? Synchronization
-require('./src/helpers/sync')()
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public", "index.html"))
+})
+
+app.use("*", (req, res) => {
+    res.status(404).json({ msg: "not found" })
+})
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))
 
 //? RUN SERVER
 app.listen(PORT, () => console.log(`Server is running on http://${HOST}:${PORT}`))
+
+//? Synchronization
+// Syncronization (must be in commentLine):
+if (process.env.NODE_ENV == "development") {
+    // require('./src/helpers/sync')() // !!! It clear database.
+}

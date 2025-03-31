@@ -10,7 +10,7 @@ const useAxios = () => {
 
   const axiosData = axios.create({
     // baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    baseURL: "/koseyazisi/",
+    baseURL: "/koseyazisi",
     headers: {
       "Content-type": "multipart/form-data",
     },
@@ -18,7 +18,7 @@ const useAxios = () => {
 
   const axiosWithToken = axios.create({
     // baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    baseURL: "/koseyazisi/",
+    baseURL: "/koseyazisi",
     headers: {
       Authorization: `Token ${userToken}`,
     },
@@ -26,7 +26,7 @@ const useAxios = () => {
 
   const axiosWithTokenAndData = axios.create({
     // baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    baseURL: "/koseyazisi/",
+    baseURL: "/koseyazisi",
     headers: {
       Authorization: `Token ${userToken}`,
       "Content-type": "multipart/form-data",
