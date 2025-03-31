@@ -12,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import useUserCalls from "../../hooks/useUserCalls";
 import UsersCard from "../../components/user/cards/UsersCard";
+import UserCardSkeleton from "../../components/user/cards/UserCardSkeleton";
 
 export function Search({ handleSearch, searchUser }) {
   return (
@@ -46,6 +47,7 @@ export default function Users() {
   const [searchUser, setSearchUser] = useState(
     sessionStorage.getItem("searchUser") || ""
   );
+  const [loading, setLoading] = useState(true);
 
   const generateBlogsUrl = () => {
     let url = `users?page=${userPage}&limit=8`;
@@ -90,6 +92,35 @@ export default function Users() {
   useEffect(() => {
     getUsers(generateBlogsUrl());
   }, [userPage, searchUser]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <Container
+        maxWidth="xl"
+        component="main"
+        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+      >
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={2}
+          justifyContent="center"
+        >
+          {users.map((_, index) => (
+            <UserCardSkeleton key={index} />
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
 
   return (
     <Container

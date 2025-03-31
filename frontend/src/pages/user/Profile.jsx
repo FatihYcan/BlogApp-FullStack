@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import ProfileCard from "../../components/user/cards/ProfileCard";
 import useUserCalls from "../../hooks/useUserCalls";
+import ProfileCardSkeleton from "../../components/user/cards/ProfileCardSkeleton";
 
 export default function Profile() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -13,6 +14,8 @@ export default function Profile() {
 
   const { getSingleUser } = useUserCalls();
   const { singleUser } = useSelector((state) => state.user);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getSingleUser(_id);
@@ -25,6 +28,33 @@ export default function Profile() {
     sessionStorage.removeItem("myPage");
     sessionStorage.removeItem("userPage");
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <Container
+        maxWidth="xl"
+        component="main"
+        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+      >
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={2}
+          justifyContent="center"
+        >
+          <ProfileCardSkeleton />
+        </Grid>
+      </Container>
+    );
+  }
 
   return (
     <Container

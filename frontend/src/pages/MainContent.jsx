@@ -39,7 +39,7 @@ export function Search({ handleSearch, searchBlog }) {
 }
 
 export default function MainContent() {
-  const { blogs, viewBlogs, details, likes, allBlogs,loading } = useSelector(
+  const { blogs, viewBlogs, details, likes, allBlogs } = useSelector(
     (state) => state.blog
   );
 
@@ -53,7 +53,7 @@ export default function MainContent() {
   const [searchBlog, setSearchBlog] = useState(
     sessionStorage.getItem("searchBlog") || ""
   );
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const uniqueCategories = [
     ...new Set(allBlogs.map((blog) => JSON.stringify(blog.categoryId))),
@@ -94,7 +94,6 @@ export default function MainContent() {
     setPage(1);
   };
 
- 
   useEffect(() => {
     if (selectedCategory) {
       sessionStorage.setItem("selectedCategory", selectedCategory);
@@ -122,18 +121,14 @@ export default function MainContent() {
   }, [selectedCategory, searchBlog, page]);
 
   useEffect(() => {
-    getAllBlogs("blogs");
-    getBlogs(generateBlogsUrl());
-    getBlogsView("blogs?sort[viewCount]=desc&limit=4");
+    const fetchData = async () => {
+      await getAllBlogs("blogs");
+      await getBlogs(generateBlogsUrl());
+      await getBlogsView("blogs?sort[viewCount]=desc&limit=4");
+      setLoading(false);
+    };
+    fetchData();
   }, [page, selectedCategory, likes, searchBlog]);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 100);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   if (loading) {
     return (

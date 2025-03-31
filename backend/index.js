@@ -66,8 +66,7 @@ app.use("/uploads/user", express.static("./uploads/user"))
 app.use("/uploads/content", express.static("./uploads/content"))
 
 /* ------------------------------------------------------- */
-//? Synchronization
-require('./src/helpers/sync')()
+
 
 //? errorHandler
 app.use(require('./src/middlewares/errorHandler'))

@@ -75,8 +75,8 @@ export default function BlogCard({
 
   const isLiked = likes.some((like) => like.userId.username === username);
 
-  const handleLike = () => {
-    username ? postBlogLike(_id) : setLoginOpen(true);
+  const handleLike = async () => {
+    username ? await postBlogLike(_id) : setLoginOpen(true);
   };
 
   const handleDetail = () => {
@@ -220,7 +220,9 @@ export default function BlogCard({
                 alt={userId.username}
                 src={
                   userId.image && userId.image.length > 0
-                    ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                    ? `https://koseyazisi.onrender.com${userId.image[0].slice(
+                        1
+                      )}`
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}

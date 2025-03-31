@@ -131,6 +131,7 @@ export default function MyBlogs() {
     };
     fetchData();
   }, [myPage, selectedMyCategory, likes, searchMyBlog]);
+  
 
   if (loading) {
     return (
