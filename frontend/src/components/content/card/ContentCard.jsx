@@ -68,7 +68,7 @@ export default function ContentCard({
             <CardMedia
               component="img"
               alt={`Content Image ${imgIndex + 1}`}
-              image={`https://blogapp-fullstack-zu3m.onrender.com${image.slice(1)}`}
+              image={`https://koseyazisi.onrender.com${image.slice(1)}`}
               sx={{
                 aspectRatio: "16 / 9",
                 objectFit: "initial",
@@ -76,7 +76,7 @@ export default function ContentCard({
                 cursor: "pointer",
               }}
               onClick={() =>
-                handleImageOpen(`https://blogapp-fullstack-zu3m.onrender.com${image.slice(1)}`)
+                handleImageOpen(`https://koseyazisi.onrender.com${image.slice(1)}`)
               }
             />
           </Grid>

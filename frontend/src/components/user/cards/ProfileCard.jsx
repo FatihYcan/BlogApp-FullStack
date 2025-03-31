@@ -82,7 +82,7 @@ export default function ProfileCard({ singleUser, _id }) {
           alt={username}
           image={
             image && image.length > 0
-              ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
+              ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
               : avatar
           }
           sx={{
@@ -127,7 +127,7 @@ export default function ProfileCard({ singleUser, _id }) {
                 alt={username}
                 src={
                   image && image.length > 0
-                    ? `https://blogapp-fullstack-zu3m.onrender.com${image[0].slice(1)}`
+                    ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}

@@ -280,7 +280,7 @@ export default function UpdateUserModal({
                       <img
                         src={
                           data.image && data.image.length > 0
-                            ? `https://blogapp-fullstack-zu3m.onrender.com${data.image[0].slice(1)}`
+                            ? `https://koseyazisi.onrender.com${data.image[0].slice(1)}`
                             : avatar
                         }
                         alt={formik.values.username}

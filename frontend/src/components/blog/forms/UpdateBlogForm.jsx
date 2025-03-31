@@ -134,7 +134,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
               >
                 <Box>
                   <img
-                    src={`https://blogapp-fullstack-zu3m.onrender.com${data.image[0].slice(1)}`}
+                    src={`https://koseyazisi.onrender.com${data.image[0].slice(1)}`}
                     alt={data.image}
                     style={{
                       width: "100%",
