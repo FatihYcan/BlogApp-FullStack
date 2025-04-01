@@ -79,7 +79,8 @@ export default function UserBlogCard({
   };
 
   const handleDetail = () => {
-    navigate(`/my-blogs/${username}/${_id}`);
+    const formattedUsername = userId?.username.replace(/\s+/g, "-");
+    navigate(`/my-blogs/${formattedUsername}/${_id}`);
   };
 
   const handleLikeOpen = () => setLikeOpen(true);
@@ -92,10 +93,9 @@ export default function UserBlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={
-            image && image.length > 0
-              ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-              : []
+          image={image && image.length > 0 ? image[0] : []}
+          src={
+            userId.image && userId.image.length > 0 ? userId.image[0] : avatar
           }
           sx={{
             aspectRatio: "16 / 9",
@@ -215,7 +215,7 @@ export default function UserBlogCard({
                 alt={userId.username}
                 src={
                   userId.image && userId.image.length > 0
-                    ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                    ? userId.image[0]
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}

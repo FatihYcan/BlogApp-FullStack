@@ -15,7 +15,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
   const { getCategories } = useCategoryCalls();
   const { _id, username } = useParams();
   const { categories } = useSelector((state) => state.category);
-  
+
   const [newImage, setNewImage] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -134,7 +134,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
               >
                 <Box>
                   <img
-                    src={`https://koseyazisi.onrender.com${data.image[0].slice(1)}`}
+                    src={data.image[0]}
                     alt={data.image}
                     style={{
                       width: "100%",

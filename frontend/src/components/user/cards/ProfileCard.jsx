@@ -80,11 +80,7 @@ export default function ProfileCard({ singleUser, _id }) {
         <CardMedia
           component="img"
           alt={username}
-          image={
-            image && image.length > 0
-              ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-              : avatar
-          }
+          image={image && image.length > 0 ? image[0] : avatar}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -125,11 +121,7 @@ export default function ProfileCard({ singleUser, _id }) {
               <Avatar
                 key={_id}
                 alt={username}
-                src={
-                  image && image.length > 0
-                    ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-                    : avatar
-                }
+                src={image && image.length > 0 ? image[0] : avatar}
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>

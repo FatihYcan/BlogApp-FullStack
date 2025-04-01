@@ -117,11 +117,7 @@ export default function UserDetail() {
           <CardMedia
             component="img"
             alt={username}
-            image={
-              image && image.length > 0
-                ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-                : avatar
-            }
+            image={image && image.length > 0 ? image[0] : avatar}
             sx={{
               width: "80%",
               margin: "auto",
@@ -166,11 +162,7 @@ export default function UserDetail() {
                 <Avatar
                   key={_id}
                   alt={username}
-                  src={
-                    image && image.length > 0
-                      ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-                      : avatar
-                  }
+                  src={image && image.length > 0 ? image[0] : avatar}
                   sx={{ width: 24, height: 24 }}
                 />
               </AvatarGroup>

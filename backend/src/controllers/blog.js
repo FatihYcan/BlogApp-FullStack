@@ -4,6 +4,7 @@
 
 //? Import Blog model
 const Blog = require('../models/blog')
+const { uploadToCloudinary } = require('../middlewares/upload')
 
 module.exports = {
     list: async (req, res) => {
@@ -42,9 +43,14 @@ module.exports = {
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
-        if (req.file) {
-            req.body.image = "./uploads/blog/" + req.file.filename
-        }
+        // if (req.file) {
+        //     req.body.image = "./uploads/blog/" + req.file.filename
+        // }
+
+        const imageUrl = await uploadToCloudinary(req.file.path, "blog_images")
+        req.body.image = imageUrl
+
+        console.log(imageUrl)
 
         let data
         if (req.body._id) {
@@ -104,17 +110,18 @@ module.exports = {
         }
 
         //! Eğer kullanıcı resim eklediyse
+        // if (req.file) {
+        //     req.body.image = "./uploads/blog/" + req.file.filename;
+        // }
         if (req.file) {
-            req.body.image = "./uploads/blog/" + req.file.filename;
-        }
-        //! Eğer kullanıcı resmi sildiyse
-        else if (req.body.image === "") {
-            req.body.image = []
+            const imageUrl = await uploadToCloudinary(req.file.path, "blog_images");
+            req.body.image = imageUrl;
         }
         //! Eğer kullanıcı resmi değiştirmediyse
         else {
             req.body.image = Blog.image;
         }
+
 
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
@@ -150,6 +157,8 @@ module.exports = {
         // if (req.file) {
         //     req.body.image = "./uploads/blog/" + req.file.filename;
         // }
+        const imageUrl = await uploadToCloudinary(req.file.path, "blog_images");
+        req.body.image = imageUrl;
 
         //! Blog'u oluştur ve ID'sini al
         const data = await Blog.create(req.body)

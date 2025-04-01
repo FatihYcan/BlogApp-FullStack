@@ -10,6 +10,8 @@ import EditBottomCommentForm from "../forms/EditBottomCommentForm";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 import avatar from "../../../assets/icons/avatar.png";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function BottomCommentCard({
   item,
@@ -21,6 +23,8 @@ export default function BottomCommentCard({
   isReplyBottomCardId,
   setIsReplyBottomCardId,
 }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { _id: id, username: name } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog } = useBlogCalls();
@@ -97,25 +101,43 @@ export default function BottomCommentCard({
           mb: 1,
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flex: 1,
+          }}
+        >
           <Avatar
             src={
               userId?.image && userId.image.length > 0
-                ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                ? userId.image[0]
                 : avatar
             }
-            sx={{ width: 30, height: 30, mr: 2 }}
+            sx={{ width: 30, height: 30, mr: 1 }}
           />
-          <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
-            {userId.username.charAt(0).toUpperCase() + userId.username.slice(1)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {getTimeDifference(new Date(), new Date(createdAt))}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: isSmallScreen ? "column" : "row",
+              alignItems: isSmallScreen ? "flex-start" : "center",
+            }}
+          >
+            <Typography
+              variant="body1"
+              fontWeight="bold"
+              sx={{ mr: isSmallScreen ? 0 : 2 }}
+            >
+              {userId.username.charAt(0).toUpperCase() +
+                userId.username.slice(1)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {getTimeDifference(new Date(), new Date(createdAt))}
+            </Typography>
+          </Box>
         </Box>
 
         {username === userId?.username && (
-          <div className="relative">
+          <div className="relative" style={{ marginLeft: "auto" }}>
             <div
               className="border border-black p-1 cursor-pointer dark:border-white"
               onClick={onBottomtMenuClick}

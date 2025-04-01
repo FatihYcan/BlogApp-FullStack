@@ -44,7 +44,7 @@ export default function BlogLikesModal({ likeOpen, handleLikeClose, likes }) {
                   alt={like.userId.username}
                   src={
                     like.userId.image && like.userId.image.length > 0
-                      ? `https://koseyazisi.onrender.com${like.userId.image[0].slice(1)}`
+                      ? like.userId.image[0]
                       : avatar
                   }
                   sx={{ width: 40, height: 40 }}

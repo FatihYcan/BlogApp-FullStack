@@ -8,10 +8,14 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import useCommentCalls from "../../../hooks/useCommentCalls";
 
 export default function CommentForm() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { _id, username } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog } = useBlogCalls();
@@ -99,7 +103,23 @@ export default function CommentForm() {
         )}
 
         {showEmojiPicker && (
-          <Box sx={{ position: "absolute", zIndex: 1, right: 0, top: 60 }}>
+          <Box
+            sx={{
+              position: "absolute",
+              zIndex: 1,
+              ...(isSmallScreen
+                ? {
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    top: "100%",
+                    marginTop: 1,
+                  }
+                : {
+                    right: 0,
+                    top: 60,
+                  }),
+            }}
+          >
             <Picker data={data} onEmojiSelect={handleEmojiSelect} />
           </Box>
         )}

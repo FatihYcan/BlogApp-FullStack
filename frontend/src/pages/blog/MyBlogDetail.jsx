@@ -144,11 +144,7 @@ export default function MyBlogDetail() {
           <CardMedia
             component="img"
             alt={title}
-            image={
-              image && image.length > 0
-                ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-                : []
-            }
+            image={image && image.length > 0 ? image[0] : []}
             sx={{
               width: "80%",
               margin: "auto",
@@ -181,7 +177,7 @@ export default function MyBlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                      ? userId.image[0]
                       : avatar
                   }
                   sx={{ width: 30, height: 30 }}

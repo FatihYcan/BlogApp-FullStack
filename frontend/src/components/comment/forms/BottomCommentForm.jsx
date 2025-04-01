@@ -8,6 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 
@@ -17,6 +19,8 @@ export default function BottomCommentForm({
   setSeeAnswersCardId,
   isReplyName,
 }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { _id, username } = useParams();
   const { getSingleBlog } = useBlogCalls();
   const { postBottomComment } = useBottomCommentCalls();
@@ -55,6 +59,7 @@ export default function BottomCommentForm({
     e.preventDefault();
     setIsReplyCardId("");
   };
+
   return (
     <Box
       component="form"
@@ -67,42 +72,83 @@ export default function BottomCommentForm({
       }}
     >
       <FormControl fullWidth margin="dense" sx={{ position: "relative" }}>
-        <TextField
-          size="small"
-          id="comment"
-          type="text"
-          name="comment"
-          variant="outlined"
-          placeholder={isReplyName ? `reply to ${isReplyName}` : ""}
-          required
-          multiline
-          value={bottomCommentData.comment}
-          onChange={handleChange}
-        />
         <Box
           sx={{
-            position: "absolute",
-            right: 0,
-            bottom: 0,
-            display: "flex",
-            alignItems: "center",
+            position: "relative",
+            border: "1px solid rgba(0, 0, 0, 0.23)",
+            borderRadius: "4px",
+            padding: isSmallScreen ? "8px 8px 40px 8px" : "8px 40px 8px 8px",
+            minHeight: isSmallScreen ? "50px" : "auto",
           }}
         >
-          <Button
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            sx={{ minWidth: "auto" }}
+          <TextField
+            size="small"
+            id="comment"
+            type="text"
+            name="comment"
+            variant="standard"
+            placeholder={isReplyName ? `reply to ${isReplyName}` : ""}
+            required
+            multiline
+            fullWidth
+            value={bottomCommentData.comment}
+            onChange={handleChange}
+            sx={{
+              "& .MuiInputBase-root": {
+                padding: 0,
+                "&:before, &:after": {
+                  borderBottom: "none !important",
+                },
+              },
+              "& .MuiInputBase-input": {
+                padding: 0,
+              },
+            }}
+          />
+
+          <Box
+            sx={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
           >
-            😀
-          </Button>
-          <Button type="submit" sx={{ minWidth: "auto" }}>
-            <SendIcon />
-          </Button>
-          <Button sx={{ minWidth: "auto" }} onClick={handleClose}>
-            <CloseIcon />
-          </Button>
+            <Button
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              sx={{ minWidth: "auto" }}
+            >
+              😀
+            </Button>
+            <Button type="submit" sx={{ minWidth: "auto" }}>
+              <SendIcon fontSize="small" />
+            </Button>
+            <Button sx={{ minWidth: "auto" }} onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </Button>
+          </Box>
         </Box>
+
         {showEmojiPicker && (
-          <Box sx={{ position: "absolute", zIndex: 1, right: 0, top: 35 }}>
+          <Box
+            sx={{
+              position: "absolute",
+              zIndex: 1,
+              ...(isSmallScreen
+                ? {
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    bottom: "100%",
+                    marginTop: 1,
+                  }
+                : {
+                    right: 0,
+                    top: 40,
+                  }),
+            }}
+          >
             <Picker data={data} onEmojiSelect={handleEmojiSelect} />
           </Box>
         )}

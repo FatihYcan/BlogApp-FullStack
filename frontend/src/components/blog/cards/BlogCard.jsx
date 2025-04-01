@@ -88,6 +88,8 @@ export default function BlogCard({
   const handleLikeClose = () => setLikeOpen(false);
   const handleCloseLogin = () => setLoginOpen(false);
 
+  console.log(image[0]);
+
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <SyledCard variant="outlined">
@@ -95,11 +97,7 @@ export default function BlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={
-            image && image.length > 0
-              ? `https://koseyazisi.onrender.com${image[0].slice(1)}`
-              : []
-          }
+          image={image && image.length > 0 ? image[0] : []}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -220,9 +218,7 @@ export default function BlogCard({
                 alt={userId.username}
                 src={
                   userId.image && userId.image.length > 0
-                    ? `https://koseyazisi.onrender.com${userId.image[0].slice(
-                        1
-                      )}`
+                    ? userId.image[0]
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}

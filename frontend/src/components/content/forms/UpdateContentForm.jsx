@@ -21,7 +21,7 @@ export default function UpdateContentForm({
   const imagePath = Array.isArray(contentData?.images)
     ? contentData.images
         ?.filter((image) => typeof image === "string")
-        ?.map((image) => image.slice(1)) || []
+        ?.map((image) => image) || []
     : [];
 
   const handleContentChange = (content) => {
@@ -48,9 +48,7 @@ export default function UpdateContentForm({
 
   const handleDeleteImage = (e, image) => {
     e.preventDefault();
-    const updatedImages = contentData.images.filter(
-      (img) => img !== `.${image}`
-    );
+    const updatedImages = contentData.images.filter((img) => img !== image);
     setContentData((prevData) => ({
       ...prevData,
       images: updatedImages.length ? updatedImages : [],
@@ -132,7 +130,7 @@ export default function UpdateContentForm({
               {imagePath.map((image, index) => (
                 <Box key={index} sx={{ position: "relative" }}>
                   <img
-                    src={`https://koseyazisi.onrender.com${image}`}
+                    src={image}
                     alt={`Uploaded ${index}`}
                     style={{
                       width: "125px",

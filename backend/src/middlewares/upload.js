@@ -1,9 +1,11 @@
-"use strict";
+"use strict"
 
 /* --- BLOG API UPLOAD --- */
 
-const multer = require("multer");
-const path = require("path");
+const multer = require("multer")
+const path = require("path")
+const fs = require("fs")
+const cloudinary = require("../configs/cloudinary")
 
 const fixFileName = (fileName) => {
   return Buffer.from(fileName, "latin1")
@@ -24,8 +26,8 @@ const createUploader = (destinationFolder) => {
   const storage = multer.diskStorage({
     destination: `./uploads/${destinationFolder}`,
     filename: (req, file, callback) => {
-      const fixedName = fixFileName(file.originalname);
-      callback(null, Date.now() + "-" + fixedName);
+      const fixedName = fixFileName(file.originalname)
+      callback(null, Date.now() + "-" + fixedName)
     },
   });
 
@@ -36,7 +38,7 @@ const createUploader = (destinationFolder) => {
       const extname = filetypes.test(
         path.extname(file.originalname).toLowerCase()
       );
-      const mimetype = filetypes.test(file.mimetype);
+      const mimetype = filetypes.test(file.mimetype)
 
       if (mimetype && extname) {
         return cb(null, true);
@@ -48,11 +50,24 @@ const createUploader = (destinationFolder) => {
         );
       }
     },
+  })
+}
+
+const uploadToCloudinary = async (filePath, folderName) => {
+  const result = await cloudinary.uploader.upload(filePath, {
+    folder: folderName,
   });
+
+  if (result && result.secure_url) {
+    fs.unlinkSync(filePath); // Geçici dosyayı sil
+    return result.secure_url; // Cloudinary'den dönen URL
+  } else {
+    throw new Error("Cloudinary installation failed! Please try again.");
+  }
 };
 
-const userUpload = createUploader("user");
-const blogUpload = createUploader("blog");
-const contentUpload = createUploader("content");
+const userUpload = createUploader("user")
+const blogUpload = createUploader("blog")
+const contentUpload = createUploader("content")
 
-module.exports = { userUpload, blogUpload, contentUpload };
+module.exports = { userUpload, blogUpload, contentUpload, uploadToCloudinary }

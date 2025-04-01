@@ -4,6 +4,7 @@
 
 //? Import Content model
 const Content = require('../models/content')
+const { uploadToCloudinary } = require('../middlewares/upload')
 
 module.exports = {
     list: async (req, res) => {
@@ -35,8 +36,12 @@ module.exports = {
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
+        // if (req.files && req.files.length > 0) {
+        //     req.body.images = req.files.map(file => "./uploads/content/" + file.filename);
+        // }
         if (req.files && req.files.length > 0) {
-            req.body.images = req.files.map(file => "./uploads/content/" + file.filename);
+            const imageUploadPromises = req.files.map(file => uploadToCloudinary(file.path, "content_images"));
+            req.body.images = await Promise.all(imageUploadPromises);
         }
 
         const data = await Content.create(req.body)
@@ -77,9 +82,11 @@ module.exports = {
             content.images = []
 
             //! Yeni resimleri ekle
-            for (let file of req.files) {
-                content.images.push("./uploads/content/" + file.filename)
-            }
+            // for (let file of req.files) {
+            //     content.images.push("./uploads/content/" + file.filename)
+            // }
+            const imageUploadPromises = req.files.map(file => uploadToCloudinary(file.path, "content_images"));
+            content.images = await Promise.all(imageUploadPromises);
 
             //! Güncellenmiş resimleri req.body'ye ekle
             req.body.images = content.images
@@ -97,9 +104,13 @@ module.exports = {
         else if (req.files && content.images.length === req.body.images.length) {
 
             //! Yeni resimleri ekle
-            for (let file of req.files) {
-                content.images.push("./uploads/content/" + file.filename)
-            }
+            // for (let file of req.files) {
+            //     content.images.push("./uploads/content/" + file.filename)
+            // }
+            const imageUploadPromises = req.files.map(file => uploadToCloudinary(file.path, "content_images"));
+            const newImages = await Promise.all(imageUploadPromises);
+
+            content.images.push(...newImages);
 
             //! Güncellenmiş resimleri req.body'ye ekle
             req.body.images = content.images
@@ -109,9 +120,13 @@ module.exports = {
         else if (req.files && content.images.length !== req.body.images.length) {
             let updatedImages = content.images.filter(img => req.body.images.includes(img));
 
-            for (let file of req.files) {
-                updatedImages.push("./uploads/content/" + file.filename)
-            }
+            // for (let file of req.files) {
+            //     updatedImages.push("./uploads/content/" + file.filename)
+            // }
+            const imageUploadPromises = req.files.map(file => uploadToCloudinary(file.path, "content_images"));
+            const newImages = await Promise.all(imageUploadPromises);
+
+            updatedImages.push(...newImages);
 
             //! Güncellenmiş resimleri req.body'ye ekle
             req.body.images = updatedImages

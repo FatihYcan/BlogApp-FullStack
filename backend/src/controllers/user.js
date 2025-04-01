@@ -6,6 +6,7 @@
 const User = require('../models/user')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
 const Token = require('../models/token')
+const { uploadToCloudinary } = require('../middlewares/upload')
 
 module.exports = {
     list: async (req, res) => {
@@ -38,8 +39,12 @@ module.exports = {
         //! Yeni kayıtlarda admin=false
         req.body.isAdmin = false
 
+        // if (req.file) {
+        //     req.body.image = "./uploads/user/" + req.file.filename
+        // }
         if (req.file) {
-            req.body.image = "./uploads/user/" + req.file.filename
+            const imageUrl = await uploadToCloudinary(req.file.path, "user_images");
+            req.body.image = imageUrl;
         }
 
         const data = await User.create(req.body)
@@ -87,7 +92,8 @@ module.exports = {
 
         //! Eğer kullanıcı resim eklediyse
         if (req.file) {
-            req.body.image = "./uploads/user/" + req.file.filename;
+            const imageUrl = await uploadToCloudinary(req.file.path, "user_images");
+            req.body.image = imageUrl;
         }
 
         //! Eğer kullanıcı resmi sildiyse

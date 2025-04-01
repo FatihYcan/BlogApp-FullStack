@@ -127,7 +127,7 @@ export default function CommentCard({
             <Avatar
               src={
                 userId?.image && userId.image.length > 0
-                  ? `https://koseyazisi.onrender.com${userId.image[0].slice(1)}`
+                  ? userId.image[0]
                   : avatar
               }
               sx={{ width: 30, height: 30, mr: 2 }}

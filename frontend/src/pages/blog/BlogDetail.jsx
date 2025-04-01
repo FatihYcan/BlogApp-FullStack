@@ -42,13 +42,9 @@ export default function BlogDetail() {
   const { _id, username: name } = useParams();
   const { username } = userInfo || {};
   const { getSingleBlog, postBlogLike } = useBlogCalls();
-  const {
-    singleBlog,
-    likes: like,
-    loading,
-  } = useSelector((state) => state.blog);
+  const { singleBlog, likes: like } = useSelector((state) => state.blog);
 
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
   const [likeOpen, setLikeOpen] = useState(false);
@@ -88,13 +84,13 @@ export default function BlogDetail() {
     getSingleBlog(name, _id);
   }, [like]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 100);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleCloseLogin = () => setLoginOpen(false);
   const handleImageClose = () => setImageOpen(false);
@@ -155,13 +151,7 @@ export default function BlogDetail() {
           <CardMedia
             component="img"
             alt={title}
-            image={
-              image && image.length > 0
-                ? `https://koseyazisi.onrender.com${image[0].slice(
-                    1
-                  )}`
-                : []
-            }
+            image={image && image.length > 0 ? image[0] : []}
             sx={{
               width: "80%",
               margin: "auto",
@@ -194,9 +184,7 @@ export default function BlogDetail() {
                   alt={userId?.username}
                   src={
                     userId?.image && userId.image.length > 0
-                      ? `https://koseyazisi.onrender.com${userId.image[0].slice(
-                          1
-                        )}`
+                      ? userId.image[0]
                       : avatar
                   }
                   sx={{ width: 30, height: 30 }}

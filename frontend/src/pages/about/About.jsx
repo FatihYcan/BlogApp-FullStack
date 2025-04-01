@@ -70,7 +70,7 @@ export default function About() {
             <ListItem>📚 Farklı kategorilerde içerik oluşturma imkanı</ListItem>
             <ListItem>💬 Yorum ve beğenilerle etkileşim</ListItem>
             <ListItem>
-              🔍 Blog yazıları için gelişmiş arama ve keşif özellikleri
+              🔍 Köşe yazıları için gelişmiş arama ve keşif özellikleri
             </ListItem>
           </List>
         </Box>
@@ -81,11 +81,11 @@ export default function About() {
           </Typography>
           <Typography variant="body1" color="textSecondary" mt={1}>
             Köşe Yazısı, olarak hedefimiz, herkesin özgürce düşüncelerini
-            paylaşabileceği, yaratıcı içerik üretebileceği ve kaliteli bilgilere
-            kolayca ulaşabileceği bir ortam oluşturmaktır.
+            paylaşabileceği, çok yönlü içerik üretebileceği ve kaliteli
+            bilgilere kolayca ulaşabileceği bir ortam oluşturmaktır.
           </Typography>
           <Typography variant="body1" color="textSecondary" mt={1}>
-            <strong>Vizyonumuz:</strong> Blog yazarlığını herkes için
+            <strong>Vizyonumuz:</strong> Köşe yazarlığını herkes için
             erişilebilir hale getirmek, içerik üreticilerini desteklemek ve
             bilgi paylaşımını teşvik etmektir.
           </Typography>
@@ -103,18 +103,18 @@ export default function About() {
           <Typography variant="body1" color="textSecondary" mt={1}>
             İçerik kalitesi bizim için çok önemli. Platformumuzda paylaşılan
             içeriklerin bilgi verici, doğru ve etik kurallara uygun olmasına
-            büyük önem veriyoruz. Kullanıcılarımızın katkılarıyla blog dünyasını
-            daha güvenilir hale getirmek için çalışıyoruz.
+            büyük önem veriyoruz. Kullanıcılarımızın katkılarıyla Köşe Yazısı
+            dünyasını daha güvenilir hale getirmek için çalışıyoruz.
           </Typography>
         </Box>
 
         <Box>
           <Typography variant="h5" fontWeight="bold" color="secondary">
-            ✍️ Blog Yazmaya Nasıl Başlarsınız?
+            ✍️ Köşe Yazısı Yazmaya Nasıl Başlarsınız?
           </Typography>
           <Typography variant="body1" color="textSecondary" mt={1}>
-            Blog yazmaya başlamak çok kolay! Aşağıdaki adımları takip ederek ilk
-            yazınızı yayınlayabilirsiniz:
+            Köşe Yazısı yazmaya başlamak çok kolay! Aşağıdaki adımları takip
+            ederek ilk yazınızı yayınlayabilirsiniz:
           </Typography>
           <List>
             <ListItem>📌 Köşe Yazısı'na, üye olun veya giriş yapın.</ListItem>
