@@ -59,9 +59,13 @@ export default function UserDetail() {
 
   useEffect(() => {
     getSingleUser(_id);
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 100);
+    }, 300);
+
     return () => clearTimeout(timer);
   }, []);
 

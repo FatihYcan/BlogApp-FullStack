@@ -88,7 +88,7 @@ export default function BlogDetail() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 250);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);

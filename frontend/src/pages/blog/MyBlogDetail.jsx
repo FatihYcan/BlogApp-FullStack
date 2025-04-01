@@ -80,11 +80,15 @@ export default function MyBlogDetail() {
 
   useEffect(() => {
     getSingleBlog(name, _id);
+  }, [like]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 100);
+    }, 300);
+
     return () => clearTimeout(timer);
-  }, [like]);
+  }, []);
 
   const handleImageClose = () => setImageOpen(false);
   const handleLikeOpen = () => setLikeOpen(true);
