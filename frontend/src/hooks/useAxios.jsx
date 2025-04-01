@@ -4,29 +4,26 @@ const useAxios = () => {
   const userToken = localStorage.getItem("userToken") || {};
 
   const axiosPublic = axios.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    // baseURL: "https://koseyazisi.onrender.ccom/",
+    baseURL: "https://koseyazisi.onrender.com/",
   });
 
   const axiosData = axios.create({
-    // baseURL: "https://koseyazisi.onrender.ccom/",
-    baseURL: `${process.env.REACT_APP_BASE_URL}`,
+    baseURL: "https://koseyazisi.onrender.com/",
     headers: {
       "Content-type": "multipart/form-data",
     },
   });
 
   const axiosWithToken = axios.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    // baseURL: "https://koseyazisi.onrender.ccom/",
+    baseURL: "https://koseyazisi.onrender.com/",
+
     headers: {
       Authorization: `Token ${userToken}`,
     },
   });
 
   const axiosWithTokenAndData = axios.create({
-    baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    // baseURL: "http://127.0.0.1:88800/",
+    baseURL: "https://koseyazisi.onrender.com/",
     headers: {
       Authorization: `Token ${userToken}`,
       "Content-type": "multipart/form-data",
