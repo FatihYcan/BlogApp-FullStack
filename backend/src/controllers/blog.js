@@ -120,7 +120,6 @@ module.exports = {
             req.body.image = Blog.image;
         }
 
-
         const data = await Blog.updateOne({ _id: req.params.id, ...customFilter }, req.body, { runValidators: true })
         res.status(200).send({ error: false, data, new: await Blog.findOne({ _id: req.params.id }) })
     },
@@ -131,11 +130,27 @@ module.exports = {
             #swagger.summary = "Delete Blog"
         */
 
+        const Content = require("../models/content");
+        const View = require("../models/view");
+        const Like = require("../models/like");
+        const Comment = require("../models/comment");
+        const BottomComment = require("../models/bottomcomment");
+
         //! Kullanıcı sadece kendi bloglarını silebilir.
         let customFilter = {}
         if (!req.user.isAdmin) {
             customFilter = { userId: req.user._id }
         }
+
+        const blog = await Blog.findOne({ _id: req.params.id, ...customFilter });
+
+        //! Bloga ait içerikleri, görüntülemeleri, beğenileri ve yorumları, yorumların içindeki yorumları sil.
+        await Content.deleteMany({ _id: { $in: blog.contents } });
+        await View.deleteMany({ _id: { $in: blog.views } });
+        await Like.deleteMany({ _id: { $in: blog.likes } });
+        await BottomComment.deleteMany({ commentId: { $in: blog.comments } });
+        await Comment.deleteMany({ _id: { $in: blog.comments } });
+
         const data = await Blog.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },

@@ -73,6 +73,7 @@ module.exports = {
         */
 
         const Blog = require('../models/blog')
+        const BottomComment = require("../models/bottomcomment");
 
         //! Kullanıcı sadece kendi yorumlarını silebilir.
         let customFilter = {}
@@ -84,6 +85,9 @@ module.exports = {
         const blogComment = await Comment.findOne({ _id: req.params.id, ...customFilter })
 
         const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
+
+        //! Comment ait yorumları sil.
+        await BottomComment.deleteMany({ _id: { $in: blogComment.bottomcomments } });
 
         //! Kullanıcının bloga olan comment durumunu sil
         await Blog.updateOne({ _id: blogComment.blogId }, { $pull: { comments: req.params.id } })
