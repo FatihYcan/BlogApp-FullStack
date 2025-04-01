@@ -88,8 +88,6 @@ export default function BlogCard({
   const handleLikeClose = () => setLikeOpen(false);
   const handleCloseLogin = () => setLoginOpen(false);
 
-  console.log(image[0]);
-
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <SyledCard variant="outlined">
