@@ -83,11 +83,12 @@ export default function BlogDetail() {
   useEffect(() => {
     getSingleBlog(name, _id);
   }, [like]);
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 100);
+    }, 250);
 
     return () => clearTimeout(timer);
   }, []);
