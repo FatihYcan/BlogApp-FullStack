@@ -47,9 +47,9 @@ module.exports = {
         //     req.body.image = "./uploads/blog/" + req.file.filename
         // }
 
-        if (!req.body.image && req.file) {
-            req.body.image = await uploadToCloudinary(req.file.path, "blog_images");
-        }
+        // if (!req.body.image && req.file) {
+        //     req.body.image = await uploadToCloudinary(req.file.path, "blog_images");
+        // }
 
         let data
         if (req.body._id) {
