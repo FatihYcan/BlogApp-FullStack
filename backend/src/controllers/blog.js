@@ -50,19 +50,17 @@ module.exports = {
         const imageUrl = await uploadToCloudinary(req.file.path, "blog_images")
         req.body.image = imageUrl
 
-        console.log(imageUrl)
-
         let data
         if (req.body._id) {
             //! Eğer _id varsa, blogu güncelle
             data = await Blog.findByIdAndUpdate(
                 req.body._id,
-                { ...req.body, isPublish: true },
+                { ...req.body },
                 { new: true }
             )
         } else {
             //! _id yoksa, yeni bir blog oluştur
-            data = await Blog.create({ ...req.body, isPublish: true })
+            data = await Blog.create({ ...req.body, isPublish: false })
         }
         res.status(201).send({ error: false, data })
     },
