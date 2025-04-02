@@ -83,12 +83,12 @@ module.exports = {
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
         const cores = req.headers['sec-ch-ua-bitness'] || 'unknown_cores'
 
-        //! 1. Cihazı normalize et
+        //! Cihazı normalize et
         const deviceInfo = normalizeDevice(userAgent)
 
-        //! 2. Hash oluştur (IP + marka/model)
+        //! Hash oluştur (marka/model)
         const deviceHash = crypto.createHash('sha1')
-            .update(`${userIP}_${deviceInfo}_${platform}_${cores}`)
+            .update(`${deviceInfo}_${platform}_${cores}`)
             .digest('hex')
 
         //! Kullanıcının bloga olan view durumunu kontrol et
