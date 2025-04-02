@@ -5,6 +5,8 @@
 //? Import Blog model
 const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
+const crypto = require('crypto')
+const { normalizeDevice } = require('../helpers/normalizeDevice')
 
 module.exports = {
     list: async (req, res) => {
@@ -65,7 +67,7 @@ module.exports = {
         }
         res.status(201).send({ error: false, data })
     },
-    
+
     read: async (req, res) => {
         /*
             #swagger.tags = ["Blogs"]
@@ -76,21 +78,26 @@ module.exports = {
         //! Kullanıcı IP adresini al
         const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
 
-
-
         //! Kullanıcının cihaz bilgisini al
         const userAgent = req.headers['user-agent']
 
-        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP + User-Agent bilgisini kullan
-        const userIdentifier = req.user ? req.user._id : null
-        const deviceIdentifier = `${userIP}_${userAgent}`
+        //! 1. Cihazı normalize et
+        const deviceInfo = normalizeDevice(userAgent)
+
+        //! 2. Hash oluştur (IP + marka/model)
+        const deviceHash = crypto.createHash('sha1')
+            .update(`${userIP}_${deviceInfo}`)
+            .digest('hex')
 
         //! Kullanıcının bloga olan view durumunu kontrol et
-        const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: userIdentifier }, { userIp: deviceIdentifier }] })
+        const view = await View.findOne({
+            blogId: req.params.id, $or: [{ userId: req.user?._id },
+            { deviceHash }]
+        })
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
-            const newView = await View.create({ blogId: req.params.id, userId: userIdentifier, userIp: userIdentifier ? null : deviceIdentifier })
+            const newView = await View.create({ blogId: req.params.id, userId: req.user?._id, deviceHash: req.user ? null : deviceHash })
 
             //! Blog'un view sayısını güncelle
             await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
