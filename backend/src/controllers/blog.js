@@ -78,22 +78,21 @@ module.exports = {
         //! Kullanıcı IP adresini al
         const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
 
-        //! Kullanıcının cihaz bilgisini al
-        const userAgent = req.headers['user-agent']
+        //! Kullanıcının cihaz bilgilerini al
+        const userAgent = req.headers['user-agent'] || 'unknown_agent'
+        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
+        const cores = req.headers['sec-ch-ua-bitness'] || 'unknown_cores'
 
         //! 1. Cihazı normalize et
         const deviceInfo = normalizeDevice(userAgent)
 
         //! 2. Hash oluştur (IP + marka/model)
         const deviceHash = crypto.createHash('sha1')
-            .update(`${userIP}_${deviceInfo}`)
+            .update(`${userIP}_${deviceInfo}_${platform}_${cores}`)
             .digest('hex')
 
         //! Kullanıcının bloga olan view durumunu kontrol et
-        const view = await View.findOne({
-            blogId: req.params.id, $or: [{ userId: req.user?._id },
-            { deviceHash }]
-        })
+        const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: req.user?._id }, { deviceHash }] })
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
