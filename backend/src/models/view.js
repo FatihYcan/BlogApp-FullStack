@@ -10,9 +10,7 @@ const viewSchema = new mongoose.Schema({
 
     blogId: { type: mongoose.Schema.Types.ObjectId, ref: 'Blog', required: true, index: true },
 
-    userIp: { type: String, index: true, sparse: true },
-
-    userAgent: { type: String, index: true },
+    userIp: { type: String, index: true, sparse: true }
 },
     { collection: 'views', timestamps: true })
 

@@ -65,7 +65,7 @@ module.exports = {
         }
         res.status(201).send({ error: false, data })
     },
-    
+
     read: async (req, res) => {
         /*
             #swagger.tags = ["Blogs"]
@@ -76,24 +76,18 @@ module.exports = {
         //! Kullanıcı IP adresini al
         const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
 
-
-
-        //! Kullanıcının cihaz bilgisini al
-        const userAgent = req.headers['user-agent']
-
-        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP + User-Agent bilgisini kullan
-        const userIdentifier = req.user ? req.user._id : null
-        const deviceIdentifier = `${userIP}_${userAgent}`
+        //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
+        const userIdentifier = req.user ? req.user._id : null;
 
         //! Kullanıcının bloga olan view durumunu kontrol et
-        const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: userIdentifier }, { userIp: deviceIdentifier }] })
+        const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: userIdentifier }, { userIP: userIP }] })
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
-            const newView = await View.create({ blogId: req.params.id, userId: userIdentifier, userIp: userIdentifier ? null : deviceIdentifier })
+            const view = await View.create({ blogId: req.params.id, userId: userIdentifier, userIP: userIdentifier ? null : userIP })
 
             //! Blog'un view sayısını güncelle
-            await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
+            await Blog.updateOne({ _id: req.params.id }, { $push: { views: view }, $inc: { viewCount: 1 } })
         }
 
         const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "contents" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
