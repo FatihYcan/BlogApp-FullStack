@@ -79,11 +79,15 @@ module.exports = {
         //! Kullanıcının tarayıcı ve cihaz bilgilerini al
         const userAgent = req.headers['user-agent'];
 
+        console.log(userAgent)
+
         //! Eğer kullanıcı giriş yapmışsa userId'yi, giriş yapmamışsa IP adresini kullan
         const userIdentifier = req.user ? req.user._id : null;
 
         //! Kullanıcının bloga olan view durumunu kontrol et
         const view = await View.findOne({ blogId: req.params.id, $or: [{ userId: userIdentifier }, { $and: [{ $or: [{ userIP: userIP }, { userAgent: userAgent }] }, { $nor: [{ userIP: { $ne: userIP }, userAgent: userAgent }, { userIP: userIP, userAgent: { $ne: userAgent } }] }] }] })
+
+        console.log(view)
 
         if (!view) {
             //! Kullanıcının bloga olan view durumunu ekle
