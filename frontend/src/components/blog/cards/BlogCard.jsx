@@ -112,6 +112,7 @@ export default function BlogCard({
             variant="h6"
             component="div"
             color="error.main"
+            onClick={handleDetail}
           >
             {title}
           </Typography>
