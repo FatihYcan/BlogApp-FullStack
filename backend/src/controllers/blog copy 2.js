@@ -75,44 +75,37 @@ module.exports = {
         */
         const View = require('../models/view')
 
-        //! Cihaz bilgilerini al
-        const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
-        const acceptLanguage = req.headers['accept-language'] || 'unknown'
-        const connection = req.headers['connection'] || 'keep-alive'
-        const deviceInfo = normalizeDevice(userAgent)
+        const userIP = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
+        const deviceCookie = req.cookies[`device_${req.params.id}`] || null
 
-        //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256')
-            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`)
-            .digest('hex')
-
-        console.log("1", userAgent)
-        console.log("2", platform)
-        console.log("3", acceptLanguage)
-        console.log("4", connection)
-        console.log("5", deviceInfo)
-        console.log("6", deviceId)
-
-        //! View kontrolü
         if (req.user?._id) {
+            // Giriş yapmış kullanıcı için
             const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, userId: req.user._id, deviceId: deviceId, deviceModel: deviceInfo })
+                const newView = await View.create({ blogId: req.params.id, userId: req.user._id })
 
-                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
+                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView._id }, $inc: { viewCount: 1 } })
             }
         } else {
-            const view = await View.findOne({
-                blogId: req.params.id,
-                deviceId: deviceId
-            })
+            // Giriş yapmamış kullanıcı için cihaz bazlı kontrol
+            const deviceIdentifier = deviceCookie || userIP;
+            const view = await View.findOne({ blogId: req.params.id, $or: [{ deviceId: deviceIdentifier }, { userIP: deviceCookie ? null : userIP }] })
 
             if (!view) {
-                await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo })
+                // Yeni bir cihaz kimliği oluştur (eğer çerez yoksa)
+                const newDeviceId = deviceCookie || `device_${crypto.randomBytes(16).toString('hex')}`;
 
+                // View oluştur (sadece takip için, views dizisine ekleme yapmıyoruz)
+                await View.create({ blogId: req.params.id, deviceId: newDeviceId, userIP: deviceCookie ? null : userIP })
+
+                // Sadece viewCount'u artır
                 await Blog.updateOne({ _id: req.params.id }, { $inc: { viewCount: 1 } })
+
+                // Eğer çerez yoksa ayarla (1 yıl geçerli)
+                if (!deviceCookie) {
+                    res.cookie(`device_${req.params.id}`, newDeviceId, { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: true })
+                }
             }
         }
 
@@ -120,7 +113,6 @@ module.exports = {
 
         res.status(200).send({ error: false, data })
     },
-
 
     update: async (req, res) => {
         /*
