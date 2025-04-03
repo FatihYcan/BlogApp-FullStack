@@ -82,13 +82,13 @@ module.exports = {
         const acceptLanguage = req.headers['accept-language'] || 'unknown'
         const connection = req.headers['connection'] || 'keep-alive'
         const secCHUA = req.headers['sec-ch-ua'] || 'unknown'
-        // const userPort = req.socket.remotePort || 0
+        const userPort = req.socket.remotePort || 0
 
         const deviceInfo = normalizeDevice(userAgent)
 
         //! Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256')
-            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}_${secCHUA}`)
+            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}_${secCHUA}_${userPort}`)
             .digest('hex')
 
         //! View kontrolü
