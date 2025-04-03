@@ -13,8 +13,6 @@ const viewSchema = new mongoose.Schema({
     deviceId: { type: String, index: true, sparse: true },
 
     deviceModel: { type: String, required: true },
-
-    ipAddress: { type: String, required: true, index: true }
 },
     { collection: 'views', timestamps: true })
 

@@ -77,22 +77,11 @@ module.exports = {
 
         //! Cihaz bilgilerini al
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
-        const acceptLanguage = req.headers['accept-language'] || 'unknown'
-        const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
+        const userIp = req.ip.replace(/^::ffff:/, '')
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256')
-            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`)
-            .digest('hex')
-
-        console.log("1", userAgent)
-        console.log("2", platform)
-        console.log("3", acceptLanguage)
-        console.log("4", connection)
-        console.log("5", deviceInfo)
-        console.log("6", deviceId)
+        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${userIp}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
@@ -104,15 +93,12 @@ module.exports = {
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
         } else {
-            const view = await View.findOne({
-                blogId: req.params.id,
-                deviceId: deviceId
-            })
+            const view = await View.findOne({ blogId: req.params.id, deviceId: deviceId })
 
             if (!view) {
-                await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo })
+                const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo, ipAddress: userIp })
 
-                await Blog.updateOne({ _id: req.params.id }, { $inc: { viewCount: 1 } })
+                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
         }
 
@@ -120,7 +106,6 @@ module.exports = {
 
         res.status(200).send({ error: false, data })
     },
-
 
     update: async (req, res) => {
         /*
