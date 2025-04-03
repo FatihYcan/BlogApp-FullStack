@@ -1,6 +1,6 @@
 "use strict"
 
-/* --- BLOG API DEVICE --- */
+/* --- BLOG API NORMALİZEDEVICE --- */
 
 const normalizeDevice = (userAgent = '') => {
     // 1. Temel markaları yakala
