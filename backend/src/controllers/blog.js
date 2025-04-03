@@ -80,13 +80,12 @@ module.exports = {
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
         const acceptLanguage = req.headers['accept-language'] || 'unknown'
-        const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
 
         const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || ''
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}_${deviceUUID}`).digest('hex')
+        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent}_${deviceUUID}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
