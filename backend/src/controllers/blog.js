@@ -77,7 +77,6 @@ module.exports = {
 
         //! Cihaz bilgilerini al
         const userIp = req.ip
-        const userIpSegment = userIp.split('.').slice(0, 3).join('.')
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
         const acceptLanguage = req.headers['accept-language'] || 'unknown'
@@ -87,7 +86,7 @@ module.exports = {
         const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || ''
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIpSegment}_${deviceUUID}`).digest('hex')
+        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}_${deviceUUID}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
