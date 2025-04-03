@@ -15,13 +15,13 @@ const generateDeviceId = (req, res) => {
     const userPort = req.socket.remotePort || 0
     const secCHUA = req.headers['sec-ch-ua'] || 'unknown'
     const userAgent = req.headers['user-agent'] || 'unknown_agent'
+    const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
+
 
     let deviceId = req.cookies?.deviceId
 
     if (!deviceId) {
-        deviceId = crypto.createHash('sha256').update(`${userIp}:${userPort}_${secCHUA}_${userAgent}`).digest('hex')
-
-        res.cookie('deviceId', deviceId, { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'Lax' })
+        deviceId = crypto.createHash('sha256').update(`${userIp}:${userPort}_${secCHUA}_${userAgent}_${platform}`).digest('hex')
     }
 
     return { deviceId, deviceInfo: normalizeDevice(userAgent) }

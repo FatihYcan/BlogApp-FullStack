@@ -5,13 +5,13 @@
 //? Import Blog model
 const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
-const crypto = require('crypto')
-const { normalizeDevice } = require('../helpers/normalizeDevice')
+const generateDeviceId = require('../helpers/generateDeviceId')
 
 module.exports = {
     list: async (req, res) => {
         /*       
             #swagger.tags = ["Blogs"]
+            #swagger.summary = "List Blogs"
             #swagger.summary = "List Blogs"
             #swagger.description = `You can send query with endpoint for filter[], search[], sort[], page and limit.
                 <ul>
@@ -76,37 +76,18 @@ module.exports = {
         const View = require('../models/view')
 
         //! Cihaz bilgilerini al
-        const userIp = req.ip.replace(/^::ffff:/, '').split('.').slice(0, 3).join('.') + '.0'
-        const userPort = req.socket.remotePort || 0
-        const secCHUA = req.headers['sec-ch-ua'] || 'unknown'
-        const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
-
-        const deviceInfo = normalizeDevice(userAgent)
-
-        //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${userIp}:${userPort}_${secCHUA}_${userAgent}_${platform}`).digest('hex')
+        const { deviceId, deviceInfo } = generateDeviceId(req, res)
 
         //! View kontrolü
-        if (req.user?._id) {
-            const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
+        const filter = req.user?._id ? { blogId: req.params.id, userId: req.user._id } : { blogId: req.params.id, deviceId }
 
-            if (!view) {
-                const newView = await View.create({ blogId: req.params.id, userId: req.user._id, deviceId: deviceId, deviceModel: deviceInfo })
+        const view = await View.findOne(filter)
 
-                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
-            }
-        } else {
-            const view = await View.findOne({
-                blogId: req.params.id,
-                deviceId: deviceId
-            })
+        if (!view) {
+            const newView = await View.create({ blogId: req.params.id, userId: req.user?._id, deviceId, deviceModel: deviceInfo })
 
-            if (!view) {
-                const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo })
+            await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
 
-                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
-            }
         }
 
         const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "contents" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
