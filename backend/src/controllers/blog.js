@@ -77,11 +77,13 @@ module.exports = {
 
         //! Cihaz bilgilerini al
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
+        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
+        const acceptLanguage = req.headers['accept-language'] || 'unknown'
+        const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
-        const userIp = req.ip.replace(/^::ffff:/, '')
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${userIp}`).digest('hex')
+        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
@@ -96,7 +98,7 @@ module.exports = {
             const view = await View.findOne({ blogId: req.params.id, deviceId: deviceId })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo, ipAddress: userIp })
+                const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo })
 
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
