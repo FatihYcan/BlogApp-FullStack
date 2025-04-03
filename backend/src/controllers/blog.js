@@ -97,10 +97,7 @@ module.exports = {
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
         } else {
-            const view = await View.findOne({
-                blogId: req.params.id,
-                deviceId: deviceId
-            })
+            const view = await View.findOne({ blogId: req.params.id, deviceId: deviceId })
 
             if (!view) {
                 const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: deviceInfo })
