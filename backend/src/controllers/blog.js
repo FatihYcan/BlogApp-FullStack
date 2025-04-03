@@ -76,16 +76,17 @@ module.exports = {
         const View = require('../models/view')
 
         //! Cihaz bilgilerini al
+        const userIp = req.ip.replace(/^::ffff:/, '')
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
-        const acceptLanguage = req.headers['accept-language'] || 'unknown'
-        const connection = req.headers['connection'] || 'keep-alive'
+        const userPort = req.socket.remotePort
+        const secCHUA = req.headers['sec-ch-ua'] || 'unknown'
+
         const deviceInfo = normalizeDevice(userAgent)
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`).digest('hex')
+        const deviceId = crypto.createHash('sha256').update(`${userIp}:${userPort}_${userAgent}_${secCHUA}`).digest('hex')
 
-        //! View kontrolü
+       //! View kontrolü
         if (req.user?._id) {
             const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
 

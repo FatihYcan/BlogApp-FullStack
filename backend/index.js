@@ -5,6 +5,9 @@
 const express = require("express")
 const app = express()
 
+//? Trust proxy for correct client IP and protocol when behind a proxy
+app.set('trust proxy', true)
+
 /* ------------------------------------------------------- */
 
 //? envVariables to process.env
