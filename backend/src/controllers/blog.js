@@ -82,8 +82,6 @@ module.exports = {
         const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
 
-        console.log(userAgent)
-
         //! Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`).digest('hex')
 
