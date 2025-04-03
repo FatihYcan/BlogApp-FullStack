@@ -76,6 +76,7 @@ module.exports = {
         const View = require('../models/view')
 
         //! Cihaz bilgilerini al
+        const userIp = req.ip
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
         const acceptLanguage = req.headers['accept-language'] || 'unknown'
@@ -84,7 +85,7 @@ module.exports = {
 
         //! Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256')
-            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`)
+            .update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}`)
             .digest('hex')
 
         //! View kontrolü
