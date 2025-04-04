@@ -79,14 +79,17 @@ module.exports = {
         const userIp = req.ip
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
+        const acceptLanguage = req.headers['accept-language'] || 'unknown'
+        const connection = req.headers['connection'] || 'keep-alive'
+        const isMobileData = !req.headers['sec-ch-ua-platform']
         const deviceInfo = normalizeDevice(userAgent)
 
         //! Benzersiz cihaz kimliği oluştur
-        const isLikelyWifi = req.headers['x-real-ip'] === userIp
-        const deviceId = isLikelyWifi
-            ? crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${userIp}`).digest('hex')
-            : crypto.createHash('sha256').update(`${deviceInfo}_${platform}`).digest('hex')
+        const deviceIdInput = isMobileData
+            ? `${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`
+            : `${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}`
 
+        const deviceId = crypto.createHash('sha256').update(deviceIdInput).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
