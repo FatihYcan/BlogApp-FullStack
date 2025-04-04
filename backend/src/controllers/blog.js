@@ -81,15 +81,10 @@ module.exports = {
         const platform = req.headers['sec-ch-ua-platform'] || 'unknown_platform'
         const acceptLanguage = req.headers['accept-language'] || 'unknown'
         const connection = req.headers['connection'] || 'keep-alive'
-        const isMobileData = !req.headers['sec-ch-ua-platform']
         const deviceInfo = normalizeDevice(userAgent)
 
         //! Benzersiz cihaz kimliği oluştur
-        const deviceIdInput = isMobileData
-            ? `${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}`
-            : `${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}`
-
-        const deviceId = crypto.createHash('sha256').update(deviceIdInput).digest('hex')
+        const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIp}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
