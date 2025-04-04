@@ -80,14 +80,12 @@ module.exports = {
         const userAgent = req.headers['user-agent'] || 'unknown_agent';
         const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || '';
         const deviceInfo = normalizeDevice(userAgent);
+        const cpuCores = req.headers['sec-ch-ua-platform-version'] || '';
+
         const isPrivateNetwork = /^(::ffff:)?(10|127|192\.168|172\.(1[6-9]|2[0-9]|3[0-1]))\./.test(userIp);
 
         // Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(
-            isPrivateNetwork
-                ? `${deviceInfo}_${userIp}_${userAgent.length}` // WiFi'de: IP + UserAgent uzunluğu
-                : `${deviceInfo}_${deviceUUID}` // Mobilde: Cookie tabanlı UUID
-        ).digest('hex');
+        const deviceId = crypto.createHash('sha256').update(isPrivateNetwork ? `${deviceInfo}_${userIp}_${userAgent.length}_${cpuCores}` : `${deviceUUID || userAgent.length}`).digest('hex');
 
 
         //! View kontrolü
