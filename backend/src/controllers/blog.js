@@ -85,7 +85,7 @@ module.exports = {
         const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
 
-        const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || ''
+        let deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || '';
 
         if (!deviceUUID) {
             deviceUUID = uuidv4()
