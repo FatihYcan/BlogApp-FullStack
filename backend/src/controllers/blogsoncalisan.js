@@ -7,7 +7,6 @@ const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
 const crypto = require('crypto')
 const { normalizeDevice } = require('../helpers/normalizeDevice')
-const { v4: uuidv4 } = require("uuid")
 
 module.exports = {
     list: async (req, res) => {
@@ -76,16 +75,14 @@ module.exports = {
         */
         const View = require('../models/view')
 
+        // 1) aynı wifi ağında 2 adet aynı telefon varsa örnek (m11 t gibi) ikiside read yapınca count+1 artıyor sadece.
+        // 2) daha önce wifi ile o blogo read yapıp daha sonra mobil veriyi açıp tekrar aynı blogu read yapınca count+1 daha artıyor tekrar read yapınca artmıyor fakat aradan bellli bir zaman geçip tekrar mobil veriyi açıp tekrar aynı blogu read yapınca count+1 daha artıyor bu neyden kaynaklanıyor
         //! Cihaz bilgilerini al
+        const userIp = req.ip
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
 
         //! Benzersiz cihaz kimliği oluştur
-        let deviceId = req.cookies?.deviceId
-
-        if (!deviceId) {
-            deviceId = uuidv4()
-            res.cookie("deviceId", deviceId, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 365, sameSite: "strict" })
-        }
+        const deviceId = crypto.createHash('sha256').update(`${userIp}_${userAgent}`).digest('hex')
 
         //! View kontrolü
         if (req.user?._id) {
