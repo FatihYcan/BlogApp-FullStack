@@ -7,7 +7,7 @@ const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
 const crypto = require('crypto')
 const { normalizeDevice } = require('../helpers/normalizeDevice')
-
+const { v4: uuidv4 } = require('uuid')
 
 module.exports = {
     list: async (req, res) => {
