@@ -77,18 +77,18 @@ module.exports = {
 
         //! Cihaz bilgilerini al
         const userIp = req.ip
-        const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const deviceInfo = normalizeDevice(userAgent)
-        const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || ''
+        const userAgent = req.headers['user-agent'] || 'unknown_agent';
+        const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || '';
+        const deviceInfo = normalizeDevice(userAgent);
+        const isPrivateNetwork = /^(::ffff:)?(10|127|192\.168|172\.(1[6-9]|2[0-9]|3[0-1]))\./.test(userIp);
 
-        const isPrivateNetwork = /^(::ffff:)?(10|127|192\.168|172\.(1[6-9]|2[0-9]|3[0-1]))\./.test(userIp)
-
-        //! Benzersiz cihaz kimliği oluştur
+        // Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256').update(
             isPrivateNetwork
-                ? `${deviceInfo}_${userIp}`
-                : `${deviceInfo}_${deviceUUID}`
-        ).digest('hex')
+                ? `${deviceInfo}_${userIp}_${userAgent.length}` // WiFi'de: IP + UserAgent uzunluğu
+                : `${deviceInfo}_${deviceUUID}` // Mobilde: Cookie tabanlı UUID
+        ).digest('hex');
+
 
         //! View kontrolü
         if (req.user?._id) {
