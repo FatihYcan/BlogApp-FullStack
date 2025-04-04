@@ -7,7 +7,6 @@ const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
 const crypto = require('crypto')
 const { normalizeDevice } = require('../helpers/normalizeDevice')
-const { v4: uuidv4 } = require('uuid')
 
 module.exports = {
     list: async (req, res) => {
@@ -85,12 +84,7 @@ module.exports = {
         const connection = req.headers['connection'] || 'keep-alive'
         const deviceInfo = normalizeDevice(userAgent)
 
-        let deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || '';
-
-        if (!deviceUUID) {
-            deviceUUID = uuidv4()
-            res.cookie('deviceUUID', deviceUUID, { maxAge: 1000 * 60 * 60 * 24 * 365, httpOnly: true })
-        }
+        const deviceUUID = req.cookies?.deviceUUID || req.headers?.['device-uuid'] || ''
 
         //! Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256').update(`${deviceInfo}_${platform}_${acceptLanguage}_${userAgent.length}_${connection}_${userIpSegment}_${deviceUUID}`).digest('hex')
