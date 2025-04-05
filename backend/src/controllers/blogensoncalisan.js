@@ -75,29 +75,23 @@ module.exports = {
         */
         const View = require('../models/view')
 
-        // 1) aynı wifi ağında 2 adet aynı telefon varsa örnek (m11 t gibi) ikiside read yapınca count+1 artıyor sadece.
-        // 2) daha önce wifi ile o blogo read yapıp daha sonra mobil veriyi açıp tekrar aynı blogu read yapınca count+1 daha artıyor tekrar read yapınca artmıyor fakat aradan bellli bir zaman geçip tekrar mobil veriyi açıp tekrar aynı blogu read yapınca count+1 daha artıyor bu neyden kaynaklanıyor
         //! Cihaz bilgilerini al
-        const userIp = req.ip
-        const userAgent = req.headers['user-agent'] || 'unknown_agent'
-
-        //! Benzersiz cihaz kimliği oluştur
-        const deviceId = crypto.createHash('sha256').update(`${userIp}_${userAgent}`).digest('hex')
+        const userDeviceId = req.headers["x-device-id"] || null
 
         //! View kontrolü
         if (req.user?._id) {
             const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, userId: req.user._id, deviceId: deviceId, deviceModel: userAgent.substring(0, 50) })
+                const newView = await View.create({ blogId: req.params.id, userId: req.user._id, deviceId: userDeviceId, deviceModel: userAgent.substring(0, 50), userIp: userIp })
 
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
         } else {
-            const view = await View.findOne({ blogId: req.params.id, deviceId: deviceId })
+            const view = await View.findOne({ blogId: req.params.id, deviceId: userDeviceId })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, deviceId: deviceId, deviceModel: userAgent.substring(0, 50) })
+                const newView = await View.create({ blogId: req.params.id, deviceId: userDeviceId, deviceModel: userAgent.substring(0, 50), userIp: userIp })
 
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }

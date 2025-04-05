@@ -4,10 +4,6 @@
 
 const express = require("express")
 const app = express()
-const cookieParser = require('cookie-parser')
-
-//? Trust proxy for correct client IP and protocol when behind a proxy
-app.set('trust proxy', true)
 
 /* ------------------------------------------------------- */
 
@@ -29,7 +25,6 @@ dbConnection()
 /* ------------------------------------------------------- */
 
 //? Middlewares
-
 //? Accept JSON
 app.use(express.json())
 app.use(cors())
@@ -40,8 +35,6 @@ app.use(express.urlencoded({ extended: true }))
 //? Check Authentication
 app.use(require('./src/middlewares/authentication'))
 
-//? Cookie parser
-app.use(cookieParser())
 
 //? res.getModelList()
 app.use(require('./src/middlewares/findSearchSortPage'))

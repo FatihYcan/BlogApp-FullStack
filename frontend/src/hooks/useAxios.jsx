@@ -2,14 +2,16 @@ import axios from "axios";
 import getDeviceId from "../helper/Device";
 
 const useAxios = () => {
-  const userToken = localStorage.getItem("userToken") || {};
+  const userToken = localStorage.getItem("userToken") || null;
   const deviceId = getDeviceId();
 
   const axiosPublic = axios.create({
     baseURL: "https://koseyazisi.onrender.com/",
     // baseURL: `${process.env.REACT_APP_BASE_URL}`,
     headers: {
-      "x-device-id": deviceId,
+      ...(userToken
+        ? { Authorization: `Token ${userToken}` }
+        : { "x-device-id": deviceId }),
     },
   });
 
