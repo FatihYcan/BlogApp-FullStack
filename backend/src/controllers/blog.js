@@ -75,15 +75,13 @@ module.exports = {
 
         //! Cihaz bilgilerini al
         const userDeviceId = req.headers["x-device-id"] || null
-        const userAgent = req.headers['user-agent'] || 'unknown_agent'
-        const userIp = req.ip || 'unknown_ip'
 
         //! View kontrolü
         if (req.user?._id) {
             const view = await View.findOne({ blogId: req.params.id, userId: req.user._id })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, userId: req.user._id, deviceId: userDeviceId, deviceModel: userAgent.substring(0, 50), userIp: userIp })
+                const newView = await View.create({ blogId: req.params.id, userId: req.user._id })
 
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
@@ -91,7 +89,7 @@ module.exports = {
             const view = await View.findOne({ blogId: req.params.id, deviceId: userDeviceId })
 
             if (!view) {
-                const newView = await View.create({ blogId: req.params.id, deviceId: userDeviceId, deviceModel: userAgent.substring(0, 50), userIp: userIp })
+                const newView = await View.create({ blogId: req.params.id, deviceId: userDeviceId })
 
                 await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
             }
