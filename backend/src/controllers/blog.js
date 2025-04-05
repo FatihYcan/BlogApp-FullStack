@@ -5,8 +5,6 @@
 //? Import Blog model
 const Blog = require('../models/blog')
 const { uploadToCloudinary } = require('../middlewares/upload')
-const crypto = require('crypto')
-const { normalizeDevice } = require('../helpers/normalizeDevice')
 
 module.exports = {
     list: async (req, res) => {
