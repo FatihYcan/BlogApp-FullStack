@@ -82,7 +82,8 @@ module.exports = {
         const userAgent = req.headers['user-agent'] || 'unknown_agent'
 
 
-        console.log(req)
+        console.log(req.headers)
+        console.log(req.ip)
 
         //! Benzersiz cihaz kimliği oluştur
         const deviceId = crypto.createHash('sha256').update(`${userIp}_${userAgent}`).digest('hex')
