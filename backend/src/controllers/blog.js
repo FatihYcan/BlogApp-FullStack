@@ -43,14 +43,6 @@ module.exports = {
         //! userId verisini req.user._id ile al
         req.body.userId = req.user._id
 
-        // if (req.file) {
-        //     req.body.image = "./uploads/blog/" + req.file.filename
-        // }
-
-        // if (!req.body.image && req.file) {
-        //     req.body.image = await uploadToCloudinary(req.file.path, "blog_images");
-        // }
-
         let data
         if (req.body._id) {
             //! Eğer _id varsa, blogu güncelle
@@ -73,7 +65,7 @@ module.exports = {
         */
         const View = require('../models/view')
 
-        //! Cihaz bilgilerini al
+        //! Cihaz için id yi al
         const userDeviceId = req.headers["x-device-id"] || null
 
         //! View kontrolü
@@ -103,7 +95,7 @@ module.exports = {
     update: async (req, res) => {
         /*
             #swagger.tags = ["Blogs"]
-            #swagger.summary = "Create Blog"
+            #swagger.summary = "Update Blog"
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "contents": ["65343222b67e9681f937f102", "65343222b67e9681f937f103"], "image": [], "isPublish": true } }
         */
 
@@ -114,9 +106,6 @@ module.exports = {
         }
 
         //! Eğer kullanıcı resim eklediyse
-        // if (req.file) {
-        //     req.body.image = "./uploads/blog/" + req.file.filename;
-        // }
         if (req.file) {
             const imageUrl = await uploadToCloudinary(req.file.path, "blog_images");
             req.body.image = imageUrl;
@@ -172,10 +161,7 @@ module.exports = {
         req.body.userId = req.user._id;
         req.body.isPublish = false;
 
-        //! Eğer dosya yüklendiyse, resim yolunu ayarla
-        // if (req.file) {
-        //     req.body.image = "./uploads/blog/" + req.file.filename;
-        // }
+        //! Yüklenen resmin yolunu ayarla
         const imageUrl = await uploadToCloudinary(req.file.path, "blog_images");
         req.body.image = imageUrl;
 

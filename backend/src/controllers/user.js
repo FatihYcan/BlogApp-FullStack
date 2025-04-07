@@ -39,9 +39,7 @@ module.exports = {
         //! Yeni kayıtlarda admin=false
         req.body.isAdmin = false
 
-        // if (req.file) {
-        //     req.body.image = "./uploads/user/" + req.file.filename
-        // }
+        //! Eğer kullanıcı resim eklediyse
         if (req.file) {
             const imageUrl = await uploadToCloudinary(req.file.path, "user_images");
             req.body.image = imageUrl;
@@ -49,7 +47,7 @@ module.exports = {
 
         const data = await User.create(req.body)
 
-        //! Kullanıcı kaydı başarılır ise otomatik login olsun ve token oluşturulsun.
+        //! Kullanıcı kaydı başarılı ise otomatik login olsun ve token oluşturulsun.
         const tokenData = await Token.create({ userId: data._id, token: passwordEncrypt(data._id + Date.now()) })
 
         res.status(201).send({ error: false, data, token: tokenData.token })
@@ -106,8 +104,9 @@ module.exports = {
             req.body.image = User.image;
         }
 
+        //! Eğer kullanıcı şifre değiştirmediyse
         if (!req.body.password) {
-            delete req.body.password
+            req.body.password = User.password
         }
 
         const data = await User.updateOne(customFilters, req.body, { runValidators: true })

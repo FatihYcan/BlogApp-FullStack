@@ -59,10 +59,10 @@ const uploadToCloudinary = async (filePath, folderName) => {
   });
 
   if (result && result.secure_url) {
-    fs.unlinkSync(filePath); // Geçici dosyayı sil
-    return result.secure_url; // Cloudinary'den dönen URL
+    fs.unlinkSync(filePath) // Geçici dosyayı sil
+    return result.secure_url // Cloudinary'den dönen URL
   } else {
-    throw new Error("Cloudinary installation failed! Please try again.");
+    throw new Error("Cloudinary installation failed! Please try again.")
   }
 };
 
