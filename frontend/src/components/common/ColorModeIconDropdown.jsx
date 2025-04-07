@@ -52,7 +52,7 @@ export default function ColorModeIconDropdown(props) {
   const icon = {
     light: <LightModeIcon />,
     dark: <DarkModeIcon />,
-  }[resolvedMode];
+  }[resolvedMode] || <LightModeIcon />
 
   return (
     <React.Fragment>
