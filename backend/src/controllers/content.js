@@ -28,7 +28,7 @@ module.exports = {
         /*
              #swagger.tags = ["Contents"]
             #swagger.summary = "Create Content"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "order": 1, "images": [ "uploads/images/resim1.jpg" ] } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "images": [] } }
         */
 
         const Blog = require('../models/blog')
@@ -63,7 +63,7 @@ module.exports = {
         /*
              #swagger.tags = ["Contents"]
             #swagger.summary = "Create Content"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "order": 1, "images": [ "uploads/images/resim1.jpg" ] } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "blogId": "65343222b67e9681f937f101", "content": "Content 1", "images": [] } }
         */
 
         //! Kullanıcı sadece kendi içeriklerini günceleyebilir

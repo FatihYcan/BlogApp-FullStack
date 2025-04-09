@@ -691,18 +691,10 @@
                   "type": "string",
                   "example": "Content 1"
                 },
-                "order": {
-                  "type": "number",
-                  "example": 1
-                },
                 "images": {
                   "type": "array",
-                  "example": [
-                    "uploads/images/resim1.jpg"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "example": [],
+                  "items": {}
                 }
               }
             }
@@ -764,18 +756,10 @@
                   "type": "string",
                   "example": "Content 1"
                 },
-                "order": {
-                  "type": "number",
-                  "example": 1
-                },
                 "images": {
                   "type": "array",
-                  "example": [
-                    "uploads/images/resim1.jpg"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "example": [],
+                  "items": {}
                 }
               }
             }
@@ -838,18 +822,10 @@
                   "type": "string",
                   "example": "Content 1"
                 },
-                "order": {
-                  "type": "number",
-                  "example": 1
-                },
                 "images": {
                   "type": "array",
-                  "example": [
-                    "uploads/images/resim1.jpg"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "example": [],
+                  "items": {}
                 }
               }
             }
