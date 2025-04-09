@@ -13,7 +13,7 @@
       "name": "ISC"
     }
   },
-  "host": "https://koseyazisi.onrender.com",
+  "host": "koseyazisi.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",

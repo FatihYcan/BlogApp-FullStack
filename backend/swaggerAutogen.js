@@ -18,7 +18,7 @@ const document = {
 		contact: { name: "Fatih Can", email: "f.yakutcan.32@gmail.com" },
 		license: { name: packageJson.license, },
 	},
-	host: "https://koseyazisi.onrender.com",
+	host: "koseyazisi.onrender.com",
 	basePath: '/',
 	schemes: ['http', 'https'],
 	consumes: ["application/json"],
