@@ -16,7 +16,6 @@
   "host": "koseyazisi.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "securityDefinitions": {

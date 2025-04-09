@@ -20,7 +20,7 @@ const document = {
 	},
 	host: "koseyazisi.onrender.com",
 	basePath: '/',
-	schemes: ['http', 'https'],
+	schemes: ['https'],
 	consumes: ["application/json"],
 	produces: ["application/json"],
 	securityDefinitions: {
