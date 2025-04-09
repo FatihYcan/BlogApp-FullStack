@@ -106,7 +106,7 @@ module.exports = {
 
         //! Eğer kullanıcı şifre değiştirmediyse
         if (!req.body.password) {
-            req.body.password = User.password
+            delete req.body.password
         }
 
         const data = await User.updateOne(customFilters, req.body, { runValidators: true })
