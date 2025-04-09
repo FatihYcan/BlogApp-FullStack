@@ -48,17 +48,19 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 
 //? Home Path
 app.all('/', (req, res) => {
-    res.send({
-        error: false,
-        message: 'Welcome to Blog API',
-        documents: {
-            swagger: '/documents/swagger',
-            redoc: '/documents/redoc',
-            json: '/documents/json',
-        },
-        user: req.user
-    })
-})
+    res.send(`
+          <h3>Blog API Service</h3>
+          <hr>
+          <p>
+              Documents:
+              <ul> 
+                  <li><a href="https://koseyazisi.onrender.com/documents/swagger/">SWAGGER</a></li>
+                  <li><a href="https://koseyazisi.onrender.com/documents/redoc">REDOC</a></li>
+                  <li><a href="https://koseyazisi.onrender.com/documents/json">JSON</a></li>
+              </ul>
+          </p>
+      `);
+  });
 
 //? Routes
 app.use(require('./src/routes'))
