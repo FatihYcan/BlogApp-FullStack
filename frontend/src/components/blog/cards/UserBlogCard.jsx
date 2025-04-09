@@ -13,9 +13,8 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import BlogLikesModal from "../modals/BlogLikesModal";
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import avatar from "../../../assets/icons/avatar.png";
-import "../../../assets/styles/detailStyles.css";
+import "../../../assets/styles/darkStyles.css";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -37,12 +36,8 @@ const SyledCard = styled(Card)(({ theme }) => ({
 const SyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
-  gap: 4,
-  padding: 16,
+  padding: 8,
   flexGrow: 1,
-  "&:last-child": {
-    paddingBottom: 16,
-  },
 });
 
 const StyledTypography = styled(Typography)({
@@ -64,19 +59,15 @@ export default function UserBlogCard({
   views,
   userId,
   createdAt,
+  handleLike,
 }) {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { username } = userInfo || {};
-  const { postBlogLike } = useBlogCalls();
 
   const [likeOpen, setLikeOpen] = useState(false);
 
   const isLiked = likes.some((like) => like.userId.username === username);
-
-  const handleLike = () => {
-    postBlogLike(_id);
-  };
 
   const handleDetail = () => {
     const formattedUsername = userId?.username.replace(/\s+/g, "-");
@@ -145,7 +136,7 @@ export default function UserBlogCard({
             <FavoriteIcon
               color={isLiked ? "error" : "inherit"}
               sx={{ cursor: "pointer" }}
-              onClick={handleLike}
+              onClick={() => handleLike(_id)}
             />
 
             {likes.length > 0 && (

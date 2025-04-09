@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import styled from "@mui/material/styles/styled";
+import { useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -24,6 +25,8 @@ import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
 import ContentCard from "../../components/content/card/ContentCard";
 import AddContentModal from "../../components/content/modal/AddContentModal";
+import PopularBlogCard from "../../components/blog/cards/PopularBlogCard";
+import LikedBlogCard from "../../components/blog/cards/LikedBlogCard";
 import avatar from "../../assets/icons/avatar.png";
 
 const StyledCardContent = styled(CardContent)({
@@ -41,8 +44,12 @@ export default function BlogDetail() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id, username: name } = useParams();
   const { username } = userInfo || {};
-  const { getSingleBlog, postBlogLike } = useBlogCalls();
-  const { singleBlog, likes: like } = useSelector((state) => state.blog);
+  const { getSingleBlog, postBlogLike, getBlogsView, getBlogsLike } =
+    useBlogCalls();
+  const { singleBlog, viewBlogs, likeBlogs } = useSelector(
+    (state) => state.blog
+  );
+  const theme = useTheme();
 
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -82,13 +89,14 @@ export default function BlogDetail() {
 
   useEffect(() => {
     getSingleBlog(name, _id);
-  }, [like]);
-  
+    getBlogsView("blogs?sort[viewCount]=desc&limit=4");
+    getBlogsLike("blogs?sort[likeCount]=desc&limit=4");
+  }, [name, _id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -102,13 +110,22 @@ export default function BlogDetail() {
   const handleAddClose = () => setAddOpen(false);
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleDeleteClose = () => setDeleteOpen(false);
-  const handleLike = () => {
-    username ? postBlogLike(_id) : setLoginOpen(true);
+
+  const handleLike = async () => {
+    if (username) {
+      await postBlogLike(_id);
+      await getSingleBlog(name, _id);
+      await getBlogsLike("blogs?sort[likeCount]=desc&limit=4");
+    } else {
+      setLoginOpen(true);
+    }
   };
+
   const handleImageOpen = (imageUrl) => {
     setSelectedImage(imageUrl);
     setImageOpen(true);
   };
+
   const handleUpdateOpen = () => {
     setData({
       title: singleBlog?.title,
@@ -120,264 +137,346 @@ export default function BlogDetail() {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      component="main"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        paddingTop: 20,
-        gap: 1,
-      }}
-    >
+    <Box sx={{ flexGrow: 1, mt: 20, mb: 8, gap: 4 }}>
       <Helmet>
         <meta charSet="utf-8" />
         <title>{`Köşe Yazısı${title ? " - " + title : ""}`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
 
-      {loading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          <CardMedia
-            component="img"
-            alt={title}
-            image={image && image.length > 0 ? image[0] : []}
-            sx={{
-              width: "80%",
-              margin: "auto",
-              aspectRatio: "16 / 9",
-              objectFit: "initial",
-            }}
-          />
-
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          paddingX: {
+            xs: 2,
+            md: 3,
+            lg: 4,
+            xl: 6,
+          },
+        }}
+      >
+        {loading ? (
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              gap: 2,
+              justifyContent: "center",
               alignItems: "center",
-              justifyContent: "space-between",
-              padding: "16px",
+              height: "67vh",
+              width: "100%",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-                alignItems: "center",
-              }}
-            >
-              <AvatarGroup>
-                <Avatar
-                  key={userId?._id}
-                  alt={userId?.username}
-                  src={
-                    userId?.image && userId.image.length > 0
-                      ? userId.image[0]
-                      : avatar
-                  }
-                  sx={{ width: 30, height: 30 }}
-                />
-              </AvatarGroup>
-              <Typography variant="caption">
-                {userId?.username
-                  ? userId.username.charAt(0).toUpperCase() +
-                    userId.username.slice(1)
-                  : ""}
-              </Typography>
-            </Box>
-            <Typography variant="caption">
-              {createdAt ? new Date(createdAt).toLocaleDateString("tr-TR") : ""}
-            </Typography>
+            <CircularProgress />
           </Box>
-
-          <StyledCardContent>
-            <Typography gutterBottom variant="caption" component="div">
-              {categoryId?.name || ""}
-            </Typography>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="div"
-              color="error.main"
-            >
-              {title}
-            </Typography>
-            {contents?.map((item, index) => (
-              <div key={index}>
-                <ContentCard
-                  item={item}
-                  handleImageOpen={handleImageOpen}
-                  username={username}
-                  userId={userId}
-                />
-              </div>
-            ))}
-          </StyledCardContent>
-
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              height: "50px",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "50px",
-                height: "50px",
-              }}
-            >
-              <FavoriteIcon
-                color={isLiked ? "error" : "inherit"}
-                sx={{ cursor: "pointer" }}
-                onClick={handleLike}
+        ) : (
+          <>
+            <Grid size={{ xs: 12, md: 9 }} sx={{ paddingX: 2 }}>
+              <CardMedia
+                component="img"
+                alt={title}
+                image={image && image.length > 0 ? image[0] : []}
+                sx={{
+                  width: {
+                    xs: "100%",
+                    sm: "90%",
+                    md: "85%",
+                    lg: "80%",
+                    xl: "75%",
+                  },
+                  margin: "auto",
+                  aspectRatio: "16 / 9",
+                  objectFit: "initial",
+                }}
               />
 
-              {likesCount > 0 && (
-                <span
-                  style={{
-                    fontSize: "1.2rem",
-                    marginLeft: "2px",
-                    cursor: "pointer",
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "16px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 1,
+                    alignItems: "center",
                   }}
-                  onClick={handleLikeOpen}
                 >
-                  {likesCount}
-                </span>
-              )}
-            </Box>
+                  <AvatarGroup>
+                    <Avatar
+                      key={userId?._id}
+                      alt={userId?.username}
+                      src={
+                        userId?.image && userId.image.length > 0
+                          ? userId.image[0]
+                          : avatar
+                      }
+                      sx={{ width: 30, height: 30 }}
+                    />
+                  </AvatarGroup>
+                  <Typography variant="caption">
+                    {userId?.username
+                      ? userId.username.charAt(0).toUpperCase() +
+                        userId.username.slice(1)
+                      : ""}
+                  </Typography>
+                </Box>
+                <Typography variant="caption">
+                  {createdAt
+                    ? new Date(createdAt).toLocaleDateString("tr-TR")
+                    : ""}
+                </Typography>
+              </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                width: "50px",
-                height: "50px",
-              }}
-            >
-              <ChatBubbleOutlineIcon
-                onClick={() => setCommentOpen(!commentOpen)}
+              <StyledCardContent>
+                <Typography gutterBottom variant="caption" component="div">
+                  {categoryId?.name || ""}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="div"
+                  color="error.main"
+                >
+                  {title}
+                </Typography>
+                {contents?.map((item, index) => (
+                  <div key={index}>
+                    <ContentCard
+                      item={item}
+                      handleImageOpen={handleImageOpen}
+                      username={username}
+                      userId={userId}
+                    />
+                  </div>
+                ))}
+              </StyledCardContent>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  height: "50px",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "50px",
+                    height: "50px",
+                  }}
+                >
+                  <FavoriteIcon
+                    color={isLiked ? "error" : "inherit"}
+                    sx={{ cursor: "pointer" }}
+                    onClick={handleLike}
+                  />
+
+                  {likesCount > 0 && (
+                    <span
+                      style={{
+                        fontSize: "1.2rem",
+                        marginLeft: "2px",
+                        cursor: "pointer",
+                      }}
+                      onClick={handleLikeOpen}
+                    >
+                      {likesCount}
+                    </span>
+                  )}
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    width: "50px",
+                    height: "50px",
+                  }}
+                >
+                  <ChatBubbleOutlineIcon
+                    onClick={() => setCommentOpen(!commentOpen)}
+                  />
+                  {commentsCount > 0 && (
+                    <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                      {commentsCount}
+                    </span>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "default",
+                    width: "50px",
+                    height: "50px",
+                  }}
+                >
+                  <VisibilityOutlinedIcon />
+                  {viewsCount > 0 && (
+                    <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
+                      {viewsCount}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+
+              {commentOpen && (
+                <>
+                  <CommentForm />
+
+                  {comments?.map((item) => (
+                    <CommentCard
+                      key={item._id}
+                      {...item}
+                      seeAnswersCardId={seeAnswersCardId}
+                      setSeeAnswersCardId={setSeeAnswersCardId}
+                      isReplyCardId={isReplyCardId}
+                      setIsReplyCardId={setIsReplyCardId}
+                      openMenu={openMenu}
+                      setOpenMenu={setOpenMenu}
+                      editComment={editComment}
+                      setEditComment={setEditComment}
+                    />
+                  ))}
+                </>
+              )}
+
+              {username === userId?.username && (
+                <Box mt={2} display="flex" justifyContent="center" gap={2}>
+                  <button
+                    className="bg-green-600 text-white font-medium py-2 px-2 rounded-md"
+                    onClick={handleUpdateOpen}
+                  >
+                    Update Blog
+                  </button>
+
+                  <button
+                    className="bg-blue-600 text-white font-medium py-2 px-2 rounded-md"
+                    onClick={handleAddOpen}
+                  >
+                    Add Content
+                  </button>
+
+                  <button
+                    className="bg-red-600 text-white font-medium py-2 px-2 rounded-md"
+                    onClick={handleDeleteOpen}
+                  >
+                    Delete Blog
+                  </button>
+                </Box>
+              )}
+
+              <BlogLikesModal
+                likeOpen={likeOpen}
+                handleLikeClose={handleLikeClose}
+                likes={likes}
               />
-              {commentsCount > 0 && (
-                <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {commentsCount}
-                </span>
-              )}
-            </Box>
-            <Box
+
+              <ImageBlogModal
+                imageOpen={imageOpen}
+                handleImageClose={handleImageClose}
+                selectedImage={selectedImage}
+              />
+
+              <LoginModal
+                loginOpen={loginOpen}
+                handleCloseLogin={handleCloseLogin}
+              />
+
+              <UpdateBlogModal
+                updateOpen={updateOpen}
+                handleUpdateClose={handleUpdateClose}
+                setData={setData}
+                data={data}
+              />
+
+              <AddContentModal
+                addOpen={addOpen}
+                handleAddClose={handleAddClose}
+              />
+
+              <DeleteBlogModal
+                deleteOpen={deleteOpen}
+                handleDeleteClose={handleDeleteClose}
+              />
+            </Grid>
+
+            <Grid
+              size={{ xs: 12, sm: 12, md: 3 }}
               sx={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "default",
-                width: "50px",
-                height: "50px",
+                [theme.breakpoints.up("md")]: {
+                  position: "sticky",
+                  top: 100,
+                  maxHeight: "calc(100vh - 120px)",
+                  overflowY: "auto",
+                },
               }}
             >
-              <VisibilityOutlinedIcon />
-              {viewsCount > 0 && (
-                <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                  {viewsCount}
-                </span>
-              )}
-            </Box>
-          </Box>
-
-          {commentOpen && (
-            <>
-              <CommentForm />
-
-              {comments?.map((item) => (
-                <CommentCard
-                  key={item._id}
-                  {...item}
-                  seeAnswersCardId={seeAnswersCardId}
-                  setSeeAnswersCardId={setSeeAnswersCardId}
-                  isReplyCardId={isReplyCardId}
-                  setIsReplyCardId={setIsReplyCardId}
-                  openMenu={openMenu}
-                  setOpenMenu={setOpenMenu}
-                  editComment={editComment}
-                  setEditComment={setEditComment}
-                />
-              ))}
-            </>
-          )}
-
-          {username === userId?.username && (
-            <Box mt={2} display="flex" justifyContent="center" gap={2}>
-              <button
-                className="bg-green-600 text-white font-medium py-2 px-2 rounded-md"
-                onClick={handleUpdateOpen}
+              <Typography
+                variant="h2"
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                  [theme.breakpoints.between("xs", "md")]: {
+                    mt: 2,
+                  },
+                }}
               >
-                Update Blog
-              </button>
+                Most Popular
+              </Typography>
 
-              <button
-                className="bg-blue-600 text-white font-medium py-2 px-2 rounded-md"
-                onClick={handleAddOpen}
+              <Grid
+                container
+                sx={{
+                  [theme.breakpoints.between("sm", "md")]: {
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "16px",
+                  },
+                  mb: 4,
+                }}
               >
-                Add Content
-              </button>
+                {viewBlogs.map((viewBlog) => (
+                  <PopularBlogCard key={viewBlog._id} {...viewBlog} />
+                ))}
+              </Grid>
 
-              <button
-                className="bg-red-600 text-white font-medium py-2 px-2 rounded-md"
-                onClick={handleDeleteOpen}
+              <Typography
+                variant="h2"
+                gutterBottom
+                sx={{ textAlign: "center" }}
               >
-                Delete Blog
-              </button>
-            </Box>
-          )}
+                Most Liked
+              </Typography>
 
-          <BlogLikesModal
-            likeOpen={likeOpen}
-            handleLikeClose={handleLikeClose}
-            likes={likes}
-          />
-
-          <ImageBlogModal
-            imageOpen={imageOpen}
-            handleImageClose={handleImageClose}
-            selectedImage={selectedImage}
-          />
-
-          <LoginModal
-            loginOpen={loginOpen}
-            handleCloseLogin={handleCloseLogin}
-          />
-
-          <UpdateBlogModal
-            updateOpen={updateOpen}
-            handleUpdateClose={handleUpdateClose}
-            setData={setData}
-            data={data}
-          />
-
-          <AddContentModal addOpen={addOpen} handleAddClose={handleAddClose} />
-
-          <DeleteBlogModal
-            deleteOpen={deleteOpen}
-            handleDeleteClose={handleDeleteClose}
-          />
-        </>
-      )}
-    </Container>
+              <Grid
+                container
+                sx={{
+                  [theme.breakpoints.between("sm", "md")]: {
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "16px",
+                  },
+                }}
+              >
+                {likeBlogs.map((likeBlog) => (
+                  <LikedBlogCard key={likeBlog._id} {...likeBlog} />
+                ))}
+              </Grid>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </Box>
   );
 }

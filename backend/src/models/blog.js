@@ -27,6 +27,8 @@ const blogSchema = new mongoose.Schema(
 
     viewCount: { type: Number, default: 0 },
 
+    likeCount: { type: Number, default: 0 },
+
     isPublish: { type: Boolean, default: true },
   },
   { collection: "blogs", timestamps: true }

@@ -1,8 +1,10 @@
 import { Helmet } from "react-helmet";
 import Container from "@mui/material/Container";
+import { useTheme } from "@mui/material/styles";
 import NewBlogForm from "../../components/blog/forms/NewBlogForm";
 
 export default function NewBlog() {
+  const theme = useTheme();
   return (
     <Container
       maxWidth="md"
@@ -10,8 +12,13 @@ export default function NewBlog() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        paddingTop: 20,
-        gap: 1,
+        justifyContent: "center",
+        mt: 16,
+        mb: 8,
+        gap: 4,
+        [theme.breakpoints.up("xl")]: {
+          minHeight: "67vh",
+        },
       }}
     >
       <Helmet>

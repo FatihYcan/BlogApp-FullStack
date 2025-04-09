@@ -21,7 +21,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-export default function PopularBlogCard({
+export default function LikedBlogCard({
   _id,
   title,
   contents,

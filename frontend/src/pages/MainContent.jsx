@@ -13,7 +13,8 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import useBlogCalls from "../hooks/useBlogCalls";
 import BlogCard from "../components/blog/cards/BlogCard";
 import BlogCardSkeleton from "../components/blog/cards/BlogCardSkeleton";
-import PopularBlogCard from "../components/blog/cards/PopularBlogCard";
+import MostPopularBlogCard from "../components/blog/cards/MostPopularBlogCard";
+import MostLikedBlogCard from "../components/blog/cards/MostLikedBlogCard";
 
 export function Search({ handleSearch, searchBlog }) {
   return (
@@ -39,11 +40,14 @@ export function Search({ handleSearch, searchBlog }) {
 }
 
 export default function MainContent() {
-  const { blogs, viewBlogs, details, likes, allBlogs } = useSelector(
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+  const { username } = userInfo || {};
+  const { blogs, viewBlogs, details, allBlogs, likeBlogs } = useSelector(
     (state) => state.blog
   );
 
-  const { getAllBlogs, getBlogs, getBlogsView } = useBlogCalls();
+  const { getAllBlogs, getBlogs, getBlogsView, postBlogLike, getBlogsLike } =
+    useBlogCalls();
 
   const [page, setPage] = useState(sessionStorage.getItem("page") || 1);
   const [selectedCategory, setSelectedCategory] = useState(
@@ -54,6 +58,10 @@ export default function MainContent() {
     sessionStorage.getItem("searchBlog") || ""
   );
   const [loading, setLoading] = useState(true);
+
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const handleCloseLogin = () => setLoginOpen(false);
 
   const uniqueCategories = [
     ...new Set(allBlogs.map((blog) => JSON.stringify(blog.categoryId))),
@@ -94,6 +102,16 @@ export default function MainContent() {
     setPage(1);
   };
 
+  const handleLike = async (_id) => {
+    if (username) {
+      await postBlogLike(_id);
+      await getBlogs(generateBlogsUrl());
+      await getBlogsLike("blogs?sort[likeCount]=desc&limit=4");
+    } else {
+      setLoginOpen(true);
+    }
+  };
+
   useEffect(() => {
     if (selectedCategory) {
       sessionStorage.setItem("selectedCategory", selectedCategory);
@@ -125,10 +143,11 @@ export default function MainContent() {
       await getAllBlogs("blogs");
       await getBlogs(generateBlogsUrl());
       await getBlogsView("blogs?sort[viewCount]=desc&limit=4");
+      await getBlogsLike("blogs?sort[likeCount]=desc&limit=4");
       setLoading(false);
     };
     fetchData();
-  }, [page, selectedCategory, likes, searchBlog]);
+  }, [page, selectedCategory, searchBlog]);
 
   if (loading) {
     return (
@@ -224,7 +243,13 @@ export default function MainContent() {
       </Box>
       <Grid container rowSpacing={2} columnSpacing={2} justifyContent="center">
         {blogs.map((blog) => (
-          <BlogCard key={blog._id} {...blog} />
+          <BlogCard
+            key={blog._id}
+            {...blog}
+            handleLike={handleLike}
+            loginOpen={loginOpen}
+            handleCloseLogin={handleCloseLogin}
+          />
         ))}
       </Grid>
 
@@ -251,22 +276,37 @@ export default function MainContent() {
             </Stack>
           </Box>
         )}
-
-        <Typography variant="h2" gutterBottom sx={{ mt: 4 }}>
-          Most Popular
-        </Typography>
-        <Grid
-          container
-          rowSpacing={8}
-          columnSpacing={12}
-          justifyContent="center"
-          sx={{ my: 4 }}
-        >
-          {viewBlogs.map((viewBlog) => (
-            <PopularBlogCard key={viewBlog._id} {...viewBlog} />
-          ))}
-        </Grid>
       </div>
+
+      <Typography variant="h2" gutterBottom sx={{ mt: 4 }}>
+        Most Popular
+      </Typography>
+      <Grid
+        container
+        rowSpacing={2}
+        columnSpacing={2}
+        justifyContent="center"
+        sx={{ mt: -4 }}
+      >
+        {viewBlogs.map((viewBlog) => (
+          <MostPopularBlogCard key={viewBlog._id} {...viewBlog} />
+        ))}
+      </Grid>
+
+      <Typography variant="h2" gutterBottom sx={{ mt: 4 }}>
+        Most Liked
+      </Typography>
+      <Grid
+        container
+        rowSpacing={2}
+        columnSpacing={2}
+        justifyContent="center"
+        sx={{ mt: -4 }}
+      >
+        {likeBlogs.map((likeBlog) => (
+          <MostLikedBlogCard key={likeBlog._id} {...likeBlog} />
+        ))}
+      </Grid>
     </Box>
   );
 }

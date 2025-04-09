@@ -64,7 +64,7 @@ export default function ContentCard({
         sx={{ marginBottom: "1rem" }}
       >
         {item.images?.map((image, imgIndex) => (
-          <Grid size={{ xs: 12, sm: 6 }} key={imgIndex}>
+          <Grid size={{ xs: 12, sm: 6, xl: 4 }} key={imgIndex}>
             <CardMedia
               component="img"
               alt={`Content Image ${imgIndex + 1}`}
@@ -75,9 +75,7 @@ export default function ContentCard({
                 borderRadius: 1,
                 cursor: "pointer",
               }}
-              onClick={() =>
-                handleImageOpen(image)
-              }
+              onClick={() => handleImageOpen(image)}
             />
           </Grid>
         ))}

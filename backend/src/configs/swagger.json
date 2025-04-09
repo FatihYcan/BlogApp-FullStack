@@ -406,12 +406,46 @@
         }
       }
     },
+    "/blogs/createId": {
+      "post": {
+        "tags": [
+          "Blogs"
+        ],
+        "summary": "Create Blog ID (Draft)",
+        "description": "Create a draft blog and return its ID without saving it.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "isPublish": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/blogs/{id}": {
       "put": {
         "tags": [
           "Blogs"
         ],
-        "summary": "Create Blog",
+        "summary": "Update Blog",
         "description": "",
         "parameters": [
           {
@@ -491,7 +525,7 @@
         "tags": [
           "Blogs"
         ],
-        "summary": "Create Blog",
+        "summary": "Update Blog",
         "description": "",
         "parameters": [
           {
@@ -566,7 +600,7 @@
             "type": "string"
           },
           {
-            "name": "x-forwarded-for",
+            "name": "x-device-id",
             "in": "header",
             "type": "string"
           }
@@ -645,19 +679,38 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f101"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "Content 1"
+                },
+                "order": {
+                  "type": "number",
+                  "example": 1
+                },
                 "images": {
-                  "example": "any"
+                  "type": "array",
+                  "example": [
+                    "uploads/images/resim1.jpg"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           }
         }
       }
@@ -695,11 +748,42 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f101"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "Content 1"
+                },
+                "order": {
+                  "type": "number",
+                  "example": 1
+                },
+                "images": {
+                  "type": "array",
+                  "example": [
+                    "uploads/images/resim1.jpg"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
@@ -738,11 +822,42 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blogId": {
+                  "type": "string",
+                  "example": "65343222b67e9681f937f101"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "Content 1"
+                },
+                "order": {
+                  "type": "number",
+                  "example": 1
+                },
+                "images": {
+                  "type": "array",
+                  "example": [
+                    "uploads/images/resim1.jpg"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1312,7 +1427,7 @@
             }
           }
         },
-        "blogImage": {
+        "image": {
           "type": "array",
           "example": [],
           "items": {}
@@ -1363,6 +1478,18 @@
           }
         },
         "viewCount": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "likeCount": {
           "type": "object",
           "properties": {
             "type": {
@@ -1576,7 +1703,7 @@
             }
           }
         },
-        "sectionTitle": {
+        "content": {
           "type": "object",
           "properties": {
             "type": {
@@ -1589,68 +1716,13 @@
             "trim": {
               "type": "boolean",
               "example": true
-            }
-          }
-        },
-        "text": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "order": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "number",
-              "example": 0
             }
           }
         },
         "images": {
           "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "url": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "function"
-                  },
-                  "required": {
-                    "type": "boolean",
-                    "example": true
-                  }
-                }
-              },
-              "caption": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "function"
-                  },
-                  "trim": {
-                    "type": "boolean",
-                    "example": true
-                  }
-                }
-              }
-            }
-          }
+          "example": [],
+          "items": {}
         }
       }
     },

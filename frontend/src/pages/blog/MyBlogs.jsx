@@ -41,10 +41,11 @@ export function Search({ handleSearch, searchMyBlog }) {
 
 export default function MyBlogs() {
   const navigate = useNavigate();
-  const { getUserBlog, getAllUserBlog } = useBlogCalls();
-  const { userBlogs, details, likes, allUserBlogs } = useSelector(
+  const { userBlogs, details, allUserBlogs } = useSelector(
     (state) => state.blog
   );
+  const { getUserBlog, getAllUserBlog, postBlogLike } = useBlogCalls();
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { _id } = userInfo || {};
 
@@ -97,6 +98,11 @@ export default function MyBlogs() {
     setMyPage(1);
   };
 
+  const handleLike = async (_id) => {
+    await postBlogLike(_id);
+    await getUserBlog(generateBlogsUrl());
+  };
+
   useEffect(() => {
     if (selectedMyCategory) {
       sessionStorage.setItem("selectedMyCategory", selectedMyCategory);
@@ -125,13 +131,12 @@ export default function MyBlogs() {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getUserBlog(generateBlogsUrl());
       await getAllUserBlog(`/blogs?author=${_id}`);
+      await getUserBlog(generateBlogsUrl());
       setLoading(false);
     };
     fetchData();
-  }, [myPage, selectedMyCategory, likes, searchMyBlog]);
-  
+  }, [myPage, selectedMyCategory, searchMyBlog]);
 
   if (loading) {
     return (
@@ -278,7 +283,11 @@ export default function MyBlogs() {
           justifyContent="center"
         >
           {userBlogs.map((userBlog) => (
-            <UserBlogCard key={userBlog._id} {...userBlog} />
+            <UserBlogCard
+              key={userBlog._id}
+              {...userBlog}
+              handleLike={handleLike}
+            />
           ))}
         </Grid>
 

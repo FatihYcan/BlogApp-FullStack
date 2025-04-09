@@ -325,12 +325,22 @@ export default function UpdateMyUserModal({
               </Box>
             </FormControl>
 
-            <button
-              type="submit"
-              className="bg-green-600  text-white font-medium py-2 px-2 rounded-md mt-4 w-full uppercase"
-            >
-              Update User
-            </button>
+            <Box my={2} display="flex" justifyContent="center" gap={2}>
+              <button
+                type="submit"
+                className="bg-green-600  text-white font-medium py-2 px-2 rounded-md w-1/2"
+              >
+                Update User
+              </button>
+
+              <button
+                type="button"
+                className="bg-red-600  text-white font-medium py-2 px-2 rounded-md w-1/2"
+                onClick={handleUpdateClose}
+              >
+                Cancel
+              </button>
+            </Box>
           </Box>
         </Box>
       </Modal>

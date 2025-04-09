@@ -1,3 +1,4 @@
+// themePrimitives.js
 import { createTheme } from "@mui/material/styles";
 
 const defaultTheme = createTheme();
@@ -20,7 +21,6 @@ export const colorSchemes = {
         default: "hsl(0, 0%, 99%)",
         paper: "hsl(220, 35%, 97%)",
       },
-
       baseShadow:
         "hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px",
     },
@@ -94,3 +94,35 @@ const defaultShadows = [
 ];
 
 export const shadows = defaultShadows;
+
+export const baseThemeConfig = {
+  cssVariables: {
+    colorSchemeSelector: "data-mui-color-scheme",
+    cssVarPrefix: "template",
+  },
+  colorSchemes,
+  typography,
+  shadows,
+  shape,
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: gray[100],
+            borderRadius: shape.borderRadius,
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#1976d2',
+            borderRadius: shape.borderRadius,
+          },
+          scrollbarColor: '#1976d2 #f1f1f1',
+          scrollbarWidth: 'thin',
+        },
+      },
+    },
+  },
+};

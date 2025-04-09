@@ -201,21 +201,23 @@ module.exports = {
             await Like.deleteOne({ _id: data._id })
 
             //! Blogun toplam like sayısını azalt
-            await Blog.updateOne({ _id: req.params.id }, { $pull: { likes: data._id } })
+            await Blog.updateOne({ _id: req.params.id }, { $pull: { likes: data._id }, $inc: { likeCount: -1 } })
 
             //! Güncellenmiş blogu al
-            const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-            res.status(200).send({ error: false, message: "Like removed", userLike: false, likes: blogData.likes.length })
+            const blogData = await Blog.findOne({ _id: req.params.id })
+
+            res.status(200).send({ error: false, message: "Like removed", userLike: false, likes: blogData.likes.length, likeCount: blogData.likeCount })
         } else {
             //! Kullanıcının bloga olan like durumunu ekle
             const like = await Like.create({ blogId: req.params.id, userId: req.user._id })
 
             //! Blogun toplam like sayısını artır
-            await Blog.updateOne({ _id: req.params.id }, { $push: { likes: like } })
+            await Blog.updateOne({ _id: req.params.id }, { $push: { likes: like }, $inc: { likeCount: 1 } })
 
             //! Güncellenmiş blogu al
-            const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-            res.status(200).send({ error: false, message: "Like added", userLike: true, likes: blogData.likes.length })
+            const blogData = await Blog.findOne({ _id: req.params.id })
+
+            res.status(200).send({ error: false, message: "Like added", userLike: true, likes: blogData.likes.length, likeCount: blogData.likeCount })
         }
     },
 }

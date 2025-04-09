@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
+import { useTheme } from "@mui/material/styles";
 import ProfileCard from "../../components/user/cards/ProfileCard";
 import useUserCalls from "../../hooks/useUserCalls";
 import ProfileCardSkeleton from "../../components/user/cards/ProfileCardSkeleton";
@@ -14,6 +15,7 @@ export default function Profile() {
 
   const { getSingleUser } = useUserCalls();
   const { singleUser } = useSelector((state) => state.user);
+  const theme = useTheme();
 
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +44,16 @@ export default function Profile() {
       <Container
         maxWidth="xl"
         component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          mt: 16,
+          mb: 8,
+          gap: 4,
+          [theme.breakpoints.up("xl")]: {
+            minHeight: "67vh",
+          },
+        }}
       >
         <Grid
           container
@@ -60,12 +71,26 @@ export default function Profile() {
     <Container
       maxWidth="xl"
       component="main"
-      sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        mt: 16,
+        mb: 8,
+        gap: 4,
+        justifyContent: "center",
+        [theme.breakpoints.up("xl")]: {
+          minHeight: "67vh",
+        },
+      }}
     >
       <Helmet>
         <meta charSet="utf-8" />
         <title>{`Köşe Yazısı${
-          singleUser?.username ? " - " + singleUser.username : ""
+          singleUser?.username
+            ? " - " +
+              singleUser.username.charAt(0).toUpperCase() +
+              singleUser.username.slice(1)
+            : ""
         }`}</title>
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>

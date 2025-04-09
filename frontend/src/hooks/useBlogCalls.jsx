@@ -3,8 +3,8 @@ import {
   getAllBlogSuccess,
   getBlogSuccess,
   getBlogViewSuccess,
+  getBlogLikeSuccess,
   getSingleBlogSuccess,
-  postBlogLikeSuccess,
   getAllUserBlogSuccess,
   getUserBlogSuccess,
   fetchFail,
@@ -46,6 +46,17 @@ const useBlogCalls = () => {
       const { data } = await axiosPublic(url);
       const apiData = data.data;
       dispatch(getBlogViewSuccess({ apiData }));
+    } catch (error) {
+      dispatch(fetchFail());
+    }
+  };
+
+  const getBlogsLike = async (url) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosPublic(url);
+      const apiData = data.data;
+      dispatch(getBlogLikeSuccess({ apiData }));
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -142,8 +153,7 @@ const useBlogCalls = () => {
 
   const postBlogLike = async (blog_id) => {
     try {
-      const { data } = await axiosWithToken.post(`/blogs/${blog_id}/postLike/`);
-      dispatch(postBlogLikeSuccess(data));
+      await axiosWithToken.post(`/blogs/${blog_id}/postLike/`);
     } catch (error) {
       dispatch(fetchFail());
     }
@@ -176,6 +186,7 @@ const useBlogCalls = () => {
     getAllBlogs,
     getBlogs,
     getBlogsView,
+    getBlogsLike,
     postBlogId,
     postBlog,
     getSingleBlog,

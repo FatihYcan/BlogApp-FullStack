@@ -12,11 +12,10 @@ import styled from "@mui/material/styles/styled";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import useBlogCalls from "../../../hooks/useBlogCalls";
 import BlogLikesModal from "../modals/BlogLikesModal";
 import LoginModal from "../modals/LoginModal";
 import avatar from "../../../assets/icons/avatar.png";
-import "../../../assets/styles/detailStyles.css";
+import "../../../assets/styles/darkStyles.css";
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -38,11 +37,8 @@ const SyledCard = styled(Card)(({ theme }) => ({
 const SyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
-  padding: 16,
+  padding: 8,
   flexGrow: 1,
-  "&:last-child": {
-    paddingBottom: 16,
-  },
 });
 
 const StyledTypography = styled(Typography)({
@@ -64,20 +60,17 @@ export default function BlogCard({
   views,
   userId,
   createdAt,
+  handleLike,
+  loginOpen,
+  handleCloseLogin,
 }) {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { username } = userInfo || {};
-  const { postBlogLike } = useBlogCalls();
 
   const [likeOpen, setLikeOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
 
   const isLiked = likes.some((like) => like.userId.username === username);
-
-  const handleLike = async () => {
-    username ? await postBlogLike(_id) : setLoginOpen(true);
-  };
 
   const handleDetail = () => {
     const formattedUsername = userId?.username.replace(/\s+/g, "-");
@@ -86,7 +79,6 @@ export default function BlogCard({
 
   const handleLikeOpen = () => setLikeOpen(true);
   const handleLikeClose = () => setLikeOpen(false);
-  const handleCloseLogin = () => setLoginOpen(false);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -119,8 +111,8 @@ export default function BlogCard({
           <StyledTypography
             variant="body2"
             color="text.secondary"
-            className="editor-content"
             gutterBottom
+            className="editor-content"
             dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
           />
         </SyledCardContent>
@@ -147,7 +139,7 @@ export default function BlogCard({
             <FavoriteIcon
               color={isLiked ? "error" : "inherit"}
               sx={{ cursor: "pointer" }}
-              onClick={handleLike}
+              onClick={() => handleLike(_id)}
             />
 
             {likes.length > 0 && (
@@ -197,10 +189,10 @@ export default function BlogCard({
           sx={{
             display: "flex",
             flexDirection: "row",
-            gap: 2,
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "16px",
+            paddingX: 2,
+            paddingTop: 1,
           }}
         >
           <Box

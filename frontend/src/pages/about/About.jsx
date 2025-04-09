@@ -25,9 +25,9 @@ export default function About() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        paddingTop: 20,
-        paddingBottom: 5,
-        gap: 1,
+        mt: 16,
+        mb: 8,
+        gap: 4,
       }}
     >
       <Helmet>

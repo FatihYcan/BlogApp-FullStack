@@ -10,6 +10,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import { useTheme } from "@mui/material/styles";
 import useUserCalls from "../../hooks/useUserCalls";
 import UsersCard from "../../components/user/cards/UsersCard";
 import UserCardSkeleton from "../../components/user/cards/UserCardSkeleton";
@@ -40,6 +41,7 @@ export function Search({ handleSearch, searchUser }) {
 export default function Users() {
   const { users, details } = useSelector((state) => state.user);
   const { getUsers } = useUserCalls();
+  const theme = useTheme();
 
   const [userPage, setUserPage] = useState(
     sessionStorage.getItem("userPage") || 1
@@ -106,7 +108,16 @@ export default function Users() {
       <Container
         maxWidth="xl"
         component="main"
-        sx={{ display: "flex", flexDirection: "column", mt: 16, mb: 8, gap: 4 }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          mt: 16,
+          mb: 8,
+          gap: 4,
+          [theme.breakpoints.up("xl")]: {
+            minHeight: "67vh",
+          },
+        }}
       >
         <Grid
           container
@@ -132,6 +143,10 @@ export default function Users() {
         mt: 16,
         mb: 8,
         gap: 4,
+        justifyContent: "center",
+        [theme.breakpoints.up("xl")]: {
+          minHeight: "67vh",
+        },
       }}
     >
       <Helmet>
