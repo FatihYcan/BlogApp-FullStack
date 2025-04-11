@@ -37,7 +37,7 @@ module.exports = {
         const data = await Comment.create(req.body)
 
         //! Kullanıcının bloga olan comment durumunu ekle
-        await Blog.updateOne({ _id: req.body.blogId }, { $push: { comments: data._id } })
+        await Blog.updateOne({ _id: req.body.blogId }, { $push: { commentsId: data._id } })
         res.status(201).send({ error: false, data })
     },
 
@@ -87,10 +87,10 @@ module.exports = {
         const data = await Comment.deleteOne({ _id: req.params.id, ...customFilter })
 
         //! Comment ait yorumları sil.
-        await BottomComment.deleteMany({ _id: { $in: blogComment.bottomcomments } });
+        await BottomComment.deleteMany({ _id: { $in: blogComment.bottomCommentsId } });
 
         //! Kullanıcının bloga olan comment durumunu sil
-        await Blog.updateOne({ _id: blogComment.blogId }, { $pull: { comments: req.params.id } })
+        await Blog.updateOne({ _id: blogComment.blogId }, { $pull: { commentsId: req.params.id } })
 
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },

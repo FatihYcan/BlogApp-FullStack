@@ -9,21 +9,21 @@ const View = require("./view");
 //? Blog Model
 const blogSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true, },
-
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true, },
+
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true, },
+    
+    commentsId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+
+    contentsId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Content" }],
+
+    likesId: [{ type: mongoose.Schema.Types.ObjectId, ref: Like.modelName }],
+
+    viewsId: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
 
     title: { type: String, required: true, trim: true },
 
-    contents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Content"}],
-
     image: [],
-
-    views: [{ type: mongoose.Schema.Types.ObjectId, ref: View.modelName }],
-
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: Like.modelName }],
-
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 
     viewCount: { type: Number, default: 0 },
 

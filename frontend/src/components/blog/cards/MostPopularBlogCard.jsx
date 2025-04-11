@@ -66,7 +66,7 @@ const SyledCardContent = styled(CardContent)({
 export default function MostPopularBlogCard({
   _id,
   title,
-  contents,
+  contentsId,
   categoryId,
   image,
   userId,
@@ -123,7 +123,7 @@ export default function MostPopularBlogCard({
             variant="body2"
             className="editor-content"
             gutterBottom
-            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
+            dangerouslySetInnerHTML={{ __html: contentsId[0]?.content }}
           ></StyledTypography>
         </SyledCardContent>
 

@@ -52,12 +52,12 @@ const StyledTypography = styled(Typography)({
 export default function BlogCard({
   _id,
   title,
-  contents,
+  contentsId,
   image,
   categoryId,
-  likes,
-  comments,
-  views,
+  likesId,
+  commentsId,
+  viewsId,
   userId,
   createdAt,
   handleLike,
@@ -70,7 +70,7 @@ export default function BlogCard({
 
   const [likeOpen, setLikeOpen] = useState(false);
 
-  const isLiked = likes.some((like) => like.userId.username === username);
+  const isLiked = likesId.some((like) => like.userId.username === username);
 
   const handleDetail = () => {
     const formattedUsername = userId?.username.replace(/\s+/g, "-");
@@ -113,7 +113,7 @@ export default function BlogCard({
             color="text.secondary"
             gutterBottom
             className="editor-content"
-            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
+            dangerouslySetInnerHTML={{ __html: contentsId[0]?.content }}
           />
         </SyledCardContent>
 
@@ -142,12 +142,12 @@ export default function BlogCard({
               onClick={() => handleLike(_id)}
             />
 
-            {likes.length > 0 && (
+            {likesId.length > 0 && (
               <span
                 style={{ fontSize: "1.2rem", marginLeft: "2px" }}
                 onClick={handleLikeOpen}
               >
-                {likes.length}
+                {likesId.length}
               </span>
             )}
           </Box>
@@ -161,9 +161,9 @@ export default function BlogCard({
             }}
           >
             <ChatBubbleOutlineIcon />
-            {comments.length > 0 && (
+            {commentsId.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                {comments.length}
+                {commentsId.length}
               </span>
             )}
           </Box>
@@ -177,9 +177,9 @@ export default function BlogCard({
             }}
           >
             <VisibilityOutlinedIcon />
-            {views.length > 0 && (
+            {viewsId.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                {views.length}
+                {viewsId.length}
               </span>
             )}
           </Box>
@@ -227,7 +227,7 @@ export default function BlogCard({
         <BlogLikesModal
           likeOpen={likeOpen}
           handleLikeClose={handleLikeClose}
-          likes={likes}
+          likesId={likesId}
         />
         <LoginModal loginOpen={loginOpen} handleCloseLogin={handleCloseLogin} />
       </SyledCard>

@@ -38,7 +38,7 @@ export default function EditBottomCommentForm({
   const handleEmojiSelect = (emoji) => {
     setBottomCommentData((prevData) => ({
       ...prevData,
-      comment: prevData.comment + emoji.native,
+      bottomComment: prevData.bottomComment + emoji.native,
     }));
     setShowEmojiPicker(false);
   };
@@ -48,7 +48,7 @@ export default function EditBottomCommentForm({
     await putBottomComment(editBottomComment, bottomCommentData);
     await getSingleBlog(username, _id);
     setEditBottomComment("");
-    setBottomCommentData({ commentId: commentId, comment: "" });
+    setBottomCommentData({ commentId: commentId, bottomComment: "" });
   };
 
   const handleClose = (e) => {
@@ -65,65 +65,42 @@ export default function EditBottomCommentForm({
         flexDirection: "column",
         width: "100%",
         gap: 2,
-        mb: 2,
       }}
     >
       <FormControl fullWidth margin="dense" sx={{ position: "relative" }}>
+        <TextField
+          size="small"
+          id="bottomComment"
+          type="text"
+          name="bottomComment"
+          variant="outlined"
+          required
+          multiline
+          fullWidth
+          value={bottomCommentData.bottomComment}
+          onChange={handleChange}
+        />
         <Box
           sx={{
-            position: "relative",
-            border: "1px solid rgba(0, 0, 0, 0.23)",
-            borderRadius: "4px",
-            padding: isSmallScreen ? "8px 8px 40px 8px" : "8px 40px 8px 8px",
-            minHeight: isSmallScreen ? "50px" : "auto",
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          <TextField
-            size="small"
-            id="comment"
-            type="text"
-            name="comment"
-            variant="standard"
-            required
-            multiline
-            fullWidth
-            value={bottomCommentData.comment}
-            onChange={handleChange}
-            sx={{
-              "& .MuiInputBase-root": {
-                padding: 0,
-                "&:before, &:after": {
-                  borderBottom: "none !important",
-                },
-              },
-              "& .MuiInputBase-input": {
-                padding: 0,
-              },
-            }}
-          />
-          <Box
-            sx={{
-              position: "absolute",
-              right: 0,
-              bottom: 0,
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
+          <Button
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            sx={{ minWidth: "auto" }}
           >
-            <Button
-              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-              sx={{ minWidth: "auto" }}
-            >
-              😀
-            </Button>
-            <Button type="submit" sx={{ minWidth: "auto" }}>
-              <SendIcon />
-            </Button>
-            <Button sx={{ minWidth: "auto" }} onClick={handleClose}>
-              <CloseIcon />
-            </Button>
-          </Box>
+            😀
+          </Button>
+          <Button type="submit" sx={{ minWidth: "auto" }}>
+            <SendIcon />
+          </Button>
+          <Button sx={{ minWidth: "auto" }} onClick={handleClose}>
+            <CloseIcon />
+          </Button>
         </Box>
 
         {showEmojiPicker && (
@@ -135,13 +112,12 @@ export default function EditBottomCommentForm({
                 ? {
                     left: "50%",
                     transform: "translateX(-50%)",
-                    bottom: "100%",
+                    top: "100%",
                     marginBottom: 1,
                   }
                 : {
                     right: 0,
-                    top: "100%",
-                    marginTop: 1,
+                    top: 35,
                   }),
             }}
           >

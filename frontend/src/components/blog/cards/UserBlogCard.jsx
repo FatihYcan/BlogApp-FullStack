@@ -51,12 +51,12 @@ const StyledTypography = styled(Typography)({
 export default function UserBlogCard({
   _id,
   title,
-  contents,
+  contentsId,
   image,
   categoryId,
-  likes,
-  comments,
-  views,
+  likesId,
+  commentsId,
+  viewsId,
   userId,
   createdAt,
   handleLike,
@@ -67,7 +67,7 @@ export default function UserBlogCard({
 
   const [likeOpen, setLikeOpen] = useState(false);
 
-  const isLiked = likes.some((like) => like.userId.username === username);
+  const isLiked = likesId.some((like) => like.userId.username === username);
 
   const handleDetail = () => {
     const formattedUsername = userId?.username.replace(/\s+/g, "-");
@@ -104,6 +104,7 @@ export default function UserBlogCard({
             variant="h6"
             component="div"
             color="error.main"
+            onClick={handleDetail}
           >
             {title}
           </Typography>
@@ -112,7 +113,7 @@ export default function UserBlogCard({
             color="text.secondary"
             className="editor-content"
             gutterBottom
-            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
+            dangerouslySetInnerHTML={{ __html: contentsId[0]?.content }}
           />
         </SyledCardContent>
 
@@ -123,6 +124,8 @@ export default function UserBlogCard({
             height: "50px",
             alignItems: "center",
             justifyContent: "space-evenly",
+            marginTop: "-20px",
+            marginBottom: "-15px",
           }}
         >
           <Box
@@ -139,12 +142,12 @@ export default function UserBlogCard({
               onClick={() => handleLike(_id)}
             />
 
-            {likes.length > 0 && (
+            {likesId.length > 0 && (
               <span
                 style={{ fontSize: "1.2rem", marginLeft: "2px" }}
                 onClick={handleLikeOpen}
               >
-                {likes.length}
+                {likesId.length}
               </span>
             )}
           </Box>
@@ -158,9 +161,9 @@ export default function UserBlogCard({
             }}
           >
             <ChatBubbleOutlineIcon />
-            {comments.length > 0 && (
+            {commentsId.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                {comments.length}
+                {commentsId.length}
               </span>
             )}
           </Box>
@@ -174,9 +177,9 @@ export default function UserBlogCard({
             }}
           >
             <VisibilityOutlinedIcon />
-            {views.length > 0 && (
+            {viewsId.length > 0 && (
               <span style={{ fontSize: "1.2rem", marginLeft: "2px" }}>
-                {views.length}
+                {viewsId.length}
               </span>
             )}
           </Box>
@@ -186,10 +189,10 @@ export default function UserBlogCard({
           sx={{
             display: "flex",
             flexDirection: "row",
-            gap: 2,
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "16px",
+            paddingX: 2,
+            paddingTop: 1,
           }}
         >
           <Box
@@ -224,7 +227,7 @@ export default function UserBlogCard({
         <BlogLikesModal
           likeOpen={likeOpen}
           handleLikeClose={handleLikeClose}
-          likes={likes}
+          likesId={likesId}
         />
       </SyledCard>
     </Grid>

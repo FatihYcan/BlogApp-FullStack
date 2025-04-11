@@ -24,7 +24,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 export default function LikedBlogCard({
   _id,
   title,
-  contents,
+  contentsId,
   image,
   userId,
   createdAt,
@@ -96,9 +96,9 @@ export default function LikedBlogCard({
           <StyledTypography
             variant="body2"
             component="div"
-            className="editor-content"
+            className="dark-content"
             sx={{ color: "text.secondary", marginTop: 1 }}
-            dangerouslySetInnerHTML={{ __html: contents[0]?.content }}
+            dangerouslySetInnerHTML={{ __html: contentsId[0]?.content }}
           />
         </CardContent>
 

@@ -18,7 +18,7 @@ const style = {
   padding: "10px 10px 0 10px",
 };
 
-export default function BlogLikesModal({ likeOpen, handleLikeClose, likes }) {
+export default function BlogLikesModal({ likeOpen, handleLikeClose, likesId }) {
   return (
     <div>
       <Modal
@@ -28,7 +28,7 @@ export default function BlogLikesModal({ likeOpen, handleLikeClose, likes }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {likes?.map((like) => (
+          {likesId?.map((like) => (
             <Box
               key={like._id}
               sx={{

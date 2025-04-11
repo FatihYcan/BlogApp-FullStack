@@ -26,7 +26,7 @@ module.exports = {
         /*
             #swagger.tags = ["Bottom Comments"]
             #swagger.summary = "Create Bottom Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "commentId": "65343222b67e9681f937f201",  "comment": "Bottom Comment 1"} }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "commentId": "65343222b67e9681f937f201",  "bottomComment": "Bottom Comment 1"} }
         */
 
         const Comment = require('../models/comment')
@@ -37,7 +37,7 @@ module.exports = {
         const data = await BottomComment.create(req.body)
 
         //! Kullanıcının commente olan bottom comment durumunu ekle
-        await Comment.updateOne({ _id: req.body.commentId }, { $push: { bottomcomments: data._id } })
+        await Comment.updateOne({ _id: req.body.commentId }, { $push: { bottomCommentsId: data._id } })
         res.status(201).send({ error: false, data })
     },
 
@@ -54,7 +54,7 @@ module.exports = {
         /*
             #swagger.tags = ["Bottom Comments"]
             #swagger.summary = "Update Bottom Comment"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "commentId": "65343222b67e9681f937f201",  "comment": "Bottom Comment 1"} }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: {  "commentId": "65343222b67e9681f937f201",  "bottomComment": "Bottom Comment 1"} }
         */
 
         //! Kullanıcı sadece kendi yorumlarını güncelleyebilir.
@@ -86,7 +86,7 @@ module.exports = {
         const data = await BottomComment.deleteOne({ _id: req.params.id, ...customFilter })
 
         //! Kullanıcının commente olan bottom comment durumunu sil
-        await Comment.updateOne({ _id: blogBottomComment.commentId }, { $pull: { bottomcomments: req.params.id } })
+        await Comment.updateOne({ _id: blogBottomComment.commentId }, { $pull: { bottomCommentsId: req.params.id } })
 
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
     },

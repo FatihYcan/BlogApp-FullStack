@@ -29,7 +29,7 @@ module.exports = {
             customFilter.userId = req.user._id
         }
 
-        const data = await res.getModelList(Blog, customFilter, [{ path: "userId", select: "username image" }, { path: "categoryId", select: "name" }, { path: "contents" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }])
+        const data = await res.getModelList(Blog, customFilter, [{ path: "categoryId", select: "name" }, { path: "contentsId" }, { path: "likesId", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "userId", select: "username image" }])
         res.status(200).send({ error: false, details: await res.getModelListDetails(Blog, customFilter), data })
     },
 
@@ -37,7 +37,7 @@ module.exports = {
         /*
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Create Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "contents": ["65343222b67e9681f937f102", "65343222b67e9681f937f103"], "image": [], "isPublish": true } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "image": [], "isPublish": true } }
         */
 
         //! userId verisini req.user._id ile al
@@ -75,7 +75,7 @@ module.exports = {
             if (!view) {
                 const newView = await View.create({ blogId: req.params.id, userId: req.user._id })
 
-                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
+                await Blog.updateOne({ _id: req.params.id }, { $push: { viewsId: newView }, $inc: { viewCount: 1 } })
             }
         } else {
             const view = await View.findOne({ blogId: req.params.id, deviceId: userDeviceId })
@@ -83,11 +83,11 @@ module.exports = {
             if (!view) {
                 const newView = await View.create({ blogId: req.params.id, deviceId: userDeviceId })
 
-                await Blog.updateOne({ _id: req.params.id }, { $push: { views: newView }, $inc: { viewCount: 1 } })
+                await Blog.updateOne({ _id: req.params.id }, { $push: { viewsId: newView }, $inc: { viewCount: 1 } })
             }
         }
 
-        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "userId", select: "username image" }, { path: "contents" }, { path: "categoryId", select: "name" }, { path: "likes", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "comments", select: "userId comment bottomcomments createdAt", populate: [{ path: "userId", select: "username image" }, { path: "bottomcomments", select: "userId comment createdAt", populate: { path: "userId", select: "username image" } }] }])
+        const data = await Blog.findOne({ _id: req.params.id }).populate([{ path: "categoryId", select: "name" }, { path: "commentsId", select: "bottomCommentsId userId comment createdAt", populate: [{ path: "bottomCommentsId", select: "userId bottomComment createdAt", populate: { path: "userId", select: "username image" } }, { path: "userId", select: "username image" }] }, { path: "contentsId" }, { path: "likesId", select: "userId", populate: { path: "userId", select: "username image" } }, { path: "userId", select: "username image" }])
 
         res.status(200).send({ error: false, data })
     },
@@ -96,7 +96,7 @@ module.exports = {
         /*
             #swagger.tags = ["Blogs"]
             #swagger.summary = "Update Blog"
-            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "contents": ["65343222b67e9681f937f102", "65343222b67e9681f937f103"], "image": [], "isPublish": true } }
+            #swagger.parameters['body'] = { in: 'body', required: true, schema: { "categoryId": "65343222b67e9681f937f101", "title": "Blog Title 1", "image": [], "isPublish": true } }
         */
 
         //! Kullanıcı sadece kendi bloglarını günceleyebilir
@@ -140,11 +140,11 @@ module.exports = {
         const blog = await Blog.findOne({ _id: req.params.id, ...customFilter });
 
         //! Bloga ait içerikleri, görüntülemeleri, beğenileri ve yorumları, yorumların içindeki yorumları sil.
-        await Content.deleteMany({ _id: { $in: blog.contents } });
-        await View.deleteMany({ _id: { $in: blog.views } });
-        await Like.deleteMany({ _id: { $in: blog.likes } });
-        await BottomComment.deleteMany({ commentId: { $in: blog.comments } });
-        await Comment.deleteMany({ _id: { $in: blog.comments } });
+        await Content.deleteMany({ _id: { $in: blog.contentsId } });
+        await View.deleteMany({ _id: { $in: blog.viewsId } });
+        await Like.deleteMany({ _id: { $in: blog.likesId } });
+        await BottomComment.deleteMany({ commentId: { $in: blog.commentsId } });
+        await Comment.deleteMany({ _id: { $in: blog.commentsId } });
 
         const data = await Blog.deleteOne({ _id: req.params.id, ...customFilter })
         res.status(data.deletedCount ? 204 : 404).send({ error: !data.deletedCount, data })
@@ -182,8 +182,8 @@ module.exports = {
         const data = await Like.findOne({ blogId: req.params.id, userId: req.user._id })
 
         //! Blogun toplam like sayısını getir
-        const blogData = await Blog.findOne({ _id: req.params.id }).select("likes")
-        res.status(200).send({ error: false, userLike: data ? true : false, likes: blogData.likes.length })
+        const blogData = await Blog.findOne({ _id: req.params.id })
+        res.status(200).send({ error: false, userLike: data ? true : false, likesId: blogData.likesId.length, likeCount: blogData.likeCount })
     },
 
     postLike: async (req, res) => {
@@ -201,23 +201,23 @@ module.exports = {
             await Like.deleteOne({ _id: data._id })
 
             //! Blogun toplam like sayısını azalt
-            await Blog.updateOne({ _id: req.params.id }, { $pull: { likes: data._id }, $inc: { likeCount: -1 } })
+            await Blog.updateOne({ _id: req.params.id }, { $pull: { likesId: data._id }, $inc: { likeCount: -1 } })
 
             //! Güncellenmiş blogu al
             const blogData = await Blog.findOne({ _id: req.params.id })
 
-            res.status(200).send({ error: false, message: "Like removed", userLike: false, likes: blogData.likes.length, likeCount: blogData.likeCount })
+            res.status(200).send({ error: false, message: "Like removed", userLike: false, likesId: blogData.likesId.length, likeCount: blogData.likeCount })
         } else {
             //! Kullanıcının bloga olan like durumunu ekle
             const like = await Like.create({ blogId: req.params.id, userId: req.user._id })
 
             //! Blogun toplam like sayısını artır
-            await Blog.updateOne({ _id: req.params.id }, { $push: { likes: like }, $inc: { likeCount: 1 } })
+            await Blog.updateOne({ _id: req.params.id }, { $push: { likesId: like }, $inc: { likeCount: 1 } })
 
             //! Güncellenmiş blogu al
             const blogData = await Blog.findOne({ _id: req.params.id })
 
-            res.status(200).send({ error: false, message: "Like added", userLike: true, likes: blogData.likes.length, likeCount: blogData.likeCount })
+            res.status(200).send({ error: false, message: "Like added", userLike: true, likesId: blogData.likesId.length, likeCount: blogData.likeCount })
         }
     },
 }

@@ -73,19 +73,19 @@ export default function BlogDetail() {
 
   const {
     categoryId,
-    comments,
-    contents,
+    commentsId,
+    contentsId,
     createdAt,
     image,
-    likes,
+    likesId,
     title,
     userId,
-    views,
+    viewsId,
   } = singleBlog;
-  const isLiked = likes?.some((like) => like.userId?.username === username);
-  const likesCount = likes?.length || 0;
-  const commentsCount = comments?.length || 0;
-  const viewsCount = views?.length || 0;
+  const isLiked = likesId?.some((like) => like.userId?.username === username);
+  const likesCount = likesId?.length || 0;
+  const commentsCount = commentsId?.length || 0;
+  const viewsCount = viewsId?.length || 0;
 
   useEffect(() => {
     getSingleBlog(name, _id);
@@ -245,7 +245,7 @@ export default function BlogDetail() {
                 >
                   {title}
                 </Typography>
-                {contents?.map((item, index) => (
+                {contentsId?.map((item, index) => (
                   <div key={index}>
                     <ContentCard
                       item={item}
@@ -334,7 +334,7 @@ export default function BlogDetail() {
                 <>
                   <CommentForm />
 
-                  {comments?.map((item) => (
+                  {commentsId?.map((item) => (
                     <CommentCard
                       key={item._id}
                       {...item}
@@ -379,7 +379,7 @@ export default function BlogDetail() {
               <BlogLikesModal
                 likeOpen={likeOpen}
                 handleLikeClose={handleLikeClose}
-                likes={likes}
+                likesId={likesId}
               />
 
               <ImageBlogModal

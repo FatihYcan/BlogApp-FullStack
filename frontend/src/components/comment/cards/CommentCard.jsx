@@ -18,7 +18,7 @@ export default function CommentCard({
   createdAt,
   userId,
   _id,
-  bottomcomments,
+  bottomCommentsId,
   seeAnswersCardId,
   setSeeAnswersCardId,
   isReplyCardId,
@@ -113,7 +113,19 @@ export default function CommentCard({
   };
 
   return (
-    <Box sx={{ width: "75%", margin: "auto" }}>
+    <Box
+      sx={{
+        width: {
+          xs: "100%",
+          sm: "95%",
+          md: "90%",
+          lg: "85%",
+          xl: "80%",
+        },
+        margin: "auto",
+        mb: 2,
+      }}
+    >
       <Box sx={{ borderRadius: 2, mb: 2 }}>
         <Box
           sx={{
@@ -210,13 +222,13 @@ export default function CommentCard({
             </button>
           )}
 
-          {bottomcomments.length > 0 && (
+          {bottomCommentsId.length > 0 && (
             <span
               className="cursor-pointer text-gray-600"
               onClick={handleAnswersClick}
             >
               {seeAnswersCardId === _id ? "Hide" : "See"}{" "}
-              {bottomcomments.length} Answers
+              {bottomCommentsId.length} Answers
             </span>
           )}
         </Box>
@@ -225,13 +237,19 @@ export default function CommentCard({
       {bottomCommentCard && (
         <Box
           sx={{
-            borderRadius: 2,
-            mx: 6,
+            width: {
+              xs: "95%",
+              sm: "90%",
+              md: "85%",
+              lg: "80%",
+              xl: "75%",
+            },
+            margin: "auto",
           }}
         >
           {seeAnswersCardId === _id && (
             <>
-              {bottomcomments?.map((item) => (
+              {bottomCommentsId?.map((item) => (
                 <BottomCommentCard
                   key={item._id}
                   item={item}

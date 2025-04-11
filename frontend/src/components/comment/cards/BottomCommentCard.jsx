@@ -11,7 +11,6 @@ import useBlogCalls from "../../../hooks/useBlogCalls";
 import useBottomCommentCalls from "../../../hooks/useBottomCommentCalls";
 import avatar from "../../../assets/icons/avatar.png";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function BottomCommentCard({
   item,
@@ -23,8 +22,6 @@ export default function BottomCommentCard({
   isReplyBottomCardId,
   setIsReplyBottomCardId,
 }) {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { _id: id, username: name } = useParams();
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
   const { getSingleBlog } = useBlogCalls();
@@ -33,11 +30,11 @@ export default function BottomCommentCard({
 
   const [bottomCommentData, setBottomCommentData] = useState({
     commentId: commentId,
-    comment: "",
+    bottomComment: "",
   });
   const [isReplyBottomName, setIsReplyBottomName] = useState("");
 
-  const { comment, createdAt, userId, _id } = item;
+  const { bottomComment, createdAt, userId, _id } = item;
 
   function getTimeDifference(date, created) {
     const timeDifference = date - created;
@@ -61,12 +58,12 @@ export default function BottomCommentCard({
     setOpenBottomMenu(openBottomMenu === _id ? "" : _id);
   };
 
-  const handleBottomEditClick = (e, comment_id, comment) => {
+  const handleBottomEditClick = (e, bottomComment_id, bottomComment) => {
     e.preventDefault();
-    setEditBottomComment(comment_id);
+    setEditBottomComment(bottomComment_id);
     setBottomCommentData((prevData) => ({
       ...prevData,
-      comment: comment,
+      bottomComment: bottomComment,
     }));
     setOpenBottomMenu("");
     setIsReplyBottomCardId();
@@ -105,6 +102,7 @@ export default function BottomCommentCard({
           sx={{
             display: "flex",
             flex: 1,
+           
           }}
         >
           <Avatar
@@ -118,15 +116,12 @@ export default function BottomCommentCard({
           <Box
             sx={{
               display: "flex",
-              flexDirection: isSmallScreen ? "column" : "row",
-              alignItems: isSmallScreen ? "flex-start" : "center",
+              flexDirection: "row",
+              alignItems: "center",
+             
             }}
           >
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              sx={{ mr: isSmallScreen ? 0 : 2 }}
-            >
+            <Typography variant="body1" fontWeight="bold" sx={{ mr: 2 }}>
               {userId.username.charAt(0).toUpperCase() +
                 userId.username.slice(1)}
             </Typography>
@@ -154,7 +149,9 @@ export default function BottomCommentCard({
                   aria-labelledby="options-menu"
                 >
                   <button
-                    onClick={(e) => handleBottomEditClick(e, _id, comment)}
+                    onClick={(e) =>
+                      handleBottomEditClick(e, _id, bottomComment)
+                    }
                     className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                   >
@@ -176,7 +173,7 @@ export default function BottomCommentCard({
 
       {editBottomComment !== _id && (
         <Typography variant="body2" color="text.primary" sx={{ mb: 1 }}>
-          {comment}
+          {bottomComment}
         </Typography>
       )}
 
@@ -207,7 +204,7 @@ export default function BottomCommentCard({
       >
         {username && (
           <button
-            className="flex items-center text-gray-600"
+            className="flex items-center text-gray-600 mt-1"
             onClick={(e) => handleReplyBottomClick(e, userId?.username)}
           >
             <ReplyIcon />

@@ -45,7 +45,7 @@ module.exports = {
         const data = await Content.create(req.body)
 
         //! Kullanıcının bloga olan contents durumunu ekle
-        await Blog.updateOne({ _id: data.blogId }, { $push: { contents: data._id } })
+        await Blog.updateOne({ _id: data.blogId }, { $push: { contentsId: data._id } })
         res.status(201).send({ error: false, data })
     },
 

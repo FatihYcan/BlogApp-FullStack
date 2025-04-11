@@ -41,8 +41,8 @@ export default function CommentForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await postComment(commentData);
-    setCommentData({ blogId: _id, comment: "" });
     await getSingleBlog(username, _id);
+    setCommentData({ blogId: _id, comment: "" });
   };
 
   return (
@@ -54,12 +54,23 @@ export default function CommentForm() {
         flexDirection: "column",
         width: "100%",
         gap: 2,
+        mb: 2,
       }}
     >
       <FormControl
         fullWidth
         margin="dense"
-        sx={{ width: "75%", margin: "auto", position: "relative" }}
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "95%",
+            md: "90%",
+            lg: "85%",
+            xl: "80%",
+          },
+          margin: "auto",
+          position: "relative",
+        }}
       >
         <FormLabel htmlFor="comment">Comment</FormLabel>
         <TextField

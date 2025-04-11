@@ -375,16 +375,6 @@
                   "type": "string",
                   "example": "Blog Title 1"
                 },
-                "contents": {
-                  "type": "array",
-                  "example": [
-                    "65343222b67e9681f937f102",
-                    "65343222b67e9681f937f103"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "image": {
                   "type": "array",
                   "example": [],
@@ -468,16 +458,6 @@
                   "type": "string",
                   "example": "Blog Title 1"
                 },
-                "contents": {
-                  "type": "array",
-                  "example": [
-                    "65343222b67e9681f937f102",
-                    "65343222b67e9681f937f103"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "image": {
                   "type": "array",
                   "example": [],
@@ -547,16 +527,6 @@
                 "title": {
                   "type": "string",
                   "example": "Blog Title 1"
-                },
-                "contents": {
-                  "type": "array",
-                  "example": [
-                    "65343222b67e9681f937f102",
-                    "65343222b67e9681f937f103"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "image": {
                   "type": "array",
@@ -1035,7 +1005,7 @@
                   "type": "string",
                   "example": "65343222b67e9681f937f201"
                 },
-                "comment": {
+                "bottomComment": {
                   "type": "string",
                   "example": "Bottom Comment 1"
                 }
@@ -1095,7 +1065,7 @@
                   "type": "string",
                   "example": "65343222b67e9681f937f201"
                 },
-                "comment": {
+                "bottomComment": {
                   "type": "string",
                   "example": "Bottom Comment 1"
                 }
@@ -1156,7 +1126,7 @@
                   "type": "string",
                   "example": "65343222b67e9681f937f201"
                 },
-                "comment": {
+                "bottomComment": {
                   "type": "string",
                   "example": "Bottom Comment 1"
                 }
@@ -1331,26 +1301,6 @@
     "Blog": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
         "categoryId": {
           "type": "object",
           "properties": {
@@ -1371,6 +1321,86 @@
             }
           }
         },
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "commentsId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Comment"
+              }
+            }
+          }
+        },
+        "contentsId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Content"
+              }
+            }
+          }
+        },
+        "likesId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Like"
+              }
+            }
+          }
+        },
+        "viewsId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "View"
+              }
+            }
+          }
+        },
         "title": {
           "type": "object",
           "properties": {
@@ -1387,70 +1417,10 @@
             }
           }
         },
-        "contents": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "function"
-              },
-              "ref": {
-                "type": "string",
-                "example": "Content"
-              }
-            }
-          }
-        },
         "image": {
           "type": "array",
           "example": [],
           "items": {}
-        },
-        "views": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "function"
-              },
-              "ref": {
-                "type": "string",
-                "example": "View"
-              }
-            }
-          }
-        },
-        "likes": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "function"
-              },
-              "ref": {
-                "type": "string",
-                "example": "Like"
-              }
-            }
-          }
-        },
-        "comments": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "function"
-              },
-              "ref": {
-                "type": "string",
-                "example": "Comment"
-              }
-            }
-          }
         },
         "viewCount": {
           "type": "object",
@@ -1493,26 +1463,6 @@
     "Bottom Comment": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
         "commentId": {
           "type": "object",
           "properties": {
@@ -1533,7 +1483,27 @@
             }
           }
         },
-        "comment": {
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "bottomComment": {
           "type": "object",
           "properties": {
             "type": {
@@ -1582,26 +1552,6 @@
     "Comment": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "index": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
         "blogId": {
           "type": "object",
           "properties": {
@@ -1622,6 +1572,41 @@
             }
           }
         },
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "bottomCommentsId": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "BottomComment"
+              }
+            }
+          }
+        },
         "comment": {
           "type": "object",
           "properties": {
@@ -1635,21 +1620,6 @@
             "trim": {
               "type": "boolean",
               "example": true
-            }
-          }
-        },
-        "bottomcomments": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "function"
-              },
-              "ref": {
-                "type": "string",
-                "example": "BottomComment"
-              }
             }
           }
         }

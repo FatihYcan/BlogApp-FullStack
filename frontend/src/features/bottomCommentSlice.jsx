@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const bottomCommentSlice = createSlice({
-  name: "comment",
+  name: "bottomComment",
 
   initialState: {
     loading: false,
