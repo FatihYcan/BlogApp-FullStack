@@ -85,6 +85,11 @@ export default function MyBlogDetail() {
   const commentsCount = commentsId?.length || 0;
   const viewsCount = viewsId?.length || 0;
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   useEffect(() => {
     getSingleBlog(name, _id);
     getBlogsView("blogs?sort[viewCount]=desc&limit=4");
@@ -167,7 +172,7 @@ export default function MyBlogDetail() {
               <CardMedia
                 component="img"
                 alt={title}
-                image={image && image.length > 0 ? image[0] : []}
+                image={image && image.length > 0 ? optimizeImage(image[0]) : []}
                 sx={{
                   width: {
                     xs: "100%",
@@ -206,7 +211,7 @@ export default function MyBlogDetail() {
                       alt={userId?.username}
                       src={
                         userId?.image && userId.image.length > 0
-                          ? userId.image[0]
+                          ? optimizeImage(userId.image[0])
                           : avatar
                       }
                       sx={{ width: 30, height: 30 }}

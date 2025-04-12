@@ -59,6 +59,11 @@ export default function UsersCard({
 
   const fullName = firstName + " " + lastName;
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const handleDetail = () => {
     navigate(`/users/${_id}`);
   };
@@ -70,7 +75,7 @@ export default function UsersCard({
           onClick={handleDetail}
           component="img"
           alt={username}
-          image={image && image.length > 0 ? image[0] : avatar}
+          image={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -109,7 +114,7 @@ export default function UsersCard({
               <Avatar
                 key={_id}
                 alt={username}
-                src={image && image.length > 0 ? image[0] : avatar}
+                src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>

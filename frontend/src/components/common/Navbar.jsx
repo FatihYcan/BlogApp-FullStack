@@ -49,6 +49,11 @@ export default function Navbar() {
 
   const formattedUsername = username?.replace(/\s+/g, "-");
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const admin = [
     { name: "Users", to: "/users" },
     { name: "New Category", to: "/new-category" },
@@ -177,7 +182,7 @@ export default function Navbar() {
               <div className="border border-black dark:border-white flex px-3 py-2 gap-4 items-center">
                 <img
                   alt={username}
-                  src={image && image.length > 0 ? image[0] : avatar}
+                  src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
                   className="h-8 w-8 rounded-full"
                   referrerPolicy="no-referrer"
                 />
@@ -317,7 +322,7 @@ export default function Navbar() {
                   <div className="border border-black dark:border-white flex px-3 py-2 gap-4 justify-center items-center">
                     <img
                       alt={username}
-                      src={image && image.length > 0 ? image[0] : avatar}
+                      src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
                       className="h-8 w-8 rounded-full"
                       referrerPolicy="no-referrer"
                     />

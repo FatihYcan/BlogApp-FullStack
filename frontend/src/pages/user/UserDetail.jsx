@@ -57,6 +57,11 @@ export default function UserDetail() {
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
   const fullName = firstName + " " + lastName;
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   useEffect(() => {
     getSingleUser(_id);
   }, []);
@@ -121,7 +126,7 @@ export default function UserDetail() {
           <CardMedia
             component="img"
             alt={username}
-            image={image && image.length > 0 ? image[0] : avatar}
+            image={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
             sx={{
               width: "80%",
               margin: "auto",
@@ -166,7 +171,7 @@ export default function UserDetail() {
                 <Avatar
                   key={_id}
                   alt={username}
-                  src={image && image.length > 0 ? image[0] : avatar}
+                  src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
                   sx={{ width: 24, height: 24 }}
                 />
               </AvatarGroup>

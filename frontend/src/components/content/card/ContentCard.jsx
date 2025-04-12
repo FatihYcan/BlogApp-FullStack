@@ -23,6 +23,11 @@ export default function ContentCard({
     images: item?.images,
   });
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const handleUpdateClose = () => {
     setUpdateOpen(false);
   };
@@ -68,7 +73,7 @@ export default function ContentCard({
             <CardMedia
               component="img"
               alt={`Content Image ${imgIndex + 1}`}
-              image={image}
+              image={optimizeImage(image)}
               sx={{
                 aspectRatio: "16 / 9",
                 objectFit: "initial",

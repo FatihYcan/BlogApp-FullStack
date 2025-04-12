@@ -58,6 +58,11 @@ export default function ProfileCard({ singleUser, _id }) {
     username: singleUser.username,
   });
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const { createdAt, email, firstName, image, lastName, username } = singleUser;
   const fullName = firstName + " " + lastName;
 
@@ -80,7 +85,7 @@ export default function ProfileCard({ singleUser, _id }) {
         <CardMedia
           component="img"
           alt={username}
-          image={image && image.length > 0 ? image[0] : avatar}
+          image={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -121,7 +126,7 @@ export default function ProfileCard({ singleUser, _id }) {
               <Avatar
                 key={_id}
                 alt={username}
-                src={image && image.length > 0 ? image[0] : avatar}
+                src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
                 sx={{ width: 30, height: 30 }}
               />
             </AvatarGroup>

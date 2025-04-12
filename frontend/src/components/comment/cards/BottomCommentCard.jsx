@@ -36,6 +36,11 @@ export default function BottomCommentCard({
 
   const { bottomComment, createdAt, userId, _id } = item;
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   function getTimeDifference(date, created) {
     const timeDifference = date - created;
     const seconds = Math.floor(timeDifference / 1000);
@@ -108,7 +113,7 @@ export default function BottomCommentCard({
           <Avatar
             src={
               userId?.image && userId.image.length > 0
-                ? userId.image[0]
+                ? optimizeImage(userId.image[0])
                 : avatar
             }
             sx={{ width: 30, height: 30, mr: 1 }}

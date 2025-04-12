@@ -67,6 +67,11 @@ export default function UpdateUserModal({
   const [showPassword, setShowPassword] = useState(false);
   const [visibleImage, setVisibleImage] = useState(true);
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -280,7 +285,7 @@ export default function UpdateUserModal({
                       <img
                         src={
                           data.image && data.image.length > 0
-                            ? data.image[0]
+                            ? optimizeImage(data.image[0])
                             : avatar
                         }
                         alt={formik.values.username}

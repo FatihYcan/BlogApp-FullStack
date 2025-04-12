@@ -20,7 +20,11 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getSingleUser(_id);
+    const fetchData = async () => {
+     await getSingleUser(_id);
+      setLoading(false);
+    };
+    fetchData();
     sessionStorage.removeItem("selectedCategory");
     sessionStorage.removeItem("searchBlog");
     sessionStorage.removeItem("searchUser");
@@ -31,13 +35,13 @@ export default function Profile() {
     sessionStorage.removeItem("userPage");
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
+  // useEffect(() => {
+  // const timer = setTimeout(() => {
+  // setLoading(false);
+  // }, 100);
 
-    return () => clearTimeout(timer);
-  }, []);
+  // return () => clearTimeout(timer);
+  // }, []);
 
   if (loading) {
     return (

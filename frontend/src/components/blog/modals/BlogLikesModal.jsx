@@ -19,6 +19,10 @@ const style = {
 };
 
 export default function BlogLikesModal({ likeOpen, handleLikeClose, likesId }) {
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
   return (
     <div>
       <Modal
@@ -44,7 +48,7 @@ export default function BlogLikesModal({ likeOpen, handleLikeClose, likesId }) {
                   alt={like.userId.username}
                   src={
                     like.userId.image && like.userId.image.length > 0
-                      ? like.userId.image[0]
+                      ? optimizeImage(like.userId.image[0])
                       : avatar
                   }
                   sx={{ width: 40, height: 40 }}

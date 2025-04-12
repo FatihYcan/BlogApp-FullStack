@@ -72,6 +72,11 @@ export default function BlogCard({
 
   const isLiked = likesId.some((like) => like.userId.username === username);
 
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const handleDetail = () => {
     const formattedUsername = userId?.username.replace(/\s+/g, "-");
     navigate(`/blogs/${formattedUsername}/${_id}`);
@@ -87,7 +92,7 @@ export default function BlogCard({
           onClick={handleDetail}
           component="img"
           alt={title}
-          image={image && image.length > 0 ? image[0] : []}
+          image={image && image.length > 0 ? optimizeImage(image[0]) : []}
           sx={{
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
@@ -209,7 +214,7 @@ export default function BlogCard({
                 alt={userId.username}
                 src={
                   userId.image && userId.image.length > 0
-                    ? userId.image[0]
+                    ? optimizeImage(userId.image[0])
                     : avatar
                 }
                 sx={{ width: 30, height: 30 }}

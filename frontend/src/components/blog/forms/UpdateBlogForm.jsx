@@ -27,6 +27,12 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
     fetchData();
   }, []);
 
+
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -134,7 +140,7 @@ export default function UpdateBlogForm({ data, setData, handleUpdateClose }) {
               >
                 <Box>
                   <img
-                    src={data.image[0]}
+                    src={optimizeImage(data.image[0])}
                     alt={data.image}
                     style={{
                       width: "100%",

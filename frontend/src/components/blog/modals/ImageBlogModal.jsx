@@ -23,6 +23,11 @@ export default function ImageBlogModal({
   handleImageClose,
   selectedImage,
 }) {
+  const optimizeImage = (url) => {
+    if (!url) return "";
+    return url.replace("/upload/", "/upload/q_auto,f_auto/");
+  };
+
   return (
     <div>
       <Modal
@@ -35,7 +40,7 @@ export default function ImageBlogModal({
           <CardMedia
             component="img"
             alt="selectedImage"
-            image={selectedImage}
+            image={optimizeImage(selectedImage)}
             sx={{
               aspectRatio: "16 / 9",
               objectFit: "initial",
