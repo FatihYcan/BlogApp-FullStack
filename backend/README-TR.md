@@ -145,10 +145,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 
 ### Blog Controller (Blogs)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile bloglar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/blogs?filter[field]=value`
-  - `/blogs?search[field]=value`
-  - `/blogs?sort[field]=1&page=2&limit=10`
+- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 
 #### Blog Oluşturma (`create`)
 - Kullanıcı oturum açtıktan sonra blog oluşturabilir.
@@ -178,10 +175,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 
 ### Kategori Controller (Categories)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile kategoriler filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/categories?filter[field]=value`
-  - `/categories?search[field]=value`
-  - `/categories?sort[field]=1&page=2&limit=10`
+- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 
 #### Kategori Oluşturma (`create`)
 - Admin yetkisine sahip kullanıcılar yeni kategori oluşturabilir.
@@ -205,10 +199,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 
 ### İçerik Controller (Contents)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile içerikler filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/contents?filter[field]=value`
-  - `/contents?search[field]=value`
-  - `/contents?sort[field]=1&page=2&limit=10`
+- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 
 #### İçerik Oluşturma (`create`)
 - Kullanıcı oturum açtıktan sonra bloglara içerik oluşturabilir.
@@ -233,10 +224,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 
 ### Yorum Controller (Comments)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/comments?filter[field]=value`
-  - `/comments?search[field]=value`
-  - `/comments?sort[field]=1&page=2&limit=10`
+- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 
 #### Yorum Oluşturma (`create`)
 - Kullanıcı oturum açtıktan sonra bloglara yorum ekleyebilir.
@@ -260,10 +248,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 
 ### Bottom Comment Controller (BottomComments)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile alt yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/bottomcomments?filter[field]=value`
-  - `/bottomcomments?search[field]=value`
-  - `/bottomcomments?sort[field]=1&page=2&limit=10`
+- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 
 #### Alt Yorum Oluşturma (`create`)
 - Kullanıcı oturum açtıktan sonra alt yorum oluşturabilir.
