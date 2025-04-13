@@ -3,7 +3,6 @@
 /* --- BLOG API CATEGORY ROUTE --- */
 
 const router = require('express').Router()
-
 const category = require('../controllers/category')
 const permissions = require('../middlewares/permissions')
 

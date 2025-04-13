@@ -17,4 +17,4 @@ const contentSchema = new mongoose.Schema(
 )
 
 //? Content Model Export
-module.exports = mongoose.model("Content", contentSchema);
+module.exports = mongoose.model("Content", contentSchema)

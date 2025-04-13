@@ -5,7 +5,6 @@
 //? Imports
 const User = require('../models/user')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
-const Token = require('../models/token')
 const { uploadToCloudinary } = require('../middlewares/upload')
 
 module.exports = {
@@ -35,6 +34,8 @@ module.exports = {
             #swagger.summary = "Create User"
             #swagger.parameters['body'] = { in: 'body', required: true, schema: { "username": "test", "firstName": "test", "lastName": "test", "email": "test@site.com", "password": "1234", "image": [] } }
         */
+
+        const Token = require('../models/token')
 
         //! Yeni kayıtlarda admin=false
         req.body.isAdmin = false

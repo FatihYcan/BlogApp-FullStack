@@ -9,10 +9,10 @@ const View = require("./view");
 //? Blog Model
 const blogSchema = new mongoose.Schema(
   {
-    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true, },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true },
 
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true, },
-    
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+
     commentsId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 
     contentsId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Content" }],
@@ -35,4 +35,4 @@ const blogSchema = new mongoose.Schema(
 )
 
 //? Blog Model Export
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Blog", blogSchema)

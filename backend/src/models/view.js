@@ -16,4 +16,3 @@ const viewSchema = new mongoose.Schema({
 
 //? View Model Export
 module.exports = mongoose.model('View', viewSchema)
-

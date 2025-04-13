@@ -3,7 +3,6 @@
 /* --- BLOG API BOTTOM COMMENT ROUTE --- */
 
 const router = require('express').Router()
-
 const bottomcomment = require('../controllers/bottomcomment')
 const permissions = require('../middlewares/permissions')
 
