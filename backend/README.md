@@ -1,4 +1,4 @@
-# Blog API Servisi
+# Blog API
 
 Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje Node.js, Express.js ve MongoDB kullanılarak geliştirilmiştir.
 
@@ -57,46 +57,16 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
     - `body`: İstekle gönderilen veri.
     - `stack`: Hata yığını. 
 
-### Blog Modeli (`Blog`)
-- **Alanlar**:
-  - `categoryId` (ObjectId): Bloga ait kategori.
-  - `userId` (ObjectId): Blogun yazarı.
-  - `commentsId`, `contentsId`, `likesId`, `viewsId`: Bloga ait yorumlar, içerikler, beğeniler ve görüntülemeler.
-  - `title` (String): Blog başlığı.
-  - `image` (Array): Blog görselleri.
-  - `viewCount` ve `likeCount` (Number): Blogun toplam görüntüleme ve beğeni sayıları.
-  - `isPublish` (Boolean): Blogun yayınlanma durumu.
-
-### Blog Controller (`Blogs`)
-#### Listeleme (`list`)
-- Sorgu parametreleri ile bloglar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/blogs?filter[field]=value`
-  - `/blogs?search[field]=value`
-  - `/blogs?sort[field]=1&page=2&limit=10`
-
-#### Blog Oluşturma (`create`)
-- Kullanıcı oturum açtıktan sonra blog oluşturabilir.
-- Blog oluşturulurken görsel yüklenirse Cloudinary'e yüklenir.
-
-#### Blog Güncelleme (`update`)
-- Sadece blogu yazan kullanıcı veya admin tarafından güncellenebilir.
-- Görsel değişiklikleri Cloudinary'e yüklenerek güncellenir.
-
-#### Blog Silme (`delete`)
-- Bloga ait içerik, görüntüleme, beğeni ve yorumlar da silinir.
-
-#### Blog Okuma (`read`)
-- Blog detayında kategori, yorumlar, içerik, beğeniler ve yazar bilgisi bulunur.
-- Kullanıcının blogu görüntülemesi `View` modeli ile kaydedilir.
-
-#### Beğeni İşlemleri (`getLike`, `postLike`)
-- **getLike**: Kullanıcının blogu beğenip beğenmediğini ve toplam beğeni sayısını döner.
-- **postLike**: Bloga beğeni ekler veya beğeniyi kaldırır.
-
-#### Blog ID Oluşturma (`createId`)
-- Taslak blog oluşturur ve ID'sini döner.
-
-### Kullanıcı Modeli (`User`)
+### Auth Controller (Auth)
+- **Login**:
+  - Kullanıcı adı veya e-posta ile giriş yapılır.
+  - Şifre doğrulaması yapılır ve token üretilir.
+- **Forgot Password**:
+  - Kullanıcı adı veya e-posta ile şifre sıfırlama işlemi yapılır.
+- **Logout**:
+  - Token silinir ve oturum kapatılır.
+  
+### Kullanıcı Modeli (User)
 - **Alanlar**:
   - `username` (String): Kullanıcı adı, benzersiz ve zorunlu.
   - `firstName` (String): Kullanıcının adı, zorunlu.
@@ -137,43 +107,76 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 - Admin yetkisine sahip kullanıcılar diğer kullanıcıların hesaplarını silebilir.
 - Silinen kullanıcıya ait bloglar da otomatik olarak silinir. 
 
-### Token Modeli
+## Token Modeli (Token)
 - **Alanlar**:
-  - `userId` (ObjectId): Token'a ait kullanıcı bilgisi, `User` modeline referans.
+  - `userId` (ObjectId): Token'e ait kullanıcı.
   - `token` (String): Token değeri.
 
-### Bottom Comment Modeli (`BottomComment`)
-- **Alanlar**:
-  - `commentId` (ObjectId): Yorumun ait olduğu ana yorum.
-  - `userId` (ObjectId): Yorumun yazarı.
-  - `bottomComment` (String): Alt yorumun içeriği.
-
-### Bottom Comment Controller (`BottomComments`)
+### Token Controller (Tokens)
 #### Listeleme (`list`)
-- Sorgu parametreleri ile alt yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/bottomcomments?filter[field]=value`
-  - `/bottomcomments?search[field]=value`
-  - `/bottomcomments?sort[field]=1&page=2&limit=10`
+- Tüm token kayıtlarını listeler.
+- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-#### Alt Yorum Oluşturma (`create`)
-- Kullanıcı oturum açtıktan sonra alt yorum oluşturabilir.
-- Yeni bir alt yorum oluşturulurken, ilgili ana yorumun `bottomCommentsId` alanına bu alt yorum eklenir.
+#### Token Oluşturma (`create`)
+- Yeni bir token kaydı oluşturur.
+- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-#### Alt Yorum Okuma (`read`)
-- Belirli bir alt yorumun detaylarını döner.
+#### Token Okuma (`read`)
+- Belirli bir token kaydının detaylarını döner.
+- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-#### Alt Yorum Güncelleme (`update`)
-- Sadece alt yorumu yazan kullanıcı veya admin tarafından güncellenebilir.
+#### Token Güncelleme (`update`)
+- Belirli bir token kaydını günceller.
+- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-#### Alt Yorum Silme (`delete`)
-- Sadece alt yorumu yazan kullanıcı veya admin tarafından silinebilir.
-- Silinen alt yorum, ilgili ana yorumun `bottomCommentsId` alanından da kaldırılır.
+#### Token Silme (`delete`)
+- Belirli bir token kaydını siler.
+- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-### Kategori Modeli (`Category`)
+### Blog Modeli (Blog)
+- **Alanlar**:
+  - `categoryId` (ObjectId): Bloga ait kategori.
+  - `userId` (ObjectId): Blogun yazarı.
+  - `commentsId`, `contentsId`, `likesId`, `viewsId`: Bloga ait yorumlar, içerikler, beğeniler ve görüntülemeler.
+  - `title` (String): Blog başlığı.
+  - `image` (Array): Blog görselleri.
+  - `viewCount` ve `likeCount` (Number): Blogun toplam görüntüleme ve beğeni sayıları.
+  - `isPublish` (Boolean): Blogun yayınlanma durumu.
+
+### Blog Controller (Blogs)
+#### Listeleme (`list`)
+- Sorgu parametreleri ile bloglar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
+  - `/blogs?filter[field]=value`
+  - `/blogs?search[field]=value`
+  - `/blogs?sort[field]=1&page=2&limit=10`
+
+#### Blog Oluşturma (`create`)
+- Kullanıcı oturum açtıktan sonra blog oluşturabilir.
+- Blog oluşturulurken görsel yüklenirse Cloudinary'e yüklenir.
+
+#### Blog Güncelleme (`update`)
+- Sadece blogu yazan kullanıcı veya admin tarafından güncellenebilir.
+- Görsel değişiklikleri Cloudinary'e yüklenerek güncellenir.
+
+#### Blog Silme (`delete`)
+- Bloga ait içerik, görüntüleme, beğeni ve yorumlar da silinir.
+
+#### Blog Okuma (`read`)
+- Blog detayında kategori, yorumlar, içerik, beğeniler ve yazar bilgisi bulunur.
+- Kullanıcının blogu görüntülemesi `View` modeli ile kaydedilir.
+
+#### Beğeni İşlemleri (`getLike`, `postLike`)
+- **getLike**: Kullanıcının blogu beğenip beğenmediğini ve toplam beğeni sayısını döner.
+- **postLike**: Bloga beğeni ekler veya beğeniyi kaldırır.
+
+#### Blog ID Oluşturma (`createId`)
+- Taslak blog oluşturur ve ID'sini döner.
+
+### Kategori Modeli (Category)
 - **Alanlar**:
   - `name` (String): Kategori adı.
 
-### Kategori Controller (`Categories`)
+### Kategori Controller (Categories)
 #### Listeleme (`list`)
 - Sorgu parametreleri ile kategoriler filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
   - `/categories?filter[field]=value`
@@ -193,35 +196,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 - Admin yetkisine sahip kullanıcılar kategoriyi silebilir.
 - Ancak kategoriye ait bloglar varsa, kategori silinemez.
 
-### Yorum Modeli (`Comment`)
-- **Alanlar**:
-  - `blogId` (ObjectId): Yorumun ait olduğu blog.
-  - `userId` (ObjectId): Yorumu yazan kullanıcı.
-  - `comment` (String): Yorumun içeriği.
-  - `bottomCommentsId` (Array): Alt yorumlara referanslar. 
-
-### Yorum Controller (Comments)
-#### Listeleme (`list`)
-- Sorgu parametreleri ile yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
-  - `/comments?filter[field]=value`
-  - `/comments?search[field]=value`
-  - `/comments?sort[field]=1&page=2&limit=10`
-
-#### Yorum Oluşturma (`create`)
-- Kullanıcı oturum açtıktan sonra bloglara yorum ekleyebilir.
-- Yeni bir yorum oluşturulurken, ilgili blogun `commentsId` alanına bu yorum eklenir.
-
-#### Yorum Okuma (`read`)
-- Belirli bir yorumun detaylarını döner.
-
-#### Yorum Güncelleme (`update`)
-- Sadece yorumu yazan kullanıcı veya admin tarafından güncellenebilir.
-
-#### Yorum Silme (`delete`)
-- Sadece yorumu yazan kullanıcı veya admin tarafından silinebilir.
-- Silinen yorum, ilgili blogun `commentsId` alanından kaldırılır ve yorumun alt yorumları da silinir. 
-
-### İçerik Modeli (`Content`)
+### İçerik Modeli (Content)
 - **Alanlar**:
   - `blogId` (ObjectId): İçeriğin ait olduğu blog.
   - `userId` (ObjectId): İçeriği oluşturan kullanıcı.
@@ -249,33 +224,62 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 #### İçerik Silme (`delete`)
 - Sadece içeriği oluşturan kullanıcı veya admin tarafından silinebilir.
 
-### Token Modeli (`Token`)
+### Yorum Modeli (Comment)
 - **Alanlar**:
-  - `userId` (ObjectId): Token'e ait kullanıcı.
-  - `token` (String): Token değeri.
+  - `blogId` (ObjectId): Yorumun ait olduğu blog.
+  - `userId` (ObjectId): Yorumu yazan kullanıcı.
+  - `comment` (String): Yorumun içeriği.
+  - `bottomCommentsId` (Array): Alt yorumlara referanslar. 
 
-### Token Controller (Tokens)
+### Yorum Controller (Comments)
 #### Listeleme (`list`)
-- Tüm token kayıtlarını listeler.
-- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
+- Sorgu parametreleri ile yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
+  - `/comments?filter[field]=value`
+  - `/comments?search[field]=value`
+  - `/comments?sort[field]=1&page=2&limit=10`
 
-#### Token Oluşturma (`create`)
-- Yeni bir token kaydı oluşturur.
-- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
+#### Yorum Oluşturma (`create`)
+- Kullanıcı oturum açtıktan sonra bloglara yorum ekleyebilir.
+- Yeni bir yorum oluşturulurken, ilgili blogun `commentsId` alanına bu yorum eklenir.
 
-#### Token Okuma (`read`)
-- Belirli bir token kaydının detaylarını döner.
-- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
+#### Yorum Okuma (`read`)
+- Belirli bir yorumun detaylarını döner.
 
-#### Token Güncelleme (`update`)
-- Belirli bir token kaydını günceller.
-- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
+#### Yorum Güncelleme (`update`)
+- Sadece yorumu yazan kullanıcı veya admin tarafından güncellenebilir.
 
-#### Token Silme (`delete`)
-- Belirli bir token kaydını siler.
-- Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
+#### Yorum Silme (`delete`)
+- Sadece yorumu yazan kullanıcı veya admin tarafından silinebilir.
+- Silinen yorum, ilgili blogun `commentsId` alanından kaldırılır ve yorumun alt yorumları da silinir. 
 
-### Beğeni Modeli (`Like`)
+### Bottom Comment Modeli (BottomComment)
+- **Alanlar**:
+  - `commentId` (ObjectId): Yorumun ait olduğu ana yorum.
+  - `userId` (ObjectId): Yorumun yazarı.
+  - `bottomComment` (String): Alt yorumun içeriği.
+
+### Bottom Comment Controller (BottomComments)
+#### Listeleme (`list`)
+- Sorgu parametreleri ile alt yorumlar filtrelenebilir, sıralanabilir ve sayfalama yapılabilir.
+  - `/bottomcomments?filter[field]=value`
+  - `/bottomcomments?search[field]=value`
+  - `/bottomcomments?sort[field]=1&page=2&limit=10`
+
+#### Alt Yorum Oluşturma (`create`)
+- Kullanıcı oturum açtıktan sonra alt yorum oluşturabilir.
+- Yeni bir alt yorum oluşturulurken, ilgili ana yorumun `bottomCommentsId` alanına bu alt yorum eklenir.
+
+#### Alt Yorum Okuma (`read`)
+- Belirli bir alt yorumun detaylarını döner.
+
+#### Alt Yorum Güncelleme (`update`)
+- Sadece alt yorumu yazan kullanıcı veya admin tarafından güncellenebilir.
+
+#### Alt Yorum Silme (`delete`)
+- Sadece alt yorumu yazan kullanıcı veya admin tarafından silinebilir.
+- Silinen alt yorum, ilgili ana yorumun `bottomCommentsId` alanından da kaldırılır.
+
+### Beğeni Modeli (Like)
 - **Alanlar**:
   - `blogId` (ObjectId): Beğeninin ait olduğu blog.
   - `userId` (ObjectId): Beğeniyi yapan kullanıcı. 
@@ -288,7 +292,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 #### Beğeni Bilgisi Alma
 - Bir blogun toplam beğeni sayısı ve kullanıcı tarafından beğenilip beğenilmediği bilgisi döner.
 
-### Görüntüleme Modeli (`View`)
+### Görüntüleme Modeli (View)
 - **Alanlar**:
   - `blogId` (ObjectId): Görüntülemenin ait olduğu blog.
   - `userId` (ObjectId): Blogu görüntüleyen kullanıcı.
@@ -300,14 +304,6 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 - Giriş yapmış kullanıcılar için `userId` kaydedilir.
 - Giriş yapmamış kullanıcılar için `deviceId` kullanılarak anonim görüntüleme kaydedilir.
 
-### Auth Controller
-- **Login**:
-  - Kullanıcı adı veya e-posta ile giriş yapılır.
-  - Şifre doğrulaması yapılır ve token üretilir.
-- **Forgot Password**:
-  - Kullanıcı adı veya e-posta ile şifre sıfırlama işlemi yapılır.
-- **Logout**:
-  - Token silinir ve oturum kapatılır.
 
 ### Dokümantasyon Yönlendirmeleri (Documents)
 - **Swagger ve Redoc**:
