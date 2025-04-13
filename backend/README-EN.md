@@ -107,7 +107,7 @@ This project provides a backend API service for a blog application. The project 
 - Admin users can delete other users' accounts.
 - Blogs belonging to the deleted user are also automatically deleted. 
 
-## Token Model (Token)
+### Token Model (Token)
 - **Fields**:
   - `userId` (ObjectId): The user associated with the token.
   - `token` (String): The token value.

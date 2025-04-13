@@ -107,7 +107,7 @@ Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje 
 - Admin yetkisine sahip kullanıcılar diğer kullanıcıların hesaplarını silebilir.
 - Silinen kullanıcıya ait bloglar da otomatik olarak silinir. 
 
-## Token Modeli (Token)
+### Token Modeli (Token)
 - **Alanlar**:
   - `userId` (ObjectId): Token'e ait kullanıcı.
   - `token` (String): Token değeri.
