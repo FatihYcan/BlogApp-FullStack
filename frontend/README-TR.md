@@ -1,25 +1,52 @@
-# BlogApp-FullStack
+# BlogApp-FullStack - Frontend
 
-Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp-FullStack** uygulamasının frontend kısmını içermektedir. Uygulama, modern web teknolojileri kullanılarak geliştirilmiştir ve kullanıcı dostu bir deneyim sunmayı hedeflemektedir.
+Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp-FullStack** uygulamasının frontend kısmını içermektedir. Proje, modern web teknolojileri kullanılarak geliştirilmiştir ve kullanıcı dostu bir deneyim sunmayı hedeflemektedir.
+
+## Kullanılan Teknolojiler
+
+- **React**: Kullanıcı arayüzü geliştirme.
+- **Redux Toolkit**: Global state yönetimi ve slice yapılandırmaları.
+- **Redux Persist**: Oturum verisi yönetimi.
+- **Material-UI (MUI)**: Gelişmiş React bileşenleri.
+- **React-Toastify**: Kullanıcı bildirimleri için.
+- **React Router**: Yönlendirme işlemleri.
+- **MUI Theme Customization**: Tema ve bileşen özelleştirmeleri.
+- **Formik ve Yup**: Form yönetimi ve doğrulama.
+- **Axios**: HTTP istekleri için özelleştirilmiş API istemcileri.
+- **React-Quill**: Zengin metin düzenleyici.
+- **Emoji Mart**: Emoji seçici desteği.
+- **React Helmet**: Sayfa başlığı ve meta etiketleri gibi <head> içeriğini dinamik olarak yönetmek için.
+- **Tailwind CSS**: Utility-first yapısı sayesinde hızlı ve esnek stil oluşturmayı sağlayan CSS framework’ü.
+
+---
 
 ## Projenin Özellikleri
 
 - **React** kullanılarak oluşturulmuş bir kullanıcı arayüzü.
+
 - **Redux Toolkit** ile güçlü ve kolay durum yönetimi.
+
 - **Redux Persist** ile oturum bilgilerini saklama (Session Storage ile).
+
 - **Material-UI (MUI)** ile modern ve özelleştirilebilir tasarım.
+
 - **React Toastify** ile kullanıcı bildirimleri.
+
 - Responsive tasarım ile tüm cihazlarda uyumlu görüntü.
+
 - Tema özelleştirmeleri ile farklı ışık ve karanlık modları destekler.
-- **Axios** ile API çağrıları için özel yapılandırmalar (**useAxios** hook'u):
+
+### useAxios Hook (Auth)
   - Public API çağrıları.
   - Token gerektiren API çağrıları.
   - Multipart veri içeren API çağrıları.
+
 - Kullanıcı oturum yönetimi için **useAuthCalls** hook'u:
   - Giriş (Login)
   - Kayıt (Register)
   - Şifre Sıfırlama (Forgot Password)
   - Çıkış (Logout)
+
 - Blog işlemleri için **useBlogCalls** hook'u:
   - Tüm blogları listeleme (getAllBlogs)
   - Blogları sayfalama ve filtreleme ile listeleme (getBlogs)
@@ -31,28 +58,34 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Blog silme (deleteBlog)
   - Blog beğenme (postBlogLike)
   - Kullanıcıya ait tüm blogları listeleme (getAllUserBlog ve getUserBlog)
+
 - Blog içerikleri için **useContentCalls** hook'u:
   - İçerik ekleme (postContent)
   - İçerik güncelleme (putContent)
   - İçerik silme (deleteContent)
+
 - Blog yorumları için **useCommentCalls** hook'u:
   - Yorum ekleme (postComment).
   - Yorum güncelleme (putComment).
   - Yorum silme (deleteComment).
+
 - Alt yorumlar için **useBottomCommentCalls** hook'u:
   - Alt yorum ekleme (postBottomComment).
   - Alt yorum güncelleme (putBottomComment).
   - Alt yorum silme (deleteBottomComment).
+
 - Kategoriler için **useCategoryCalls** hook'u:
   - Kategori listeleme (getCategories).
   - Kategori ekleme (postCategory).
   - Kategori güncelleme (putCategory).
   - Kategori silme (deleteCategory).
+
 - Kullanıcı yönetimi için **useUserCalls** hook'u:
   - Kullanıcı listeleme (getUsers).
   - Tek bir kullanıcıyı getirme (getSingleUser).
   - Kullanıcı güncelleme (putUser ve putMyUser).
   - Kullanıcı silme (deleteUser).
+
 - Redux dilimleri (slices) ile ayrılmış ve yönetilen state yapıları:
   - Yetki yönetimi.
   - Blog yönetimi.
@@ -61,15 +94,22 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Kategori yönetimi.
   - İçerik yönetimi.
   - Kullanıcı yönetimi.
+
 - **React Router** ile sayfalar arası gezinme.
-- **ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
+- 
+**ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
+
 - **React-Quill** ile metin editörü entegrasyonu.
+
 - **Emoji-Mart** ile emoji seçici entegrasyonu.
+
 - **Tailwind CSS** ile şık ve hızlı tasarım.
   - `darkMode: "class"` kullanılarak karanlık mod desteği.
   - Uygulama genelinde Tailwind'in **base**, **components** ve 
+
 - **Navbar.jsx** ve **Footer.jsx** gibi ortak bileşenler.
   - **Footer.jsx**: Sosyal medya bağlantıları (GitHub, LinkedIn ve Email) ve telif hakkı bilgilerini içerir.
+
 - Navbar Komponenti:
   - **Drawer (Menu)**: Mobil cihazlar için açılır menü desteği.
   - **ColorModeIconDropdown.jsx**: Karanlık ve aydınlık tema arasında geçiş yapmayı sağlayan bileşen.
@@ -199,18 +239,3 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - **Yup** ile doğrulama şemaları.
 
 
-## Kullanılan Teknolojiler
-
-- **React**: Kullanıcı arayüzü geliştirme.
-- **Redux Toolkit**: Global state yönetimi ve slice yapılandırmaları.
-- **Redux Persist**: Oturum verisi yönetimi.
-- **Material-UI (MUI)**: Gelişmiş React bileşenleri.
-- **React-Toastify**: Kullanıcı bildirimleri için.
-- **React Router**: Yönlendirme işlemleri.
-- **MUI Theme Customization**: Tema ve bileşen özelleştirmeleri.
-- **Formik ve Yup**: Form yönetimi ve doğrulama.
-- **Axios**: HTTP istekleri için özelleştirilmiş API istemcileri.
-- **React-Quill**: Zengin metin düzenleyici.
-- **Emoji Mart**: Emoji seçici desteği.
-- **React Helmet**: Sayfa başlığı ve meta etiketleri gibi <head> içeriğini dinamik olarak yönetmek için.
-- **Tailwind CSS**: Utility-first yapısı sayesinde hızlı ve esnek stil oluşturmayı sağlayan CSS framework’ü.
