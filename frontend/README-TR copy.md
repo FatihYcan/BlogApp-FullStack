@@ -36,18 +36,18 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - Tema özelleştirmeleri ile farklı ışık ve karanlık modları destekler.
 
-### useAxios Hook
+- **Axios** ile API çağrıları için özel yapılandırmalar (**useAxios** hook'u):
   - Public API çağrıları.
   - Token gerektiren API çağrıları.
   - Multipart veri içeren API çağrıları.
 
-### useAuthCalls Hook
+- Kullanıcı oturum yönetimi için **useAuthCalls** hook'u:
   - Giriş (Login)
   - Kayıt (Register)
   - Şifre Sıfırlama (Forgot Password)
   - Çıkış (Logout)
 
-### useBlogCalls Hook
+- Blog işlemleri için **useBlogCalls** hook'u:
   - Tüm blogları listeleme (getAllBlogs)
   - Blogları sayfalama ve filtreleme ile listeleme (getBlogs)
   - En çok görüntülenen blogları listeleme (getBlogsView)
@@ -59,57 +59,52 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Blog beğenme (postBlogLike)
   - Kullanıcıya ait tüm blogları listeleme (getAllUserBlog ve getUserBlog)
 
-### useContentCalls Hook
+- Blog içerikleri için **useContentCalls** hook'u:
   - İçerik ekleme (postContent)
   - İçerik güncelleme (putContent)
   - İçerik silme (deleteContent)
 
-### useCommentCalls Hook
+- Blog yorumları için **useCommentCalls** hook'u:
   - Yorum ekleme (postComment).
   - Yorum güncelleme (putComment).
   - Yorum silme (deleteComment).
 
-### useBottomCommentCalls Hook
+- Alt yorumlar için **useBottomCommentCalls** hook'u:
   - Alt yorum ekleme (postBottomComment).
   - Alt yorum güncelleme (putBottomComment).
   - Alt yorum silme (deleteBottomComment).
 
-### useCategoryCalls Hook
+- Kategoriler için **useCategoryCalls** hook'u:
   - Kategori listeleme (getCategories).
   - Kategori ekleme (postCategory).
   - Kategori güncelleme (putCategory).
   - Kategori silme (deleteCategory).
 
-### useUserCalls Hook 
+- Kullanıcı yönetimi için **useUserCalls** hook'u:
   - Kullanıcı listeleme (getUsers).
   - Tek bir kullanıcıyı getirme (getSingleUser).
   - Kullanıcı güncelleme (putUser ve putMyUser).
   - Kullanıcı silme (deleteUser).
 
-### Slice’lar
-  - authSlice
-  - blogSlice
-  - contentSlice
-  - commentSlice
-  - bottomCommentSlice
-  - categorySlice
-  - userSlice
+- Redux dilimleri (slices) ile ayrılmış ve yönetilen state yapıları:
+  - Yetki yönetimi.
+  - Blog yönetimi.
+  - Yorum yönetimi.
+  - Alt yorum yönetimi
+  - Kategori yönetimi.
+  - İçerik yönetimi.
+  - Kullanıcı yönetimi.
 
 - **React Router** ile sayfalar arası gezinme.
-
+- 
 **ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
-
 - **React-Quill** ile metin editörü entegrasyonu.
-
 - **Emoji-Mart** ile emoji seçici entegrasyonu.
-
 - **Tailwind CSS** ile şık ve hızlı tasarım.
   - `darkMode: "class"` kullanılarak karanlık mod desteği.
   - Uygulama genelinde Tailwind'in **base**, **components** ve 
-
 - **Navbar.jsx** ve **Footer.jsx** gibi ortak bileşenler.
   - **Footer.jsx**: Sosyal medya bağlantıları (GitHub, LinkedIn ve Email) ve telif hakkı bilgilerini içerir.
-
 - Navbar Komponenti:
   - **Drawer (Menu)**: Mobil cihazlar için açılır menü desteği.
   - **ColorModeIconDropdown.jsx**: Karanlık ve aydınlık tema arasında geçiş yapmayı sağlayan bileşen.
@@ -237,3 +232,5 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - **RegisterForm.jsx**: Kullanıcı kayıt formu.
   - **Formik** ile form yönetimi ve doğrulama.
   - **Yup** ile doğrulama şemaları.
+
+
