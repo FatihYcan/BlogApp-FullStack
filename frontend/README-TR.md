@@ -36,12 +36,12 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - Tema özelleştirmeleri ile farklı ışık ve karanlık modları destekler.
 
-### useAxios Hook (Auth)
+### useAxios Hook
   - Public API çağrıları.
   - Token gerektiren API çağrıları.
   - Multipart veri içeren API çağrıları.
 
-- Kullanıcı oturum yönetimi için **useAuthCalls** hook'u:
+### useAuthCalls Hook
   - Giriş (Login)
   - Kayıt (Register)
   - Şifre Sıfırlama (Forgot Password)
