@@ -47,7 +47,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Şifre Sıfırlama (Forgot Password)
   - Çıkış (Logout)
 
-- Blog işlemleri için **useBlogCalls** hook'u:
+### useBlogCalls Hook
   - Tüm blogları listeleme (getAllBlogs)
   - Blogları sayfalama ve filtreleme ile listeleme (getBlogs)
   - En çok görüntülenen blogları listeleme (getBlogsView)
@@ -59,28 +59,28 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Blog beğenme (postBlogLike)
   - Kullanıcıya ait tüm blogları listeleme (getAllUserBlog ve getUserBlog)
 
-- Blog içerikleri için **useContentCalls** hook'u:
+### useContentCalls Hook
   - İçerik ekleme (postContent)
   - İçerik güncelleme (putContent)
   - İçerik silme (deleteContent)
 
-- Blog yorumları için **useCommentCalls** hook'u:
+### useCommentCalls Hook
   - Yorum ekleme (postComment).
   - Yorum güncelleme (putComment).
   - Yorum silme (deleteComment).
 
-- Alt yorumlar için **useBottomCommentCalls** hook'u:
+### useBottomCommentCalls Hook
   - Alt yorum ekleme (postBottomComment).
   - Alt yorum güncelleme (putBottomComment).
   - Alt yorum silme (deleteBottomComment).
 
-- Kategoriler için **useCategoryCalls** hook'u:
+### useCategoryCalls Hook
   - Kategori listeleme (getCategories).
   - Kategori ekleme (postCategory).
   - Kategori güncelleme (putCategory).
   - Kategori silme (deleteCategory).
 
-- Kullanıcı yönetimi için **useUserCalls** hook'u:
+### useUserCalls Hook 
   - Kullanıcı listeleme (getUsers).
   - Tek bir kullanıcıyı getirme (getSingleUser).
   - Kullanıcı güncelleme (putUser ve putMyUser).
