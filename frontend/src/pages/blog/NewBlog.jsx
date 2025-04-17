@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
-import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
+import Container from "@mui/material/Container";
 import NewBlogForm from "../../components/blog/forms/NewBlogForm";
 
 export default function NewBlog() {

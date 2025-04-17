@@ -12,8 +12,8 @@ import styled from "@mui/material/styles/styled";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import BlogLikesModal from "../modals/BlogLikesModal";
 import LoginModal from "../modals/LoginModal";
+import BlogLikesModal from "../modals/BlogLikesModal";
 import avatar from "../../../assets/icons/avatar.png";
 import "../../../assets/styles/darkStyles.css";
 

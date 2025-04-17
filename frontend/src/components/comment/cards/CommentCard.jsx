@@ -6,9 +6,9 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReplyIcon from "@mui/icons-material/Reply";
-import BottomCommentCard from "./BottomCommentCard";
-import BottomCommentForm from "../forms/BottomCommentForm";
 import EditCommentForm from "../forms/EditCommentForm";
+import BottomCommentForm from "../forms/BottomCommentForm";
+import BottomCommentCard from "./BottomCommentCard";
 import useBlogCalls from "../../../hooks/useBlogCalls";
 import useCommentCalls from "../../../hooks/useCommentCalls";
 import avatar from "../../../assets/icons/avatar.png";
@@ -252,6 +252,15 @@ export default function CommentCard({
             margin: "auto",
           }}
         >
+          {isReplyCardId === _id && (
+            <BottomCommentForm
+              isReplyCardId={isReplyCardId}
+              setIsReplyCardId={setIsReplyCardId}
+              setSeeAnswersCardId={setSeeAnswersCardId}
+              isReplyName={isReplyName}
+            />
+          )}
+
           {seeAnswersCardId === _id && (
             <>
               {bottomCommentsId?.map((item) => (
@@ -268,15 +277,6 @@ export default function CommentCard({
                 />
               ))}
             </>
-          )}
-
-          {isReplyCardId === _id && (
-            <BottomCommentForm
-              isReplyCardId={isReplyCardId}
-              setIsReplyCardId={setIsReplyCardId}
-              setSeeAnswersCardId={setSeeAnswersCardId}
-              isReplyName={isReplyName}
-            />
           )}
         </Box>
       )}

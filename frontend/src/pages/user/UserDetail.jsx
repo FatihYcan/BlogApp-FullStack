@@ -11,8 +11,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
-import DeleteUserModal from "../../components/user/modals/DeleteUserModal";
 import UpdateUserModal from "../../components/user/modals/UpdateUserModal";
+import DeleteUserModal from "../../components/user/modals/DeleteUserModal";
 import useUserCalls from "../../hooks/useUserCalls";
 import avatar from "../../assets/icons/avatar.png";
 
@@ -171,7 +171,9 @@ export default function UserDetail() {
                 <Avatar
                   key={_id}
                   alt={username}
-                  src={image && image.length > 0 ? optimizeImage(image[0]) : avatar}
+                  src={
+                    image && image.length > 0 ? optimizeImage(image[0]) : avatar
+                  }
                   sx={{ width: 24, height: 24 }}
                 />
               </AvatarGroup>
@@ -197,11 +199,13 @@ export default function UserDetail() {
               Delete User
             </button>
           </Box>
+
           <UpdateUserModal
             updateOpen={updateOpen}
             handleUpdateClose={handleUpdateClose}
             data={data}
           />
+
           <DeleteUserModal
             deleteOpen={deleteOpen}
             handleDeleteClose={handleDeleteClose}

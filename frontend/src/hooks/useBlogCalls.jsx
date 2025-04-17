@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import useAxios from "./useAxios";
 import {
   fetchStart,
   getAllBlogSuccess,
@@ -9,13 +11,11 @@ import {
   getUserBlogSuccess,
   fetchFail,
 } from "../features/blogSlice";
-import useAxios from "./useAxios";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { useDispatch } from "react-redux";
 
 const useBlogCalls = () => {
-  const { axiosPublic, axiosWithToken, axiosWithTokenAndData } = useAxios();
   const dispatch = useDispatch();
+  const { axiosPublic, axiosWithToken, axiosWithTokenAndData } = useAxios();
 
   const getAllBlogs = async (url) => {
     dispatch(fetchStart());

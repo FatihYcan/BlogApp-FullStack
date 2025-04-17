@@ -1,6 +1,6 @@
-# Blog API
+# BlogApp-FullStack - Backend
 
-Bu proje, bir blog uygulaması için backend API servisi sağlamaktadır. Proje Node.js, Express.js ve MongoDB kullanılarak geliştirilmiştir.
+Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp-FullStack** uygulamasının backend kısmını içermektedir. Proje Node.js, Express.js ve MongoDB kullanılarak geliştirilmiştir.
 
 ## Kullanılan Teknolojiler
 

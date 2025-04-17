@@ -1,78 +1,36 @@
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import styled from "@mui/material/styles/styled";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import avatar from "../../../assets/icons/avatar.png";
 import "../../../assets/styles/darkStyles.css";
 
-const TitleTypography = styled(Typography)(({ theme }) => ({
-  position: "relative",
-  textDecoration: "none",
-  "&:hover": { cursor: "pointer" },
-  "& .arrow": {
-    visibility: "hidden",
-    position: "absolute",
-    right: 0,
-    top: "50%",
-    transform: "translateY(-50%)",
-  },
-  "&:hover .arrow": {
-    visibility: "visible",
-    opacity: 0.7,
-  },
-  "&:focus-visible": {
-    outline: "3px solid",
-    outlineColor: "hsla(210, 98%, 48%, 0.5)",
-    outlineOffset: "3px",
-    borderRadius: "8px",
-  },
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    width: 0,
-    height: "1px",
-    bottom: 0,
-    left: 0,
-    backgroundColor: (theme.vars || theme).palette.text.primary,
-    opacity: 0.3,
-    transition: "width 0.3s ease, opacity 0.3s ease",
-  },
-  "&:hover::before": {
-    width: "100%",
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 2,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  [theme.breakpoints.between("md", "xl")]: {
+    WebkitLineClamp: 3,
   },
 }));
 
-const StyledTypography = styled(Typography)({
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 3,
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-});
-
-const SyledCardContent = styled(CardContent)({
-  display: "flex",
-  flexDirection: "column",
-  padding: 8,
-  flexGrow: 1,
-});
-
-export default function MostPopularBlogCard({
+export default function ViewedBlogCard({
   _id,
   title,
   contentsId,
-  categoryId,
   image,
   userId,
   createdAt,
 }) {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const optimizeImage = (url) => {
     if (!url) return "";
@@ -85,52 +43,69 @@ export default function MostPopularBlogCard({
   };
 
   return (
-    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-      <Box
-        sx={{
+    <Box
+      sx={{
+        [theme.breakpoints.only("xs")]: {
+          display: "flex",
+          border: "1px solid grey",
+          marginBottom: 1,
+          "& .MuiCardMedia-root": {
+            width: 151,
+            objectFit: "initial",
+          },
+        },
+        [theme.breakpoints.up("sm")]: {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          gap: 1,
           height: "100%",
-        }}
-      >
-        <CardMedia
-          onClick={handleDetail}
-          component="img"
-          sx={{
-            cursor: "pointer",
+          border: "1px solid grey",
+          paddingBottom: 1,
+          backgroundColor: "transparent",
+        },
+      }}
+    >
+      <CardMedia
+        onClick={handleDetail}
+        component="img"
+        sx={{
+          cursor: "pointer",
+          [theme.breakpoints.up("sm")]: {
             aspectRatio: "16 / 9",
             borderBottom: "1px solid",
             borderColor: "divider",
             objectFit: "initial",
-          }}
-          alt={title}
-          image={image && image.length > 0 ? optimizeImage(image[0]) : []}
-        />
-        <SyledCardContent>
-          <Typography gutterBottom variant="caption" component="div">
-            {categoryId.name}
-          </Typography>
-          <TitleTypography
-            gutterBottom
-             variant="subtitle2"
+            cursor: "pointer",
+          },
+        }}
+        alt={title}
+        image={image && image.length > 0 ? optimizeImage(image[0]) : []}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+        }}
+      >
+        <CardContent sx={{ flex: "1 0 auto" }}>
+          <Typography
+            component="div"
+            variant="subtitle2"
             color="error.main"
             onClick={handleDetail}
+            sx={{ cursor: "pointer" }}
           >
             {title}
-            <NavigateNextRoundedIcon
-              className="arrow"
-              sx={{ fontSize: "1rem" }}
-            />
-          </TitleTypography>
+          </Typography>
           <StyledTypography
             variant="body2"
-            className="editor-content"
-            gutterBottom
+            component="div"
+            className="dark-content"
+            sx={{ color: "text.secondary", marginTop: 1 }}
             dangerouslySetInnerHTML={{ __html: contentsId[0]?.content }}
-          ></StyledTypography>
-        </SyledCardContent>
+          />
+        </CardContent>
 
         <Box
           sx={{
@@ -172,6 +147,6 @@ export default function MostPopularBlogCard({
           </Typography>
         </Box>
       </Box>
-    </Grid>
+    </Box>
   );
 }

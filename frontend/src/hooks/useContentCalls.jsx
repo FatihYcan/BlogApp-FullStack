@@ -1,26 +1,11 @@
-import {
-  fetchStart,
-  getContentSuccess,
-  fetchFail,
-} from "../features/contentSlice";
-import useAxios from "./useAxios";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useDispatch } from "react-redux";
+import useAxios from "./useAxios";
+import { fetchStart, fetchFail } from "../features/contentSlice";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const useContentCalls = () => {
-  const { axiosPublic, axiosWithToken, axiosWithTokenAndData } = useAxios();
+  const { axiosWithToken, axiosWithTokenAndData } = useAxios();
   const dispatch = useDispatch();
-
-  const getContents = async (url) => {
-    dispatch(fetchStart());
-    try {
-      const { data } = await axiosPublic(url);
-      const apiData = data.data;
-      dispatch(getContentSuccess({ apiData }));
-    } catch (error) {
-      dispatch(fetchFail());
-    }
-  };
 
   const postContent = async (data) => {
     dispatch(fetchStart());
@@ -71,12 +56,7 @@ const useContentCalls = () => {
     }
   };
 
-  return {
-    getContents,
-    postContent,
-    putContent,
-    deleteContent,
-  };
+  return { postContent, putContent, deleteContent };
 };
 
 export default useContentCalls;

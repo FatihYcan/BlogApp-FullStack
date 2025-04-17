@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet";
+import { styled } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import MuiCard from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import NewCategoryForm from "../../components/category/forms/NewCategoryForm";
 
 const Card = styled(MuiCard)(({ theme }) => ({

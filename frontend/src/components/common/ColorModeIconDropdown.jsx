@@ -1,12 +1,12 @@
 import React from 'react';
-import { useEffect } from "react";
 import { useColorScheme } from "@mui/material/styles";
-import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeIcon from "@mui/icons-material/LightModeRounded";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeIcon from "@mui/icons-material/LightModeRounded";
 
 export default function ColorModeIconDropdown(props) {
   const { mode, setMode } = useColorScheme();

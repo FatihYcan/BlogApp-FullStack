@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { object, string, boolean } from "yup";
 import { useFormik } from "formik";
+import { object, string, boolean } from "yup";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -13,8 +13,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import avatar from "../../../assets/icons/avatar.png";
 import useUserCalls from "../../../hooks/useUserCalls";
+import avatar from "../../../assets/icons/avatar.png";
 
 const style = {
   position: "absolute",

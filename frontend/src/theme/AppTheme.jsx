@@ -1,11 +1,10 @@
-// AppTheme.js
 import * as React from "react";
 import PropTypes from "prop-types";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material/styles";
-import { inputsCustomizations } from "./components/inputs";
-import { dataDisplayCustomizations } from "./components/dataDisplay";
-import { surfacesCustomizations } from "./components/surfaces";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { baseThemeConfig } from "./primitives/themePrimitives";
+import { dataDisplayCustomizations } from "./components/dataDisplay";
+import { inputsCustomizations } from "./components/inputs";
+import { surfacesCustomizations } from "./components/surfaces";
 
 function AppTheme(props) {
   const { children, disableCustomTheme, themeComponents } = props;

@@ -4,8 +4,8 @@ import { Helmet } from "react-helmet";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
-import useCategoryCalls from "../../hooks/useCategoryCalls";
 import CategoryCard from "../../components/category/cards/CategoryCard";
+import useCategoryCalls from "../../hooks/useCategoryCalls";
 
 export default function Categories() {
   const { categories } = useSelector((state) => state.category);

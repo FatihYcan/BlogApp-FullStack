@@ -108,19 +108,19 @@ export const baseThemeConfig = {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          '&::-webkit-scrollbar': {
-            width: '8px',
+          "&::-webkit-scrollbar": {
+            width: "8px",
           },
-          '&::-webkit-scrollbar-track': {
+          "&::-webkit-scrollbar-track": {
             background: gray[100],
             borderRadius: shape.borderRadius,
           },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#1976d2',
+          "&::-webkit-scrollbar-thumb": {
+            background: "#1976d2",
             borderRadius: shape.borderRadius,
           },
-          scrollbarColor: '#1976d2 #f1f1f1',
-          scrollbarWidth: 'thin',
+          scrollbarColor: "#1976d2 #f1f1f1",
+          scrollbarWidth: "thin",
         },
       },
     },

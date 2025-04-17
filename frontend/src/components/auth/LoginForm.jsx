@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Formik } from "formik";
 import { object, string } from "yup";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -9,9 +10,8 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Formik } from "formik";
-import useAuthCalls from "../../hooks/useAuthCalls";
 import ForgotPasswordForm, { forgotSchema } from "./ForgotPasswordForm";
+import useAuthCalls from "../../hooks/useAuthCalls";
 
 export const loginSchema = object({
   email: string()

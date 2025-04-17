@@ -1,5 +1,6 @@
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import useAxios from "./useAxios";
 import {
   fetchFail,
   fetchStart,
@@ -7,8 +8,7 @@ import {
   logoutSuccess,
   registerSuccess,
 } from "../features/authSlice";
-import { useDispatch } from "react-redux";
-import useAxios from "./useAxios";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const useAuthCalls = () => {
   const navigate = useNavigate();
@@ -101,12 +101,7 @@ const useAuthCalls = () => {
     }
   };
 
-  return {
-    register,
-    login,
-    forgotPassword,
-    logout,
-  };
+  return { register, login, forgotPassword, logout };
 };
 
 export default useAuthCalls;

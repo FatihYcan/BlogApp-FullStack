@@ -1,11 +1,11 @@
+import { useDispatch } from "react-redux";
+import useAxios from "./useAxios";
 import {
   fetchStart,
   getCategorySuccess,
   fetchFail,
 } from "../features/categorySlice";
-import useAxios from "./useAxios";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { useDispatch } from "react-redux";
 
 const useCategoryCalls = () => {
   const { axiosPublic, axiosWithToken } = useAxios();
@@ -59,12 +59,7 @@ const useCategoryCalls = () => {
     }
   };
 
-  return {
-    getCategories,
-    postCategory,
-    putCategory,
-    deleteCategory,
-  };
+  return { getCategories, postCategory, putCategory, deleteCategory };
 };
 
 export default useCategoryCalls;

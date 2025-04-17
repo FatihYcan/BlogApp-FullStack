@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -7,7 +8,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import UpdateMyUserModal from "../modals/UpdateMyUserModal";
 import avatar from "../../../assets/icons/avatar.png";
 

@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { useEffect } from "react";
+import Typography from "@mui/material/Typography";
 
 export default function About() {
   useEffect(() => {

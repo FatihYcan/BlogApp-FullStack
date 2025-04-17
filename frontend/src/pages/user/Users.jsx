@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -10,10 +11,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useTheme } from "@mui/material/styles";
-import useUserCalls from "../../hooks/useUserCalls";
-import UsersCard from "../../components/user/cards/UsersCard";
 import UserCardSkeleton from "../../components/user/cards/UserCardSkeleton";
+import UsersCard from "../../components/user/cards/UsersCard";
+import useUserCalls from "../../hooks/useUserCalls";
 
 export function Search({ handleSearch, searchUser }) {
   return (

@@ -12,9 +12,9 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import useBlogCalls from "../../hooks/useBlogCalls";
 import BlogCardSkeleton from "../../components/blog/cards/BlogCardSkeleton";
 import UserBlogCard from "../../components/blog/cards/UserBlogCard";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 export function Search({ handleSearch, searchMyBlog }) {
   return (

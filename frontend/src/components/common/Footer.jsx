@@ -5,17 +5,16 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import EmailIcon from "@mui/icons-material/Email";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import EmailIcon from "@mui/icons-material/Email";
 
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
       {"Copyright © "}
+      &nbsp; 2025 - {new Date().getFullYear()}{" "}
       <span color="text.secondary">Köşe Yazısı</span>
-      &nbsp;
-      {new Date().getFullYear()}
     </Typography>
   );
 }

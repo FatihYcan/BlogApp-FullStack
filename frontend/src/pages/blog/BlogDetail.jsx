@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
@@ -15,18 +15,18 @@ import CircularProgress from "@mui/material/CircularProgress";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import useBlogCalls from "../../hooks/useBlogCalls";
-import BlogLikesModal from "../../components/blog/modals/BlogLikesModal";
-import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
-import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 import LoginModal from "../../components/blog/modals/LoginModal";
+import BlogLikesModal from "../../components/blog/modals/BlogLikesModal";
+import ContentCard from "../../components/content/card/ContentCard";
 import ImageBlogModal from "../../components/blog/modals/ImageBlogModal";
 import CommentForm from "../../components/comment/forms/CommentForm";
 import CommentCard from "../../components/comment/cards/CommentCard";
-import ContentCard from "../../components/content/card/ContentCard";
+import UpdateBlogModal from "../../components/blog/modals/UpdateBlogModal";
 import AddContentModal from "../../components/content/modal/AddContentModal";
-import PopularBlogCard from "../../components/blog/cards/PopularBlogCard";
+import DeleteBlogModal from "../../components/blog/modals/DeleteBlogModal";
 import LikedBlogCard from "../../components/blog/cards/LikedBlogCard";
+import ViewedBlogCard from "../../components/blog/cards/ViewedBlogCard";
+import useBlogCalls from "../../hooks/useBlogCalls";
 import avatar from "../../assets/icons/avatar.png";
 
 const StyledCardContent = styled(CardContent)({
@@ -381,23 +381,6 @@ export default function BlogDetail() {
                 </Box>
               )}
 
-              <BlogLikesModal
-                likeOpen={likeOpen}
-                handleLikeClose={handleLikeClose}
-                likesId={likesId}
-              />
-
-              <ImageBlogModal
-                imageOpen={imageOpen}
-                handleImageClose={handleImageClose}
-                selectedImage={selectedImage}
-              />
-
-              <LoginModal
-                loginOpen={loginOpen}
-                handleCloseLogin={handleCloseLogin}
-              />
-
               <UpdateBlogModal
                 updateOpen={updateOpen}
                 handleUpdateClose={handleUpdateClose}
@@ -414,6 +397,23 @@ export default function BlogDetail() {
                 deleteOpen={deleteOpen}
                 handleDeleteClose={handleDeleteClose}
               />
+
+              <LoginModal
+                loginOpen={loginOpen}
+                handleCloseLogin={handleCloseLogin}
+              />
+
+              <BlogLikesModal
+                likeOpen={likeOpen}
+                handleLikeClose={handleLikeClose}
+                likesId={likesId}
+              />
+
+              <ImageBlogModal
+                imageOpen={imageOpen}
+                handleImageClose={handleImageClose}
+                selectedImage={selectedImage}
+              />
             </Grid>
 
             <Grid
@@ -427,35 +427,6 @@ export default function BlogDetail() {
                 },
               }}
             >
-              <Typography
-                variant="h2"
-                gutterBottom
-                sx={{
-                  textAlign: "center",
-                  [theme.breakpoints.between("xs", "md")]: {
-                    mt: 2,
-                  },
-                }}
-              >
-                Most Popular
-              </Typography>
-
-              <Grid
-                container
-                sx={{
-                  [theme.breakpoints.between("sm", "md")]: {
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, 1fr)",
-                    gap: "16px",
-                  },
-                  mb: 4,
-                }}
-              >
-                {viewBlogs.map((viewBlog) => (
-                  <PopularBlogCard key={viewBlog._id} {...viewBlog} />
-                ))}
-              </Grid>
-
               <Typography
                 variant="h2"
                 gutterBottom
@@ -476,6 +447,35 @@ export default function BlogDetail() {
               >
                 {likeBlogs.map((likeBlog) => (
                   <LikedBlogCard key={likeBlog._id} {...likeBlog} />
+                ))}
+              </Grid>
+
+              <Typography
+                variant="h2"
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                  [theme.breakpoints.between("xs", "md")]: {
+                    mt: 2,
+                  },
+                }}
+              >
+                Most Viewed
+              </Typography>
+
+              <Grid
+                container
+                sx={{
+                  [theme.breakpoints.between("sm", "md")]: {
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "16px",
+                  },
+                  mb: 4,
+                }}
+              >
+                {viewBlogs.map((viewBlog) => (
+                  <ViewedBlogCard key={viewBlog._id} {...viewBlog} />
                 ))}
               </Grid>
             </Grid>

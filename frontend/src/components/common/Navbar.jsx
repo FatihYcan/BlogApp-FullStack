@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { alpha, styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -9,12 +10,11 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import { alpha, styled } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import useAuthCalls from "../../hooks/useAuthCalls";
+import MenuIcon from "@mui/icons-material/Menu";
 import ColorModeIconDropdown from "./ColorModeIconDropdown";
 import LoginModal from "../blog/modals/LoginModal";
+import useAuthCalls from "../../hooks/useAuthCalls";
 import blog from "../../assets/images/logo-transparent.png";
 import avatar from "../../assets/icons/avatar.png";
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
-import { useTheme } from "@mui/material/styles";
+import ProfileCardSkeleton from "../../components/user/cards/ProfileCardSkeleton";
 import ProfileCard from "../../components/user/cards/ProfileCard";
 import useUserCalls from "../../hooks/useUserCalls";
-import ProfileCardSkeleton from "../../components/user/cards/ProfileCardSkeleton";
 
 export default function Profile() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -34,14 +34,6 @@ export default function Profile() {
     sessionStorage.removeItem("myPage");
     sessionStorage.removeItem("userPage");
   }, []);
-
-  // useEffect(() => {
-  // const timer = setTimeout(() => {
-  // setLoading(false);
-  // }, 100);
-
-  // return () => clearTimeout(timer);
-  // }, []);
 
   if (loading) {
     return (

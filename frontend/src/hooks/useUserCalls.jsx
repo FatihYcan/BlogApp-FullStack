@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import useAxios from "./useAxios";
 import {
   fetchStart,
   getUserSuccess,
@@ -5,9 +7,7 @@ import {
   putMyUserSuccess,
   fetchFail,
 } from "../features/userSlice";
-import useAxios from "./useAxios";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-import { useDispatch } from "react-redux";
 
 const useUserCalls = () => {
   const { axiosWithToken, axiosWithTokenAndData } = useAxios();
@@ -93,13 +93,7 @@ const useUserCalls = () => {
     }
   };
 
-  return {
-    getUsers,
-    getSingleUser,
-    putUser,
-    putMyUser,
-    deleteUser,
-  };
+  return { getUsers, getSingleUser, putUser, putMyUser, deleteUser };
 };
 
 export default useUserCalls;

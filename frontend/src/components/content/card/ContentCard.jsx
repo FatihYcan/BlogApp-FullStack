@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
-import DeleteContentModal from "../modal/DeleteContentModal";
 import UpdateContentModal from "../modal/UpdateContentModal";
+import DeleteContentModal from "../modal/DeleteContentModal";
 import "../../../assets/styles/detailStyles.css";
 
 export default function ContentCard({

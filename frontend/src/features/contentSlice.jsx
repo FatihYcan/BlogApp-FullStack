@@ -4,7 +4,6 @@ const contentSlice = createSlice({
   name: "content",
 
   initialState: {
-    contents: [],
     loading: false,
     error: false,
   },
@@ -15,12 +14,6 @@ const contentSlice = createSlice({
       state.loading = true;
     },
 
-    getContentSuccess: (state, { payload }) => {
-      state.contents = payload.apiData;
-      state.loading = false;
-      state.error = false;
-    },
-
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
@@ -28,6 +21,6 @@ const contentSlice = createSlice({
   },
 });
 
-export const { fetchStart, getContentSuccess, fetchFail } = contentSlice.actions;
+export const { fetchStart, fetchFail } = contentSlice.actions;
 
 export default contentSlice.reducer;
