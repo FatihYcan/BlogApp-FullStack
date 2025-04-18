@@ -22,19 +22,19 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 ## Projenin Özellikleri
 
-- **React** kullanılarak oluşturulmuş bir kullanıcı arayüzü.
+- **React** ile oluşturulmuş bir kullanıcı arayüzü.
 
 - **Redux Toolkit** ile güçlü ve kolay durum yönetimi.
 
-- **Redux Persist** ile oturum bilgilerini saklama (`Session Storage` ile).
+- **Redux Persist** ile oturum bilgilerini saklama (`Session Storage` kullanılarak).
 
 - **Material-UI (MUI)** ile modern ve özelleştirilebilir tasarım.
 
 - **React Toastify** ile kullanıcı bildirimleri.
 
-- Responsive tasarım ile tüm cihazlarda uyumlu görüntü.
+- Tüm cihazlara uyumlu, responsive tasarım.
 
-- Tema özelleştirmeleri ile farklı ışık ve karanlık modları destekler.
+- Farklı ışık ve karanlık modları destekleyen tema özelleştirmeleri.
 
 - **useAxios Hook**
   - Public API çağrıları.
@@ -42,10 +42,10 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Multipart veri içeren API çağrıları.
 
 - **useAuthCalls Hook**
-  - Giriş (`Login`)
-  - Kayıt (`Register`)
-  - Şifre Sıfırlama (`Forgot Password`)
-  - Çıkış (`Logout`)
+  - Giriş yapma (`Login`)
+  - Kayıt olma (`Register`)
+  - Şifre sıfırlama (`Forgot Password`)
+  - Çıkış yapma (`Logout`)
 
 - **useBlogCalls Hook**
   - Tüm blogları listeleme (`getAllBlogs`)
@@ -97,168 +97,139 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - **React Router** ile sayfalar arası gezinme.
 
-- **ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
+- Sayfa geçişlerinde otomatik olarak en üste kaydırma işlemi için **ScrollToTop**.
 
-- **React-Quill** ile metin editörü entegrasyonu.
+- **React-Quill** kullanılarak metin editörü entegrasyonu.
 
 - **Emoji-Mart** ile emoji seçici entegrasyonu.
 
 - **Tailwind CSS** ile şık ve hızlı tasarım.
   - `darkMode: "class"` kullanılarak karanlık mod desteği.
-  - Uygulama genelinde Tailwind'in **base**, **components** ve 
+  - Tailwind'in **base**, **components** ve **utilities** yapılarını uygulama genelinde kullanma.
 
 - **Navbar.jsx** ve **Footer.jsx** gibi ortak bileşenler.
   - **Footer.jsx**: Sosyal medya bağlantıları (GitHub, LinkedIn ve Email) ve telif hakkı bilgilerini içerir.
 
-- **Navbar.jsx Bileşeni**:
-  - **Drawer (Menu)**: Mobil cihazlar için açılır menü desteği.
-  - **ColorModeIconDropdown.jsx**: Karanlık ve aydınlık tema arasında geçiş yapmayı sağlayan bileşen.
-  - **LoginModal.jsx**: Blog oluşturma gibi işlemlerde giriş yapmayı zorunlu kılan kullanıcı dostu modal.
-  - **LoginForm.jsx**: Kullanıcı giriş formu.
-  - **Formik** ile form yönetimi ve doğrulama.
-  - **Yup** ile doğrulama şemaları.
-  - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal formu.
-
-- **Blogs.jsx**: Kullanıcıların yazdığı blogları listeleme ve yönetme sayfası.
+### Navbar Bileşeni
+- **Drawer (Menu)**: Mobil cihazlar için açılır menü desteği.
+- **ColorModeIconDropdown.jsx**: Işık ve karanlık tema arasında geçiş yapmayı sağlayan bileşen.
+- **LoginModal.jsx**: Blog oluşturma gibi işlemlerde giriş yapmayı zorunlu kılan kullanıcı dostu modal.
+- **LoginForm.jsx**: Kullanıcı giriş formu.
+- Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
+- **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal form.
 
 - **Blogs.jsx Bileşeni**:
-  - **BlogCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı sağlamak için.
-  - **BlogCard.jsx**: Blog detaylarını görüntülemek ve işlem yapmak için.
-  - **LoginModal.jsx**: Blog oluşturma gibi işlemlerde giriş yapmayı zorunlu kılan kullanıcı dostu modal.
-  - **LoginForm.jsx**: Kullanıcı giriş formu.
-  - **Formik** ile form yönetimi ve doğrulama.
-  - **Yup** ile doğrulama şemaları.
-  - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal formu.
-  - **BlogLikesModal.jsx**: Blog beğenilerini listelemek için modal.
-  - **MostLikedBlogCard.jsx**: En çok beğenilen blogları görüntülemek için.
-  - **MostViewedBlogCard.jsx**: En çok görüntülenen blogları göstermek için.
+- **BlogCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı.
+- **BlogCard.jsx**: Blog detaylarını görüntüler ve işlem yapılmasını sağlar.
+- **LoginModal.jsx**: Blog oluşturma gibi işlemler için giriş yapmayı zorunlu kılar.
+- **LoginForm.jsx**: Kullanıcı giriş formu.
+- Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
+- **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal form.
+- **BlogLikesModal.jsx**: Blog beğenilerini listelemek için modal.
+- **MostLikedBlogCard.jsx**: En çok beğenilen blogları görüntüler.
+- **MostViewedBlogCard.jsx**: En çok görüntülenen blogları görüntüler.
 
-- **BlogDetail.jsx**: Tek bir blogun detaylarını görüntüleme bileşeni.
-
-- **BlogDetail.jsx Bileşeni**:
-  - Blog içeriğini ve detaylarını listeleme.
-  - Blog beğenme, yorum yapma ve görüntüleme.
-  - Blog güncelleme, silme ve içerik ekleme işlemleri.
-  - En çok beğenilen ve görüntülenen blogların listesi.
-  - Blog içeriklerini listeleme, düzenleme ve silme.
-  - Blog yorumlarını görüntüleme, düzenleme/silme ve yanıtlama.
-  - Alt yorumları görüntüleme, düzenleme/silme ve yanıtlama.
-  - **LoginModal.jsx**: Blog oluşturma gibi işlemlerde giriş yapmayı zorunlu kılan kullanıcı dostu modal.
+### BlogDetail Bileşeni
+- Tek bir blogun detaylarını görüntüler ve yönetir.
+- Blog beğenme, yorum ekleme ve görüntüleme işlemleri.
+- Blog güncelleme, silme veya içerik ekleme.
+- En çok beğenilen ve görüntülenen blogları listeleme.
+- Blog içeriği, yorumlar ve alt yorumları yönetme.
+- Farklı işlemler için modallar ve formlar içerir:
+  - **LoginModal.jsx**: Blog oluşturma gibi işlemler için giriş yapmayı zorunlu kılar.
   - **LoginForm.jsx**: Kullanıcı giriş formu.
-  - **Formik** ile form yönetimi ve doğrulama.
-  - **Yup** ile doğrulama şemaları.
-  - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal formu.
+  - Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
+  - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal form.
   - **BlogLikesModal.jsx**: Blog beğenilerini listelemek için modal.
   - **ContentCard.jsx**: Blog içeriklerini görselleştirmek ve düzenleme/silme işlemleri için bileşen.
   - **UpdateContentModal.jsx** ve **UpdateContentForm.jsx**:  Blog içeriklerini güncelleme işlemleri için modal ve form bileşenleri.
-  - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
+  - **TextEditor.jsx**: Blog içeriği için zengin metin düzenleyici.
   - **DeleteContentModal.jsx**: Blog içeriklerini silmek için modal bileşeni.
-  - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni.
-  - **CommentForm.jsx**: Bloga yorum yapmak için kullanılan form bileşeni.
-  - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kullanılan kart bileşeni.
-  - **EditCommentForm.jsx**: Blog yorumlarını düzenlemek için kullanılan form bileşeni.
-  - **BottomCommentForm.jsx**: Bloga yapılan yorumlara alt yorum yapmak için kullanılan form bileşeni.
-  - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kullanılan kart bileşeni.
-  - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için kullanılan form bileşeni.
-  - **CommentBottomForm.jsx**: Alt yoruma alt yorum yapmak için kullanılan form bileşeni.
-  - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için modal ve form bileşenleri.
-  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloga içerik ekleme işlemleri için modal ve form bileşenleri.
-  - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
-  - **DeleteBlogModal**: Blog silme işlemleri için modal bileşeni.
+  - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni. 
+  - **CommentForm.jsx**: Bloga yorum eklemek için form.
+  - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kart.
+  - **EditCommentForm.jsx**: Yorumları düzenlemek için form.
+  - **BottomCommentForm.jsx**: Yorumlara alt yorum eklemek için form.
+  - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kart.
+  - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için form.
+  - **CommentBottomForm.jsx**: Alt yorumlara alt yorum eklemek için form.
+  - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için.
+  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloglara içerik eklemek için.
+  - **DeleteBlogModal.jsx**: Blog silme işlemleri için modal.
   - **LikedBlogCard.jsx**: Beğenilen blogları göstermek için.
   - **ViewedBlogCard.jsx**: Görüntülenen blogları göstermek için.
 
-- **Users.jsx**: Kullanıcı listesi bileşeni
+### Users Bileşeni
+- **UserCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı. 
+- **UsersCard.jsx**: Kullanıcı detaylarını görüntüler ve işlemler yapılmasını sağlar.
 
-- **Users.jsx Bileşeni**:
-  - **UserCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı sağlamak için. 
-  - **UsersCard.jsx**: Kullanıcı detaylarını görüntülemek ve işlem yapmak için.
+### UserDetail Bileşeni
+- Tek bir kullanıcının detaylarını görüntüler ve yönetir.
+- Kullanıcı bilgilerini güncelleme ve silme işlemleri:
+  - **UpdateUserModal.jsx**: Kullanıcı güncelleme için modal.
+  - **DeleteUserModal.jsx**: Kullanıcı silme için modal.
 
-- **UserDetail.jsx**: Tek bir kullanıcı detaylarını görüntüleme bileşeni.
+### NewCategory Bileşeni
+- **NewCategoryForm.jsx**: Yeni kategori eklemek için form.
 
-- **UserDetail.jsx Bileşeni**:
-  - Kullanıcı içeriğini ve detaylarını listeleme.
-  - Kullanıcı güncelleme ve silme işlemleri.
-  - **UpdateUserModal.jsx**: Kullanıcı güncelleme işlemleri için modal.
-  - **DeleteUserModal.jsx**: Kullanıcı silme işlemleri için modal.
+### Categories Bileşeni
+- **CategoryCard.jsx**: Kategori bilgilerini görüntüler ve işlemler yapılmasını sağlar.
+- **UpdateCategoryModal.jsx**: Kategori güncelleme için modal.
+- **DeleteCategoryModal.jsx**: Kategori silme için modal.
 
-- **NewCategory.jsx**: Yeni kategori ekleme bileşeni.
+### NewBlog Bileşeni
+- **NewBlogForm.jsx**: Yeni blog eklemek için form.
+- **ContentForm.jsx**: Blog içeriği eklemek için form.
+- **TextEditor.jsx**: Blog içeriği için zengin metin düzenleyici.
 
-- **NewCategory.jsx Bileşeni**:
-  - **NewCategoryForm.jsx**: Yeni kategori eklemek için form bileşeni.
+### About Bileşeni
+- Platformun amacı, vizyonu ve kullanıcı deneyimi hakkında bilgi verir.
 
-- **Categories.jsx**: Kategori listesi bileşeni.
-
-- **Categories.jsx Bileşeni**:
-  - **CategoryCard.jsx**: Kategori bilgilerini listelemek ve işlemler yapmak için.
-  - **UpdateCategoryModal.jsx**: Kategori güncelleme işlemleri için modal.
-  - **DeleteCategoryModal.jsx**: Kategori silme işlemleri için modal.
-
-- **NewBlog.jsx**: Yeni blog oluşturma bileşeni.
-
-- **NewBlog.jsx Bileşeni**:
-  - **NewBlogForm.jsx**: Yeni blog eklemek için form bileşeni.
-  - **ContentForm.jsx**: Blog içerik eklemek için form bileşeni.
-  - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
-
-- **About.jsx**: Platformun amacı, vizyonu ve kullanıcı deneyimi hakkında bilgi veren sayfa.
-
-- **MyBlogs.jsx**: Kullanıcının yazdığı blogları listeleme ve yönetme sayfası.
-
-- **MyBlogs.jsx Bileşeni**:
-  - **BlogCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı sağlamak için.
-  - **UserBlogCard.jsx**: Kullanıcının yazdığı blogların detaylarını görüntülemek ve işlem yapmak için.
+### MyBlogs Bileşeni
+- Kullanıcının yazdığı blogları listeleme ve yönetme.
+- Şunları içerir:
+  - **BlogCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı.
+  - **UserBlogCard.jsx**: Blog detaylarını görüntüler ve işlemler yapılmasını sağlar.
   - **BlogLikesModal.jsx**: Blog beğenilerini listelemek için modal.
 
-- **MyBlogDetail.jsx**: Kullanıcın yazdığı bir blogun detaylarını görüntüleme bileşeni.
-
-- **MyBlogDetail.jsx Bileşeni**:
-  - Blog içeriğini ve detaylarını listeleme.
-  - Blog beğenme, yorum yapma ve görüntüleme.
-  - Blog güncelleme, silme ve içerik ekleme işlemleri.
-  - En çok beğenilen ve görüntülenen blogların listesi.
-  - Blog içeriklerini listeleme, düzenleme ve silme.
-  - Blog yorumlarını görüntüleme, düzenleme/silme ve yanıtlama.
-  - Alt yorumları görüntüleme, düzenleme/silme ve yanıtlama.
-  - Blog yazarı için güncelleme, içerik ekleme ve silme işlemleri.
+### MyBlogDetail Bileşeni
+- Tek bir blogun detaylarını görüntüler ve yönetir.
+- Blog beğenme, yorum ekleme ve görüntüleme işlemleri.
+- Blog güncelleme, silme veya içerik ekleme.
+- En çok beğenilen ve görüntülenen blogları listeleme.
+- Blog içeriği, yorumlar ve alt yorumları yönetme.
+- Farklı işlemler için modallar ve formlar içerir:
   - **BlogLikesModal.jsx**: Blog beğenilerini listelemek için modal.
   - **ContentCard.jsx**: Blog içeriklerini görselleştirmek ve düzenleme/silme işlemleri için bileşen.
   - **UpdateContentModal.jsx** ve **UpdateContentForm.jsx**:  Blog içeriklerini güncelleme işlemleri için modal ve form bileşenleri.
-  - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
+  - **TextEditor.jsx**: Blog içeriği için zengin metin düzenleyici.
   - **DeleteContentModal.jsx**: Blog içeriklerini silmek için modal bileşeni.
-  - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni.
-  - **CommentForm.jsx**: Bloga yorum yapmak için kullanılan form bileşeni.
-  - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kullanılan kart bileşeni.
-  - **EditCommentForm.jsx**: Blog yorumlarını düzenlemek için kullanılan form bileşeni.
-  - **BottomCommentForm.jsx**: Blog yapılan yorumlara alt yorum yapmak için kullanılan form bileşeni.
-  - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kullanılan kart bileşeni.
-  - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için kullanılan form bileşeni.
-  - **CommentBottomForm.jsx**: Alt yoruma alt yorum yapmak için kullanılan form bileşeni.
-  - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için modal ve form bileşenleri.
-  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloga içerik ekleme işlemleri için modal ve form bileşenleri.
-  - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
-  - **DeleteMyBlogModal.jsx**: Blog silme işlemleri için modal bileşeni.
+  - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni. 
+  - **CommentForm.jsx**: Bloga yorum eklemek için form.
+  - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kart.
+  - **EditCommentForm.jsx**: Yorumları düzenlemek için form.
+  - **BottomCommentForm.jsx**: Yorumlara alt yorum eklemek için form.
+  - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kart.
+  - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için form.
+  - **CommentBottomForm.jsx**: Alt yorumlara alt yorum eklemek için form.
+  - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için.
+  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloglara içerik eklemek için.
+  - **DeleteBlogModal.jsx**: Blog silme işlemleri için modal.
   - **LikedBlogCard.jsx**: Beğenilen blogları göstermek için.
   - **ViewedBlogCard.jsx**: Görüntülenen blogları göstermek için.
 
-- **Profile.jsx.js**: Kullanıcının profil bilgilerini listeleme ve detaylarını görüntüleme sayfası.
-
-- **Profile.jsx Bileşeni**:
-  - **ProfileCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı sağlamak için.
+### Profile Bileşeni
+- Kullanıcı profili bilgilerini listeleme ve detaylarını görüntüleme.
+- Şunları içerir:
+  - **ProfileCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı.
   - **ProfileCard.jsx**: Profil bilgilerini listelemek ve işlemler yapmak için.
-  - **UpdateMyUserModal.jsx**: Profil güncelleme işlemleri için modal.
+  - **UpdateMyUserModal.jsx**: Profil güncelleme için modal.
 
-- **Login.jsx**: Kullanıcı giriş işlemleri bileşeni
+### Login Bileşeni
+- **LoginForm.jsx**: Kullanıcı giriş formu.
+- Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
+- **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal form.
 
-- **Login.jsx Bileşeni**:
-  - **LoginForm.jsx**: Kullanıcı giriş formu.
-  - **Formik** ile form yönetimi ve doğrulama.
-  - **Yup** ile doğrulama şemaları.
-  - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal formu. 
-
-- **Register.jsx**: Kullanıcı kayıt işlemleri bileşeni
-
-- **Register.jsx Bileşeni**:
-  - **RegisterForm.jsx**: Kullanıcı kayıt formu.
-  - **Formik** ile form yönetimi ve doğrulama.
-  - **Yup** ile doğrulama şemaları.
+### Register Bileşeni
+- **RegisterForm.jsx**: Kullanıcı kayıt formu.
+- Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
