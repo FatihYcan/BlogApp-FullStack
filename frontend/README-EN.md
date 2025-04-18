@@ -1,6 +1,6 @@
 # BlogApp-FullStack - Frontend
 
-This project contains the frontend of the **BlogApp-FullStack** application, a platform where you can share your blog posts. It is developed using modern web technologies and aims to provide a user-friendly experience.
+This project contains the frontend of the **BlogApp-FullStack** application, a platform where you can share your blog posts. The project is developed using modern web technologies and aims to provide a user-friendly experience.
 
 ## Technologies Used
 
@@ -9,14 +9,14 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
 - **Redux Persist**: For session data management.
 - **Material-UI (MUI)**: Advanced React components.
 - **React-Toastify**: For user notifications.
-- **React Router**: For routing.
+- **React Router**: For routing operations.
 - **MUI Theme Customization**: For theme and component customizations.
 - **Formik and Yup**: For form management and validation.
 - **Axios**: Customized API clients for HTTP requests.
 - **React-Quill**: Rich text editor.
 - **Emoji Mart**: Emoji picker support.
-- **React Helmet**: To dynamically manage `<head>` content like page titles and meta tags.
-- **Tailwind CSS**: Utility-first CSS framework for quick and flexible styling.
+- **React Helmet**: For dynamically managing `<head>` content like page titles and meta tags.
+- **Tailwind CSS**: A utility-first CSS framework for quick and flexible styling.
 
 ---
 
@@ -39,52 +39,52 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
 - **useAxios Hook**
   - Public API calls.
   - Token-required API calls.
-  - Multipart data API calls.
+  - API calls containing multipart data.
 
 - **useAuthCalls Hook**
-  - Login.
-  - Register.
-  - Forgot Password.
-  - Logout.
+  - Login (`Login`)
+  - Register (`Register`)
+  - Reset Password (`Forgot Password`)
+  - Logout (`Logout`)
 
 - **useBlogCalls Hook**
-  - Listing all blogs (`getAllBlogs`).
-  - Paginated and filtered blog listing (`getBlogs`).
-  - Listing most viewed blogs (`getBlogsView`).
-  - Listing most liked blogs (`getBlogsLike`).
-  - Fetching a single blog in detail (`getSingleBlog`).
-  - Creating blogs (`postBlogId` and `postBlog`).
-  - Updating blogs (`putBlog`).
-  - Deleting blogs (`deleteBlog`).
-  - Liking blogs (`postBlogLike`).
-  - Listing all blogs of the user (`getAllUserBlog` and `getUserBlog`).
+  - List all blogs (`getAllBlogs`).
+  - List blogs with pagination and filtering (`getBlogs`).
+  - List most viewed blogs (`getBlogsView`).
+  - List most liked blogs (`getBlogsLike`).
+  - Get a single blog in detail (`getSingleBlog`).
+  - Create blogs (`postBlogId` and `postBlog`).
+  - Update blogs (`putBlog`).
+  - Delete blogs (`deleteBlog`).
+  - Like blogs (`postBlogLike`).
+  - List all blogs of a user (`getAllUserBlog` and `getUserBlog`).
 
 - **useContentCalls Hook**
-  - Adding content (`postContent`).
-  - Updating content (`putContent`).
-  - Deleting content (`deleteContent`).
+  - Add content (`postContent`).
+  - Update content (`putContent`).
+  - Delete content (`deleteContent`).
 
 - **useCommentCalls Hook**
-  - Adding comments (`postComment`).
-  - Updating comments (`putComment`).
-  - Deleting comments (`deleteComment`).
+  - Add comments (`postComment`).
+  - Update comments (`putComment`).
+  - Delete comments (`deleteComment`).
 
 - **useBottomCommentCalls Hook**
-  - Adding sub-comments (`postBottomComment`).
-  - Updating sub-comments (`putBottomComment`).
-  - Deleting sub-comments (`deleteBottomComment`).
+  - Add sub-comments (`postBottomComment`).
+  - Update sub-comments (`putBottomComment`).
+  - Delete sub-comments (`deleteBottomComment`).
 
 - **useCategoryCalls Hook**
-  - Listing categories (`getCategories`).
-  - Adding categories (`postCategory`).
-  - Updating categories (`putCategory`).
-  - Deleting categories (`deleteCategory`).
+  - List categories (`getCategories`).
+  - Add categories (`postCategory`).
+  - Update categories (`putCategory`).
+  - Delete categories (`deleteCategory`).
 
 - **useUserCalls Hook**
-  - Listing users (`getUsers`).
-  - Fetching a single user (`getSingleUser`).
-  - Updating users (`putUser` and `putMyUser`).
-  - Deleting users (`deleteUser`).
+  - List users (`getUsers`).
+  - Get a single user (`getSingleUser`).
+  - Update users (`putUser` and `putMyUser`).
+  - Delete users (`deleteUser`).
 
 - **Slices**
   - authSlice.
@@ -95,11 +95,11 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
   - categorySlice.
   - userSlice.
 
-- Navigation between pages with **React Router**.
+- Navigation between pages using **React Router**.
 
-- Automatic scroll to the top during page transitions with **ScrollToTop**.
+- Automatic scrolling to the top during page transitions with **ScrollToTop**.
 
-- Integration of a text editor using **React-Quill**.
+- Integration of a rich text editor using **React-Quill**.
 
 - Emoji picker integration with **Emoji-Mart**.
 
@@ -111,57 +111,69 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
   - **Footer.jsx**: Includes social media links (GitHub, LinkedIn, and Email) and copyright information.
 
 ### Navbar Component
-- **Drawer (Menu)**: Drop-down menu support for mobile devices.
-- **ColorModeIconDropdown.jsx**: Component to toggle between light and dark themes.
+- **Drawer (Menu)**: Dropdown menu support for mobile devices.
+- **ColorModeIconDropdown.jsx**: Component for toggling between light and dark themes.
 - **LoginModal.jsx**: User-friendly modal that enforces login for operations like creating blogs.
 - **LoginForm.jsx**: User login form.
-- Form management and validation with **Formik**.
-- Validation schemas with **Yup**.
+- Form management and validation using **Formik** and **Yup**.
 - **ForgotPasswordForm.jsx**: User-friendly modal form for password reset.
 
 ### Blogs Component
 - **BlogCardSkeleton.jsx**: Skeleton screen during loading.
 - **BlogCard.jsx**: Displays blog details and allows actions to be performed.
 - **LoginModal.jsx**: Enforces login for actions like creating blogs.
+- **LoginForm.jsx**: User login form.
+- Form management and validation using **Formik** and **Yup**.
+- **ForgotPasswordForm.jsx**: User-friendly modal form for password reset.
 - **BlogLikesModal.jsx**: Modal to list blog likes.
 - **MostLikedBlogCard.jsx**: Displays most liked blogs.
 - **MostViewedBlogCard.jsx**: Displays most viewed blogs.
 
 ### BlogDetail Component
 - Displays and manages the details of a single blog.
-- Like the blog, add comments, and track views.
-- Update and delete blogs or add content.
+- Blog liking, commenting, and viewing operations.
+- Blog updating, deleting, or adding content.
 - List most liked and most viewed blogs.
 - Manage blog content, comments, and sub-comments.
-- Includes modals and forms for various actions:
-  - **UpdateBlogModal.jsx** and **UpdateBlogForm.jsx**: Update blog operations.
-  - **AddContentModal.jsx** and **AddContentForm.jsx**: Add content to blogs.
+- Includes modals and forms for various operations:
+  - **LoginModal.jsx**: Enforces login for actions like creating blogs.
+  - **LoginForm.jsx**: User login form.
+  - Form management and validation using **Formik** and **Yup**.
+  - **ForgotPasswordForm.jsx**: User-friendly modal form for password reset.
+  - **BlogLikesModal.jsx**: Modal to list blog likes.
+  - **ContentCard.jsx**: Displays blog content and allows editing/deleting operations.
+  - **UpdateContentModal.jsx** and **UpdateContentForm.jsx**: Modals and forms for updating blog content.
   - **TextEditor.jsx**: Rich text editor for blog content.
-  - **DeleteBlogModal.jsx**: Modal for blog deletion.
-  - **ImageBlogModal.jsx**: Modal for enlarging and optimizing blog images.
+  - **DeleteContentModal.jsx**: Modal for deleting blog content.
+  - **ImageBlogModal.jsx**: Modal to enlarge and optimize blog images.
   - **CommentForm.jsx**: Form to add comments to blogs.
-  - **CommentCard.jsx**: Card to display blog comments.
-  - **EditCommentForm.jsx**: Form to edit comments.
+  - **CommentCard.jsx**: Card for displaying blog comments.
+  - **EditCommentForm.jsx**: Form for editing comments.
   - **BottomCommentForm.jsx**: Form to add sub-comments to comments.
-  - **BottomCommentCard.jsx**: Card to display sub-comments.
-  - **EditBottomCommentForm.jsx**: Form to edit sub-comments.
+  - **BottomCommentCard.jsx**: Card for displaying sub-comments.
+  - **EditBottomCommentForm.jsx**: Form for editing sub-comments.
   - **CommentBottomForm.jsx**: Form to add sub-comments to sub-comments.
+  - **UpdateBlogModal.jsx** and **UpdateBlogForm.jsx**: For blog updating operations.
+  - **AddContentModal.jsx** and **AddContentForm.jsx**: For adding content to blogs.
+  - **DeleteBlogModal.jsx**: Modal for blog deletion.
+  - **LikedBlogCard.jsx**: Displays liked blogs.
+  - **ViewedBlogCard.jsx**: Displays viewed blogs.
 
 ### Users Component
 - **UserCardSkeleton.jsx**: Skeleton screen during loading.
-- **UsersCard.jsx**: Displays user details and actions.
+- **UsersCard.jsx**: Displays user details and allows actions to be performed.
 
 ### UserDetail Component
-- Displays and manages details of a single user.
-- Update and delete user information:
-  - **UpdateUserModal.jsx**: Modal for user updates.
+- Displays and manages the details of a single user.
+- User updating and deletion:
+  - **UpdateUserModal.jsx**: Modal for user updating.
   - **DeleteUserModal.jsx**: Modal for user deletion.
 
 ### NewCategory Component
 - **NewCategoryForm.jsx**: Form to add a new category.
 
 ### Categories Component
-- **CategoryCard.jsx**: Displays category information and actions.
+- **CategoryCard.jsx**: Displays category information and allows actions.
 - **UpdateCategoryModal.jsx**: Modal for category updates.
 - **DeleteCategoryModal.jsx**: Modal for category deletion.
 
@@ -176,28 +188,48 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
 ### MyBlogs Component
 - Lists and manages blogs written by the user.
 - Includes:
-  - **UserBlogCard.jsx**: Displays blog details and actions.
+  - **BlogCardSkeleton.jsx**: Skeleton screen during loading.
+  - **UserBlogCard.jsx**: Displays blog details and allows actions to be performed.
   - **BlogLikesModal.jsx**: Modal to list blog likes.
 
 ### MyBlogDetail Component
 - Displays and manages the details of a single user-authored blog.
-- Blog content and comment management.
-- Includes:
-  - **UpdateMyBlogModal.jsx**: Modal for blog updates.
-  - **AddContentModal.jsx** and **AddContentForm.jsx**: Add content to blogs.
-  - **DeleteMyBlogModal.jsx**: Modal for blog deletion.
+- Blog liking, commenting, and viewing operations.
+- Blog updating, deleting, or adding content.
+- List most liked and most viewed blogs.
+- Manage blog content, comments, and sub-comments.
+- Includes modals and forms for various operations:
+  - **BlogLikesModal.jsx**: Modal to list blog likes.
+  - **ContentCard.jsx**: Displays blog content and allows editing/deleting operations.
+  - **UpdateContentModal.jsx** and **UpdateContentForm.jsx**: Modals and forms for updating blog content.
+  - **TextEditor.jsx**: Rich text editor for blog content.
+  - **DeleteContentModal.jsx**: Modal for deleting blog content.
+  - **ImageBlogModal.jsx**: Modal to enlarge and optimize blog images.
+  - **CommentForm.jsx**: Form to add comments to blogs.
+  - **CommentCard.jsx**: Card for displaying blog comments.
+  - **EditCommentForm.jsx**: Form for editing comments.
+  - **BottomCommentForm.jsx**: Form to add sub-comments to comments.
+  - **BottomCommentCard.jsx**: Card for displaying sub-comments.
+  - **EditBottomCommentForm.jsx**: Form for editing sub-comments.
+  - **CommentBottomForm.jsx**: Form to add sub-comments to sub-comments.
+  - **UpdateBlogModal.jsx** and **UpdateBlogForm.jsx**: For blog updating operations.
+  - **AddContentModal.jsx** and **AddContentForm.jsx**: For adding content to blogs.
+  - **DeleteBlogModal.jsx**: Modal for blog deletion.
+  - **LikedBlogCard.jsx**: Displays liked blogs.
+  - **ViewedBlogCard.jsx**: Displays viewed blogs.
 
 ### Profile Component
 - Lists and displays user profile information.
 - Includes:
   - **ProfileCardSkeleton.jsx**: Skeleton screen during loading.
-  - **ProfileCard.jsx**: Displays profile details and actions.
+  - **ProfileCard.jsx**: Displays profile details and allows actions to be performed.
   - **UpdateMyUserModal.jsx**: Modal for profile updates.
 
 ### Login Component
 - **LoginForm.jsx**: Form for user login.
-- Includes password reset modal.
+- Form management and validation using **Formik** and **Yup**.
+- **ForgotPasswordForm.jsx**: User-friendly modal form for password reset.
 
 ### Register Component
 - **RegisterForm.jsx**: Form for user registration.
-- Includes validation with **Formik** and **Yup**.
+- Validation using **Formik** and **Yup**.
