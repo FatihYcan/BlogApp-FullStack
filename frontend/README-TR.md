@@ -118,7 +118,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 - Form yönetimi ve doğrulama için **Formik** ve **Yup** kullanımı.
 - **ForgotPasswordForm.jsx**: Şifre sıfırlama için kullanıcı dostu modal form.
 
-- **Blogs.jsx Bileşeni**:
+### Blogs Bileşeni
 - **BlogCardSkeleton.jsx**: Yükleme sırasında iskelet ekranı.
 - **BlogCard.jsx**: Blog detaylarını görüntüler ve işlem yapılmasını sağlar.
 - **LoginModal.jsx**: Blog oluşturma gibi işlemler için giriş yapmayı zorunlu kılar.
