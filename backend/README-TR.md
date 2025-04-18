@@ -222,7 +222,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 ### Bottom Comment Controller (BottomComments)
 - **Listeleme (`list`)**
- - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
+  - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **Alt Yorum Oluşturma (`create`)**
   - Kullanıcı oturum açtıktan sonra alt yorum oluşturabilir.
   - Yeni bir alt yorum oluşturulurken, ilgili ana yorumun `bottomCommentsId` alanına bu alt yorum eklenir.
