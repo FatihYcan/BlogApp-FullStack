@@ -83,15 +83,14 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Şifreler `crypto.pbkdf2Sync` ile hashlenir ve güvenli bir şekilde veritabanında saklanır.
 
 ### Kullanıcı Controller (Users)
-#### Listeleme (`list`)
-- Sadece admin yetkisine sahip kullanıcılar tüm kullanıcıları listeleyebilir.
-- Admin olmayan kullanıcılar yalnızca kendi bilgilerini görebilir.
-- Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
-
-#### Kullanıcı Oluşturma (`create`)
-- Yeni bir kullanıcı kaydı oluşturulur.
-- Kullanıcı profil resmi yüklendiyse, Cloudinary'e yüklenir.
-- Kayıt oluşturulduğunda otomatik olarak giriş yapılır ve bir token oluşturulur.
+- **Listeleme (`list`)**:
+  - Sadece admin yetkisine sahip kullanıcılar tüm kullanıcıları listeleyebilir.
+  - Admin olmayan kullanıcılar yalnızca kendi bilgilerini görebilir.
+  - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
+- **Kullanıcı Oluşturma (`create`)**: 
+  - Yeni bir kullanıcı kaydı oluşturulur.
+  - Kullanıcı profil resmi yüklendiyse, Cloudinary'e yüklenir.
+  - Kayıt oluşturulduğunda otomatik olarak giriş yapılır ve bir token oluşturulur.
 
 #### Kullanıcı Okuma (`read`)
 - Sadece oturum açmış kullanıcılar kendi bilgilerini görebilir.

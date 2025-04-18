@@ -154,15 +154,15 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
   - **DeleteContentModal.jsx**: Blog içeriklerini silmek için modal bileşeni.
   - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni.
-  - **CommentForm.jsx**: Blog yorum yapmak için kullanılan form bileşeni.
+  - **CommentForm.jsx**: Bloga yorum yapmak için kullanılan form bileşeni.
   - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kullanılan kart bileşeni.
   - **EditCommentForm.jsx**: Blog yorumlarını düzenlemek için kullanılan form bileşeni.
-  - **BottomCommentForm.jsx**: Blog yapılan yorumlara alt yorum(cevap vermek) yapmak için kullanılan form bileşeni.
+  - **BottomCommentForm.jsx**: Bloga yapılan yorumlara alt yorum yapmak için kullanılan form bileşeni.
   - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kullanılan kart bileşeni.
   - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için kullanılan form bileşeni.
-  - **CommentBottomForm.jsx**: Alt yoruma alt yorum(cevap vermek) yapmak için kullanılan form bileşeni.
+  - **CommentBottomForm.jsx**: Alt yoruma alt yorum yapmak için kullanılan form bileşeni.
   - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için modal ve form bileşenleri.
-  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Blog içerik ekleme işlemleri için modal ve form bileşenleri.
+  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloga içerik ekleme işlemleri için modal ve form bileşenleri.
   - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
   - **DeleteBlogModal**: Blog silme işlemleri için modal bileşeni.
   - **LikedBlogCard.jsx**: Beğenilen blogları göstermek için.
@@ -227,15 +227,15 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
   - **DeleteContentModal.jsx**: Blog içeriklerini silmek için modal bileşeni.
   - **ImageBlogModal.jsx**: Blog görsellerini büyütmek ve optimize edilmiş halde göstermek için modal bileşeni.
-  - **CommentForm.jsx**: Blog yorum yapmak için kullanılan form bileşeni.
+  - **CommentForm.jsx**: Bloga yorum yapmak için kullanılan form bileşeni.
   - **CommentCard.jsx**: Blog yorumlarını görüntülemek için kullanılan kart bileşeni.
   - **EditCommentForm.jsx**: Blog yorumlarını düzenlemek için kullanılan form bileşeni.
-  - **BottomCommentForm.jsx**: Blog yapılan yorumlara alt yorum(cevap vermek) yapmak için kullanılan form bileşeni.
+  - **BottomCommentForm.jsx**: Blog yapılan yorumlara alt yorum yapmak için kullanılan form bileşeni.
   - **BottomCommentCard.jsx**: Alt yorumları görüntülemek için kullanılan kart bileşeni.
   - **EditBottomCommentForm.jsx**: Alt yorumları düzenlemek için kullanılan form bileşeni.
-  - **CommentBottomForm.jsx**: Alt yoruma alt yorum(cevap vermek) yapmak için kullanılan form bileşeni.
+  - **CommentBottomForm.jsx**: Alt yoruma alt yorum yapmak için kullanılan form bileşeni.
   - **UpdateBlogModal.jsx** ve **UpdateBlogForm.jsx**: Blog güncelleme işlemleri için modal ve form bileşenleri.
-  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Blog içerik ekleme işlemleri için modal ve form bileşenleri.
+  - **AddContentModal.jsx** ve **AddContentForm.jsx**: Bloga içerik ekleme işlemleri için modal ve form bileşenleri.
   - **TextEditor.jsx**: React-Quill tabanlı metin editörü.
   - **DeleteMyBlogModal.jsx**: Blog silme işlemleri için modal bileşeni.
   - **LikedBlogCard.jsx**: Beğenilen blogları göstermek için.
