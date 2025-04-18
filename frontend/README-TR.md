@@ -26,7 +26,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - **Redux Toolkit** ile güçlü ve kolay durum yönetimi.
 
-- **Redux Persist** ile oturum bilgilerini saklama (Session Storage ile).
+- **Redux Persist** ile oturum bilgilerini saklama (`Session Storage` ile).
 
 - **Material-UI (MUI)** ile modern ve özelleştirilebilir tasarım.
 
@@ -41,52 +41,52 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Token gerektiren API çağrıları.
   - Multipart veri içeren API çağrıları.
 
-### useAuthCalls Hook
-  - Giriş (Login)
-  - Kayıt (Register)
-  - Şifre Sıfırlama (Forgot Password)
-  - Çıkış (Logout)
+- **useAuthCalls Hook**
+  - Giriş (`Login`)
+  - Kayıt (`Register`)
+  - Şifre Sıfırlama (`Forgot Password`)
+  - Çıkış (`Logout`)
 
-### useBlogCalls Hook
-  - Tüm blogları listeleme (getAllBlogs)
-  - Blogları sayfalama ve filtreleme ile listeleme (getBlogs)
-  - En çok görüntülenen blogları listeleme (getBlogsView)
-  - En çok beğenilen blogları listeleme (getBlogsLike)
-  - Tek bir blogu detaylı olarak getirme (getSingleBlog)
-  - Blog oluşturma (postBlogId ve postBlog)
-  - Blog güncelleme (putBlog)
-  - Blog silme (deleteBlog)
-  - Blog beğenme (postBlogLike)
-  - Kullanıcıya ait tüm blogları listeleme (getAllUserBlog ve getUserBlog)
+- **useBlogCalls Hook**
+  - Tüm blogları listeleme (`getAllBlogs`)
+  - Blogları sayfalama ve filtreleme ile listeleme (`getBlogs`)
+  - En çok görüntülenen blogları listeleme (`getBlogsView`)
+  - En çok beğenilen blogları listeleme (`getBlogsLike`)
+  - Tek bir blogu detaylı olarak getirme (`getSingleBlog`)
+  - Blog oluşturma (`postBlogId` ve `postBlog`)
+  - Blog güncelleme (`putBlog`)
+  - Blog silme (`deleteBlog`)
+  - Blog beğenme (`postBlogLike`)
+  - Kullanıcıya ait tüm blogları listeleme (`getAllUserBlog` ve `getUserBlog`)
 
-### useContentCalls Hook
-  - İçerik ekleme (postContent)
-  - İçerik güncelleme (putContent)
-  - İçerik silme (deleteContent)
+- **useContentCalls Hook**
+  - İçerik ekleme (`postContent`)
+  - İçerik güncelleme (`putContent`)
+  - İçerik silme (`deleteContent`)
 
-### useCommentCalls Hook
-  - Yorum ekleme (postComment).
-  - Yorum güncelleme (putComment).
-  - Yorum silme (deleteComment).
+- **useCommentCalls Hook**
+  - Yorum ekleme (`postComment`).
+  - Yorum güncelleme (`putComment`).
+  - Yorum silme (`deleteComment`).
 
-### useBottomCommentCalls Hook
-  - Alt yorum ekleme (postBottomComment).
-  - Alt yorum güncelleme (putBottomComment).
-  - Alt yorum silme (deleteBottomComment).
+- **useBottomCommentCalls Hook**
+  - Alt yorum ekleme (`postBottomComment`).
+  - Alt yorum güncelleme (`putBottomComment`).
+  - Alt yorum silme (`deleteBottomComment`).
 
-### useCategoryCalls Hook
-  - Kategori listeleme (getCategories).
-  - Kategori ekleme (postCategory).
-  - Kategori güncelleme (putCategory).
-  - Kategori silme (deleteCategory).
+- **useCategoryCalls Hook**
+  - Kategori listeleme (`getCategories`).
+  - Kategori ekleme (`postCategory`).
+  - Kategori güncelleme (`putCategory`).
+  - Kategori silme (`deleteCategory`).
 
-### useUserCalls Hook 
-  - Kullanıcı listeleme (getUsers).
-  - Tek bir kullanıcıyı getirme (getSingleUser).
-  - Kullanıcı güncelleme (putUser ve putMyUser).
-  - Kullanıcı silme (deleteUser).
+- **useUserCalls Hook**
+  - Kullanıcı listeleme (`getUsers`).
+  - Tek bir kullanıcıyı getirme (`getSingleUser`).
+  - Kullanıcı güncelleme (`putUser` ve `putMyUser`).
+  - Kullanıcı silme (`deleteUser`).
 
-### Slice’lar
+- **Slice’lar**
   - authSlice
   - blogSlice
   - contentSlice
@@ -97,7 +97,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - **React Router** ile sayfalar arası gezinme.
 
-**ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
+- **ScrollToTop** ile sayfa geçişlerinde otomatik olarak en üste kaydırma.
 
 - **React-Quill** ile metin editörü entegrasyonu.
 
