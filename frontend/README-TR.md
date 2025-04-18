@@ -36,7 +36,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 
 - Tema özelleştirmeleri ile farklı ışık ve karanlık modları destekler.
 
-### useAxios Hook
+- **useAxios Hook**
   - Public API çağrıları.
   - Token gerektiren API çağrıları.
   - Multipart veri içeren API çağrıları.
