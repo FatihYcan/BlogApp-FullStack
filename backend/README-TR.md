@@ -66,7 +66,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 - **Logout**
   - Token silinir ve oturum kapatılır.
   
-### Kullanıcı Modeli (User)
+### User Model (User)
 - **Alanlar**
   - `username` (String): Kullanıcı adı, benzersiz ve zorunlu.
   - `firstName` (String): Kullanıcının adı, zorunlu.
@@ -82,8 +82,8 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 - **Şifreleme**
   - Şifreler `crypto.pbkdf2Sync` ile hashlenir ve güvenli bir şekilde veritabanında saklanır.
 
-### Kullanıcı Controller (Users)
-- **Listeleme (`list`)**
+### User Controller (Users)
+- **Kullanıcı Listeleme (`list`)**
   - Sadece admin yetkisine sahip kullanıcılar tüm kullanıcıları listeleyebilir.
   - Admin olmayan kullanıcılar yalnızca kendi bilgilerini görebilir.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
@@ -103,13 +103,13 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Admin yetkisine sahip kullanıcılar diğer kullanıcıların hesaplarını silebilir.
   - Silinen kullanıcıya ait bloglar da otomatik olarak silinir. 
 
-### Token Modeli (Token)
+### Token Model (Token)
 - **Alanlar**
   - `userId` (ObjectId): Token'e ait kullanıcı.
   - `token` (String): Token değeri.
 
 ### Token Controller (Tokens)
-- **Listeleme (`list`)**
+- **Token Listeleme (`list`)**
   - Tüm token kayıtlarını listeler.
   - Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 - **Token Oluşturma (`create`)**
@@ -125,7 +125,7 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Belirli bir token kaydını siler.
   - Sadece admin yetkisine sahip kullanıcılar bu işlemi gerçekleştirebilir.
 
-### Blog Modeli (Blog)
+### Blog Model (Blog)
 - **Alanlar**
   - `categoryId` (ObjectId): Bloga ait kategori.
   - `userId` (ObjectId): Blogun yazarı.
@@ -136,31 +136,34 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - `isPublish` (Boolean): Blogun yayınlanma durumu.
 
 ### Blog Controller (Blogs)
-- **Listeleme (`list`**)
+- **Blog Listeleme (`list`**)
+  - Tüm blog kayıtlarını listeler.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **Blog Oluşturma (`create`)**
   - Kullanıcı oturum açtıktan sonra blog oluşturabilir.
   - Blog oluşturulurken görsel yüklenirse Cloudinary'e yüklenir.
+- **Blog Okuma (`read`)**
+  - Blog detayında kategori, yorumlar, içerik, beğeniler ve yazar bilgisi bulunur.
+  - Kullanıcının blogu görüntülemesi `View` modeli ile kaydedilir.
 - **Blog Güncelleme (`update`)**
   - Sadece blogu yazan kullanıcı veya admin tarafından güncellenebilir.
   - Görsel değişiklikleri Cloudinary'e yüklenerek güncellenir.
 - **Blog Silme (`delete`)**
+  - Sadece blogu yazan kullanıcı veya admin tarafından silinebilir.
   - Bloga ait içerik, görüntüleme, beğeni ve yorumlar da silinir.
-- **Blog Okuma (`read`)**
-  - Blog detayında kategori, yorumlar, içerik, beğeniler ve yazar bilgisi bulunur.
-  - Kullanıcının blogu görüntülemesi `View` modeli ile kaydedilir.
 - **Beğeni İşlemleri (`getLike`, `postLike`)**
   - **getLike**: Kullanıcının blogu beğenip beğenmediğini ve toplam beğeni sayısını döner.
   - **postLike**: Bloga beğeni ekler veya beğeniyi kaldırır.
 - **Blog ID Oluşturma (`createId`)**
   - Taslak blog oluşturur ve ID'sini döner.
 
-### Kategori Modeli (Category)
+### Category Model (Category)
 - **Alanlar**
   - `name` (String): Kategori adı.
 
-### Kategori Controller (Categories)
-- **Listeleme (`list`)**
+### Category Controller (Categories)
+- **Kategori Listeleme (`list`)**
+  - Tüm kategori kayıtlarını listeler.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **Kategori Oluşturma (`create`)**
   - Admin yetkisine sahip kullanıcılar yeni kategori oluşturabilir.
@@ -172,15 +175,16 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Admin yetkisine sahip kullanıcılar kategoriyi silebilir.
   - Ancak kategoriye ait bloglar varsa, kategori silinemez.
 
-### İçerik Modeli (Content)
+### Content Model (Content)
 - **Alanlar**
   - `blogId` (ObjectId): İçeriğin ait olduğu blog.
   - `userId` (ObjectId): İçeriği oluşturan kullanıcı.
   - `content` (String): İçeriğin metni.
   - `images` (Array): İçeriğe ait görseller.
 
-### İçerik Controller (Contents)
-- **Listeleme (`list`**)
+### Content Controller (Contents)
+- **İçerik Listeleme (`list`**)
+  - Tüm içerik kayıtlarını listeler.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **İçerik Oluşturma (`create`)**
   - Kullanıcı oturum açtıktan sonra bloglara içerik oluşturabilir.
@@ -193,15 +197,16 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
 - **İçerik Silme (`delete`)**
   - Sadece içeriği oluşturan kullanıcı veya admin tarafından silinebilir.
 
-### Yorum Modeli (Comment)
+### Comment Model (Comment)
 - **Alanlar**
   - `blogId` (ObjectId): Yorumun ait olduğu blog.
   - `userId` (ObjectId): Yorumu yazan kullanıcı.
   - `comment` (String): Yorumun içeriği.
   - `bottomCommentsId` (Array): Alt yorumlara referanslar. 
 
-### Yorum Controller (Comments)
-- **Listeleme (`list`)**
+### Comment Controller (Comments)
+- **Yorum Listeleme (`list`)**
+  - Tüm yorum kayıtlarını listeler.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **Yorum Oluşturma (`create`)**
   - Kullanıcı oturum açtıktan sonra bloglara yorum ekleyebilir.
@@ -214,14 +219,15 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Sadece yorumu yazan kullanıcı veya admin tarafından silinebilir.
   - Silinen yorum, ilgili blogun `commentsId` alanından kaldırılır ve yorumun alt yorumları da silinir. 
 
-### Bottom Comment Modeli (BottomComment)
+### BottomComment Model (BottomComment)
 - **Alanlar**
   - `commentId` (ObjectId): Yorumun ait olduğu ana yorum.
   - `userId` (ObjectId): Yorumun yazarı.
   - `bottomComment` (String): Alt yorumun içeriği.
 
-### Bottom Comment Controller (BottomComments)
-- **Listeleme (`list`)**
+### BottomComment Controller (BottomComments)
+- **Alt Yorum Listeleme (`list`)**
+  - Tüm alt yorum kayıtlarını listeler.
   - Sorgu parametreleri ile filtreleme, sıralama, arama ve sayfalama yapılabilir.
 - **Alt Yorum Oluşturma (`create`)**
   - Kullanıcı oturum açtıktan sonra alt yorum oluşturabilir.
@@ -234,25 +240,25 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Sadece alt yorumu yazan kullanıcı veya admin tarafından silinebilir.
   - Silinen alt yorum, ilgili ana yorumun `bottomCommentsId` alanından da kaldırılır.
 
-### Beğeni Modeli (Like)
+### Like Model (Like)
 - **Alanlar**
   - `blogId` (ObjectId): Beğeninin ait olduğu blog.
   - `userId` (ObjectId): Beğeniyi yapan kullanıcı. 
 
-### Beğeni Controller (Likes)
+### Like Controller (Likes)
 - **Beğeni Ekleme veya Kaldırma**
   - Bloglara beğeni eklenebilir veya mevcut beğeni kaldırılabilir.
   - Kullanıcı bir blogu beğendiğinde, ilgili blogun `likesId` alanına referans eklenir.
 - **Beğeni Bilgisi Alma**
   - Bir blogun toplam beğeni sayısı ve kullanıcı tarafından beğenilip beğenilmediği bilgisi döner.
 
-### Görüntüleme Modeli (View)
+### View Model (View)
 - **Alanlar**
   - `blogId` (ObjectId): Görüntülemenin ait olduğu blog.
   - `userId` (ObjectId): Blogu görüntüleyen kullanıcı.
   - `deviceId` (String): Kullanıcının cihaz ID'si (anonim görüntülemeler için). 
 
-### Görüntüleme Controller (Views)
+### View Controller (Views)
 - **Görüntülemeyi Kaydetme**
   - Bloglar her görüntülendiğinde bir `View` kaydı oluşturulur.
   - Giriş yapmış kullanıcılar için `userId` kaydedilir.
