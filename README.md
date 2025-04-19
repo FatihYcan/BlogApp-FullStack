@@ -45,19 +45,6 @@
 - **Forgot Password**: Kullanıcı adı/e-posta ile şifre sıfırlama işlemi yapılır.
 - **Logout**: Token silinir, oturum kapatılır.
 
-#### Kullanıcı Modeli (User)
-- **Alanlar**:
-  - `username` (String): Benzersiz, zorunlu.
-  - `firstName` / `lastName` (String): Ad ve soyad, zorunlu.
-  - `email` (String): Benzersiz, doğrulamalı.
-  - `password` (String): Şifre kurallara uygun, hashlenmiş.
-  - `image` (Array): Kullanıcı görselleri.
-  - `isActive` / `isAdmin` (Boolean): Aktiflik ve adminlik durumu.
-- **Şifre Doğrulama**:
-  - Büyük/küçük harf, rakam, özel karakter içermeli, min. 8 karakter.
-- **Şifreleme**:
-  - `crypto.pbkdf2Sync` ile hashlenir ve saklanır.
-
 #### Kullanıcı Controller (Users)
 - **Listeleme**: Admin tüm kullanıcıları, diğerleri sadece kendi bilgilerini görebilir.
 - **Oluşturma**: Yeni kullanıcı kaydı oluşturulur, profil resmi Cloudinary'e yüklenir.
@@ -134,8 +121,10 @@
 - **Blog İşlemleri (useBlogCalls)**:
   - Blog listeleme, oluşturma, güncelleme, silme, beğenme.
   - Sayfalama, filtreleme, en çok beğenilen/görüntülenen bloglar.
-- **Yorum ve Alt Yorum İşlemleri**:
-  - Yorum ekleme, düzenleme, silme (useCommentCalls, useBottomCommentCalls).
+- **İçerik İşlemleri (useContentCalls)**
+  - İçerik ekleme, düzenleme, silme.
+- **Yorum ve Alt Yorum İşlemleri (useCommentCalls, useBottomCommentCalls)**:
+  - Yorum ve alt yorum ekleme, düzenleme, silme .
 - **Kategori İşlemleri (useCategoryCalls)**:
   - Kategori listeleme, ekleme, düzenleme, silme.
 - **Kullanıcı İşlemleri (useUserCalls)**:
