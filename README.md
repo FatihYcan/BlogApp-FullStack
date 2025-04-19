@@ -85,3 +85,5 @@
    - [SWAGGER](https://koseyazisi.onrender.com/documents/swagger/)
    - [REDOC](https://koseyazisi.onrender.com/documents/redoc)
    - [JSON](https://koseyazisi.onrender.com/documents/json)
+
+---
