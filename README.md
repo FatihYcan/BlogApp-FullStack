@@ -41,9 +41,22 @@
   - **ErrorHandler Middleware**: Sunucu hatalarını yakalar ve anlamlı bir yanıt döndürür (`error`, `message`, `cause`, `body`, `stack`).
 
 #### Auth Controller (Auth)
-- **Login**: Kullanıcı adı/e-posta ile giriş yapılır, şifre doğrulanır ve token üretilir.
-- **Forgot Password**: Şifre sıfırlama işlemi yapılır.
-- **Logout**: Token silinir ve oturum kapatılır.
+- **Login**: Kullanıcı adı/e-posta ve şifre doğrulamasıyla giriş yapılır, token üretilir.
+- **Forgot Password**: Kullanıcı adı/e-posta ile şifre sıfırlama işlemi yapılır.
+- **Logout**: Token silinir, oturum kapatılır.
+
+#### Kullanıcı Modeli (User)
+- **Alanlar**:
+  - `username` (String): Benzersiz, zorunlu.
+  - `firstName` / `lastName` (String): Ad ve soyad, zorunlu.
+  - `email` (String): Benzersiz, doğrulamalı.
+  - `password` (String): Şifre kurallara uygun, hashlenmiş.
+  - `image` (Array): Kullanıcı görselleri.
+  - `isActive` / `isAdmin` (Boolean): Aktiflik ve adminlik durumu.
+- **Şifre Doğrulama**:
+  - Büyük/küçük harf, rakam, özel karakter içermeli, min. 8 karakter.
+- **Şifreleme**:
+  - `crypto.pbkdf2Sync` ile hashlenir ve saklanır.
 
 #### Kullanıcı Controller (Users)
 - **Listeleme**: Admin tüm kullanıcıları, diğerleri sadece kendi bilgilerini görebilir.
