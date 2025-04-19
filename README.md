@@ -25,10 +25,9 @@
 - **regex destekli arama**: Arama sorgularında büyük/küçük harf duyarsızlık.
 
 ### Özellikler
-
-### Veritabanı Bağlantısı
-- MongoDB bağlantısı `dbConnection` fonksiyonu ile sağlanır.
-- Bağlantı hataları konsola loglanır.
+- **Veritabanı Bağlantısı**
+  - MongoDB bağlantısı `dbConnection` fonksiyonu ile sağlanır.
+  - Bağlantı hataları konsola loglanır.
 
 ### Cloudinary Desteği
 - Görsel yüklemeler için Cloudinary API entegrasyonu yapılabilir.
