@@ -1,6 +1,6 @@
 # BlogApp-FullStack
 
-**BlogApp-FullStack** is a platform where users can share blog posts. The project consists of two main parts:
+**BlogApp-FullStack** is a platform where users can share their blog posts. The project consists of two main parts:
 - **Backend**: An API developed using Node.js, Express.js, and MongoDB.
 - **Frontend**: A user interface developed using React and modern frontend technologies.
 
@@ -10,73 +10,94 @@
 
 ### Technologies Used
 - **Node.js**: JavaScript runtime for server-side execution.
-- **Express.js**: Minimalist web framework for handling API requests.
+- **Express.js**: A minimalist web framework to handle API requests.
 - **MongoDB**: NoSQL database.
-- **dotenv**: Module for managing environment variables.
+- **dotenv**: A module for managing environment variables.
 - **jsonwebtoken**: JSON Web Token for authentication.
 - **mongoose**: ODM (Object Data Modeling) library for MongoDB.
-- **crypto**: For encryption and hashing.
-- **multer**: For file upload handling.
+- **crypto**: For encryption and hashing operations.
+- **multer**: For handling file uploads.
 - **Cloudinary**: For image uploads.
 - **cors**: Cross-Origin Resource Sharing (CORS) management.
 - **express-async-errors**: For handling asynchronous errors.
 - **Swagger** and **Redoc**: For API documentation.
-- **swagger-autogen**: Automatic generation of Swagger documentation.
+- **swagger-autogen**: For automatically generating Swagger documentation.
 - **Regex-supported search**: Case-insensitive search queries.
 
 ### Features
 
-- **Database Connection**: MongoDB connection via `dbConnection`, with errors logged to the console.
-- **Image Uploading**: 
+- **Database Connection**: MongoDB connection is established using `dbConnection`, and any errors are logged to the console.
+- **Image Upload**: 
   - **Multer**: Used for file uploads.
   - **Cloudinary**: Images are uploaded to Cloudinary (supports JPEG, JPG, PNG, GIF, WEBP).
-  - **fixFileName**: File names are fixed, and the upload is completed.
+  - **fixFileName**: File names are fixed and then uploaded.
 - **Authentication**: 
-  - **JWT**: User authentication using `jsonwebtoken`.
-  - **Simple Token**: Authentication using the `Token` model in the database.
+  - **JWT**: User authentication is performed using `jsonwebtoken`.
+  - **Simple Token**: Authentication based on tokens stored in the `Token` model in the database.
 - **Authorization**: 
-  - **isLogin**: Session control.
-  - **isAdmin**: Admin privilege control.
-- **Error Management**: 
-  - **ErrorHandler Middleware**: Captures server errors and returns meaningful responses (`error`, `message`, `cause`, `body`, `stack`).
+  - **isLogin**: Checks if a user is logged in.
+  - **isAdmin**: Checks if a user has admin privileges.
+- **Error Handling**: 
+  - **ErrorHandler Middleware**: Captures server-side errors and returns a meaningful response (`error`, `message`, `cause`, `body`, `stack`).
 
 #### Auth Controller (Auth)
-- **Login**: Allows login via username/email and password validation, generates a token.
-- **Forgot Password**: Allows password reset using username/email.
+- **Login**: Login using a username/email and password. A token is generated upon successful validation.
+- **Forgot Password**: Password reset via username/email.
 - **Logout**: Deletes the token and ends the session.
 
 #### User Controller (Users)
-- **Listing**: Admin can view all users, others can view only their information.
-- **Creation**: Registers a new user, profile pictures are uploaded to Cloudinary.
-- **Update**: Users can update their own information, admins can update others' information.
-- **Deletion**: Users cannot delete themselves, but admins can delete other users.
+- **List**: Admin users can view all users, while other users can only view their own information.
+- **Create**: Creates a new user record, and the profile image is uploaded to Cloudinary.
+- **Read**: Users can view their own information, while admins can view other users' information.
+- **Update**: Users can update their own information, while admins can update others' information.
+- **Delete**: Users cannot delete their own accounts, but admins can delete other users' accounts.
+
+#### Token Controller (Tokens)
+- **List**: Only admin users can view all token records.
+- **Create**: Only admin users can create new token records.
+- **Read**: Only admin users can view details of a specific token record.
+- **Update**: Only admin users can update a specific token record.
+- **Delete**: Only admin users can delete a specific token record.
 
 #### Blog Controller (Blogs)
-- **Listing**: Supports filtering, sorting, and searching.
-- **Creation/Update**: Users can create and update their blogs.
-- **Likes**: Blogs can be liked/unliked.
+- **List**: View all blog records.
+- **Create**: Logged-in users can create blog posts, and blog images are uploaded to Cloudinary.
+- **Read**: View blog details, and a `View` record is generated during viewing.
+- **Update**: Users can update their own blogs, while admins can update others' blogs.
+- **Delete**: Users can delete their own blogs, while admins can delete others' blogs.
+- **Likes**: Blogs can be liked or unliked.
 
-#### Comments and Sub-Comments (Comments & BottomComments)
-- **Listing**: Supports search, filtering, and sorting.
-- **Creation/Update/Deletion**: Comments can be managed by users or admins.
+#### Category Controller (Categories)
+- **List**: View all category records.
+- **Create**: Only admin users can create new category records.
+- **Read**: View details of a specific category record.
+- **Update**: Only admin users can update a specific category record.
+- **Delete**: Only admin users can delete a specific category record; however, categories associated with blogs cannot be deleted.
+
+### Content Controller (Contents)
+- **List**: View all content records.
+- **Create**: Logged-in users can create content for blogs, and content images are uploaded to Cloudinary.
+- **Read**: View details of a specific content record.
+- **Update**: Users can update their own content, while admins can update others' content. Images can be updated, removed, or added.
+- **Delete**: Users can delete their own content, while admins can delete others' content.
+
+#### Comment and BottomComment Controller (Comments & BottomComments)
+- **List**: View all comment and sub-comment records.
+- **Create**: Logged-in users can add comments and sub-comments to blogs.
+- **Read**: View details of a specific comment or sub-comment record.
+- **Update**: Users can update their own comments and sub-comments, while admins can update others' comments and sub-comments.
+- **Delete**: Users can delete their own comments and sub-comments, while admins can delete others' comments and sub-comments.
 
 #### Likes
-- Adding/removing likes to blogs and viewing the total count.
+- Add/remove likes to blogs and view the total count.
 
 #### Views
 - Blog view information is recorded (`userId` or `deviceId`).
 
-#### Category Controller (Categories)
-- Admin users can create/update categories.
-- Categories with assigned blogs cannot be deleted.
-
-#### Content Controller (Contents)
-- Contents can be added, updated, and images uploaded to Cloudinary.
-
 #### Middleware
-- **Authentication**: Checks user session status (`isLogin`, `isAdmin`).
-- **Filtering and Pagination**: Supports filtering, searching, and sorting for data queries.
-- **Error Management**: Returns meaningful error messages using `errorHandler`.
+- **Authentication**: Checks the user's session status (`isLogin`, `isAdmin`).
+- **Filtering and Pagination**: Provides support for filtering, searching, and sorting data queries.
+- **Error Handling**: Returns meaningful error messages using `errorHandler`.
 
 #### Documentation
 - **Swagger & Redoc**: API documentation is accessible at `/documents/swagger` and `/documents/redoc`.
@@ -103,14 +124,14 @@
 - **Axios**: For HTTP requests with custom API clients.
 - **React-Quill**: Rich text editor.
 - **Emoji Mart**: Emoji picker support.
-- **React Helmet**: Dynamic management of `<head>` content like page titles and meta tags.
+- **React Helmet**: For dynamically managing `<head>` content like page titles and meta tags.
 - **Tailwind CSS**: A utility-first CSS framework for quick and flexible styling.
 
 ### Features
 
-- Powerful and modern structure with **React** and **Redux Toolkit**.
-- **Redux Persist**: Stores session information.
-- Customizable and responsive design using **Material-UI (MUI)** and **Tailwind CSS**.
+- Strong and modern architecture with **React** and **Redux Toolkit**.
+- **Redux Persist**: For storing session information.
+- Customizable and responsive design with **Material-UI (MUI)** and **Tailwind CSS**.
 - **React Toastify**: For user notifications.
 - Theme customization with light and dark mode support.
 
@@ -119,16 +140,16 @@
 - **Authentication (useAuthCalls)**:
   - Login, registration, password reset, logout.
 - **Blog Operations (useBlogCalls)**:
-  - Listing, creating, updating, deleting, and liking blogs.
+  - List, create, update, delete, and like blogs.
   - Pagination, filtering, and most liked/viewed blogs.
-- **Content Operations (useContentCalls)**:
-  - Adding, editing, and deleting blog content.
+- **Content Operations (useContentCalls)**
+  - Add, edit, and delete blog content.
 - **Comment and Sub-Comment Operations (useCommentCalls, useBottomCommentCalls)**:
-  - Adding, editing, and deleting comments and sub-comments.
+  - Add, edit, and delete comments and sub-comments.
 - **Category Operations (useCategoryCalls)**:
-  - Listing, adding, editing, and deleting categories.
+  - List, add, edit, and delete categories.
 - **User Operations (useUserCalls)**:
-  - Listing users, viewing details, updating, and deleting.
+  - List users, view details, update, and delete.
 
 ### Slices
 - **authSlice**: State management for authentication operations.
@@ -139,26 +160,11 @@
 - **categorySlice**: For creating, editing, and deleting categories.
 - **userSlice**: Managing user information and operation statuses.
 
-### Components
-- **Navbar**: Theme switcher, login modal.
-- **Blogs**: Blog cards, like/view lists.
-- **BlogDetail**: Blog details, content, and comment management.
-- **Users**: Listing user cards and viewing details.
-- **UserDetail**: Viewing, updating, and deleting user information.
-- **NewCategory**: Form for adding new categories.
-- **Categories**: Category cards, edit/delete modal.
-- **NewBlog**: Creating new blogs and adding content.
-- **About**: Information about the platform's purpose and vision.
-- **MyBlogs**: Managing and listing user blogs.
-- **MyBlogDetail**: Managing blog details and adding content/comments.
-- **Profile**: User profile details and editing.
-- **Login & Register**: Form validation using **Formik** and **Yup**.
-
 ### Extra Features
 - **React-Quill**: Rich text editor.
 - **Emoji-Mart**: Emoji picker.
 - **ScrollToTop**: Automatically scrolls to the top during page transitions.
-- **Tailwind CSS**: Supports dark mode and quick design.
+- **Tailwind CSS**: Dark mode support and quick styling.
 
 ### Responsive and User-Friendly Design
 - Mobile-friendly **Drawer (Menu)**.
@@ -212,33 +218,54 @@
 - **Forgot Password**: Kullanıcı adı/e-posta ile şifre sıfırlama işlemi yapılır.
 - **Logout**: Token silinir, oturum kapatılır.
 
-#### Kullanıcı Controller (Users)
+#### User Controller (Users)
 - **Listeleme**: Admin tüm kullanıcıları, diğerleri sadece kendi bilgilerini görebilir.
 - **Oluşturma**: Yeni kullanıcı kaydı oluşturulur, profil resmi Cloudinary'e yüklenir.
+- **Okuma**: Kullanıcılar kendi bilgilerini, admin başkalarının bilgilerini görüntüleyebilir.
 - **Güncelleme**: Kullanıcılar kendi bilgilerini, admin başkalarının bilgilerini güncelleyebilir.
-- **Silme**: Kullanıcılar kendilerini silemez, admin diğerlerini silebilir.
+- **Silme**: Kullanıcılar kendilerini silemez, admin başka kullanıcıları silebilir.
+
+#### Token Controller (Tokens)
+- **Listeleme**: Sadece admin yetkisine sahip kullancılar tüm token kayıtlarını görebilir.
+- **Oluşturma**: Sadece admin yetkisine sahip kullancılar yeni token kaydı oluştur.
+- **Okuma**: Sadece admin yetkisine sahip kullancılar belirli bir token kaydının detaylarını görebilir.
+- **Güncelleme**: Sadece admin yetkisine sahip kullancılar belirli bir token kaydını günceller.
+- **Silme**: Sadece admin yetkisine sahip kullancılar belirli bir token kaydını siler.
 
 #### Blog Controller (Blogs)
-- **Listeleme**: Filtreleme, sıralama ve arama desteklenir.
-- **Oluşturma/Güncelleme**: Kullanıcılar kendi bloglarını oluşturup güncelleyebilir.
+- **Listeleme**: Tüm blog kayıtlarını görebilir.
+- **Oluşturma**: Oturum açmış kullanıcı blog kaydı oluşturabilir, blog resmi Cloudinary'e yüklenir.
+- **Okuma**: Blog bilgilerini görüntüleyebilir ve görüntüleme sırasında `View` kaydı oluşur.
+- **Güncelleme**: Kullanıcılar kendi bloglarını, admin başkalarının bloglarını güncelleyebilir.
+- **Silme**: Kullanıcılar kendi bloglarını, admin başkalarının bloglarını silebilir.
 - **Beğeni**: Blog beğenisi eklenebilir/kaldırılabilir.
 
-#### Yorumlar ve Alt Yorumlar (Comments & BottomComments)
-- **Listeleme**: Arama, filtreleme ve sıralama desteklenir.
-- **Oluşturma/Güncelleme/Silme**: Yorumlar kullanıcı veya admin tarafından yönetilir.
+#### Category Controller (Categories)
+- **Listeleme**: Tüm kategori kayıtlarını görebilir.
+- **Oluşturma**: Sadece admin yetkisine sahip kullancılar yeni kategori kaydı oluştur.
+- **Okuma**: Belirli bir kategori kaydının detaylarını görebilir.
+- **Güncelleme**: Sadece admin yetkisine sahip kullancılar belirli bir kategori kaydını günceller.
+- **Silme**:  Sadece admin yetkisine sahip kullancılar belirli bir kategori kaydını siler ancak kategoriye ait bloglar varsa, kategori silinemez.
+
+### Content Controller (Contents)
+- **Listeleme**: Tüm içerik kayıtlarını görebilir.
+- **Oluşturma**: Oturum açmış kullanıcı bloglara içerik kaydı oluşturabilir, içerik resmi Cloudinary'e yüklenir.
+- **Okuma**: Belirli bir içerik kaydının detaylarını görebilir.
+- **Güncelleme**: Kullanıcılar kendi içeriklerini, admin başkalarının içeriklerini güncelleyebilir ve görseller güncellenirken mevcut görseller silinebilir, yeni görseller eklenebilir veya var olanlarla birlikte kullanılabilir.
+- **Silme**: Kullanıcılar kendi içeriklerini, admin başkalarının içeriklerini silebilir.
+
+#### Comment ve BottomComment Controller (Comments & BottomComments)
+- **Listeleme**: Tüm yorum ve alt yorum kayıtlarını görebilir.
+- **Oluşturma**: Oturum açmış kullanıcı bloglara yorum ve alt yorum kaydı oluşturabilir.
+- **Okuma**: Belirli bir yorum ve alt yorum kaydının detaylarını görebilir.
+- **Güncelleme**: Kullanıcılar kendi yorumlarını ve alt yorumlarını, admin başkalarının yorumlarını ve alt yorumlarını güncelleyebilir.
+- **Silme**: Kullanıcılar kendi yorumlarını ve alt yorumlarını, admin başkalarının yorumlarını ve alt yorumlarını silebilir.
 
 #### Beğeniler (Likes)
 - Blog beğeni ekleme/kaldırma ve toplam sayısını görüntüleme.
 
 #### Görüntülemeler (Views)
 - Blog görüntüleme bilgileri kaydedilir (`userId` veya `deviceId`).
-
-#### Kategori Controller (Categories)
-- Admin kullanıcılar kategorileri oluşturabilir/güncelleyebilir.
-- Blog ataması yapılmış kategoriler silinemez.
-
-#### İçerik Controller (Contents)
-- Bloglara içerik eklenir, güncellenir ve görseller Cloudinary'e yüklenir.
 
 #### Middleware’ler
 - **Kimlik Doğrulama**: Kullanıcı oturum durumu (`isLogin`, `isAdmin`) kontrolü.
@@ -291,7 +318,7 @@
 - **İçerik İşlemleri (useContentCalls)**
   - İçerik ekleme, düzenleme, silme.
 - **Yorum ve Alt Yorum İşlemleri (useCommentCalls, useBottomCommentCalls)**:
-  - Yorum ve alt yorum ekleme, düzenleme, silme .
+  - Yorum ve alt yorum ekleme, düzenleme, silme.
 - **Kategori İşlemleri (useCategoryCalls)**:
   - Kategori listeleme, ekleme, düzenleme, silme.
 - **Kullanıcı İşlemleri (useUserCalls)**:
@@ -306,21 +333,6 @@
 - **categorySlice**: Kategori oluşturma, düzenleme ve silme işlemleri.
 - **userSlice**: Kullanıcı bilgileri ve işlem durumları yönetimi.
 
-### Bileşenler
-- **Navbar**: Tema geçişi, giriş yapma modalı.
-- **Blogs**: Blog kartları, beğeni/görüntüleme listeleri.
-- **BlogDetail**: Blog detayları, içerik ve yorum yönetimi.
-- **Users**: Kullanıcı kartlarını listeleme ve detaylarını görüntüleme.
-- **UserDetail**: Kullanıcı bilgilerini detaylı görüntüleme, güncelleme ve silme.
-- **NewCategory**: Yeni kategori ekleme formu.
-- **Categories**: Kategori kartları, düzenleme/silme modalı.
-- **NewBlog**: Yeni blog oluşturma ve içerik ekleme.
-- **About**: Platformun amacı ve vizyonu hakkında bilgi.
-- **MyBlogs**: Kullanıcının yazdığı blogları listeleme ve yönetme.
-- **MyBlogDetail**: Kullanıcının blog detaylarını yönetme ve içerik/görüş ekleme.
-- **Profile**: Kullanıcı profili bilgileri ve düzenleme.
-- **Login & Register**: Form doğrulama için **Formik** ve **Yup**.
-
 ### Ekstra Özellikler
 - **React-Quill**: Zengin metin düzenleyici.
 - **Emoji-Mart**: Emoji seçici.
@@ -331,3 +343,6 @@
 - Mobil uyumlu **Drawer (Menu)**.
 - Yükleme ekranları için iskelet bileşenler (**Skeletons**).
 - Kullanıcı dostu modallar ve formlar.
+
+**Canlı Site**
+(https://koseyazisi.netlify.app/)
