@@ -40,7 +40,7 @@
     - Dosya geçici olarak kaydedilir ve ardından Cloudinary'e yüklenir.
 - **Kimlik Doğrulama**
   - **JWT (Bearer Token)**: Kullanıcı kimlik doğrulaması için `jsonwebtoken` kullanılır.
--   **Simple Token**: Veritabanındaki `Token` modeli ile kaydedilen tokenlara göre doğrulama yapılır.
+  - **Simple Token**: Veritabanındaki `Token` modeli ile kaydedilen tokenlara göre doğrulama yapılır.
 - **Yetkilendirme**
   - **isLogin**: Kullanıcının oturum açıp açmadığını kontrol eder. Kullanıcı oturum açmamışsa erişim engellenir.
   - **isAdmin**: Kullanıcının admin olup olmadığını kontrol eder. Sadece admin yetkisi olan kullanıcılar belirli işlemleri gerçekleştirebilir.
