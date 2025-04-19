@@ -28,33 +28,28 @@
 - **Veritabanı Bağlantısı**
   - MongoDB bağlantısı `dbConnection` fonksiyonu ile sağlanır.
   - Bağlantı hataları konsola loglanır.
-
-### Cloudinary Desteği
-- Görsel yüklemeler için Cloudinary API entegrasyonu yapılabilir.
-
-### Görsel Yükleme
-- **Multer**: Dosya yükleme işlemleri için kullanılır.
-- **Cloudinary**: Yüklenen dosyalar Cloudinary'e gönderilir.
-- **Desteklenen Formatlar**
-  - JPEG, JPG, PNG, GIF, WEBP.
-- **Yükleme Süreci**
-  - Yüklenen dosya adı düzenlenir (`fixFileName`).
-  - Dosya geçici olarak kaydedilir ve ardından Cloudinary'e yüklenir.
-
-### Kimlik Doğrulama
-- **JWT (Bearer Token)**: Kullanıcı kimlik doğrulaması için `jsonwebtoken` kullanılır.
-- **Simple Token**: Veritabanındaki `Token` modeli ile kaydedilen tokenlara göre doğrulama yapılır.
-
-### Yetkilendirme
-- **isLogin**: Kullanıcının oturum açıp açmadığını kontrol eder. Kullanıcı oturum açmamışsa erişim engellenir.
-- **isAdmin**: Kullanıcının admin olup olmadığını kontrol eder. Sadece admin yetkisi olan kullanıcılar belirli işlemleri gerçekleştirebilir.
-
-### Global Hata Yönetimi
-- **ErrorHandler Middleware**
-  - Sunucu tarafında oluşan tüm hatalar bu middleware ile yakalanır ve anlamlı bir cevap döndürülür.
-  - Dönen hata yanıtı şu bilgileri içerir:
-    - `error`: Hata durumu.
-    - `message`: Hata mesajı.
-    - `cause`: Hatanın sebebi.
-    - `body`: İstekle gönderilen veri.
-    - `stack`: Hata yığını. 
+- **Cloudinary Desteği**
+  - Görsel yüklemeler için Cloudinary API entegrasyonu yapılabilir.
+- **Görsel Yükleme**
+  - **Multer**: Dosya yükleme işlemleri için kullanılır.
+  - **Cloudinary**: Yüklenen dosyalar Cloudinary'e gönderilir.
+  - **Desteklenen Formatlar**
+    - JPEG, JPG, PNG, GIF, WEBP.
+  - **Yükleme Süreci**
+    - Yüklenen dosya adı düzenlenir (`fixFileName`).
+    - Dosya geçici olarak kaydedilir ve ardından Cloudinary'e yüklenir.
+- **Kimlik Doğrulama**
+  - **JWT (Bearer Token)**: Kullanıcı kimlik doğrulaması için `jsonwebtoken` kullanılır.
+-   **Simple Token**: Veritabanındaki `Token` modeli ile kaydedilen tokenlara göre doğrulama yapılır.
+- **Yetkilendirme**
+  - **isLogin**: Kullanıcının oturum açıp açmadığını kontrol eder. Kullanıcı oturum açmamışsa erişim engellenir.
+  - **isAdmin**: Kullanıcının admin olup olmadığını kontrol eder. Sadece admin yetkisi olan kullanıcılar belirli işlemleri gerçekleştirebilir.
+- **Global Hata Yönetimi**
+  - **ErrorHandler Middleware**
+    - Sunucu tarafında oluşan tüm hatalar bu middleware ile yakalanır ve anlamlı bir cevap döndürülür.
+    - Dönen hata yanıtı şu bilgileri içerir:
+      - `error`: Hata durumu.
+      - `message`: Hata mesajı.
+      - `cause`: Hatanın sebebi.
+      - `body`: İstekle gönderilen veri.
+      - `stack`: Hata yığını. 
