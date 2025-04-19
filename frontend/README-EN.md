@@ -87,13 +87,13 @@ This project contains the frontend of the **BlogApp-FullStack** application, a p
   - Delete users (`deleteUser`).
 
 - **Slices**
-  - authSlice.
-  - blogSlice.
-  - contentSlice.
-  - commentSlice.
-  - bottomCommentSlice.
-  - categorySlice.
-  - userSlice.
+  - **authSlice**: State management for authentication processes.
+  - **blogSlice**: Operations and state management related to blogs.
+  - **contentSlice**: Adding, updating, and deleting blog content.
+  - **commentSlice**: Adding, editing, and deleting comments.
+  - **bottomCommentSlice**: Sub-comment management.
+  - **categorySlice**: Creating, editing, and deleting categories.
+  - **userSlice**: Managing user information and operation states.
 
 - Navigation between pages using **React Router**.
 
