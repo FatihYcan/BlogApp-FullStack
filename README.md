@@ -54,7 +54,7 @@
    - [JSON](https://koseyazisi.onrender.com/documents/json)
 
 **More Detailed Readme**
-[Backend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)
+- [Backend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)
 
 ---
 
