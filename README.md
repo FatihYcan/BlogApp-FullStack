@@ -120,6 +120,9 @@
 - Skeleton components for loading screens (**Skeletons**).
 - User-friendly modals and forms.
 
+**More Detailed Readme**
+- [Frontend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-EN.md)
+
 ---
 
 **BlogApp-FullStack**, kullanıcıların blog yazılarını paylaşabileceği bir platformdur. Proje iki ana bölümden oluşmaktadır:
