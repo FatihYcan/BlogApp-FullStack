@@ -87,3 +87,78 @@
    - [JSON](https://koseyazisi.onrender.com/documents/json)
 
 ---
+
+## Frontend
+
+## Kullanılan Teknolojiler
+
+- **React**: Kullanıcı arayüzü geliştirme.
+- **Redux Toolkit**: Global state yönetimi ve slice yapılandırmaları.
+- **Redux Persist**: Oturum verisi yönetimi.
+- **Material-UI (MUI)**: Gelişmiş React bileşenleri.
+- **React-Toastify**: Kullanıcı bildirimleri için.
+- **React Router**: Yönlendirme işlemleri.
+- **MUI Theme Customization**: Tema ve bileşen özelleştirmeleri.
+- **Formik ve Yup**: Form yönetimi ve doğrulama.
+- **Axios**: HTTP istekleri için özelleştirilmiş API istemcileri.
+- **React-Quill**: Zengin metin düzenleyici.
+- **Emoji Mart**: Emoji seçici desteği.
+- **React Helmet**: Sayfa başlığı ve meta etiketleri gibi <head> içeriğini dinamik olarak yönetmek için.
+- **Tailwind CSS**: Utility-first yapısı sayesinde hızlı ve esnek stil oluşturmayı sağlayan CSS framework’ü.
+
+## Özellikler
+
+- **React** ve **Redux Toolkit** ile güçlü ve modern yapı.
+- **Redux Persist**: Oturum bilgilerini saklama.
+- **Material-UI (MUI)** ve **Tailwind CSS** ile özelleştirilebilir ve responsive tasarım.
+- **React Toastify**: Kullanıcı bildirimleri.
+- Işık ve karanlık mod destekli tema özelleştirmeleri.
+
+### Öne Çıkan Özellikler
+- **useAxios Hook**: Public, token gerektiren ve multipart API çağrıları.
+- **Kimlik Doğrulama (useAuthCalls)**:
+  - Giriş yapma, kayıt olma, şifre sıfırlama, çıkış yapma.
+- **Blog İşlemleri (useBlogCalls)**:
+  - Blog listeleme, oluşturma, güncelleme, silme, beğenme.
+  - Sayfalama, filtreleme, en çok beğenilen/görüntülenen bloglar.
+- **Yorum ve Alt Yorum İşlemleri**:
+  - Yorum ekleme, düzenleme, silme (useCommentCalls, useBottomCommentCalls).
+- **Kategori İşlemleri (useCategoryCalls)**:
+  - Kategori listeleme, ekleme, düzenleme, silme.
+- **Kullanıcı İşlemleri (useUserCalls)**:
+  - Kullanıcı listeleme, detay, güncelleme, silme.
+
+### Slice’lar
+- **authSlice**: Kimlik doğrulama işlemleri için durum yönetimi.
+- **blogSlice**: Bloglarla ilgili işlem ve durum yönetimi.
+- **contentSlice**: Blog içeriklerini ekleme, güncelleme ve silme işlemleri.
+- **commentSlice**: Yorum ekleme, düzenleme ve silme işlemleri.
+- **bottomCommentSlice**: Alt yorum yönetimi.
+- **categorySlice**: Kategori oluşturma, düzenleme ve silme işlemleri.
+- **userSlice**: Kullanıcı bilgileri ve işlem durumları yönetimi.
+
+### Bileşenler
+- **Navbar**: Tema geçişi, giriş yapma modalı.
+- **Blogs**: Blog kartları, beğeni/görüntüleme listeleri.
+- **BlogDetail**: Blog detayları, içerik ve yorum yönetimi.
+- **Users**: Kullanıcı kartlarını listeleme ve detaylarını görüntüleme.
+- **UserDetail**: Kullanıcı bilgilerini detaylı görüntüleme, güncelleme ve silme.
+- **NewCategory**: Yeni kategori ekleme formu.
+- **Categories**: Kategori kartları, düzenleme/silme modalı.
+- **NewBlog**: Yeni blog oluşturma ve içerik ekleme.
+- **About**: Platformun amacı ve vizyonu hakkında bilgi.
+- **MyBlogs**: Kullanıcının yazdığı blogları listeleme ve yönetme.
+- **MyBlogDetail**: Kullanıcının blog detaylarını yönetme ve içerik/görüş ekleme.
+- **Profile**: Kullanıcı profili bilgileri ve düzenleme.
+- **Login & Register**: Form doğrulama için **Formik** ve **Yup**.
+
+### Ekstra Özellikler
+- **React-Quill**: Zengin metin düzenleyici.
+- **Emoji-Mart**: Emoji seçici.
+- **ScrollToTop**: Sayfa geçişlerinde otomatik yukarı kaydırma.
+- **Tailwind CSS**: Karanlık mod desteği ve hızlı tasarım.
+
+### Responsive ve Kullanıcı Dostu Tasarım
+- Mobil uyumlu **Drawer (Menu)**.
+- Yükleme ekranları için iskelet bileşenler (**Skeletons**).
+- Kullanıcı dostu modallar ve formlar.
