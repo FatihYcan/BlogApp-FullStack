@@ -80,3 +80,8 @@
 
 #### Dokümantasyon
 - **Swagger & Redoc**: API dokümantasyonuna `/documents/swagger` ve `/documents/redoc` adreslerinden erişilebilir.
+
+**API Dokümantasyonu**
+   - [SWAGGER](https://koseyazisi.onrender.com/documents/swagger/)
+   - [REDOC](https://koseyazisi.onrender.com/documents/redoc)
+   - [JSON](https://koseyazisi.onrender.com/documents/json)
