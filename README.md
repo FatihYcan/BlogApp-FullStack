@@ -344,5 +344,4 @@
 - Yükleme ekranları için iskelet bileşenler (**Skeletons**).
 - Kullanıcı dostu modallar ve formlar.
 
-**Canlı Site**
-(https://koseyazisi.netlify.app/)
+[Canlı Site](https://koseyazisi.netlify.app/)
