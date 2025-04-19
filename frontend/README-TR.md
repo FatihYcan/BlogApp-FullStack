@@ -87,13 +87,13 @@ Bu proje, blog yazılarınızı paylaşabileceğiniz bir platform olan **BlogApp
   - Kullanıcı silme (`deleteUser`).
 
 - **Slice’lar**
-  - authSlice
-  - blogSlice
-  - contentSlice
-  - commentSlice
-  - bottomCommentSlice
-  - categorySlice
-  - userSlice
+  - **authSlice**: Kimlik doğrulama işlemleri için durum yönetimi.
+  - **blogSlice**: Bloglarla ilgili işlem ve durum yönetimi.
+  - **contentSlice**: Blog içeriklerini ekleme, güncelleme ve silme işlemleri.
+  - **commentSlice**: Yorum ekleme, düzenleme ve silme işlemleri.
+  - **bottomCommentSlice**: Alt yorum yönetimi.
+  - **categorySlice**: Kategori oluşturma, düzenleme ve silme işlemleri.
+  - **userSlice**: Kullanıcı bilgileri ve işlem durumları yönetimi.
 
 - **React Router** ile sayfalar arası gezinme.
 
