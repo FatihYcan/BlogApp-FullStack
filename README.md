@@ -25,31 +25,58 @@
 - **regex destekli arama**: Arama sorgularında büyük/küçük harf duyarsızlık.
 
 ### Özellikler
-- **Veritabanı Bağlantısı**
-  - MongoDB bağlantısı `dbConnection` fonksiyonu ile sağlanır.
-  - Bağlantı hataları konsola loglanır.
-- **Cloudinary Desteği**
-  - Görsel yüklemeler için Cloudinary API entegrasyonu yapılabilir.
-- **Görsel Yükleme**
-  - **Multer**: Dosya yükleme işlemleri için kullanılır.
-  - **Cloudinary**: Yüklenen dosyalar Cloudinary'e gönderilir.
-  - **Desteklenen Formatlar**
-    - JPEG, JPG, PNG, GIF, WEBP.
-  - **Yükleme Süreci**
-    - Yüklenen dosya adı düzenlenir (`fixFileName`).
-    - Dosya geçici olarak kaydedilir ve ardından Cloudinary'e yüklenir.
-- **Kimlik Doğrulama**
-  - **JWT (Bearer Token)**: Kullanıcı kimlik doğrulaması için `jsonwebtoken` kullanılır.
-  - **Simple Token**: Veritabanındaki `Token` modeli ile kaydedilen tokenlara göre doğrulama yapılır.
-- **Yetkilendirme**
-  - **isLogin**: Kullanıcının oturum açıp açmadığını kontrol eder. Kullanıcı oturum açmamışsa erişim engellenir.
-  - **isAdmin**: Kullanıcının admin olup olmadığını kontrol eder. Sadece admin yetkisi olan kullanıcılar belirli işlemleri gerçekleştirebilir.
-- **Global Hata Yönetimi**
-  - **ErrorHandler Middleware**
-    - Sunucu tarafında oluşan tüm hatalar bu middleware ile yakalanır ve anlamlı bir cevap döndürülür.
-    - Dönen hata yanıtı şu bilgileri içerir:
-      - `error`: Hata durumu.
-      - `message`: Hata mesajı.
-      - `cause`: Hatanın sebebi.
-      - `body`: İstekle gönderilen veri.
-      - `stack`: Hata yığını. 
+
+- **Veritabanı Bağlantısı**: MongoDB bağlantısı `dbConnection` ile yapılır, hatalar konsola loglanır.
+- **Görsel Yükleme**: 
+  - **Multer**: Dosya yükleme için kullanılır.
+  - **Cloudinary**: Görseller Cloudinary'e yüklenir (JPEG, JPG, PNG, GIF, WEBP desteklenir).
+  - **fixFileName**: Dosya adları düzenlenir ve yükleme tamamlanır.
+- **Kimlik Doğrulama**: 
+  - **JWT**: Kullanıcı doğrulaması `jsonwebtoken` ile yapılır.
+  - **Simple Token**: Veritabanındaki `Token` modeli ile doğrulama.
+- **Yetkilendirme**: 
+  - **isLogin**: Oturum kontrolü.
+  - **isAdmin**: Admin yetkisi kontrolü.
+- **Hata Yönetimi**: 
+  - **ErrorHandler Middleware**: Sunucu hatalarını yakalar ve anlamlı bir yanıt döndürür (`error`, `message`, `cause`, `body`, `stack`).
+
+#### Auth Controller (Auth)
+- **Login**: Kullanıcı adı/e-posta ile giriş yapılır, şifre doğrulanır ve token üretilir.
+- **Forgot Password**: Şifre sıfırlama işlemi yapılır.
+- **Logout**: Token silinir ve oturum kapatılır.
+
+#### Kullanıcı Controller (Users)
+- **Listeleme**: Admin tüm kullanıcıları, diğerleri sadece kendi bilgilerini görebilir.
+- **Oluşturma**: Yeni kullanıcı kaydı oluşturulur, profil resmi Cloudinary'e yüklenir.
+- **Güncelleme**: Kullanıcılar kendi bilgilerini, admin başkalarının bilgilerini güncelleyebilir.
+- **Silme**: Kullanıcılar kendilerini silemez, admin diğerlerini silebilir.
+
+#### Blog Controller (Blogs)
+- **Listeleme**: Filtreleme, sıralama ve arama desteklenir.
+- **Oluşturma/Güncelleme**: Kullanıcılar kendi bloglarını oluşturup güncelleyebilir.
+- **Beğeni**: Blog beğenisi eklenebilir/kaldırılabilir.
+
+#### Yorumlar ve Alt Yorumlar (Comments & BottomComments)
+- **Listeleme**: Arama, filtreleme ve sıralama desteklenir.
+- **Oluşturma/Güncelleme/Silme**: Yorumlar kullanıcı veya admin tarafından yönetilir.
+
+#### Beğeniler (Likes)
+- Blog beğeni ekleme/kaldırma ve toplam sayısını görüntüleme.
+
+#### Görüntülemeler (Views)
+- Blog görüntüleme bilgileri kaydedilir (`userId` veya `deviceId`).
+
+#### Kategori Controller (Categories)
+- Admin kullanıcılar kategorileri oluşturabilir/güncelleyebilir.
+- Blog ataması yapılmış kategoriler silinemez.
+
+#### İçerik Controller (Contents)
+- Bloglara içerik eklenir, güncellenir ve görseller Cloudinary'e yüklenir.
+
+#### Middleware’ler
+- **Kimlik Doğrulama**: Kullanıcı oturum durumu (`isLogin`, `isAdmin`) kontrolü.
+- **Filtreleme ve Sayfalama**: Veri sorguları için filtreleme, arama ve sıralama desteği.
+- **Hata Yönetimi**: `errorHandler` ile anlamlı hata mesajları döndürülür.
+
+#### Dokümantasyon
+- **Swagger & Redoc**: API dokümantasyonuna `/documents/swagger` ve `/documents/redoc` adreslerinden erişilebilir.
