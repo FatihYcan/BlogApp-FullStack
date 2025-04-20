@@ -55,6 +55,7 @@
 
 **More Detailed Readme**
 - [Backend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)
+**[More Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)**
 
 ---
 
