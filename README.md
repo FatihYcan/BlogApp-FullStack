@@ -119,8 +119,7 @@
 - Skeleton components for loading screens (**Skeletons**).
 - User-friendly modals and forms.
 
-**More Detailed Readme**
-- [Frontend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-EN.md)
+**[More Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-EN.md)**
 
 ---
 
