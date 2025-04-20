@@ -53,7 +53,7 @@
    - [REDOC](https://koseyazisi.onrender.com/documents/redoc)
    - [JSON](https://koseyazisi.onrender.com/documents/json)
 
-**[More Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)**
+**[Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)**
 
 ---
 
@@ -119,7 +119,7 @@
 - Skeleton components for loading screens (**Skeletons**).
 - User-friendly modals and forms.
 
-**[More Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-EN.md)**
+**[Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-EN.md)**
 
 ---
 
@@ -175,6 +175,8 @@
    - [SWAGGER](https://koseyazisi.onrender.com/documents/swagger/)
    - [REDOC](https://koseyazisi.onrender.com/documents/redoc)
    - [JSON](https://koseyazisi.onrender.com/documents/json)
+
+**[Ayrıntılı Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-TR.md)**
 
 ---
 
@@ -239,5 +241,7 @@
 - Mobil uyumlu **Drawer (Menu)**.
 - Yükleme ekranları için iskelet bileşenler (**Skeletons**).
 - Kullanıcı dostu modallar ve formlar.
+
+**[Ayrıntılı Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-TR.md)**
 
 [Canlı Site](https://koseyazisi.netlify.app/)
