@@ -243,5 +243,3 @@
 - Kullanıcı dostu modallar ve formlar.
 
 **[Ayrıntılı Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/frontend/README-TR.md)**
-
-[Canlı Site](https://koseyazisi.netlify.app/)
