@@ -53,8 +53,6 @@
    - [REDOC](https://koseyazisi.onrender.com/documents/redoc)
    - [JSON](https://koseyazisi.onrender.com/documents/json)
 
-**More Detailed Readme**
-- [Backend Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)
 **[More Detailed Readme](https://github.com/FatihYcan/BlogApp-FullStack/blob/main/backend/README-EN.md)**
 
 ---
