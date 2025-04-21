@@ -123,6 +123,10 @@
 
 ---
 
+https://github.com/user-attachments/assets/7516daa0-6e6a-45fd-812f-ca31c33de700
+
+---
+
 **BlogApp-FullStack**, kullanıcıların blog yazılarını paylaşabileceği bir platformdur. Proje iki ana bölümden oluşmaktadır:
 - **Backend**: Node.js, Express.js ve MongoDB kullanılarak geliştirilmiş bir API.
 - **Frontend**: React ve modern frontend teknolojileri kullanılarak geliştirilmiş kullanıcı arayüzü.
