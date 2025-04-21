@@ -179,9 +179,6 @@ export default function UpdateContentForm({
               onChange={handleImagesChange}
             />
           </Box>
-          {!contentData.images.length && (
-            <span className="text-gray-500">En az 1 adet resim ekleyiniz</span>
-          )}
         </FormControl>
 
         <Box display="flex" justifyContent="center" gap={2}>
